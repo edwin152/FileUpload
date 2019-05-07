@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.ddzu.shop.dao.OfficeMapperDao">
+
+    <insert id="insertOffice" parameterType="cn.ddzu.shop.entity.Office">
+        INSERT INTO OFFICE VALUES (
+            NULL
+            ,#{office.name}
+            ,#{office.business_center_id}
+            ,#{office.zone_id}
+            ,#{office.address}
+            ,#{office.metro_name_list}
+            ,#{office.type_id}
+            ,#{office.area_value}
+            ,#{office.area_range_id}
+            ,#{office.price}
+            ,#{office.price_range_id}
+            ,#{office.decoration_id}
+        )
+    </insert>
+
+    <select id="selectOfficeList" resultType="cn.ddzu.shop.entity.Office">
+        SELECT * FROM OFFICE
+        <where>
+            <if test="id != null">
+                AND OFFICE.ID = #{id}
+            </if>
+            <if test="keyword != null">
+                AND OFFICE.NAME LIKE #{keyword}
+            </if>
+            <if test="business_center_id != null">
+                AND OFFICE.BUSINESS_CENTER_ID = #{business_center_id}
+            </if>
+            <if test="zone_id != null">
+                AND OFFICE.ZONE_ID = #{zone_id}
+            </if>
+            <if test="metro_name != null">
+                AND OFFICE.METRO_NAME_LIST LIKE #{metro_name}
+            </if>
+            <if test="type_id != null">
+                AND OFFICE.TYPE_ID = #{type_id}
+            </if>
+            <if test="area_range_id != null">
+                AND OFFICE.AREA_RANGE_ID = #{area_range_id}
+            </if>
+            <if test="price_range_id != null">
+                AND OFFICE.PRICE_RANGE_ID = #{price_range_id}
+            </if>
+            <if test="decoration_id != null">
+                AND OFFICE.DECORATION_ID = #{decoration_id}
+            </if>
+        </where>
+        ORDER BY ID DESC;
+    </select>
+</mapper>

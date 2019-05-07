@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.ddzu.shop.dao.PriceRangeMapperDao">
+
+    <select id="selectPriceRangeList" resultType="cn.ddzu.shop.entity.PriceRange">
+        SELECT * FROM PRICE_RANGE ORDER BY ID ASC;
+    </select>
+</mapper>
