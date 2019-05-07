@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,5 +58,6 @@
 <button type="button" onclick="getFilterList()">get filter list</button>
 <button type="button" onclick="getOfficeList()">get office list</button>
 <button type="button" onclick="addOffice()">add office</button>
+<a href="search.html">搜索</a>
 </body>
 </html>

@@ -1,0 +1,189 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.bg_gray {
+	background: #f5f6fb;
+}
+
+.bg_white {
+	background: #FFFFFF;
+}
+
+.win {
+	width: 1182px;
+	margin: 0 auto;
+}
+
+.flexd_row {
+	display: flex;
+	align-items: center;
+}
+
+.flexd_column {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.title_box {
+	background: #333;
+	height: 30px;
+	line-height: 30px;
+	font-style: normal;
+	font-size: 12px;
+}
+
+.title_text {
+	display: flex;
+	color: #999999;
+	margin-right: 10px;
+}
+
+.title_text_right {
+	display: flex;
+	color: #999999;
+	margin-right: 28px;
+}
+
+.title_obvious {
+	color: #f3b100;
+}
+
+.top_box {
+	height: 60px;
+}
+
+.top_logo {
+	width: 108px;
+	height: 40px;
+	display: flex;
+}
+
+a {
+	text-decoration: none;
+	color: #333333;
+}
+
+.title_text a:visited {
+	color: #999999;
+}
+
+.black_a {
+	color: #333;
+}
+
+.black_a:visited {
+	color: #333;
+}
+
+.top_search_box {
+	flex-grow: 1;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.top_search {
+	width: 280px;
+	height: 28px;
+	line-height: 28px;
+	padding: 0 10px;
+	border: 1px solid #f3f3f3;
+	border-right: none;
+	background: #fff;
+}
+
+.top_search_btn {
+	border: none;
+	border-radius: 0 3px 3px 0;
+	-webkit-border-radius: 0 3px 3px 0;
+	background: #ffbe5e;
+	padding: 0 18px 0 20px;
+	height: 30px;
+	line-height: 30px;
+	color: #fff;
+	font-size: 14px;
+}
+
+input {
+	outline: none
+}
+
+.matop {
+	margin-top: 20px;
+}
+
+.condition_box {
+	padding: 20px 0px 10px 0px;
+}
+
+.bottom_box {
+	padding-bottom: 50px;
+	overflow: hidden;
+	background: #2c2c2c;
+	padding: 54px 0px 50px 0px;
+}
+
+.bottom_top {
+	display: flex;
+	justify-content: space-between;
+}
+
+.bottom_box .footm {
+	margin-right: 100px;
+    padding-right: 65px;
+    color: #ccc;
+    font-size: 14px;
+}
+
+.bottom_box .footm span{
+	font-size: 30px;
+    line-height: 34px;
+}
+
+.bottom_box .footm .flexd_row{
+	margin-top: 50px;
+}
+
+.bottom_box .footm a {
+	color: #ccc;
+}
+
+.bottom_box .footl {
+	color: #999;
+	font: 12px Microsoft YaHei, SimHei, SimSun;
+	line-height: 25px;
+}
+
+.bottom_box .footl a {
+	color: #999;
+}
+
+.bottom_box .footl a:hover {
+	color: #FFBB33;
+}
+
+.ad_title {
+	font-size: 30px;
+	line-height: 35px;
+	padding: 0px 0px 45px 0px;
+	color: #ccc;
+	font-weight: normal;
+}
+
+.footlink {
+	padding-top: 10px;
+	border-top: 1px solid #ccc;
+	margin-top: 15px;
+	color: #999;
+	font: 12px Microsoft YaHei, SimHei, SimSun;
+	display: flex;
+	align-items: center;
+}
+.bottom_box .footlink a{
+	color: #999;
+}
+.bottom_box .footlink a:hover {
+	color: #FFBB33;
+}
