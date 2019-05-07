@@ -8,6 +8,8 @@ import java.util.List;
 @Repository
 public interface AreaRangeMapperDao {
 
-    // 查询面积区间列表
+    /**
+     * 查询面积区间列表
+     */
     List<AreaRange> selectAreaRangeList();
 }

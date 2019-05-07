@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!--suppress ALL -->
 <mapper namespace="cn.ddzu.shop.dao.OfficeMapperDao">
 
     <insert id="insertOffice" parameterType="cn.ddzu.shop.entity.Office">
@@ -21,7 +22,32 @@
     </insert>
 
     <select id="selectOfficeList" resultType="cn.ddzu.shop.entity.Office">
-        SELECT * FROM OFFICE
+        SELECT
+        OFFICE.ID,
+        OFFICE.NAME,
+        OFFICE.BUSINESS_CENTER_ID,
+        OFFICE.ZONE_ID,
+        OFFICE.ADDRESS,
+        OFFICE.METRO_NAME_LIST,
+        OFFICE.TYPE_ID,
+        OFFICE.AREA_VALUE,
+        OFFICE.AREA_RANGE_ID,
+        OFFICE.PRICE,
+        OFFICE.PRICE_RANGE_ID,
+        OFFICE.DECORATION_ID,
+        ZONE.NAME AS ZONE_NAME,
+        DISTRICT.NAME AS DISTRICT_NAME,
+        TYPE.NAME AS TYPE_NAME,
+        AREA_RANGE.NAME AS AREA_RANGE_NAME,
+        PRICE_RANGE.NAME AS PRICE_RANGE_NAME,
+        DECORATION.NAME AS DECORATION_NAME
+        FROM OFFICE
+        LEFT JOIN ZONE ON OFFICE.ZONE_ID = ZONE.ID
+        LEFT JOIN DISTRICT ON ZONE.DISTRICT_ID = DISTRICT.ID
+        LEFT JOIN TYPE ON OFFICE.TYPE_ID = TYPE.ID
+        LEFT JOIN AREA_RANGE ON OFFICE.AREA_RANGE_ID = AREA_RANGE.ID
+        LEFT JOIN PRICE_RANGE ON OFFICE.PRICE_RANGE_ID = PRICE_RANGE.ID
+        LEFT JOIN DECORATION ON OFFICE.DECORATION_ID = DECORATION.ID
         <where>
             <if test="id != null">
                 AND OFFICE.ID = #{id}

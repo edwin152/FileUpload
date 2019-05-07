@@ -6,7 +6,7 @@
 </head>
 <%--suppress EqualityComparisonWithCoercionJS --%>
 <script>
-    function getDistrictList() {
+    function getFilterList() {
         let xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function () {
             if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
@@ -14,7 +14,7 @@
             }
         };
         xmlHttp.charset = "utf-8";
-        xmlHttp.open("POST", "search/districts", true);
+        xmlHttp.open("POST", "info/filters", true);
         xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlHttp.send();
     }
@@ -40,7 +40,7 @@
             }
         };
         xmlHttp.charset = "utf-8";
-        xmlHttp.open("POST", "search/addOffice", true);
+        xmlHttp.open("POST", "edit/addOffice", true);
         xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlHttp.send("name=edwin" +
             "&zone_id=10" +
@@ -54,7 +54,7 @@
 </script>
 <body>
 <p id="test">Hello World!</p>
-<button type="button" onclick="getDistrictList()">get district list</button>
+<button type="button" onclick="getFilterList()">get filter list</button>
 <button type="button" onclick="getOfficeList()">get office list</button>
 <button type="button" onclick="addOffice()">add office</button>
 </body>

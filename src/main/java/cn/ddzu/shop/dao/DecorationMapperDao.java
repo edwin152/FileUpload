@@ -8,6 +8,8 @@ import java.util.List;
 @Repository
 public interface DecorationMapperDao {
 
-    // 查询装修情况列表
+    /**
+     * 查询装修情况列表
+     */
     List<Decoration> selectDecorationList();
 }

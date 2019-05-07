@@ -8,6 +8,8 @@ import java.util.List;
 @Repository
 public interface TypeMapperDao {
 
-    // 查询办公类型列表
+    /**
+     * 查询办公类型列表
+     */
     List<Type> selectTypeList();
 }

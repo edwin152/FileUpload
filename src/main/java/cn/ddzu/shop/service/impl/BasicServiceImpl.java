@@ -25,8 +25,6 @@ public class BasicServiceImpl implements BasicService {
     private PriceRangeMapperDao priceRangeMapperDao;
     @Autowired
     private DecorationMapperDao decorationMapperDao;
-    @Autowired
-    private OfficeMapperDao officeMapperDao;
 
     @Override
     public List<District> getDistrictList() {
@@ -66,31 +64,5 @@ public class BasicServiceImpl implements BasicService {
     @Override
     public List<Decoration> getDecorationList() {
         return decorationMapperDao.selectDecorationList();
-    }
-
-    @Override
-    public void addOffice(Office office) {
-        officeMapperDao.insertOffice(office);
-    }
-
-    @Override
-    public List<Office> getOfficeList(Long id
-            , String keyword
-            , Long business_center_id
-            , Long zone_id
-            , String metro_name
-            , Long type_id
-            , Long area_range_id
-            , Long price_range_id
-            , Long decoration_id) {
-        return officeMapperDao.selectOfficeList(id
-                , keyword
-                , business_center_id
-                , zone_id
-                , metro_name
-                , type_id
-                , area_range_id
-                , price_range_id
-                , decoration_id);
     }
 }

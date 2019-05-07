@@ -8,6 +8,8 @@ import java.util.List;
 @Repository
 public interface PriceRangeMapperDao {
 
-    // 查询价格区间列表
+    /**
+     * 查询价格区间列表
+     */
     List<PriceRange> selectPriceRangeList();
 }

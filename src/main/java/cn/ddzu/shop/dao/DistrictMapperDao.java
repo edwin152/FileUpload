@@ -8,6 +8,8 @@ import java.util.List;
 @Repository
 public interface DistrictMapperDao {
 
-    // 查询区列表
+    /**
+     * 查询区列表
+     */
     List<District> selectDistrictList();
 }

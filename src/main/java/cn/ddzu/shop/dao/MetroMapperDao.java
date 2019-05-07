@@ -9,9 +9,15 @@ import java.util.List;
 @Repository
 public interface MetroMapperDao {
 
-    // 查询地铁列表
+    /**
+     * 查询地铁列表
+     */
     List<Metro> selectMetroList();
 
-    // 查询地铁
+    /**
+     * 查询地铁
+     *
+     * @param id 地铁id
+     */
     Metro selectMetroById(@Param("id") Long id);
 }
