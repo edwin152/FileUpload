@@ -1,16 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>test</title>
 </head>
-<%--suppress EqualityComparisonWithCoercionJS --%>
 <script>
     function getFilterList() {
         let xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function () {
-            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
                 document.getElementById("test").innerHTML = xmlHttp.responseText;
             }
         };
@@ -23,7 +22,7 @@
     function getOfficeList() {
         let xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function () {
-            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
                 document.getElementById("test").innerHTML = xmlHttp.responseText;
             }
         };
@@ -36,7 +35,7 @@
     function addOffice() {
         let xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function () {
-            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
                 document.getElementById("test").innerHTML = xmlHttp.responseText;
             }
         };
@@ -58,6 +57,5 @@
 <button type="button" onclick="getFilterList()">get filter list</button>
 <button type="button" onclick="getOfficeList()">get office list</button>
 <button type="button" onclick="addOffice()">add office</button>
-<a href="search.html">搜索</a>
 </body>
 </html>

@@ -48,8 +48,13 @@ public class InfoController {
         json.add("areaRangeList", new Gson().toJsonTree(areaRangeList));
         json.add("priceRanges", new Gson().toJsonTree(priceRanges));
         json.add("decorationList", new Gson().toJsonTree(decorationList));
-        json.addProperty("checkedDistrictId", 2);
+        json.addProperty("checkedDistrictId", 1);
         json.addProperty("checkedZoneId", 1);
+        json.addProperty("checkedMetroId", 1);
+        json.addProperty("checkedTypeId", 1);
+        json.addProperty("checkedAreaRangeId", 1);
+        json.addProperty("checkedPriceRangeId", 1);
+        json.addProperty("checkedDecorationId", 1);
 
         response.getWriter().write(json.toString());
         response.getWriter().close();

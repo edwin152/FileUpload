@@ -7,4 +7,8 @@
     <select id="selectZoneList" resultType="cn.ddzu.shop.entity.Zone" parameterType="long">
         SELECT * FROM ZONE WHERE DISTRICT_ID = #{district_id} ORDER BY ID ASC;
     </select>
+
+    <select id="selectZoneById" resultType="cn.ddzu.shop.entity.Zone" parameterType="long">
+        SELECT * FROM ZONE WHERE ID = #{id};
+    </select>
 </mapper>

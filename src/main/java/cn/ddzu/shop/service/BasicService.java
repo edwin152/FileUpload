@@ -19,6 +19,13 @@ public interface BasicService {
     List<Zone> getZoneList(Long district_id);
 
     /**
+     * 获取区域
+     *
+     * @param id 区域id
+     */
+    Zone getZone(Long id);
+
+    /**
      * 获取地铁列表
      */
     List<Metro> getMetroList();

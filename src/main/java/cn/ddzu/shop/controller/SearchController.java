@@ -1,7 +1,9 @@
 package cn.ddzu.shop.controller;
 
+import cn.ddzu.shop.entity.District;
 import cn.ddzu.shop.entity.Metro;
 import cn.ddzu.shop.entity.Office;
+import cn.ddzu.shop.entity.Zone;
 import cn.ddzu.shop.service.BasicService;
 import cn.ddzu.shop.service.OfficeService;
 import com.google.gson.Gson;
@@ -66,7 +68,6 @@ public class SearchController {
             metro_id = Long.parseLong(request.getParameter("metro_id"));
         }
 
-
         Long type_id = null;
         if (request.getParameter("type_id") != null) {
             type_id = Long.parseLong(request.getParameter("type_id"));
@@ -101,8 +102,17 @@ public class SearchController {
                 , decoration_id
         );
 
+        Zone zone = basicService.getZone(zone_id);
+
         JsonObject json = new JsonObject();
         json.add("officeList", new Gson().toJsonTree(officeList));
+        json.addProperty("checkedDistrictId", zone.getDistrict_id());
+        json.addProperty("checkedZoneId", zone_id);
+        json.addProperty("checkedMetroId", metro_id);
+        json.addProperty("checkedTypeId", type_id);
+        json.addProperty("checkedAreaRangeId", area_range_id);
+        json.addProperty("checkedPriceRangeId", price_range_id);
+        json.addProperty("checkedDecorationId", decoration_id);
         response.getWriter().write(json.toString());
         response.getWriter().close();
     }

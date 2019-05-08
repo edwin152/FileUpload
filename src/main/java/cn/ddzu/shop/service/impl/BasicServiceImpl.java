@@ -6,6 +6,7 @@ import cn.ddzu.shop.service.BasicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,7 +34,18 @@ public class BasicServiceImpl implements BasicService {
 
     @Override
     public List<Zone> getZoneList(Long district_id) {
+        if (district_id == null) {
+            return new ArrayList<>();
+        }
         return zoneMapperDao.selectZoneList(district_id);
+    }
+
+    @Override
+    public Zone getZone(Long id) {
+        if (id == null) {
+            return null;
+        }
+        return zoneMapperDao.selectZoneById(id);
     }
 
     @Override
@@ -43,6 +55,9 @@ public class BasicServiceImpl implements BasicService {
 
     @Override
     public Metro getMetro(Long id) {
+        if (id == null) {
+            return null;
+        }
         return metroMapperDao.selectMetroById(id);
     }
 
