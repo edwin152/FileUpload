@@ -16,39 +16,40 @@
 			getFilterList();
 		};
 
-		function getFilterList() {
-			let xmlHttp = new XMLHttpRequest();
-			xmlHttp.onreadystatechange = function() {
-				if(xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-					data = JSON.parse(xmlHttp.responseText);
-					setFilterList();
-				}
-			};
-			xmlHttp.charset = "utf-8";
-			xmlHttp.open("POST", "info/filters", true);
-			xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xmlHttp.send();
-		}
+    function getFilterList() {
+        let xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                data = JSON.parse(xmlHttp.responseText);
+                search();
+            }
+        };
+        xmlHttp.charset = "utf-8";
+        xmlHttp.open("POST", "info/filters", true);
+        xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlHttp.send();
+    }
 
-		function search() {
-			let xmlHttp = new XMLHttpRequest();
-			xmlHttp.onreadystatechange = function() {
-				if(xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-					data = JSON.parse(xmlHttp.responseText);
-					setFilterList();
-				}
-			};
-			xmlHttp.charset = "utf-8";
-			xmlHttp.open("POST", "search/offices", true);
-			xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xmlHttp.send("business_center_id" + data.business_center_id +
-				"&zone_id" + data.zone_id +
-				"&metro_id" + data.metro_id +
-				"&type_id" + data.type_id +
-				"&area_range_id" + data.area_range_id +
-				"&price_range_id" + data.price_range_id +
-				"&decoration_id" + data.decoration_id);
-		}
+    function search() {
+        let xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                let officeData = JSON.parse(xmlHttp.responseText);
+                console.log(officeData);
+                // data.districtList = officeData.districtList;
+                // data.metroList = officeData.metroList;
+                // data.typeList = officeData.typeList;
+                // data.areaRangeList = officeData.areaRangeList;
+                // data.priceRanges = officeData.priceRanges;
+                // data.decorationList = officeData.decorationList;
+                setFilterList();
+            }
+        };
+        xmlHttp.charset = "utf-8";
+        xmlHttp.open("POST", "search/offices", true);
+        xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlHttp.send();
+    }
 
 		function setFilterList() {
 			if(data === undefined) {
@@ -97,14 +98,14 @@
 				let imgLeft = document.createElement("img");
 				imgLeft.className = 'item_image';
 				conditionBox.appendChild(imgLeft);
-				
+
 
 				//      		<div class="data_info_box flexed_column">
 				//      			<div class="item_name">
 				//      				万创坊
 				//      			</div>
 				//      			<div class="item_address item_margin">
-				//      				<span class="item_title">地址：</span>[ <a class="hover_de">嘉定</a> ] - [ <a class="hover_de">安亭</a> ] |   安智路155号  
+				//      				<span class="item_title">地址：</span>[ <a class="hover_de">嘉定</a> ] - [ <a class="hover_de">安亭</a> ] |   安智路155号
 				//      			</div>
 				//      			<div class="item_size item_margin"">
 				//      				<span class="item_title">面积：</span>117 - 209.38m²
