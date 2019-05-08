@@ -188,3 +188,7 @@ input {
 .bottom_box .footlink a:hover {
     color: #FFBB33;
 }
+
+.max_width{
+	width: 100%;
+}
