@@ -20,7 +20,7 @@
         xmlHttp.onreadystatechange = function () {
             if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
                 data = JSON.parse(xmlHttp.responseText);
-                setFilterList();
+                search();
             }
         };
         xmlHttp.charset = "utf-8";
@@ -33,20 +33,21 @@
         let xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function () {
             if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                data = JSON.parse(xmlHttp.responseText);
+                let officeData = JSON.parse(xmlHttp.responseText);
+                console.log(officeData);
+                // data.districtList = officeData.districtList;
+                // data.metroList = officeData.metroList;
+                // data.typeList = officeData.typeList;
+                // data.areaRangeList = officeData.areaRangeList;
+                // data.priceRanges = officeData.priceRanges;
+                // data.decorationList = officeData.decorationList;
                 setFilterList();
             }
         };
         xmlHttp.charset = "utf-8";
         xmlHttp.open("POST", "search/offices", true);
         xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlHttp.send("business_center_id" + data.business_center_id +
-            "&zone_id" + data.zone_id +
-            "&metro_id" + data.metro_id +
-            "&type_id" + data.type_id +
-            "&area_range_id" + data.area_range_id +
-            "&price_range_id" + data.price_range_id +
-            "&decoration_id" + data.decoration_id);
+        xmlHttp.send();
     }
 
     function setFilterList() {
