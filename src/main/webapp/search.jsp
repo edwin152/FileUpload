@@ -92,38 +92,61 @@
 		}
 
 		function setDataList(data) {
-			console.log(checkedId);
 			let conditionBox = document.getElementById("dataList");
 			for(let i = 0; i < data.length; i++) {
 				let imgLeft = document.createElement("img");
 				imgLeft.className = 'item_image';
 				conditionBox.appendChild(imgLeft);
+				let dataInfoBox = document.createElement("div");
+				dataInfoBox.className = 'data_info_box flexed_column';
+				conditionBox.appendChild(dataInfoBox);
 
+				let itemName = document.createElement("div");
+				itemName.className = 'item_name';
+				itemName.innerHTML = data.title // -----------------------
+				dataInfoBox.appendChild(itemName);
 
-				//      		<div class="data_info_box flexed_column">
-				//      			<div class="item_name">
-				//      				万创坊
-				//      			</div>
-				//      			<div class="item_address item_margin">
-				//      				<span class="item_title">地址：</span>[ <a class="hover_de">嘉定</a> ] - [ <a class="hover_de">安亭</a> ] |   安智路155号
-				//      			</div>
-				//      			<div class="item_size item_margin"">
-				//      				<span class="item_title">面积：</span>117 - 209.38m²
-				//      			</div>
-				//      			<div class="item_position item_margin"">
-				//      				共有2个房源
-				//      			</div>
-				//      			<div class="item_size_btn_box flexed_row item_margin"">
-				//      				<div class="item_size_btn hover_de">
-				//      					117m²
-				//      				</div>
-				//      			</div>
-				//      		</div>
-				//      		<div class="item_price">
-				//      			<span class="item_price_num">
-				//      				1.8
-				//      			</span>元/m²/天
-				//      		</div>
+				let itemAddress = document.createElement("div");
+				itemAddress.className = 'item_address item_margin';
+				dataInfoBox.appendChild(itemAddress);
+
+				let itemAddressContent = "<span class=\"item_title\">地址：</span>[ <a class=\"hover_de\">" +
+					data.sss + // -----------------------
+					"</a> ] - [ <a class=\"hover_de\">" +
+					data.sss + // -----------------------
+					"</a> ] |   " +
+					data.sss; // -----------------------
+				itemAddress.innerHTML = itemAddressContent;
+
+				let itemSize = document.createElement("div");
+				itemSize.className = 'item_size item_margin';
+				dataInfoBox.appendChild(itemSize);
+
+				let itemSizeContent = "<span class=\"item_title\">面积：</span>" + data.sss + "m²"; // -----------------------
+				itemSize.innerHTML = itemSizeContent;
+
+				let itemPostion = document.createElement("div");
+				itemPostion.className = 'item_position item_margin';
+				itemPostion.innerHTML = "共有" + data.sss + "个房源"; // -----------------------
+				dataInfoBox.appendChild(itemPostion);
+
+				let itemSizeBtnBox = document.createElement("div");
+				itemSizeBtnBox.className = 'item_size_btn_box flexed_row item_margin';
+				dataInfoBox.appendChild(itemSizeBtnBox);
+
+				for(let i = 0; i < data.sss; i++) { // -----------------------
+					let itemSizeBtn = document.createElement("div");
+					itemSizeBtn.className = 'item_size_btn hover_de';
+					itemPostion.innerHTML = data.sss + "m²"; // -----------------------
+					itemSizeBtnBox.appendChild(itemSizeBtn);
+				}
+
+				let itemPrice = document.createElement("div");
+				itemPrice.className = 'item_price';
+				itemPrice.innerHTML = "<span class=\"item_price_num\">" +
+					data.sss + // -----------------------
+					"</span>元/m²/天";
+				dataInfoBox.appendChild(itemPrice);
 			}
 		}
 	</script>
