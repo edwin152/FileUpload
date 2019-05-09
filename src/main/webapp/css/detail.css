@@ -287,3 +287,8 @@
 	font-size: 12px;
 	flex-shrink: 1;
 }
+
+.table_item_image{
+	width: 140px;
+	height: 105px;
+}

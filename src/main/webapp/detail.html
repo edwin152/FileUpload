@@ -22,6 +22,45 @@
 				autoplayDisableOnInteraction: false,
 			});
 		});
+		
+		function setTopInfo(data){
+			document.getElementById("deteil_info_name").innerHTML = data.sssss;
+			// TODO
+		}
+		
+		function setDataList(data){
+			var contentBox = document.getElementById("data_item_box");
+			var trView = document.createElement("tr");
+			contentBox.appendChild(trView);
+			var tdImage = document.createElement("td");
+			trView.appendChild(tdImage)
+			
+			// 图片
+			var imageView = document.createElement("img");
+			imageView.className = "table_item_image";
+			imageView.setAttribute("src", "");
+			tdImage.appendChild(imageView);
+			
+			// 名称
+			var tdName = document.createElement("td");
+			tdName.innerHTML = ""
+			trView.appendChild(tdImage)
+			
+			// 面积
+			var tdName = document.createElement("td");
+			tdName.innerHTML = ""
+			trView.appendChild(tdImage)
+			
+			// 单价
+			var tdName = document.createElement("td");
+			tdName.innerHTML = ""
+			trView.appendChild(tdImage)
+			
+			// 总价
+			var tdName = document.createElement("td");
+			tdName.innerHTML = ""
+			trView.appendChild(tdImage)
+		}
 	</script>
 
 	<body class="bg_gray">
@@ -78,11 +117,11 @@
 					<div class="swiper_position swiper_top"></div>
 				</div>
 				<div class="detail_info_box flexed_column">
-					<div class="deteil_info_name">
+					<div class="deteil_info_name" id="deteil_info_name">
 						同普大厦
 					</div>
 					<div class="detail_info_price_box">
-						<span class="detail_info_price">2.8-3.3</span>元/m²/天
+						<span class="detail_info_price" id="detail_info_price">2.8-3.3</span>元/m²/天
 					</div>
 					<div class="infodown_box flexed_row">
 						<div class="infodown">
@@ -154,7 +193,7 @@
 						<div class="data_item_box flexed_row" id="dataList">
 						</div>
 					</div>
-					<table class="table_box" border="0" cellspacing="0" cellpadding="0">
+					<table class="table_box" id="data_item_box" border="0" cellspacing="0" cellpadding="0">
 						<tr class="table_title">
 							<td>全部（2套）</td>
 							<td>房源信息</td>
@@ -163,7 +202,7 @@
 							<td>总价排序</td>
 						</tr>
 						<tr>
-							<td><img src="img/phone.png" /></td>
+							<td><img src="img/phone.png" class="table_item_image" /></td>
 							<td>普陀长风商务区【同普大厦】普通办公-中等装修-可注册-130m²</td>
 							<td>130m²</td>
 							<td>3.3元/m²/天</td>
