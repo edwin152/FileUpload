@@ -7,10 +7,12 @@
     <title></title>
     <link rel="stylesheet" type="text/css" href="css/all.css"/>
     <link rel="stylesheet" type="text/css" href="css/search.css"/>
+    <script src="js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
 <script type="text/javascript">
     let data;
+    let pageIndex;
 
     window.onload = function () {
         getFilterList();
@@ -45,6 +47,11 @@
                 data.checkedPriceRangeId = officeData.checkedPriceRangeId;
                 data.checkedDecorationId = officeData.checkedDecorationId;
                 setFilterList();
+                pageIndex = officeData.pageIndex;
+                if (officeData.pageNum == officeData.pageIndex + 1) {
+                    $("#next_page").hide();
+                }
+                setDataList(officeData.officeList);
             }
         };
         xmlHttp.charset = "utf-8";
@@ -53,17 +60,17 @@
         if (page === undefined || page === null) {
             page = 0;
         }
-        xmlHttp.send("id=" + id === undefined ? "null" : id
-            + "&keyword=" + keyword === undefined ? "null" : keyword
-            + "&business_center_id=" + business_center_id === undefined ? "null" : business_center_id
-            + "&district_id=" + data.checkedDistrictId
-            + "&zone_id=" + data.checkedZoneId
-            + "&metro_id=" + data.checkedMetroId
-            + "&type_id=" + data.checkedTypeId
-            + "&area_range_id=" + data.checkedAreaRangeId
-            + "&price_range_id=" + data.checkedPriceRangeId
-            + "&decoration_id=" + data.checkedDecorationId
-            + "&page=" + page
+        xmlHttp.send("id=" + id === undefined ? "null" : id +
+            "&keyword=" + keyword === undefined ? "null" : keyword +
+            "&business_center_id=" + business_center_id === undefined ? "null" : business_center_id +
+            "&district_id=" + data.checkedDistrictId +
+            "&zone_id=" + data.checkedZoneId +
+            "&metro_id=" + data.checkedMetroId +
+            "&type_id=" + data.checkedTypeId +
+            "&area_range_id=" + data.checkedAreaRangeId +
+            "&price_range_id=" + data.checkedPriceRangeId +
+            "&decoration_id=" + data.checkedDecorationId +
+            "&page=" + page
         );
     }
 
@@ -139,7 +146,83 @@
             conditionBox.appendChild(optionItem);
         }
     }
+
+    function setDataList(data) {
+        if (data.length < 0) {
+            $("#error_not_text").show();
+            return;
+        }
+        $("#error_not_text").hide();
+        let dataListBox = document.getElementById("data_list_box");
+        if (pageIndex && pageIndex === 0) {
+            dataListBox.innerHTML = "";
+        }
+        for (let i = 0; i < data.length; i++) {
+            let conditionBox = document.createElement("div");
+            conditionBox.className = "data_item_box flexed_row";
+            let imgLeft = document.createElement("img");
+            imgLeft.className = 'item_image';
+            imgLeft.setAttribute("src", data[i].url)
+            conditionBox.appendChild(imgLeft);
+            let dataInfoBox = document.createElement("div");
+            dataInfoBox.className = 'data_info_box flexed_column';
+            conditionBox.appendChild(dataInfoBox);
+
+            let itemName = document.createElement("div");
+            itemName.className = 'item_name';
+            itemName.innerHTML = data[i].name // -----------------------
+            dataInfoBox.appendChild(itemName);
+
+            let itemAddress = document.createElement("div");
+            itemAddress.className = 'item_address item_margin';
+            dataInfoBox.appendChild(itemAddress);
+
+            let itemAddressContent = "<span class=\"item_title\">地址：</span>[ <a class=\"hover_de\">" +
+                data[i].district_name + // -----------------------
+                "</a> ] - [ <a class=\"hover_de\">" +
+                data[i].zone_name + // -----------------------
+                "</a> ] |   " +
+                data[i].address; // -----------------------
+            itemAddress.innerHTML = itemAddressContent;
+
+            let itemSize = document.createElement("div");
+            itemSize.className = 'item_size item_margin';
+            dataInfoBox.appendChild(itemSize);
+
+            let itemSizeContent = "<span class=\"item_title\">面积：</span>" + data[i].area_range_name + "m²"; // -----------------------
+            itemSize.innerHTML = itemSizeContent;
+
+            let itemPostion = document.createElement("div");
+            itemPostion.className = 'item_position item_margin';
+            itemPostion.innerHTML = "共有" + data[i].area_value + "个房源"; // -----------------------
+            dataInfoBox.appendChild(itemPostion);
+
+            let itemSizeBtnBox = document.createElement("div");
+            itemSizeBtnBox.className = 'item_size_btn_box flexed_row item_margin';
+            dataInfoBox.appendChild(itemSizeBtnBox);
+
+            for (let i = 0; i < data[i].sss; i++) { // -----------------------
+                let itemSizeBtn = document.createElement("div");
+                itemSizeBtn.className = 'item_size_btn hover_de';
+                itemPostion.innerHTML = data[i].sss + "m²"; // -----------------------
+                itemSizeBtnBox.appendChild(itemSizeBtn);
+            }
+
+            let itemPrice = document.createElement("div");
+            itemPrice.className = 'item_price';
+            itemPrice.innerHTML = "<span class=\"item_price_num\">" +
+                data[i].price + // -----------------------
+                "</span>元/m²/天";
+            conditionBox.appendChild(itemPrice);
+            dataListBox.appendChild(conditionBox);
+        }
+    }
+
+    function nextPage() {
+        search(null, null, null, pageIndex + 1);
+    }
 </script>
+
 <body class="bg_gray">
 <div class="title_box">
     <div class="win flexed_row">
@@ -233,26 +316,17 @@
 <div class="content_box matop win flexed_row">
     <div class="content_left bg_white">
         <h3 class="sec_title">默认搜索</h3>
-        <div class="error_not_text">
+        <div class="error_not_text" id="error_not_text">
             抱歉，暂无数据！
         </div>
-        <div class="data_list">
+        <div class="data_list flexed_column" id="data_list_box">
             <div class="data_item_box flexed_row" id="dataList">
             </div>
         </div>
 
-        <div class="paging">
-            <div class="paging_item">
-                首页
-            </div>
-            <div class="paging_item">
-                上一页
-            </div>
-            <div class="paging_item">
+        <div class="paging" id="next_page">
+            <div class="paging_item" onclick="nextPage()">
                 下一页
-            </div>
-            <div class="paging_item">
-                尾页
             </div>
         </div>
     </div>
