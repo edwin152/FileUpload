@@ -1,272 +1,273 @@
 .logo_right {
-	margin-left: 30px;
-	font-size: 14px;
+    margin-left: 30px;
+    font-size: 14px;
 }
 
 .condition_line {
-	align-items: flex-start;
-	width: 100%;
-	border-bottom: 1px solid #f3f3f3;
-	line-height: 28px;
-	padding: 6px 0;
+    align-items: flex-start;
+    width: 100%;
+    border-bottom: 1px solid #f3f3f3;
+    line-height: 28px;
+    padding: 6px 0;
 }
 
 .condition_line a {
-	color: #333;
+    color: #333;
 }
 
 .condition_line a:hover {
-	color: #FF9933;
+    color: #FF9933;
 }
 
 .condition_title {
-	color: #999;
-	font-size: 12px;
-	margin-right: 30px;
-	flex-wrap: nowrap;
-	justify-content: center;
-	align-items: center;
-	flex-shrink: 0;
+    color: #999;
+    font-size: 12px;
+    margin-right: 30px;
+    flex-wrap: nowrap;
+    min-width: 40px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
 }
 
 .option_box {
-	flex-wrap: wrap;
+    flex-wrap: wrap;
 }
 
 .condition_option {
-	color: #333;
-	font-size: 12px;
-	margin-right: 30px;
+    color: #333;
+    font-size: 12px;
+    margin-right: 30px;
 }
 
 .condition_option:hover {
-	color: #FF9933;
-	font-size: 12px;
-	margin-right: 30px;
-	cursor: pointer;
+    color: #FF9933;
+    font-size: 12px;
+    margin-right: 30px;
+    cursor: pointer;
 }
 
 .condition_option_select {
-	color: #FF9933;
-	font-size: 12px;
-	margin-right: 30px;
+    color: #FF9933;
+    font-size: 12px;
+    margin-right: 30px;
 }
 
 .condition_option_select:hover {
-	color: #FF9933;
-	font-size: 12px;
-	margin-right: 30px;
-	cursor: pointer;
+    color: #FF9933;
+    font-size: 12px;
+    margin-right: 30px;
+    cursor: pointer;
 }
 
 .content_box {
-	align-items: flex-start;
+    align-items: flex-start;
 }
 
 .content_left {
-	flex-shrink: 0;
-	flex-grow: 1;
-	margin-right: 20px;
-	padding: 20px;
+    flex-shrink: 0;
+    flex-grow: 1;
+    margin-right: 20px;
+    padding: 20px;
 }
 
 .error_not_text {
-	margin: 20px 0;
-	line-height: 28px;
-	font-size: 16px;
-	color: #333;
-	font-weight: bold;
+    margin: 20px 0;
+    line-height: 28px;
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
 }
 
 .content_right {
-	flex-shrink: 0;
-	flex-grow: 0;
-	width: 282px;
-	padding-bottom: 15px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    width: 282px;
+    padding-bottom: 15px;
 }
 
 .contact_way {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .contact_info {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 282px;
-	height: 105px;
-	border-bottom: 1px solid #e5e5e5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 282px;
+    height: 105px;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .contact_img {
-	width: 64px;
-	height: 64px;
-	margin-right: 20px;
+    width: 64px;
+    height: 64px;
+    margin-right: 20px;
 }
 
 .sec_title {
-	line-height: 34px;
-	font-size: 16px;
-	border-bottom: 4px #f5f8ff solid;
-	font-weight: normal;
+    line-height: 34px;
+    font-size: 16px;
+    border-bottom: 4px #f5f8ff solid;
+    font-weight: normal;
 }
 
 .service_box {
-	font: 12px Microsoft YaHei, SimHei, SimSun;
-	line-height: 16px;
+    font: 12px Microsoft YaHei, SimHei, SimSun;
+    line-height: 16px;
 }
 
 .service_name {
-	font-size: 16px;
-	display: inline-block;
-	padding-right: 15px;
-	font-weight: normal;
+    font-size: 16px;
+    display: inline-block;
+    padding-right: 15px;
+    font-weight: normal;
 }
 
 .service_phone {
-	padding: 20px 0;
-	border-bottom: 1px solid #e5e5e5;
-	width: 100%;
-	justify-content: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #e5e5e5;
+    width: 100%;
+    justify-content: center;
 }
 
 .icon_phone {
-	display: inline-block;
-	width: 20px;
-	height: 20px;
-	background: url("../img/phone.png");
-	background-size: 20px 20px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url("../img/phone.png");
+    background-size: 20px 20px;
 }
 
 .service_phone_text {
-	font-size: 24px;
-	line-height: 30px;
-	color: #666;
-	border-bottom: 1px solid #f3f3f3;
+    font-size: 24px;
+    line-height: 30px;
+    color: #666;
+    border-bottom: 1px solid #f3f3f3;
 }
 
 .ready_see {
-	font-size: 16px;
-	line-height: 56px;
+    font-size: 16px;
+    line-height: 56px;
 }
 
 .ready_phone {
-	border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border: 2px solid #f3f3f3;
-	width: 238px;
-	height: 40px;
-	line-height: 40px;
-	text-align: center;
-	background: #fff;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border: 2px solid #f3f3f3;
+    width: 238px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background: #fff;
 }
 
 .btn {
-	width: 242px;
-	height: 36px;
-	margin: 20px 0;
-	text-align: center;
-	line-height: 36px;
-	font-size: 16px;
-	color: #FFFFFF;
-	border-radius: 5px;
-	background: #ffbb33;
+    width: 242px;
+    height: 36px;
+    margin: 20px 0;
+    text-align: center;
+    line-height: 36px;
+    font-size: 16px;
+    color: #FFFFFF;
+    border-radius: 5px;
+    background: #ffbb33;
 }
 
 .content_right_title {
-	height: 42px;
-	line-height: 42px;
-	width: 100%;
-	margin-top: 15px;
-	background: #e7e7e9;
-	color: #262313;
-	font-size: 16px;
-	font-weight: normal;
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
+    height: 42px;
+    line-height: 42px;
+    width: 100%;
+    margin-top: 15px;
+    background: #e7e7e9;
+    color: #262313;
+    font-size: 16px;
+    font-weight: normal;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .content_right_title_img {
-	width: 16px;
-	height: 16px;
-	margin-left: 15px;
+    width: 16px;
+    height: 16px;
+    margin-left: 15px;
 }
 
 .data_list {
-	width: 100%;
+    width: 100%;
 }
 
 .data_item_box {
-	padding: 20px 0;
-	width: 100%;
-	font: 14px Microsoft YaHei, SimHei, SimSun;
-	color: #666;
+    padding: 20px 0;
+    width: 100%;
+    font: 14px Microsoft YaHei, SimHei, SimSun;
+    color: #666;
 }
 
 .data_item_box .item_image {
-	width: 240px;
-	height: 180px;
+    width: 240px;
+    height: 180px;
 }
 
 .data_item_box .data_info_box {
-	height: 180px;
-	justify-content: flex-start;
-	align-items: flex-start;
-	margin-left: 30px;
-	flex-grow: 1;
+    height: 180px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-left: 30px;
+    flex-grow: 1;
 }
 
 .data_item_box .data_info_box .item_name {
-	font-size: 16px;
-	font-weight: bold;
-	line-height: 16px;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 16px;
 }
 
 .data_item_box .data_info_box .item_name:hover {
-	color: #fb3;
+    color: #fb3;
 }
 
 .data_item_box .data_info_box .item_margin {
-	margin: 10px 0px;
+    margin: 10px 0;
 }
 
 .data_item_box .data_info_box .item_title {
-	color: #999999;
+    color: #999999;
 }
 
 .data_item_box .item_position {
-	font-size: 12px;
+    font-size: 12px;
 }
 
 .data_item_box .item_size_btn_box {
-	font-size: 12px;
-	border: 1px solid #f3f3f3;
-	border-left: none;
+    font-size: 12px;
+    border: 1px solid #f3f3f3;
+    border-left: none;
 }
 
 .data_item_box .item_size_btn_box .item_size_btn {
-	border-left: 1px solid #f3f3f3;
-	padding: 0 20px;
-	line-height: 28px;
+    border-left: 1px solid #f3f3f3;
+    padding: 0 20px;
+    line-height: 28px;
 }
 
 .hover_de:hover {
-	text-decoration: underline;
-	color: #999999;
+    text-decoration: underline;
+    color: #999999;
 }
 
 .data_item_box .item_price {
-	height: 180px;
-	flex-shrink: 0;
-	flex-grow: 0;
+    height: 180px;
+    flex-shrink: 0;
+    flex-grow: 0;
 }
 
 .data_item_box .item_price .item_price_num {
-	color: #f90;
-	font-size: 20px;
-	line-height: 30px;
-	font-weight: normal;
+    color: #f90;
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: normal;
 }
