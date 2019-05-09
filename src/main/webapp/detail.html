@@ -23,11 +23,19 @@
 			});
 		});
 		
+		/**
+		 * 设置顶部数据
+		 * @param {Object} data 数据
+		 */
 		function setTopInfo(data){
 			document.getElementById("deteil_info_name").innerHTML = data.sssss;
 			// TODO
 		}
 		
+		/**
+		 * 设置列表数据
+		 * @param {Object} data
+		 */
 		function setDataList(data){
 			var contentBox = document.getElementById("data_item_box");
 			var trView = document.createElement("tr");
@@ -60,6 +68,15 @@
 			var tdName = document.createElement("td");
 			tdName.innerHTML = ""
 			trView.appendChild(tdImage)
+		}
+		
+		/**
+		 * 设置底部写字楼信息
+		 * @param {Object} data
+		 */
+		function setBottomInfo(data){
+			document.getElementById("bottom_info_text").innerHTML = data.sssss;
+			// TODO
 		}
 	</script>
 
@@ -219,7 +236,7 @@
 									<div class="bottom_info_title">
 										建筑面积：
 									</div>
-									<div class="bottom_info_text">
+									<div class="bottom_info_text" id="bottom_info_text">
 										27703m²
 									</div>
 								</div>
