@@ -226,12 +226,25 @@
         <div class="error_not_text">
             抱歉，暂无数据！
         </div>
-        -->
         <div class="data_list">
             <div class="data_item_box flexed_row" id="dataList">
             </div>
         </div>
 
+        <div class="paging">
+            <div class="paging_item">
+                首页
+            </div>
+            <div class="paging_item">
+                上一页
+            </div>
+            <div class="paging_item">
+                下一页
+            </div>
+            <div class="paging_item">
+                尾页
+            </div>
+        </div>
     </div>
     <div class="content_right bg_white">
         <div class="contact_way">
