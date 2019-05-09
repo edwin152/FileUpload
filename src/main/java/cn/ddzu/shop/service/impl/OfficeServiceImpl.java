@@ -20,48 +20,31 @@ public class OfficeServiceImpl implements OfficeService {
     }
 
     @Override
-    public List<Office> getOfficeList(Long id
-            , String keyword
-            , Long business_center_id
-            , Long zone_id
-            , String metro_name
-            , Long type_id
-            , Long area_range_id
-            , Long price_range_id
-            , Long decoration_id
-            , int page
-            , int step) {
-        return officeMapperDao.selectOfficeList(id
-                , keyword
-                , business_center_id
-                , zone_id
-                , metro_name
-                , type_id
-                , area_range_id
-                , price_range_id
-                , decoration_id
+    public List<Office> getOfficeList(SearchBean searchBean, int page, int step) {
+        return officeMapperDao.selectOfficeList(searchBean.getId()
+                , searchBean.getKeyword()
+                , searchBean.getBusiness_center_id()
+                , searchBean.getZone_id()
+                , searchBean.getMetro_name()
+                , searchBean.getType_id()
+                , searchBean.getArea_range_id()
+                , searchBean.getPrice_range_id()
+                , searchBean.getDecoration_id()
                 , page < 0 ? 0 : page * step
                 , step);
     }
 
     @Override
-    public Integer getOfficeSize(Long id
-            , String keyword
-            , Long business_center_id
-            , Long zone_id
-            , String metro_name
-            , Long type_id
-            , Long area_range_id
-            , Long price_range_id
-            , Long decoration_id) {
-        return officeMapperDao.countOfficeList(id
-                , keyword
-                , business_center_id
-                , zone_id
-                , metro_name
-                , type_id
-                , area_range_id
-                , price_range_id
-                , decoration_id);
+    public int getOfficeSize(SearchBean searchBean) {
+        Integer size = officeMapperDao.countOfficeList(searchBean.getId()
+                , searchBean.getKeyword()
+                , searchBean.getBusiness_center_id()
+                , searchBean.getZone_id()
+                , searchBean.getMetro_name()
+                , searchBean.getType_id()
+                , searchBean.getArea_range_id()
+                , searchBean.getPrice_range_id()
+                , searchBean.getDecoration_id());
+        return size == null ? 0 : size;
     }
 }

@@ -59,37 +59,37 @@ public class SearchController {
             business_center_id = Long.parseLong(request.getParameter("business_center_id"));
         }
 
-        Long district_id = null;
+        Long district_id = 1L;
         if (request.getParameter("district_id") != null) {
             district_id = Long.parseLong(request.getParameter("district_id"));
         }
 
-        Long zone_id = null;
+        Long zone_id = 1L;
         if (request.getParameter("zone_id") != null) {
             zone_id = Long.parseLong(request.getParameter("zone_id"));
         }
 
-        Long metro_id = null;
+        Long metro_id = 1L;
         if (request.getParameter("metro_id") != null) {
             metro_id = Long.parseLong(request.getParameter("metro_id"));
         }
 
-        Long type_id = null;
+        Long type_id = 1L;
         if (request.getParameter("type_id") != null) {
             type_id = Long.parseLong(request.getParameter("type_id"));
         }
 
-        Long area_range_id = null;
+        Long area_range_id = 1L;
         if (request.getParameter("area_range_id") != null) {
             area_range_id = Long.parseLong(request.getParameter("area_range_id"));
         }
 
-        Long price_range_id = null;
+        Long price_range_id = 1L;
         if (request.getParameter("price_range_id") != null) {
             price_range_id = Long.parseLong(request.getParameter("price_range_id"));
         }
 
-        Long decoration_id = null;
+        Long decoration_id = 1L;
         if (request.getParameter("decoration_id") != null) {
             decoration_id = Long.parseLong(request.getParameter("decoration_id"));
         }
@@ -100,60 +100,24 @@ public class SearchController {
         }
 
         Metro metro = basicService.getMetro(metro_id);
-
-        Long sqlZoneId = zone_id != null && zone_id.equals(district_id) ? null : zone_id;
-        List<Office> officeList = officeService.getOfficeList(id
-                , keyword
-                , business_center_id
-                , sqlZoneId
-                , metro == null ? null : metro.getName()
-                , type_id
-                , area_range_id
-                , price_range_id
-                , decoration_id
-                , page
-                , PAGE_SIZE
-        );
-        Integer size = officeService.getOfficeSize(id
-                , keyword
-                , business_center_id
-                , sqlZoneId
-                , metro == null ? null : metro.getName()
-                , type_id
-                , area_range_id
-                , price_range_id
-                , decoration_id
-        );
-        if (size == null) size = 0;
-
-        if (district_id == null) {
-            district_id = 1L;
-        }
-
         Zone zone = basicService.getZone(zone_id);
-        if (zone_id == null || zone == null || zone.getDistrict_id() == district_id) {
+        if (zone == null || zone.getDistrict_id() != district_id) {
             zone_id = district_id;
         }
 
-        if (metro_id == null) {
-            metro_id = 1L;
-        }
+        OfficeService.SearchBean searchBean = new OfficeService.SearchBean();
+        searchBean.setId(id);
+        searchBean.setKeyword(keyword);
+        searchBean.setBusiness_center_id(business_center_id);
+        searchBean.setZone_id(zone_id);
+        searchBean.setMetro_name(metro);
+        searchBean.setType_id(type_id);
+        searchBean.setArea_range_id(area_range_id);
+        searchBean.setPrice_range_id(price_range_id);
+        searchBean.setDecoration_id(decoration_id);
 
-        if (type_id == null) {
-            type_id = 1L;
-        }
-
-        if (area_range_id == null) {
-            area_range_id = 1L;
-        }
-
-        if (price_range_id == null) {
-            price_range_id = 1L;
-        }
-
-        if (decoration_id == null) {
-            decoration_id = 1L;
-        }
+        List<Office> officeList = officeService.getOfficeList(searchBean, page, PAGE_SIZE);
+        int size = officeService.getOfficeSize(searchBean);
 
         JsonObject json = new JsonObject();
         json.add("officeList", new Gson().toJsonTree(officeList));
