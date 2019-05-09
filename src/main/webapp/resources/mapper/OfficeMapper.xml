@@ -111,6 +111,6 @@
                 AND OFFICE.DECORATION_ID = #{decoration_id}
             </if>
         </where>
-        GROUP BY ID;
+        ;
     </select>
 </mapper>
