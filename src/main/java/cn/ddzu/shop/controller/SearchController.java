@@ -128,7 +128,7 @@ public class SearchController {
         json.addProperty("checkedAreaRangeId", area_range_id);
         json.addProperty("checkedPriceRangeId", price_range_id);
         json.addProperty("checkedDecorationId", decoration_id);
-        json.addProperty("pageNum", size / PAGE_SIZE + 1);
+        json.addProperty("pageNum", (size - 1) / PAGE_SIZE + 1);
         json.addProperty("pageIndex", page);
         response.getWriter().write(json.toString());
         response.getWriter().close();
