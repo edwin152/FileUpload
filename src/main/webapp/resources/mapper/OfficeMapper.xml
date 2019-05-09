@@ -77,6 +77,40 @@
                 AND OFFICE.DECORATION_ID = #{decoration_id}
             </if>
         </where>
-        ORDER BY ID DESC;
+        ORDER BY ID DESC LIMIT #{start}, #{step};
+    </select>
+
+    <select id="countOfficeList" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM OFFICE
+        <where>
+            <if test="id != null">
+                AND OFFICE.ID = #{id}
+            </if>
+            <if test="keyword != null">
+                AND OFFICE.NAME LIKE #{keyword}
+            </if>
+            <if test="business_center_id != null">
+                AND OFFICE.BUSINESS_CENTER_ID = #{business_center_id}
+            </if>
+            <if test="zone_id != null">
+                AND OFFICE.ZONE_ID = #{zone_id}
+            </if>
+            <if test="metro_name != null">
+                AND OFFICE.METRO_NAME_LIST LIKE #{metro_name}
+            </if>
+            <if test="type_id != null">
+                AND OFFICE.TYPE_ID = #{type_id}
+            </if>
+            <if test="area_range_id != null">
+                AND OFFICE.AREA_RANGE_ID = #{area_range_id}
+            </if>
+            <if test="price_range_id != null">
+                AND OFFICE.PRICE_RANGE_ID = #{price_range_id}
+            </if>
+            <if test="decoration_id != null">
+                AND OFFICE.DECORATION_ID = #{decoration_id}
+            </if>
+        </where>
+        GROUP BY ID;
     </select>
 </mapper>

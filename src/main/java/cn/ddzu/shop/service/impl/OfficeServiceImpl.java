@@ -28,8 +28,33 @@ public class OfficeServiceImpl implements OfficeService {
             , Long type_id
             , Long area_range_id
             , Long price_range_id
-            , Long decoration_id) {
+            , Long decoration_id
+            , int page
+            , int step) {
         return officeMapperDao.selectOfficeList(id
+                , keyword
+                , business_center_id
+                , zone_id
+                , metro_name
+                , type_id
+                , area_range_id
+                , price_range_id
+                , decoration_id
+                , page < 0 ? 0 : page * step
+                , step);
+    }
+
+    @Override
+    public Integer getOfficeSize(Long id
+            , String keyword
+            , Long business_center_id
+            , Long zone_id
+            , String metro_name
+            , Long type_id
+            , Long area_range_id
+            , Long price_range_id
+            , Long decoration_id) {
+        return officeMapperDao.countOfficeList(id
                 , keyword
                 , business_center_id
                 , zone_id

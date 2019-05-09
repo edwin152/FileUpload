@@ -1,6 +1,5 @@
 package cn.ddzu.shop.controller;
 
-import cn.ddzu.shop.entity.District;
 import cn.ddzu.shop.entity.Metro;
 import cn.ddzu.shop.entity.Office;
 import cn.ddzu.shop.entity.Zone;
@@ -20,6 +19,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/search")
 public class SearchController {
+
+    private static final int PAGE_SIZE = 10;
 
     @Autowired
     private OfficeService officeService;
@@ -58,6 +59,11 @@ public class SearchController {
             business_center_id = Long.parseLong(request.getParameter("business_center_id"));
         }
 
+        Long district_id = null;
+        if (request.getParameter("district_id") != null) {
+            district_id = Long.parseLong(request.getParameter("district_id"));
+        }
+
         Long zone_id = null;
         if (request.getParameter("zone_id") != null) {
             zone_id = Long.parseLong(request.getParameter("zone_id"));
@@ -88,33 +94,78 @@ public class SearchController {
             decoration_id = Long.parseLong(request.getParameter("decoration_id"));
         }
 
+        int page = 0;
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
+
         Metro metro = basicService.getMetro(metro_id);
 
-        List<Office> officeList = officeService.getOfficeList(
-                id
+        Long sqlZoneId = zone_id != null && zone_id.equals(district_id) ? null : zone_id;
+        List<Office> officeList = officeService.getOfficeList(id
                 , keyword
                 , business_center_id
-                , zone_id
+                , sqlZoneId
+                , metro == null ? null : metro.getName()
+                , type_id
+                , area_range_id
+                , price_range_id
+                , decoration_id
+                , page
+                , PAGE_SIZE
+        );
+        Integer size = officeService.getOfficeSize(id
+                , keyword
+                , business_center_id
+                , sqlZoneId
                 , metro == null ? null : metro.getName()
                 , type_id
                 , area_range_id
                 , price_range_id
                 , decoration_id
         );
+        if (size == null) size = 0;
+
+        if (district_id == null) {
+            district_id = 1L;
+        }
 
         Zone zone = basicService.getZone(zone_id);
+        if (zone_id == null || zone == null || zone.getDistrict_id() == district_id) {
+            zone_id = district_id;
+        }
+
+        if (metro_id == null) {
+            metro_id = 1L;
+        }
+
+        if (type_id == null) {
+            type_id = 1L;
+        }
+
+        if (area_range_id == null) {
+            area_range_id = 1L;
+        }
+
+        if (price_range_id == null) {
+            price_range_id = 1L;
+        }
+
+        if (decoration_id == null) {
+            decoration_id = 1L;
+        }
 
         JsonObject json = new JsonObject();
         json.add("officeList", new Gson().toJsonTree(officeList));
-        json.addProperty("checkedDistrictId", zone.getDistrict_id());
+        json.addProperty("checkedDistrictId", district_id);
         json.addProperty("checkedZoneId", zone_id);
         json.addProperty("checkedMetroId", metro_id);
         json.addProperty("checkedTypeId", type_id);
         json.addProperty("checkedAreaRangeId", area_range_id);
         json.addProperty("checkedPriceRangeId", price_range_id);
         json.addProperty("checkedDecorationId", decoration_id);
-        json.addProperty("pageSize", 10);
-        json.addProperty("pageIndex", 0);
+        json.addProperty("pageNum", size / PAGE_SIZE + 1);
+        json.addProperty("pageIndex", page);
         response.getWriter().write(json.toString());
         response.getWriter().close();
     }
