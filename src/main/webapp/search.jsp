@@ -20,6 +20,7 @@
         let xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function () {
             if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                // console.log(xmlHttp.responseText);
                 data = JSON.parse(xmlHttp.responseText);
                 search();
             }
@@ -37,6 +38,7 @@
                 console.log(xmlHttp.responseText);
                 let officeData = JSON.parse(xmlHttp.responseText);
                 data.checkedDistrictId = officeData.checkedDistrictId;
+                data.checkedZoneId = officeData.checkedZoneId;
                 data.checkedMetroId = officeData.checkedMetroId;
                 data.checkedTypeId = officeData.checkedTypeId;
                 data.checkedAreaRangeId = officeData.checkedAreaRangeId;
@@ -72,8 +74,9 @@
         if (data.districtList !== undefined) {
             setListByName(data.districtList, 'districtList', data.checkedDistrictId);
         }
-        if (data.zoneList !== undefined) {
-            setListByName(data.zoneList, 'zoneList', data.checkedZoneId);
+        let zoneList = data.districtList[data.checkedDistrictId - 1].zoneList;
+        if (zoneList !== undefined) {
+            setListByName(zoneList, 'zoneList', data.checkedZoneId);
         }
         if (data.metroList !== undefined) {
             setListByName(data.metroList, 'metroList', data.checkedMetroId);
@@ -178,9 +181,16 @@
     <div class="win condition_box" id="condition_box">
         <div class="condition_line flexed_row">
             <div class="condition_title">
-                区域：
+                区：
             </div>
             <div class="option_box flexed_row" id="districtList">
+            </div>
+        </div>
+        <div class="condition_line flexed_row">
+            <div class="condition_title">
+                区域：
+            </div>
+            <div class="option_box flexed_row" id="zoneList">
             </div>
         </div>
         <div class="condition_line flexed_row">
