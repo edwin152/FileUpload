@@ -132,11 +132,13 @@ public class SearchController {
             }
 
             List<Float> areaList = new ArrayList<>();
+            float priceSum = 0;
             for (Office office : officeList) {
                 float area = office.getArea_value();
                 if (areaList.indexOf(area) == -1) {
                     areaList.add(area);
                 }
+                priceSum += office.getPrice();
             }
             Collections.sort(areaList);
             StringBuilder areaRange = new StringBuilder();
@@ -146,6 +148,8 @@ public class SearchController {
                         .append(areaList.get(areaList.size() - 1))
                         .append("m²");
             }
+            buildingObject.addProperty("office_num", officeList.size());
+            buildingObject.addProperty("price_average", priceSum / officeList.size());
             buildingObject.addProperty("area_range", areaRange.toString());
             buildingObject.add("area_list", new Gson().toJsonTree(areaList));
             buildingArray.add(buildingObject);

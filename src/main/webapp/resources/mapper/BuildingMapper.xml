@@ -43,19 +43,8 @@
         LEFT JOIN AREA_RANGE ON OFFICE.AREA_RANGE_ID = AREA_RANGE.ID
         LEFT JOIN PRICE_RANGE ON OFFICE.PRICE_RANGE_ID = PRICE_RANGE.ID
         LEFT JOIN DECORATION ON OFFICE.DECORATION_ID = DECORATION.ID
+        WHERE OFFICE.ID IN (SELECT MIN(ID) FROM OFFICE
         <where>
-            <if test="id != null">
-                AND BUILDING.ID = #{id}
-            </if>
-            <if test="keyword != null">
-                AND BUILDING.NAME LIKE #{keyword}
-            </if>
-            <if test="zone_id != null">
-                AND BUILDING.ZONE_ID = #{zone_id}
-            </if>
-            <if test="metro_name != null">
-                AND BUILDING.METRO_NAME_LIST LIKE #{metro_name}
-            </if>
             <if test="type_id != null">
                 AND OFFICE.TYPE_ID = #{type_id}
             </if>
@@ -69,6 +58,20 @@
                 AND OFFICE.DECORATION_ID = #{decoration_id}
             </if>
         </where>
+        GROUP BY OFFICE.BUILDING_ID
+        )
+        <if test="id != null">
+            AND BUILDING.ID = #{id}
+        </if>
+        <if test="keyword != null">
+            AND BUILDING.NAME LIKE #{keyword}
+        </if>
+        <if test="zone_id != null">
+            AND BUILDING.ZONE_ID = #{zone_id}
+        </if>
+        <if test="metro_name != null">
+            AND BUILDING.METRO_NAME_LIST LIKE #{metro_name}
+        </if>
         ORDER BY OFFICE.ID DESC
         <if test="step > 0">
             LIMIT #{start}, #{step};
@@ -76,21 +79,10 @@
     </select>
 
     <select id="countBuildingList" resultType="java.lang.Integer">
-        SELECT COUNT(*) FROM OFFICE
-        RIGHT JOIN BUILDING ON OFFICE.BUILDING_ID = BUILDING.ID
+        SELECT COUNT(*) FROM BUILDING
+        LEFT JOIN OFFICE ON BUILDING.ID = OFFICE.BUILDING_ID
+        WHERE OFFICE.ID IN (SELECT MIN(ID) FROM OFFICE
         <where>
-            <if test="id != null">
-                AND BUILDING.ID = #{id}
-            </if>
-            <if test="keyword != null">
-                AND BUILDING.NAME LIKE #{keyword}
-            </if>
-            <if test="zone_id != null">
-                AND BUILDING.ZONE_ID = #{zone_id}
-            </if>
-            <if test="metro_name != null">
-                AND BUILDING.METRO_NAME_LIST LIKE #{metro_name}
-            </if>
             <if test="type_id != null">
                 AND OFFICE.TYPE_ID = #{type_id}
             </if>
@@ -104,6 +96,21 @@
                 AND OFFICE.DECORATION_ID = #{decoration_id}
             </if>
         </where>
+        GROUP BY OFFICE.BUILDING_ID
+        )
+        <if test="id != null">
+            AND BUILDING.ID = #{id}
+        </if>
+        <if test="keyword != null">
+            AND BUILDING.NAME LIKE #{keyword}
+        </if>
+        <if test="zone_id != null">
+            AND BUILDING.ZONE_ID = #{zone_id}
+        </if>
+        <if test="metro_name != null">
+            AND BUILDING.METRO_NAME_LIST LIKE #{metro_name}
+        </if>
+        GROUP BY BUILDING.ID
         ;
     </select>
 </mapper>
