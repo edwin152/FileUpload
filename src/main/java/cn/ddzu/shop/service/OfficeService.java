@@ -29,14 +29,36 @@ public interface OfficeService {
      */
     int getOfficeSize(SearchBean searchBean);
 
+    /**
+     * 插入楼
+     *
+     * @param office 办公室信息
+     */
+    void addBuilding(Building office);
 
-    class SearchBean {
+    /**
+     * 按条件筛选楼
+     *
+     * @param searchBean 搜索模型
+     * @param page       当前页数 0开始
+     * @param step       每页数量
+     */
+    List<Building> getBuildingList(SearchBean searchBean, int page, int step);
+
+    /**
+     * 按条件筛选楼数量
+     *
+     * @param searchBean 搜索模型
+     */
+    int getBuildingSize(SearchBean searchBean);
+
+    class SearchBean implements Cloneable{
         // 办公室id
         private Long id;
         // 关键词
         private String keyword;
         // 商圈id
-        private Long business_center_id;
+        private Long building_id;
         // 区域id
         private Long zone_id;
         // 地铁名字
@@ -66,12 +88,12 @@ public interface OfficeService {
             this.keyword = keyword;
         }
 
-        public Long getBusiness_center_id() {
-            return business_center_id;
+        public Long getBuilding_id() {
+            return building_id;
         }
 
-        public void setBusiness_center_id(Long business_center_id) {
-            this.business_center_id = business_center_id;
+        public void setBuilding_id(Long building_id) {
+            this.building_id = building_id;
         }
 
         public Long getZone_id() {
@@ -139,6 +161,11 @@ public interface OfficeService {
                 decoration_id = null;
             }
             this.decoration_id = decoration_id;
+        }
+
+        @Override
+        public Object clone() throws CloneNotSupportedException {
+            return super.clone();
         }
     }
 }

@@ -215,4 +215,5 @@ input {
 
 .paging_item:hover {
     color: #FFBB33;
+    cursor: pointer;
 }

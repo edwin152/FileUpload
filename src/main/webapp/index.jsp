@@ -11,10 +11,10 @@
 <script>
 
     window.onload = function () {
-        for (var i = 0; i < 40; i++) {
-            addOffice();
+        for (let i = 0; i < 15; i++) {
+            addOffice(i + 1);
         }
-    }
+    };
 
     function getFilterList() {
         let xmlHttp = new XMLHttpRequest();
@@ -42,7 +42,23 @@
         xmlHttp.send();
     }
 
-    function addOffice() {
+    function addBuilding() {
+        let xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                document.getElementById("test").innerHTML = xmlHttp.responseText;
+            }
+        };
+        xmlHttp.charset = "utf-8";
+        xmlHttp.open("POST", "edit/addBuilding", true);
+        xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlHttp.send("name=Four Lock Center" +
+            "&zone_id=41" +
+            "&address=The Bond No.1" +
+            "&metro_list=[3]");
+    }
+
+    function addOffice(name) {
         let xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function () {
             if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
@@ -52,14 +68,12 @@
         xmlHttp.charset = "utf-8";
         xmlHttp.open("POST", "edit/addOffice", true);
         xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlHttp.send("name=edwin" +
-            "&zone_id=10" +
-            "&address=ZhongHuan No.1" +
-            "&metro_list=[3]" +
-            "&type_id=1" +
-            "&area_value=523" +
+        xmlHttp.send("name=" + name +
+            "&building_id=1" +
+            "&type_id=2" +
+            "&area_value=" + (name % 2 === 0 ? 450 : name * 100) +
             "&price=8" +
-            "&decoration_id=1");
+            "&decoration_id=2");
     }
 </script>
 

@@ -2,30 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!--suppress ALL -->
-<mapper namespace="cn.ddzu.shop.dao.OfficeMapperDao">
+<mapper namespace="cn.ddzu.shop.dao.BuildingMapperDao">
 
-    <insert id="insertOffice" parameterType="cn.ddzu.shop.entity.Office">
-        INSERT INTO OFFICE VALUES (
+    <insert id="insertBuilding" parameterType="cn.ddzu.shop.entity.Building">
+        INSERT INTO BUILDING VALUES (
             NULL
-            ,#{office.name}
-            ,#{office.building_id}
-            ,#{office.address}
-            ,#{office.type_id}
-            ,#{office.area_value}
-            ,#{office.area_range_id}
-            ,#{office.price}
-            ,#{office.price_range_id}
-            ,#{office.decoration_id}
-            ,#{office.img_list}
+            ,#{building.name}
+            ,#{building.zone_id}
+            ,#{building.address}
+            ,#{building.metro_name_list}
+            ,#{building.img_list}
         );
     </insert>
 
-    <select id="selectOfficeList" resultType="cn.ddzu.shop.entity.Office">
+    <select id="selectBuildingList" resultType="cn.ddzu.shop.entity.Building">
         SELECT
-        OFFICE.ID,
-        OFFICE.NAME,
-        OFFICE.BUILDING_ID,
-        OFFICE.ADDRESS,
+        BUILDING.ID ,
+        BUILDING.NAME,
+        BUILDING.ZONE_ID,
+        BUILDING.ADDRESS,
+        BUILDING.METRO_NAME_LIST,
+        BUILDING.IMG_LIST,
         OFFICE.TYPE_ID,
         OFFICE.AREA_VALUE,
         OFFICE.AREA_RANGE_ID,
@@ -38,8 +35,8 @@
         AREA_RANGE.NAME AS AREA_RANGE_NAME,
         PRICE_RANGE.NAME AS PRICE_RANGE_NAME,
         DECORATION.NAME AS DECORATION_NAME
-        FROM OFFICE
-        LEFT JOIN BUILDING ON OFFICE.BUILDING_ID = BUILDING.ID
+        FROM BUILDING
+        LEFT JOIN OFFICE ON BUILDING.ID = OFFICE.BUILDING_ID
         LEFT JOIN ZONE ON BUILDING.ZONE_ID = ZONE.ID
         LEFT JOIN DISTRICT ON ZONE.DISTRICT_ID = DISTRICT.ID
         LEFT JOIN TYPE ON OFFICE.TYPE_ID = TYPE.ID
@@ -48,13 +45,10 @@
         LEFT JOIN DECORATION ON OFFICE.DECORATION_ID = DECORATION.ID
         <where>
             <if test="id != null">
-                AND OFFICE.ID = #{id}
+                AND BUILDING.ID = #{id}
             </if>
             <if test="keyword != null">
-                AND OFFICE.NAME LIKE #{keyword}
-            </if>
-            <if test="building_id != null">
-                AND OFFICE.BUILDING_ID = #{building_id}
+                AND BUILDING.NAME LIKE #{keyword}
             </if>
             <if test="zone_id != null">
                 AND BUILDING.ZONE_ID = #{zone_id}
@@ -81,23 +75,21 @@
         </if>
     </select>
 
-    <select id="countOfficeList" resultType="java.lang.Integer">
+    <select id="countBuildingList" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM OFFICE
+        RIGHT JOIN BUILDING ON OFFICE.BUILDING_ID = BUILDING.ID
         <where>
             <if test="id != null">
-                AND OFFICE.ID = #{id}
+                AND BUILDING.ID = #{id}
             </if>
             <if test="keyword != null">
-                AND OFFICE.NAME LIKE #{keyword}
-            </if>
-            <if test="building_id != null">
-                AND OFFICE.BUILDING_ID = #{building_id}
+                AND BUILDING.NAME LIKE #{keyword}
             </if>
             <if test="zone_id != null">
-                AND OFFICE.ZONE_ID = #{zone_id}
+                AND BUILDING.ZONE_ID = #{zone_id}
             </if>
             <if test="metro_name != null">
-                AND OFFICE.METRO_NAME_LIST LIKE #{metro_name}
+                AND BUILDING.METRO_NAME_LIST LIKE #{metro_name}
             </if>
             <if test="type_id != null">
                 AND OFFICE.TYPE_ID = #{type_id}

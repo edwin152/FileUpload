@@ -1,5 +1,6 @@
 package cn.ddzu.shop.controller;
 
+import cn.ddzu.shop.entity.Building;
 import cn.ddzu.shop.entity.Metro;
 import cn.ddzu.shop.entity.Office;
 import cn.ddzu.shop.service.BasicService;
@@ -27,30 +28,21 @@ public class EditController {
     private OfficeService officeService;
 
     /**
-     * 新增办公室
+     * 新增楼
      * name 名字
-     * business_center_id 商圈id
      * zone_id 区域id
      * address 地址
      * metro_list 地铁集合[2,4,6]
-     * type_id 办公室类型id
-     * area_value 面积
-     * price 单平米价格
      * decoration_id 装修类型id
      */
-    @RequestMapping("/addOffice")
-    public void addOffice(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @RequestMapping("/addBuilding")
+    public void addBuilding(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
         String name = null;
         if (request.getParameter("name") != null) {
             name = request.getParameter("name");
-        }
-
-        Long business_center_id = null;
-        if (request.getParameter("business_center_id") != null) {
-            business_center_id = Long.parseLong(request.getParameter("business_center_id"));
         }
 
         Long zone_id = null;
@@ -68,6 +60,63 @@ public class EditController {
             String metro_list_str = request.getParameter("metro_list");
             metro_list = new Gson().fromJson(metro_list_str, new TypeToken<List<Long>>() {
             }.getType());
+        }
+
+        String img_list = null;
+        if (request.getParameter("img_list") != null) {
+            img_list = request.getParameter("img_list");
+        }
+
+        List<String> metro_name_list = new ArrayList<>();
+        for (Long id : metro_list) {
+            Metro metro = basicService.getMetro(id);
+            if (metro != null) {
+                metro_name_list.add(metro.getName());
+            }
+        }
+
+        Building building = new Building(name
+                , zone_id
+                , address
+                , new Gson().toJson(metro_name_list)
+                , img_list);
+
+        officeService.addBuilding(building);
+
+        JsonObject json = new JsonObject();
+        json.addProperty("resultCode", 1);
+        response.getWriter().write(json.toString());
+        response.getWriter().close();
+    }
+
+    /**
+     * 新增办公室
+     * name 名字
+     * building_id 商圈id
+     * address 地址
+     * type_id 办公室类型id
+     * area_value 面积
+     * price 单平米价格
+     * decoration_id 装修类型id
+     */
+    @RequestMapping("/addOffice")
+    public void addOffice(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+
+        String name = null;
+        if (request.getParameter("name") != null) {
+            name = request.getParameter("name");
+        }
+
+        Long building_id = null;
+        if (request.getParameter("building_id") != null) {
+            building_id = Long.parseLong(request.getParameter("building_id"));
+        }
+
+        String address = null;
+        if (request.getParameter("address") != null) {
+            address = request.getParameter("address");
         }
 
         Long type_id = null;
@@ -90,12 +139,9 @@ public class EditController {
             decoration_id = Long.parseLong(request.getParameter("decoration_id"));
         }
 
-        List<String> metro_name_list = new ArrayList<>();
-        for (Long id : metro_list) {
-            Metro metro = basicService.getMetro(id);
-            if (metro != null) {
-                metro_name_list.add(metro.getName());
-            }
+        String img_list = null;
+        if (request.getParameter("img_list") != null) {
+            img_list = request.getParameter("img_list");
         }
 
         long area_range_id;
@@ -137,16 +183,15 @@ public class EditController {
         }
 
         Office office = new Office(name
-                , business_center_id
-                , zone_id
+                , building_id
                 , address
-                , new Gson().toJson(metro_name_list)
                 , type_id
                 , area_value
                 , area_range_id
                 , price
                 , price_range_id
-                , decoration_id);
+                , decoration_id
+                , img_list);
 
         officeService.addOffice(office);
 

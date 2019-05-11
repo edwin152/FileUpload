@@ -4,20 +4,21 @@ public class Office {
 
     private long id;
     private String name;
-    private Long business_center_id;
-    private Long zone_id;
+    private Long building_id;
     private String address;
-    private String metro_name_list;
     private Long type_id;
     private Float area_value;
     private Long area_range_id;
     private Float price;
     private Long price_range_id;
     private Long decoration_id;
+    private String img_list;
 
-    private String business_center_name;
+    private String building_name;
+    private Long zone_id;
     private String district_name;
     private String zone_name;
+    private String metro_name_list;
     private String type_name;
     private String area_range_name;
     private String price_range_name;
@@ -26,18 +27,17 @@ public class Office {
     public Office() {
     }
 
-    public Office(String name, Long business_center_id, Long zone_id, String address, String metro_name_list, Long type_id, Float area_value, Long area_range_id, Float price, Long price_range_id, Long decoration_id) {
+    public Office(String name, Long building_id, String address, Long type_id, Float area_value, Long area_range_id, Float price, Long price_range_id, Long decoration_id, String img_list) {
         this.name = name;
-        this.business_center_id = business_center_id;
-        this.zone_id = zone_id;
+        this.building_id = building_id;
         this.address = address;
-        this.metro_name_list = metro_name_list;
         this.type_id = type_id;
         this.area_value = area_value;
         this.area_range_id = area_range_id;
         this.price = price;
         this.price_range_id = price_range_id;
         this.decoration_id = decoration_id;
+        this.img_list = img_list;
     }
 
     public long getId() {
@@ -56,12 +56,12 @@ public class Office {
         this.name = name;
     }
 
-    public Long getBusiness_center_id() {
-        return business_center_id;
+    public Long getBuilding_id() {
+        return building_id;
     }
 
-    public void setBusiness_center_id(Long business_center_id) {
-        this.business_center_id = business_center_id;
+    public void setBuilding_id(Long building_id) {
+        this.building_id = building_id;
     }
 
     public Long getZone_id() {
@@ -136,12 +136,20 @@ public class Office {
         this.decoration_id = decoration_id;
     }
 
-    public String getBusiness_center_name() {
-        return business_center_name;
+    public String getImg_list() {
+        return img_list;
     }
 
-    public void setBusiness_center_name(String business_center_name) {
-        this.business_center_name = business_center_name;
+    public void setImg_list(String img_list) {
+        this.img_list = img_list;
+    }
+
+    public String getBuilding_name() {
+        return building_name;
+    }
+
+    public void setBuilding_name(String building_name) {
+        this.building_name = building_name;
     }
 
     public String getDistrict_name() {

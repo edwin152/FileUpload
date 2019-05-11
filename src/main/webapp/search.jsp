@@ -1,3 +1,5 @@
+<%--suppress HtmlFormInputWithoutLabel --%>
+<%--suppress JSJQueryEfficiency --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -12,7 +14,8 @@
 
 <script type="text/javascript">
     let data;
-    let pageIndex;
+    let pageIndex = 0;
+    let pageNum = 0;
 
     window.onload = function () {
         getFilterList();
@@ -33,7 +36,7 @@
         xmlHttp.send();
     }
 
-    function search(id, keyword, business_center_id, page) {
+    function search(id, keyword, building_id, page) {
         let xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function () {
             if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
@@ -48,28 +51,21 @@
                 data.checkedDecorationId = officeData.checkedDecorationId;
                 setFilterList();
                 pageIndex = officeData.pageIndex;
-                if (officeData.pageNum == officeData.pageIndex + 1) {
-                    $("#next_page").hide();
-                }
-                setDataList(officeData.officeList);
+                pageNum = officeData.pageNum;
+                setDataList(officeData.buildingList);
             }
         };
         xmlHttp.charset = "utf-8";
-        xmlHttp.open("POST", "search/offices", true);
+        xmlHttp.open("POST", "search/buildings", true);
         xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         if (page === undefined || page === null) {
             page = 0;
         }
         xmlHttp.send("id=" + id === undefined ? "null" : id +
             "&keyword=" + keyword === undefined ? "null" : keyword +
-            "&business_center_id=" + business_center_id === undefined ? "null" : business_center_id +
             "&district_id=" + data.checkedDistrictId +
             "&zone_id=" + data.checkedZoneId +
             "&metro_id=" + data.checkedMetroId +
-            "&type_id=" + data.checkedTypeId +
-            "&area_range_id=" + data.checkedAreaRangeId +
-            "&price_range_id=" + data.checkedPriceRangeId +
-            "&decoration_id=" + data.checkedDecorationId +
             "&page=" + page
         );
     }
@@ -104,10 +100,7 @@
 
     function setListByName(list, name, checkedId) {
         let conditionBox = document.getElementById(name);
-        let children = conditionBox.childNodes;
-        for (let i = children.length - 1; i >= 0; i--) {
-            conditionBox.removeChild(children[i]);
-        }
+        conditionBox.innerHTML = "";
         for (let i = 0; i < list.length; i++) {
             let optionItem = document.createElement("span");
             if (list[i].id === checkedId) {
@@ -148,21 +141,27 @@
     }
 
     function setDataList(data) {
-        if (data.length < 0) {
-            $("#error_not_text").show();
-            return;
-        }
-        $("#error_not_text").hide();
         let dataListBox = document.getElementById("data_list_box");
-        if (pageIndex && pageIndex === 0) {
+        if (pageIndex === 0) {
             dataListBox.innerHTML = "";
         }
+        if (pageNum > pageIndex + 1) {
+            $("#next_page").show();
+        } else {
+            $("#next_page").hide();
+        }
+        if (pageIndex === 0 && data.length === 0) {
+            $("#error_not_text").show();
+        } else {
+            $("#error_not_text").hide();
+        }
+
         for (let i = 0; i < data.length; i++) {
             let conditionBox = document.createElement("div");
             conditionBox.className = "data_item_box flexed_row";
             let imgLeft = document.createElement("img");
             imgLeft.className = 'item_image';
-            imgLeft.setAttribute("src", data[i].url)
+            imgLeft.setAttribute("src", "https://www.tuotuozu.com/public/upload/20180325/cover/a572a2428ffc977a8d8748546986c7be.jpg");
             conditionBox.appendChild(imgLeft);
             let dataInfoBox = document.createElement("div");
             dataInfoBox.className = 'data_info_box flexed_column';
@@ -170,27 +169,25 @@
 
             let itemName = document.createElement("div");
             itemName.className = 'item_name';
-            itemName.innerHTML = data[i].name // -----------------------
+            itemName.innerHTML = data[i].name;
             dataInfoBox.appendChild(itemName);
 
             let itemAddress = document.createElement("div");
             itemAddress.className = 'item_address item_margin';
             dataInfoBox.appendChild(itemAddress);
 
-            let itemAddressContent = "<span class=\"item_title\">地址：</span>[ <a class=\"hover_de\">" +
+            itemAddress.innerHTML = "<span class=\"item_title\">地址：</span>[ <a class=\"hover_de\">" +
                 data[i].district_name + // -----------------------
                 "</a> ] - [ <a class=\"hover_de\">" +
                 data[i].zone_name + // -----------------------
                 "</a> ] |   " +
-                data[i].address; // -----------------------
-            itemAddress.innerHTML = itemAddressContent;
+                data[i].address;
 
             let itemSize = document.createElement("div");
             itemSize.className = 'item_size item_margin';
             dataInfoBox.appendChild(itemSize);
 
-            let itemSizeContent = "<span class=\"item_title\">面积：</span>" + data[i].area_range_name + "m²"; // -----------------------
-            itemSize.innerHTML = itemSizeContent;
+            itemSize.innerHTML = "<span class=\"item_title\">面积：</span>" + data[i].area_range_name + "m²";
 
             let itemPostion = document.createElement("div");
             itemPostion.className = 'item_position item_margin';
@@ -251,7 +248,7 @@
 </div>
 <div class="bg_white">
     <div class="win top_box flexed_row">
-        <img src="" class="top_logo"/>
+        <img src="" class="top_logo" alt=""/>
         <a href="" class="black_a logo_right">上海写字楼出租</a>
         <div class="top_search_box flexed_row">
             <input type="text" class="top_search" name="search" id="top_search" value=""
@@ -325,15 +322,15 @@
         </div>
 
         <div class="paging" id="next_page">
-            <div class="paging_item" onclick="nextPage()">
+            <span class="paging_item" onclick="nextPage()">
                 下一页
-            </div>
+            </span>
         </div>
     </div>
     <div class="content_right bg_white">
         <div class="contact_way">
             <div class="contact_info">
-                <img src="" class="contact_img"/>
+                <img src="" class="contact_img" alt=""/>
                 <div class="service_box">
                     <span class="service_name">妥妥租</span>上海写字楼专属顾问
                 </div>
@@ -354,7 +351,7 @@
                 </div>
             </div>
             <div class="content_right_title">
-                <img src="" class="content_right_title_img"/>热门楼盘
+                <img src="" class="content_right_title_img" alt=""/>热门楼盘
             </div>
         </div>
     </div>
