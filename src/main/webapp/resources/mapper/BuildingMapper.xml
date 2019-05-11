@@ -15,9 +15,25 @@
         );
     </insert>
 
+    <select id="selectBuildingById" parameterType="java.lang.Long" resultType="cn.ddzu.shop.entity.Building">
+        SELECT
+        BUILDING.ID,
+        BUILDING.NAME,
+        BUILDING.ZONE_ID,
+        BUILDING.ADDRESS,
+        BUILDING.METRO_NAME_LIST,
+        BUILDING.IMG_LIST,
+        DISTRICT.NAME AS DISTRICT_NAME,
+        ZONE.NAME AS ZONE_NAME,
+        FROM BUILDING
+        LEFT JOIN ZONE ON BUILDING.ZONE_ID = ZONE.ID
+        LEFT JOIN DISTRICT ON ZONE.DISTRICT_ID = DISTRICT.ID
+        WHERE BUILDING.ID = #{id}
+    </select>
+
     <select id="selectBuildingList" resultType="cn.ddzu.shop.entity.Building">
         SELECT
-        BUILDING.ID ,
+        BUILDING.ID,
         BUILDING.NAME,
         BUILDING.ZONE_ID,
         BUILDING.ADDRESS,
@@ -29,8 +45,8 @@
         OFFICE.PRICE,
         OFFICE.PRICE_RANGE_ID,
         OFFICE.DECORATION_ID,
-        ZONE.NAME AS ZONE_NAME,
         DISTRICT.NAME AS DISTRICT_NAME,
+        ZONE.NAME AS ZONE_NAME,
         TYPE.NAME AS TYPE_NAME,
         AREA_RANGE.NAME AS AREA_RANGE_NAME,
         PRICE_RANGE.NAME AS PRICE_RANGE_NAME,
@@ -60,9 +76,6 @@
         </where>
         GROUP BY OFFICE.BUILDING_ID
         )
-        <if test="id != null">
-            AND BUILDING.ID = #{id}
-        </if>
         <if test="keyword != null">
             AND BUILDING.NAME LIKE #{keyword}
         </if>
@@ -98,9 +111,6 @@
         </where>
         GROUP BY OFFICE.BUILDING_ID
         )
-        <if test="id != null">
-            AND BUILDING.ID = #{id}
-        </if>
         <if test="keyword != null">
             AND BUILDING.NAME LIKE #{keyword}
         </if>

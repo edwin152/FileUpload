@@ -14,6 +14,11 @@ public interface OfficeService {
     void addOffice(Office office);
 
     /**
+     * 获得办公室
+     */
+    Office getOffice(Long id);
+
+    /**
      * 按条件筛选办公室
      *
      * @param searchBean 搜索模型
@@ -37,6 +42,11 @@ public interface OfficeService {
     void addBuilding(Building office);
 
     /**
+     * 获得楼
+     */
+    Building getBuilding(Long id);
+
+    /**
      * 按条件筛选楼
      *
      * @param searchBean 搜索模型
@@ -53,8 +63,6 @@ public interface OfficeService {
     int getBuildingSize(SearchBean searchBean);
 
     class SearchBean implements Cloneable{
-        // 办公室id
-        private Long id;
         // 关键词
         private String keyword;
         // 商圈id
@@ -71,14 +79,6 @@ public interface OfficeService {
         private Long price_range_id;
         // 装修类型id
         private Long decoration_id;
-
-        public Long getId() {
-            return id;
-        }
-
-        public void setId(Long id) {
-            this.id = id;
-        }
 
         public String getKeyword() {
             return keyword;

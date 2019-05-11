@@ -33,8 +33,7 @@ public class SearchController {
     private BasicService basicService;
 
     /**
-     * 查询楼
-     * id 楼id
+     * 搜索楼
      * keyword 关键词
      * zone_id 区域id
      * metro_id 地铁id
@@ -47,11 +46,6 @@ public class SearchController {
     public void getBuildingList(HttpServletRequest request, HttpServletResponse response) throws IOException, CloneNotSupportedException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
-
-        Long id = null;
-        if (request.getParameter("id") != null) {
-            id = Long.parseLong(request.getParameter("id"));
-        }
 
         String keyword = null;
         if (request.getParameter("keyword") != null) {
@@ -105,7 +99,6 @@ public class SearchController {
         }
 
         OfficeService.SearchBean searchBean = new OfficeService.SearchBean();
-        searchBean.setId(id);
         searchBean.setKeyword(keyword);
         searchBean.setZone_id(zone_id);
         searchBean.setMetro_name(metro);
@@ -173,7 +166,7 @@ public class SearchController {
     }
 
     /**
-     * 查询办公室
+     * 搜索办公室
      * id 办公室id
      * keyword 关键词
      * building_id 商圈id
@@ -185,14 +178,9 @@ public class SearchController {
      * decoration_id 装修类型id
      */
     @RequestMapping("/offices")
-    public void getOfficeList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void getOffice(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
-
-        Long id = null;
-        if (request.getParameter("id") != null) {
-            id = Long.parseLong(request.getParameter("id"));
-        }
 
         String keyword = null;
         if (request.getParameter("keyword") != null) {
@@ -251,7 +239,6 @@ public class SearchController {
         }
 
         OfficeService.SearchBean searchBean = new OfficeService.SearchBean();
-        searchBean.setId(id);
         searchBean.setKeyword(keyword);
         searchBean.setBuilding_id(building_id);
         searchBean.setZone_id(zone_id);
@@ -261,10 +248,12 @@ public class SearchController {
         searchBean.setPrice_range_id(price_range_id);
         searchBean.setDecoration_id(decoration_id);
 
-        List<Office> officeList = officeService.getOfficeList(searchBean, page, PAGE_SIZE);
-        int size = officeService.getOfficeSize(searchBean);
-
         JsonObject json = new JsonObject();
+
+        Building building = officeService.getBuilding(building_id);
+        json.add("building", new Gson().toJsonTree(building));
+
+        List<Office> officeList = officeService.getOfficeList(searchBean, page, PAGE_SIZE);
         json.add("officeList", new Gson().toJsonTree(officeList));
         json.addProperty("checkedDistrictId", district_id);
         json.addProperty("checkedZoneId", zone_id);
@@ -273,8 +262,37 @@ public class SearchController {
         json.addProperty("checkedAreaRangeId", area_range_id);
         json.addProperty("checkedPriceRangeId", price_range_id);
         json.addProperty("checkedDecorationId", decoration_id);
+
+        int size = officeService.getOfficeSize(searchBean);
         json.addProperty("pageNum", size / PAGE_SIZE);
         json.addProperty("pageIndex", page);
+        response.getWriter().write(json.toString());
+        response.getWriter().close();
+    }
+
+    /**
+     * 查询办公室
+     * id 办公室id
+     */
+    @RequestMapping("/office")
+    public void getOfficeList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+
+        Long id = null;
+        if (request.getParameter("id") != null) {
+            id = Long.parseLong(request.getParameter("id"));
+        }
+
+        JsonObject json = new JsonObject();
+
+        Office office = officeService.getOffice(id);
+        if (office != null) {
+            Building building = officeService.getBuilding(office.getBuilding_id());
+            json.add("building", new Gson().toJsonTree(building));
+            json.add("office", new Gson().toJsonTree(office));
+        }
+
         response.getWriter().write(json.toString());
         response.getWriter().close();
     }

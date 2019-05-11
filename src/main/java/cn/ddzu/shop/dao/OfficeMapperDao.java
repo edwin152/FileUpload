@@ -17,22 +17,25 @@ public interface OfficeMapperDao {
     void insertOffice(@Param("office") Office office);
 
     /**
+     * 按id查询办公室
+     */
+    Office selectOfficeById(@Param("id") Long id);
+
+    /**
      * 按条件筛选办公室
      *
-     * @param id                 办公室id
-     * @param keyword            关键词
-     * @param building_id 商圈id
-     * @param zone_id            区域id
-     * @param metro_name         地铁名字
-     * @param type_id            办公室类型id
-     * @param area_range_id      面积区间id
-     * @param price_range_id     价格区间id
-     * @param decoration_id      装修类型id
-     * @param start              开始位置
-     * @param step               请求总量
+     * @param keyword        关键词
+     * @param building_id    商圈id
+     * @param zone_id        区域id
+     * @param metro_name     地铁名字
+     * @param type_id        办公室类型id
+     * @param area_range_id  面积区间id
+     * @param price_range_id 价格区间id
+     * @param decoration_id  装修类型id
+     * @param start          开始位置
+     * @param step           请求总量
      */
-    List<Office> selectOfficeList(@Param("id") Long id
-            , @Param("keyword") String keyword
+    List<Office> selectOfficeList(@Param("keyword") String keyword
             , @Param("building_id") Long building_id
             , @Param("zone_id") Long zone_id
             , @Param("metro_name") String metro_name
@@ -46,18 +49,16 @@ public interface OfficeMapperDao {
     /**
      * 按条件筛选办公室数量
      *
-     * @param id                 办公室id
-     * @param keyword            关键词
-     * @param building_id 商圈id
-     * @param zone_id            区域id
-     * @param metro_name         地铁名字
-     * @param type_id            办公室类型id
-     * @param area_range_id      面积区间id
-     * @param price_range_id     价格区间id
-     * @param decoration_id      装修类型id
+     * @param keyword        关键词
+     * @param building_id    商圈id
+     * @param zone_id        区域id
+     * @param metro_name     地铁名字
+     * @param type_id        办公室类型id
+     * @param area_range_id  面积区间id
+     * @param price_range_id 价格区间id
+     * @param decoration_id  装修类型id
      */
-    Integer countOfficeList(@Param("id") Long id
-            , @Param("keyword") String keyword
+    Integer countOfficeList(@Param("keyword") String keyword
             , @Param("building_id") Long building_id
             , @Param("zone_id") Long zone_id
             , @Param("metro_name") String metro_name

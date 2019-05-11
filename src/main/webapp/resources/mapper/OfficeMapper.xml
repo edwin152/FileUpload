@@ -20,6 +20,30 @@
         );
     </insert>
 
+    <select id="selectOfficeById" parameterType="java.lang.Long" resultType="cn.ddzu.shop.entity.Office">
+        SELECT
+        OFFICE.ID,
+        OFFICE.NAME,
+        OFFICE.BUILDING_ID,
+        OFFICE.ADDRESS,
+        OFFICE.TYPE_ID,
+        OFFICE.AREA_VALUE,
+        OFFICE.AREA_RANGE_ID,
+        OFFICE.PRICE,
+        OFFICE.PRICE_RANGE_ID,
+        OFFICE.DECORATION_ID,
+        TYPE.NAME AS TYPE_NAME,
+        AREA_RANGE.NAME AS AREA_RANGE_NAME,
+        PRICE_RANGE.NAME AS PRICE_RANGE_NAME,
+        DECORATION.NAME AS DECORATION_NAME
+        FROM OFFICE
+        LEFT JOIN TYPE ON OFFICE.TYPE_ID = TYPE.ID
+        LEFT JOIN AREA_RANGE ON OFFICE.AREA_RANGE_ID = AREA_RANGE.ID
+        LEFT JOIN PRICE_RANGE ON OFFICE.PRICE_RANGE_ID = PRICE_RANGE.ID
+        LEFT JOIN DECORATION ON OFFICE.DECORATION_ID = DECORATION.ID
+        WHERE OFFICE.ID = #{id};
+    </select>
+
     <select id="selectOfficeList" resultType="cn.ddzu.shop.entity.Office">
         SELECT
         OFFICE.ID,
@@ -47,9 +71,6 @@
         LEFT JOIN PRICE_RANGE ON OFFICE.PRICE_RANGE_ID = PRICE_RANGE.ID
         LEFT JOIN DECORATION ON OFFICE.DECORATION_ID = DECORATION.ID
         <where>
-            <if test="id != null">
-                AND OFFICE.ID = #{id}
-            </if>
             <if test="keyword != null">
                 AND OFFICE.NAME LIKE #{keyword}
             </if>
@@ -84,9 +105,6 @@
     <select id="countOfficeList" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM OFFICE
         <where>
-            <if test="id != null">
-                AND OFFICE.ID = #{id}
-            </if>
             <if test="keyword != null">
                 AND OFFICE.NAME LIKE #{keyword}
             </if>

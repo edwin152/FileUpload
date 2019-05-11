@@ -24,9 +24,14 @@ public class OfficeServiceImpl implements OfficeService {
     }
 
     @Override
+    public Office getOffice(Long id) {
+        if (id == null) return null;
+        return officeMapperDao.selectOfficeById(id);
+    }
+
+    @Override
     public List<Office> getOfficeList(SearchBean searchBean, int page, int step) {
-        return officeMapperDao.selectOfficeList(searchBean.getId()
-                , searchBean.getKeyword()
+        return officeMapperDao.selectOfficeList(searchBean.getKeyword()
                 , searchBean.getBuilding_id()
                 , searchBean.getZone_id()
                 , searchBean.getMetro_name()
@@ -40,8 +45,7 @@ public class OfficeServiceImpl implements OfficeService {
 
     @Override
     public int getOfficeSize(SearchBean searchBean) {
-        Integer size = officeMapperDao.countOfficeList(searchBean.getId()
-                , searchBean.getKeyword()
+        Integer size = officeMapperDao.countOfficeList(searchBean.getKeyword()
                 , searchBean.getBuilding_id()
                 , searchBean.getZone_id()
                 , searchBean.getMetro_name()
@@ -58,9 +62,14 @@ public class OfficeServiceImpl implements OfficeService {
     }
 
     @Override
+    public Building getBuilding(Long id) {
+        if (id == null) return null;
+        return buildingMapperDao.selectBuildingById(id);
+    }
+
+    @Override
     public List<Building> getBuildingList(SearchBean searchBean, int page, int step) {
-        return buildingMapperDao.selectBuildingList(searchBean.getId()
-                , searchBean.getKeyword()
+        return buildingMapperDao.selectBuildingList(searchBean.getKeyword()
                 , searchBean.getZone_id()
                 , searchBean.getMetro_name()
                 , searchBean.getType_id()
@@ -73,8 +82,7 @@ public class OfficeServiceImpl implements OfficeService {
 
     @Override
     public int getBuildingSize(SearchBean searchBean) {
-        Integer size = buildingMapperDao.countBuildingList(searchBean.getId()
-                , searchBean.getKeyword()
+        Integer size = buildingMapperDao.countBuildingList(searchBean.getKeyword()
                 , searchBean.getZone_id()
                 , searchBean.getMetro_name()
                 , searchBean.getType_id()
