@@ -11,6 +11,7 @@
 <script>
 
     window.onload = function () {
+        addBuilding();
         for (let i = 0; i < 15; i++) {
             addOffice(i + 1);
         }
@@ -55,7 +56,8 @@
         xmlHttp.send("name=Four Lock Center" +
             "&zone_id=41" +
             "&address=The Bond No.1" +
-            "&metro_list=[3]");
+            "&metro_list=[3]" +
+            "&img_list=[\"https://www.tuotuozu.com/public/upload/20180325/cover/a572a2428ffc977a8d8748546986c7be.jpg\"]");
     }
 
     function addOffice(name) {
@@ -73,7 +75,8 @@
             "&type_id=2" +
             "&area_value=" + (name % 2 === 0 ? 450 : name * 100) +
             "&price=8" +
-            "&decoration_id=2");
+            "&decoration_id=2" +
+            "&img_list=[\"https://www.tuotuozu.com/public/upload/20180325/cover/a572a2428ffc977a8d8748546986c7be.jpg\"]");
     }
 </script>
 

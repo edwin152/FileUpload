@@ -157,58 +157,56 @@
         }
 
         for (let i = 0; i < data.length; i++) {
+            let item = data[i];
+
             let conditionBox = document.createElement("div");
             conditionBox.className = "data_item_box flexed_row";
             let imgLeft = document.createElement("img");
             imgLeft.className = 'item_image';
-            imgLeft.setAttribute("src", "https://www.tuotuozu.com/public/upload/20180325/cover/a572a2428ffc977a8d8748546986c7be.jpg");
+            imgLeft.setAttribute("src", item.img_list[0]);
             conditionBox.appendChild(imgLeft);
+
             let dataInfoBox = document.createElement("div");
             dataInfoBox.className = 'data_info_box flexed_column';
             conditionBox.appendChild(dataInfoBox);
 
             let itemName = document.createElement("div");
             itemName.className = 'item_name';
-            itemName.innerHTML = data[i].name;
+            itemName.innerHTML = item.name;
             dataInfoBox.appendChild(itemName);
 
             let itemAddress = document.createElement("div");
             itemAddress.className = 'item_address item_margin';
-            dataInfoBox.appendChild(itemAddress);
-
             itemAddress.innerHTML = "<span class=\"item_title\">地址：</span>[ <a class=\"hover_de\">" +
-                data[i].district_name + // -----------------------
-                "</a> ] - [ <a class=\"hover_de\">" +
-                data[i].zone_name + // -----------------------
-                "</a> ] |   " +
-                data[i].address;
+                item.district_name + "</a> ] - [ <a class=\"hover_de\">" + item.zone_name + "</a> ] |   " + item.address;
+            dataInfoBox.appendChild(itemAddress);
 
             let itemSize = document.createElement("div");
             itemSize.className = 'item_size item_margin';
             dataInfoBox.appendChild(itemSize);
 
-            itemSize.innerHTML = "<span class=\"item_title\">面积：</span>" + data[i].area_range;
+            itemSize.innerHTML = "<span class=\"item_title\">面积：</span>" + item.area_range;
 
             let itemPosition = document.createElement("div");
             itemPosition.className = 'item_position item_margin';
-            itemPosition.innerHTML = "共有" + data[i].office_num + "个房源"; // -----------------------
+            itemPosition.innerHTML = "共有" + item.office_num + "个房源"; // -----------------------
             dataInfoBox.appendChild(itemPosition);
 
             let itemSizeBtnBox = document.createElement("div");
             itemSizeBtnBox.className = 'item_size_btn_box flexed_row item_margin';
             dataInfoBox.appendChild(itemSizeBtnBox);
 
-            for (let j = 0; j < data[i].area_list.length && j < 4; j++) { // -----------------------
+            for (let j = 0; j < item.area_list.length && j < 4; j++) { // -----------------------
                 let itemSizeBtn = document.createElement("div");
                 itemSizeBtn.className = 'item_size_btn hover_de';
-                itemSizeBtn.innerHTML = data[i].area_list[j] + "m²"; // -----------------------
+                itemSizeBtn.innerHTML = item.area_list[j] + "m²"; // -----------------------
                 itemSizeBtnBox.appendChild(itemSizeBtn);
             }
 
             let itemPrice = document.createElement("div");
             itemPrice.className = 'item_price';
             itemPrice.innerHTML = "<span class=\"item_price_num\">" +
-                data[i].price_average + // -----------------------
+                item.price_average + // -----------------------
                 "</span>元/m²/天";
             conditionBox.appendChild(itemPrice);
             dataListBox.appendChild(conditionBox);

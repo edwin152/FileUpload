@@ -119,7 +119,7 @@ public class SearchController {
         JsonArray buildingArray = new JsonArray();
         for (Building building : buildingList) {
             String img_list = building.getImg_list();
-            List<String> imgList = new Gson().fromJson(img_list, new TypeToken<String>() {
+            List<String> imgList = new Gson().fromJson(img_list, new TypeToken<List<String>>() {
             }.getType());
             JsonObject buildingObject = new Gson().toJsonTree(building).getAsJsonObject();
             buildingObject.add("img_list", new Gson().toJsonTree(imgList));
