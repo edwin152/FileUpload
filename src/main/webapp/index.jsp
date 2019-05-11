@@ -79,7 +79,7 @@
 
 <body>
 <div class="search_box_main">
-    <img src="https://images.diandianzu.com/Public/Home/v5/images/public/nav_logo.png" class="search_image"/>
+    <img src="https://images.diandianzu.com/Public/Home/v5/images/public/nav_logo.png" class="search_image" alt=""/>
     <div class="top_search_box flexed_row">
         <input type="text" class="top_search" name="search" id="top_search" value="" placeholder="输入您要查找的楼盘或者区域商圈名称"/>
         <input class="top_search_btn" type="submit" value="搜索"/>
