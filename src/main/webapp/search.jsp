@@ -160,6 +160,9 @@
             let item = data[i];
 
             let conditionBox = document.createElement("div");
+
+            conditionBox.setAttribute("onclick", "openDetail(" + item.id + ")");
+
             conditionBox.className = "data_item_box flexed_row";
             let imgLeft = document.createElement("img");
             imgLeft.className = 'item_image';
@@ -215,6 +218,10 @@
 
     function nextPage() {
         search(null, null, null, pageIndex + 1);
+    }
+
+    function openDetail(id){
+        window.open("detail.html?id=" + id ,"_blank");
     }
 </script>
 

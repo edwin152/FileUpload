@@ -12,6 +12,27 @@
 </head>
 
 <script type="text/javascript">
+    window.onload = function () {
+        let parmas = window.location.href.split('?')[1];
+        let id = parmas.split("=")[1];
+        getOffice(id)
+    };
+
+    function getOffice(id) {
+        let xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                console.log(xmlHttp.responseText);
+                let data = JSON.parse(xmlHttp.responseText);
+                setDataList(data.officeList);
+            }
+        };
+        xmlHttp.charset = "utf-8";
+        xmlHttp.open("POST", "search/offices", true);
+        xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlHttp.send("building_id=" + id === undefined ? "null" : id);
+    }
+
     $(function () {
         new Swiper('#swiper_top_info', {
             loop: true, //循环 最后面一个往后面滑动会滑到第一个
@@ -37,37 +58,39 @@
      * @param {Object} data
      */
     function setDataList(data) {
-        var contentBox = document.getElementById("data_item_box");
-        var trView = document.createElement("tr");
-        contentBox.appendChild(trView);
-        var tdImage = document.createElement("td");
-        trView.appendChild(tdImage)
+        let contentBox = document.getElementById("data_item_box");
+        for (let i = 0; i < data.length; i++) {
+            let trView = document.createElement("tr");
+            contentBox.appendChild(trView);
+            let tdImage = document.createElement("td");
+            trView.appendChild(tdImage);
 
-        // 图片
-        var imageView = document.createElement("img");
-        imageView.className = "table_item_image";
-        imageView.setAttribute("src", "");
-        tdImage.appendChild(imageView);
+            // 图片
+            let imageView = document.createElement("img");
+            imageView.className = "table_item_image";
+            imageView.setAttribute("src", "");
+            tdImage.appendChild(imageView);
 
-        // 名称
-        var tdName = document.createElement("td");
-        tdName.innerHTML = ""
-        trView.appendChild(tdImage)
+            // 名称
+            let tdName = document.createElement("td");
+            tdName.innerHTML = data[i].decoration_name;
+            trView.appendChild(tdName);
 
-        // 面积
-        var tdName = document.createElement("td");
-        tdName.innerHTML = ""
-        trView.appendChild(tdImage)
+            // 面积
+            let areaName = document.createElement("td");
+            areaName.innerHTML = data[i].area_range_name;
+            trView.appendChild(areaName);
 
-        // 单价
-        var tdName = document.createElement("td");
-        tdName.innerHTML = ""
-        trView.appendChild(tdImage)
+            // 单价
+            let priceName = document.createElement("td");
+            priceName.innerHTML = data[i].price_range_name;
+            trView.appendChild(priceName);
 
-        // 总价
-        var tdName = document.createElement("td");
-        tdName.innerHTML = ""
-        trView.appendChild(tdImage)
+            // 总价
+            let areaValue = document.createElement("td");
+            areaValue.innerHTML = data[i].area_value;
+            trView.appendChild(areaValue);
+        }
     }
 
     /**
