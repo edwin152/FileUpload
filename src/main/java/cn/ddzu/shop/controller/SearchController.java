@@ -167,7 +167,6 @@ public class SearchController {
 
     /**
      * 搜索办公室
-     * id 办公室id
      * keyword 关键词
      * building_id 商圈id
      * zone_id 区域id
