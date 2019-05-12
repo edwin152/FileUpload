@@ -26,6 +26,7 @@
                 let data = JSON.parse(xmlHttp.responseText);
                 setDataList(data.officeList);
                 setTopInfo(data.building);
+                setBottomInfo(data.building);
             }
         };
         xmlHttp.charset = "utf-8";
@@ -50,7 +51,7 @@
      * @param {Object} data 数据
      */
     function setTopInfo(data) {
-        document.getElementById("deteil_info_name").innerHTML = data.name;
+        document.getElementById("detail_info_name").innerHTML = data.name;
         let imgBox = document.getElementById("top_image_list");
         // TODO 数据为字符串，如果变为数组，这里改动
         let imageData = JSON.parse(data.img_list);
@@ -173,7 +174,7 @@
             <div class="swiper_position swiper_top"></div>
         </div>
         <div class="detail_info_box flexed_column">
-            <div class="deteil_info_name" id="deteil_info_name">
+            <div class="detail_info_name" id="detail_info_name">
             </div>
             <div class="detail_info_price_box">
                 <span class="detail_info_price" id="detail_info_price">2.8-3.3</span>元/m²/天
