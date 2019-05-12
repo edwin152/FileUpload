@@ -13,8 +13,8 @@
 
 <script type="text/javascript">
     window.onload = function () {
-        let parmas = window.location.href.split('?')[1];
-        let id = parmas.split("=")[1];
+        let params = window.location.href.split('?')[1];
+        let id = params.split("=")[1];
         getOffice(id)
     };
 
@@ -25,12 +25,13 @@
                 console.log(xmlHttp.responseText);
                 let data = JSON.parse(xmlHttp.responseText);
                 setDataList(data.officeList);
+                setTopInfo(data.building);
             }
         };
         xmlHttp.charset = "utf-8";
         xmlHttp.open("POST", "search/offices", true);
         xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlHttp.send("building_id=" + id === undefined ? "null" : id);
+        xmlHttp.send("building_id=" + (id === undefined ? "null" : id));
     }
 
     $(function () {
@@ -49,8 +50,32 @@
      * @param {Object} data 数据
      */
     function setTopInfo(data) {
-        document.getElementById("deteil_info_name").innerHTML = data.sssss;
-        // TODO
+        document.getElementById("deteil_info_name").innerHTML = data.name;
+        let imgBox = document.getElementById("top_image_list");
+        // TODO 数据为字符串，如果变为数组，这里改动
+        let imageData = JSON.parse(data.img_list);
+        for (let i = 0; i < imageData.length; i++) {
+            let itemBox = document.createElement("div");
+            itemBox.setAttribute("class", "swiper-slide");
+            imgBox.appendChild(itemBox);
+            let itemImg = document.createElement("img");
+            itemImg.setAttribute("class", "top_info_image");
+            itemImg.setAttribute("src", imageData[i]);
+            itemBox.appendChild(itemImg);
+        }
+
+        // TODO 价格
+        document.getElementById("detail_info_price").innerHTML = "";
+
+        // TODO 地址
+        document.getElementById("page_info_more").innerHTML = "地址："
+            + "[" + data.district_name + "]"
+            + "[" + data.zone_name + "]"
+            + data.address;
+
+        // TODO 距离地铁距离
+        document.getElementById("metro_name_list").innerHTML = "距离地铁："
+            + "[" + data.metro_name_list + "]";
     }
 
     /**
@@ -68,7 +93,7 @@
             // 图片
             let imageView = document.createElement("img");
             imageView.className = "table_item_image";
-            imageView.setAttribute("src", "");
+            imageView.setAttribute("src", ""); // TODO
             tdImage.appendChild(imageView);
 
             // 名称
@@ -143,26 +168,12 @@
 <div class="top_info_box">
     <div class="top_info flexed_row">
         <div class="swiper-container swiper_top_info" id="swiper_top_info">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="https://www.tuotuozu.com/public/upload/20180211/67004a4fa92d5161cf9fb77aa6f10532.jpg"
-                         class="top_info_image"/>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://www.tuotuozu.com/public/upload/20180211/67004a4fa92d5161cf9fb77aa6f10532.jpg"
-                         class="top_info_image"/>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://www.tuotuozu.com/public/upload/20180211/67004a4fa92d5161cf9fb77aa6f10532.jpg"
-                         class="top_info_image"/>
-                </div>
-
+            <div class="swiper-wrapper" id="top_image_list">
             </div>
             <div class="swiper_position swiper_top"></div>
         </div>
         <div class="detail_info_box flexed_column">
             <div class="deteil_info_name" id="deteil_info_name">
-                同普大厦
             </div>
             <div class="detail_info_price_box">
                 <span class="detail_info_price" id="detail_info_price">2.8-3.3</span>元/m²/天
@@ -190,7 +201,7 @@
             </div>
             <div class="page_info_more mini_line_height flexed_row">
                 距离地铁：
-                <div>
+                <div id="metro_name_list">
                     距离 13号线 祁连山南路 约598米 <br/> 距离 2号线 北新泾 约1807米
                 </div>
             </div>
