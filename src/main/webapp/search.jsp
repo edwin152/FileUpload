@@ -29,12 +29,12 @@
             onSuccess: function (data) {
                 // console.log(data);
                 filter = JSON.parse(data);
-                search();
+                getBuildingList();
             }
         });
     }
 
-    function search(page) {
+    function getBuildingList(page) {
         http.post({
             url: "search/buildings",
             params: {
@@ -125,7 +125,7 @@
                         filter.checkedDecorationId = list[i].id;
                         break;
                 }
-                search();
+                getBuildingList();
             };
             conditionBox.appendChild(optionItem);
         }
@@ -213,7 +213,7 @@
     }
 
     function nextPage() {
-        search(pageIndex + 1);
+        getBuildingList(pageIndex + 1);
     }
 
     function openDetail(building_id) {

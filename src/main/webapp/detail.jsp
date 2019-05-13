@@ -41,7 +41,7 @@
                 building_id: building_id,
             },
             onSuccess: function (data) {
-                console.log(data)
+                console.log(data);
                 filter = JSON.parse(xmlHttp.responseText);
                 search();
             }
