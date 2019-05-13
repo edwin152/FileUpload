@@ -8,7 +8,7 @@
     <meta charset="utf-8"/>
     <title></title>
     <link rel="stylesheet" type="text/css" href="css/all.css"/>
-    <link rel="stylesheet" type="text/css" href="css/search.css"/>
+    <link rel="stylesheet" type="text/css" href="css/searchStyle.css"/>
     <script src="js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
