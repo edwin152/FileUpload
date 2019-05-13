@@ -1,3 +1,5 @@
+<%--suppress HtmlFormInputWithoutLabel --%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 
@@ -14,11 +16,11 @@
 <script type="text/javascript">
     window.onload = function () {
         let params = window.location.href.split('?')[1];
-        let id = params.split("=")[1];
-        getOffice(id)
+        let building_id = params.split("=")[1];
+        getOffice(building_id);
     };
 
-    function getOffice(id) {
+    function getOffice(building_id) {
         let xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function () {
             if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
@@ -32,7 +34,7 @@
         xmlHttp.charset = "utf-8";
         xmlHttp.open("POST", "search/offices", true);
         xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlHttp.send("building_id=" + (id === undefined ? "null" : id));
+        xmlHttp.send("building_id=" + (building_id === undefined ? "null" : building_id));
     }
 
     $(function () {
@@ -157,7 +159,7 @@
 </div>
 <div class="bg_white">
     <div class="win top_box flexed_row">
-        <img src="" class="top_logo"/>
+        <img src="" class="top_logo" alt=""/>
         <a href="" class="black_a logo_right">上海写字楼出租</a>
         <div class="top_search_box flexed_row">
             <input type="text" class="top_search" name="search" id="top_search" value=""
@@ -207,7 +209,7 @@
                 </div>
             </div>
             <div class="page_info_service flexed_row">
-                <img src="img/phone.png" class="page_info_service_imgage"/>
+                <img src="img/phone.png" class="page_info_service_imgage" alt=""/>
                 <div class="page_info_service_right flexed_column">
                     <div class="page_info_service_name">
                         <span>同普大厦写字楼出租</span> 专属顾问
@@ -249,7 +251,7 @@
                 <div class="data_item_box flexed_row" id="dataList">
                 </div>
             </div>
-            <table class="table_box" id="data_item_box" border="0" cellspacing="0" cellpadding="0">
+            <table class="table_box" id="data_item_box">
                 <tr class="table_title">
                     <td>全部</td>
                     <td>房源信息</td>
@@ -322,7 +324,7 @@
     <div class="content_right bg_white">
         <div class="contact_way">
             <div class="contact_info">
-                <img src="" class="contact_img"/>
+                <img src="" class="contact_img" alt=""/>
                 <div class="service_box">
                     <span class="service_name">妥妥租</span>上海写字楼专属顾问
                 </div>
@@ -343,7 +345,7 @@
                 </div>
             </div>
             <div class="content_right_title">
-                <img src="" class="content_right_title_img"/>热门楼盘
+                <img src="" class="content_right_title_img" alt=""/>热门楼盘
             </div>
         </div>
     </div>

@@ -13,7 +13,8 @@
 </head>
 
 <script type="text/javascript">
-    let data;
+    let keyword;
+    let filter;
     let pageIndex = 0;
     let pageNum = 0;
 
@@ -26,12 +27,12 @@
         xmlHttp.onreadystatechange = function () {
             if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
                 // console.log(xmlHttp.responseText);
-                data = JSON.parse(xmlHttp.responseText);
+                filter = JSON.parse(xmlHttp.responseText);
                 search();
             }
         };
         xmlHttp.charset = "utf-8";
-        xmlHttp.open("POST", "info/filters", true);
+        xmlHttp.open("POST", "filter/all", true);
         xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlHttp.send();
     }
@@ -42,17 +43,17 @@
             if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
                 console.log(xmlHttp.responseText);
                 let officeData = JSON.parse(xmlHttp.responseText);
-                data.checkedDistrictId = officeData.checkedDistrictId;
-                data.checkedZoneId = officeData.checkedZoneId;
-                data.checkedMetroId = officeData.checkedMetroId;
-                data.checkedTypeId = officeData.checkedTypeId;
-                data.checkedAreaRangeId = officeData.checkedAreaRangeId;
-                data.checkedPriceRangeId = officeData.checkedPriceRangeId;
-                data.checkedDecorationId = officeData.checkedDecorationId;
+                filter.checkedDistrictId = officeData.checkedDistrictId;
+                filter.checkedZoneId = officeData.checkedZoneId;
+                filter.checkedMetroId = officeData.checkedMetroId;
+                filter.checkedTypeId = officeData.checkedTypeId;
+                filter.checkedAreaRangeId = officeData.checkedAreaRangeId;
+                filter.checkedPriceRangeId = officeData.checkedPriceRangeId;
+                filter.checkedDecorationId = officeData.checkedDecorationId;
                 setFilterList();
                 pageIndex = officeData.pageIndex;
                 pageNum = officeData.pageNum;
-                setDataList(officeData.buildingList);
+                setBuildingList(officeData.buildingList);
             }
         };
         xmlHttp.charset = "utf-8";
@@ -61,44 +62,50 @@
         if (page === undefined || page === null) {
             page = 0;
         }
-        xmlHttp.send("id=" + id === undefined ? "null" : id +
-            "&keyword=" + keyword === undefined ? "null" : keyword +
-            "&district_id=" + data.checkedDistrictId +
-            "&zone_id=" + data.checkedZoneId +
-            "&metro_id=" + data.checkedMetroId +
+        if (id === undefined || id === null) {
+            id = "null";
+        }
+        if (keyword === undefined || keyword === null) {
+            keyword = "null";
+        }
+        xmlHttp.send("id=" + id +
+            "&keyword=" + keyword +
+            "&district_id=" + filter.checkedDistrictId +
+            "&zone_id=" + filter.checkedZoneId +
+            "&metro_id=" + filter.checkedMetroId +
             "&page=" + page
         );
     }
 
     function setFilterList() {
-        if (data === undefined) {
+        if (filter === undefined) {
             return;
         }
-        if (data.districtList !== undefined) {
-            setListByName(data.districtList, 'districtList', data.checkedDistrictId);
+        if (filter.districtList !== undefined) {
+            setFilterListByName(filter.districtList, 'districtList', filter.checkedDistrictId);
         }
-        let zoneList = data.districtList[data.checkedDistrictId - 1].zoneList;
+        let zoneList = filter.districtList[filter.checkedDistrictId - 1].zoneList;
         if (zoneList !== undefined) {
-            setListByName(zoneList, 'zoneList', data.checkedZoneId);
+            setFilterListByName(zoneList, 'zoneList', filter.checkedZoneId);
         }
-        if (data.metroList !== undefined) {
-            setListByName(data.metroList, 'metroList', data.checkedMetroId);
+        if (filter.metroList !== undefined) {
+            setFilterListByName(filter.metroList, 'metroList', filter.checkedMetroId);
         }
-        if (data.typeList !== undefined) {
-            setListByName(data.typeList, 'typeList', data.checkedTypeId);
+        if (filter.typeList !== undefined) {
+            setFilterListByName(filter.typeList, 'typeList', filter.checkedTypeId);
         }
-        if (data.areaRangeList !== undefined) {
-            setListByName(data.areaRangeList, 'areaRangeList', data.checkedAreaRangeId);
+        if (filter.areaRangeList !== undefined) {
+            setFilterListByName(filter.areaRangeList, 'areaRangeList', filter.checkedAreaRangeId);
         }
-        if (data.priceRanges !== undefined) {
-            setListByName(data.priceRanges, 'priceRanges', data.checkedPriceRangeId);
+        if (filter.priceRanges !== undefined) {
+            setFilterListByName(filter.priceRanges, 'priceRanges', filter.checkedPriceRangeId);
         }
-        if (data.decorationList !== undefined) {
-            setListByName(data.decorationList, 'decorationList', data.checkedDecorationId);
+        if (filter.decorationList !== undefined) {
+            setFilterListByName(filter.decorationList, 'decorationList', filter.checkedDecorationId);
         }
     }
 
-    function setListByName(list, name, checkedId) {
+    function setFilterListByName(list, name, checkedId) {
         let conditionBox = document.getElementById(name);
         conditionBox.innerHTML = "";
         for (let i = 0; i < list.length; i++) {
@@ -108,30 +115,29 @@
             } else {
                 optionItem.className = 'condition_option';
             }
-            // optionItem.setAttribute("href", "#");
             optionItem.innerHTML = list[i].name;
             optionItem.onclick = function () {
                 switch (name) {
                     case "districtList":
-                        data.checkedDistrictId = list[i].id;
+                        filter.checkedDistrictId = list[i].id;
                         break;
                     case "zoneList":
-                        data.checkedZoneId = list[i].id;
+                        filter.checkedZoneId = list[i].id;
                         break;
                     case "metroList":
-                        data.checkedMetroId = list[i].id;
+                        filter.checkedMetroId = list[i].id;
                         break;
                     case "typeList":
-                        data.checkedTypeId = list[i].id;
+                        filter.checkedTypeId = list[i].id;
                         break;
                     case "areaRangeList":
-                        data.checkedAreaRangeId = list[i].id;
+                        filter.checkedAreaRangeId = list[i].id;
                         break;
                     case "priceRanges":
-                        data.checkedPriceRangeId = list[i].id;
+                        filter.checkedPriceRangeId = list[i].id;
                         break;
                     case "decorationList":
-                        data.checkedDecorationId = list[i].id;
+                        filter.checkedDecorationId = list[i].id;
                         break;
                 }
                 search();
@@ -140,7 +146,7 @@
         }
     }
 
-    function setDataList(data) {
+    function setBuildingList(buildingList) {
         let dataListBox = document.getElementById("data_list_box");
         if (pageIndex === 0) {
             dataListBox.innerHTML = "";
@@ -150,23 +156,25 @@
         } else {
             $("#next_page").hide();
         }
-        if (pageIndex === 0 && data.length === 0) {
+        if (pageIndex === 0 && buildingList.length === 0) {
             $("#error_not_text").show();
         } else {
             $("#error_not_text").hide();
         }
 
-        for (let i = 0; i < data.length; i++) {
-            let item = data[i];
+        for (let i = 0; i < buildingList.length; i++) {
+            let building = buildingList[i];
 
             let conditionBox = document.createElement("div");
 
-            conditionBox.setAttribute("onclick", "openDetail(" + item.id + ")");
 
             conditionBox.className = "data_item_box flexed_row";
             let imgLeft = document.createElement("img");
             imgLeft.className = 'item_image';
-            imgLeft.setAttribute("src", item.img_list[0]);
+            imgLeft.setAttribute("src", building.img_list[0]);
+            imgLeft.onclick = function () {
+                openDetail(item.id);
+            };
             conditionBox.appendChild(imgLeft);
 
             let dataInfoBox = document.createElement("div");
@@ -175,41 +183,44 @@
 
             let itemName = document.createElement("div");
             itemName.className = 'item_name';
-            itemName.innerHTML = item.name;
+            itemName.innerHTML = building.name;
+            itemName.onclick = function () {
+                openDetail(building.id);
+            };
             dataInfoBox.appendChild(itemName);
 
             let itemAddress = document.createElement("div");
             itemAddress.className = 'item_address item_margin';
             itemAddress.innerHTML = "<span class=\"item_title\">地址：</span>[ <a class=\"hover_de\">" +
-                item.district_name + "</a> ] - [ <a class=\"hover_de\">" + item.zone_name + "</a> ] |   " + item.address;
+                building.district_name + "</a> ] - [ <a class=\"hover_de\">" + building.zone_name + "</a> ] |   " + building.address;
             dataInfoBox.appendChild(itemAddress);
 
             let itemSize = document.createElement("div");
             itemSize.className = 'item_size item_margin';
             dataInfoBox.appendChild(itemSize);
 
-            itemSize.innerHTML = "<span class=\"item_title\">面积：</span>" + item.area_range;
+            itemSize.innerHTML = "<span class=\"item_title\">面积：</span>" + building.area_range;
 
             let itemPosition = document.createElement("div");
             itemPosition.className = 'item_position item_margin';
-            itemPosition.innerHTML = "共有" + item.office_num + "个房源"; // -----------------------
+            itemPosition.innerHTML = "共有" + building.office_num + "个房源"; // -----------------------
             dataInfoBox.appendChild(itemPosition);
 
             let itemSizeBtnBox = document.createElement("div");
             itemSizeBtnBox.className = 'item_size_btn_box flexed_row item_margin';
             dataInfoBox.appendChild(itemSizeBtnBox);
 
-            for (let j = 0; j < item.area_list.length && j < 4; j++) { // -----------------------
+            for (let j = 0; j < building.area_list.length && j < 4; j++) { // -----------------------
                 let itemSizeBtn = document.createElement("div");
                 itemSizeBtn.className = 'item_size_btn hover_de';
-                itemSizeBtn.innerHTML = item.area_list[j] + "m²"; // -----------------------
+                itemSizeBtn.innerHTML = building.area_list[j] + "m²"; // -----------------------
                 itemSizeBtnBox.appendChild(itemSizeBtn);
             }
 
             let itemPrice = document.createElement("div");
             itemPrice.className = 'item_price';
             itemPrice.innerHTML = "<span class=\"item_price_num\">" +
-                item.price_average + // -----------------------
+                building.price_average + // -----------------------
                 "</span>元/m²/天";
             conditionBox.appendChild(itemPrice);
             dataListBox.appendChild(conditionBox);
@@ -220,8 +231,8 @@
         search(null, null, null, pageIndex + 1);
     }
 
-    function openDetail(id){
-        window.open("detail.html?id=" + id ,"_blank");
+    function openDetail(building_id) {
+        window.open("detail.jsp?building_id=" + building_id, "_blank");
     }
 </script>
 
@@ -317,7 +328,7 @@
 </div>
 <div class="content_box matop win flexed_row">
     <div class="content_left bg_white">
-        <h3 class="sec_title">默认搜索</h3>
+        <h3 class="sec_title">默认排序</h3>
         <div class="error_not_text" id="error_not_text">
             抱歉，暂无数据！
         </div>

@@ -177,7 +177,7 @@ public class SearchController {
      * decoration_id 装修类型id
      */
     @RequestMapping("/offices")
-    public void getOffice(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void getOfficeList(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
@@ -270,11 +270,34 @@ public class SearchController {
     }
 
     /**
+     * 查询楼
+     * id 办公室id
+     */
+    @RequestMapping("/building")
+    public void getBuilding(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+
+        Long id = null;
+        if (request.getParameter("id") != null) {
+            id = Long.parseLong(request.getParameter("id"));
+        }
+
+        JsonObject json = new JsonObject();
+
+        Building building = officeService.getBuilding(id);
+        json.add("building", new Gson().toJsonTree(building));
+
+        response.getWriter().write(json.toString());
+        response.getWriter().close();
+    }
+
+    /**
      * 查询办公室
      * id 办公室id
      */
     @RequestMapping("/office")
-    public void getOfficeList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void getOffice(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 

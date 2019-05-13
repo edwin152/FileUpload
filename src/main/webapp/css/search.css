@@ -95,6 +95,10 @@
     height: 180px;
 }
 
+.data_item_box .item_image:hover {
+    cursor: pointer;
+}
+
 .data_item_box .data_info_box {
     height: 180px;
     justify-content: flex-start;
@@ -110,6 +114,7 @@
 }
 
 .data_item_box .data_info_box .item_name:hover {
+    cursor: pointer;
     color: #fb3;
 }
 

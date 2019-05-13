@@ -14,8 +14,8 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
-@RequestMapping("/info")
-public class InfoController {
+@RequestMapping("/filter")
+public class FilterController {
 
     @Autowired
     private BasicService basicService;
@@ -23,8 +23,8 @@ public class InfoController {
     /**
      * 查询过滤条件
      */
-    @RequestMapping("/filters")
-    public void getFilterList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @RequestMapping("/all")
+    public void getBuildingFilter(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
