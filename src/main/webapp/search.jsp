@@ -34,7 +34,7 @@
         });
     }
 
-    function search(keyword, building_id, page) {
+    function search(page) {
         http.post({
             url: "search/buildings",
             params: {
@@ -213,7 +213,7 @@
     }
 
     function nextPage() {
-        search(null, null, pageIndex + 1);
+        search(pageIndex + 1);
     }
 
     function openDetail(building_id) {

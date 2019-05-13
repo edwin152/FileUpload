@@ -36,28 +36,29 @@
 
     function getFilterList() {
         http.post({
-
-        })
-        let xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function () {
-            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                // console.log(xmlHttp.responseText);
+            url: "filter/office",
+            params: {
+                building_id: building_id,
+            },
+            onSuccess: function (data) {
+                console.log(data)
                 filter = JSON.parse(xmlHttp.responseText);
                 search();
             }
-        };
-        xmlHttp.charset = "utf-8";
-        xmlHttp.open("POST", "filter/office", true);
-        xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlHttp.send("building_id=" + building_id);
+        });
     }
 
     function search() {
-        let xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function () {
-            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                console.log(xmlHttp.responseText);
-                let data = JSON.parse(xmlHttp.responseText);
+        http.post({
+            url: "search/offices",
+            params: {
+                building_id: building_id,
+                area_range_id: filter.checkedAreaRangeId,
+                price_range_id: filter.checkedPriceRangeId,
+            },
+            onSuccess: function (data) {
+                // console.log(data);
+                data = JSON.parse(data);
                 filter.checkedAreaRangeId = data.checkedAreaRangeId;
                 filter.checkedPriceRangeId = data.checkedPriceRangeId;
                 setFilterList();
@@ -65,14 +66,7 @@
                 setBottomInfo(data.building);
                 setOfficeList(data.officeList);
             }
-        };
-        xmlHttp.charset = "utf-8";
-        xmlHttp.open("POST", "search/offices", true);
-        xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlHttp.send("building_id=" + building_id +
-            "&area_range_id=" + filter.checkedAreaRangeId +
-            "&price_range_id=" + filter.checkedPriceRangeId
-        );
+        });
     }
 
     function setFilterList() {
