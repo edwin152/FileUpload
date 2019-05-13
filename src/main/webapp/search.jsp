@@ -173,7 +173,7 @@
             imgLeft.className = 'item_image';
             imgLeft.setAttribute("src", building.img_list[0]);
             imgLeft.onclick = function () {
-                openDetail(item.id);
+                openDetail(building.id);
             };
             conditionBox.appendChild(imgLeft);
 
