@@ -207,7 +207,7 @@
             dataInfoBox.appendChild(itemPosition);
 
             let itemSizeBtnBox = document.createElement("div");
-            itemSizeBtnBox.className = 'item_size_btn_box flexed_row item_margin';
+            itemSizeBtnBox.className = 'item_size_btn_box flexed_row';
             dataInfoBox.appendChild(itemSizeBtnBox);
 
             for (let j = 0; j < building.area_list.length && j < 4; j++) { // -----------------------
