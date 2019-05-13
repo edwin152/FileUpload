@@ -2,7 +2,7 @@ package cn.ddzu.shop.entity;
 
 import java.util.List;
 
-public class District {
+public class District implements Comparable<District> {
 
     private long id;
     private String name;
@@ -30,5 +30,16 @@ public class District {
 
     public void setZoneList(List<Zone> zoneList) {
         this.zoneList = zoneList;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof District
+                && compareTo((District) obj) == 0;
+    }
+
+    @Override
+    public int compareTo(District o) {
+        return Long.compare(id, o.id);
     }
 }

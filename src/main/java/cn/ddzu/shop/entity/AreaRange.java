@@ -1,6 +1,6 @@
 package cn.ddzu.shop.entity;
 
-public class AreaRange {
+public class AreaRange implements Comparable<AreaRange> {
 
     private long id;
     private String name;
@@ -19,5 +19,16 @@ public class AreaRange {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof AreaRange
+                && compareTo((AreaRange) obj) == 0;
+    }
+
+    @Override
+    public int compareTo(AreaRange o) {
+        return Long.compare(id, o.id);
     }
 }

@@ -98,7 +98,7 @@
             setFilterListByName(filter.areaRangeList, 'areaRangeList', filter.checkedAreaRangeId);
         }
         if (filter.priceRanges !== undefined) {
-            setFilterListByName(filter.priceRanges, 'priceRanges', filter.checkedPriceRangeId);
+            setFilterListByName(filter.priceRanges, 'priceRangeList', filter.checkedPriceRangeId);
         }
         if (filter.decorationList !== undefined) {
             setFilterListByName(filter.decorationList, 'decorationList', filter.checkedDecorationId);
@@ -133,7 +133,7 @@
                     case "areaRangeList":
                         filter.checkedAreaRangeId = list[i].id;
                         break;
-                    case "priceRanges":
+                    case "priceRangeList":
                         filter.checkedPriceRangeId = list[i].id;
                         break;
                     case "decorationList":

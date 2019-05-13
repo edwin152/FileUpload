@@ -14,49 +14,79 @@
 </head>
 
 <script type="text/javascript">
+    let building_id;
+    let filter;
+
     window.onload = function () {
         let params = window.location.href.split('?')[1];
-        let building_id = params.split("=")[1];
-        getOffice(building_id);
+        building_id = params.split("=")[1];
+        if (building_id === undefined || building_id === null) {
+            building_id = "null";
+        }
+        getFilterList();
     };
-
-    function getOffice(building_id) {
-        let xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function () {
-            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                console.log(xmlHttp.responseText);
-                let data = JSON.parse(xmlHttp.responseText);
-                setDataList(data.officeList);
-                setTopInfo(data.building);
-                setBottomInfo(data.building);
-            }
-        };
-        xmlHttp.charset = "utf-8";
-        xmlHttp.open("POST", "search/offices", true);
-        xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlHttp.send("building_id=" + (building_id === undefined ? "null" : building_id));
-    }
 
     $(function () {
         new Swiper('#swiper_top_info', {
-            loop: true, //循环 最后面一个往后面滑动会滑到第一个
+            loop: true,
             autoplay: 2000,
-            //指示器
             pagination: '.swiper_position',
             paginationClickable: true,
             autoplayDisableOnInteraction: false,
         });
     });
 
+    function getFilterList() {
+        let xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                // console.log(xmlHttp.responseText);
+                filter = JSON.parse(xmlHttp.responseText);
+                search();
+            }
+        };
+        xmlHttp.charset = "utf-8";
+        xmlHttp.open("POST", "filter/office", true);
+        xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlHttp.send("building_id=" + building_id);
+    }
+
+    function search() {
+        let xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                console.log(xmlHttp.responseText);
+                let data = JSON.parse(xmlHttp.responseText);
+                filter.checkedAreaRangeId = data.checkedAreaRangeId;
+                filter.checkedPriceRangeId = data.checkedPriceRangeId;
+                setFilterList();
+                setTopInfo(data.building);
+                setBottomInfo(data.building);
+                setOfficeList(data.officeList);
+            }
+        };
+        xmlHttp.charset = "utf-8";
+        xmlHttp.open("POST", "search/offices", true);
+        xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlHttp.send("building_id=" + building_id +
+            "&area_range_id=" + filter.checkedAreaRangeId +
+            "&price_range_id=" + filter.checkedPriceRangeId
+        );
+    }
+
+    function setFilterList() {
+
+    }
+
     /**
      * 设置顶部数据
-     * @param {Object} data 数据
+     * @param building 数据
      */
-    function setTopInfo(data) {
-        document.getElementById("detail_info_name").innerHTML = data.name;
+    function setTopInfo(building) {
+        document.getElementById("detail_info_name").innerHTML = building.name;
         let imgBox = document.getElementById("top_image_list");
         // TODO 数据为字符串，如果变为数组，这里改动
-        let imageData = JSON.parse(data.img_list);
+        let imageData = JSON.parse(building.img_list);
         for (let i = 0; i < imageData.length; i++) {
             let itemBox = document.createElement("div");
             itemBox.setAttribute("class", "swiper-slide");
@@ -72,20 +102,20 @@
 
         // TODO 地址
         document.getElementById("page_info_more").innerHTML = "地址："
-            + "[" + data.district_name + "]"
-            + "[" + data.zone_name + "]"
-            + data.address;
+            + "[" + building.district_name + "]"
+            + "[" + building.zone_name + "]"
+            + building.address;
 
         // TODO 距离地铁距离
         document.getElementById("metro_name_list").innerHTML = "距离地铁："
-            + "[" + data.metro_name_list + "]";
+            + "[" + building.metro_name_list + "]";
     }
 
     /**
-     * 设置列表数据
+     * 设置办公室列表数据
      * @param {Object} data
      */
-    function setDataList(data) {
+    function setOfficeList(data) {
         let contentBox = document.getElementById("data_item_box");
         for (let i = 0; i < data.length; i++) {
             let trView = document.createElement("tr");

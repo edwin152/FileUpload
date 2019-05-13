@@ -21,10 +21,10 @@ public class FilterController {
     private BasicService basicService;
 
     /**
-     * 查询过滤条件
+     * 查询所有过滤条件
      */
     @RequestMapping("/all")
-    public void getBuildingFilter(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void getAllFilter(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
@@ -38,7 +38,7 @@ public class FilterController {
         List<Metro> metroList = basicService.getMetroList();
         List<Type> typeList = basicService.getTypeList();
         List<AreaRange> areaRangeList = basicService.getAreaRangeList();
-        List<PriceRange> priceRanges = basicService.getPriceRangeList();
+        List<PriceRange> priceRangeList = basicService.getPriceRangeList();
         List<Decoration> decorationList = basicService.getDecorationList();
 
         JsonObject json = new JsonObject();
@@ -46,7 +46,7 @@ public class FilterController {
         json.add("metroList", new Gson().toJsonTree(metroList));
         json.add("typeList", new Gson().toJsonTree(typeList));
         json.add("areaRangeList", new Gson().toJsonTree(areaRangeList));
-        json.add("priceRanges", new Gson().toJsonTree(priceRanges));
+        json.add("priceRangeList", new Gson().toJsonTree(priceRangeList));
         json.add("decorationList", new Gson().toJsonTree(decorationList));
         json.addProperty("checkedDistrictId", 1);
         json.addProperty("checkedZoneId", 1);
@@ -55,6 +55,32 @@ public class FilterController {
         json.addProperty("checkedAreaRangeId", 1);
         json.addProperty("checkedPriceRangeId", 1);
         json.addProperty("checkedDecorationId", 1);
+
+        response.getWriter().write(json.toString());
+        response.getWriter().close();
+    }
+
+    /**
+     * 查询办公室过滤条件
+     */
+    @RequestMapping("/office")
+    public void getOfficeFilter(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+
+        Long building_id = null;
+        if (request.getParameter("building_id") != null) {
+            building_id = Long.parseLong(request.getParameter("building_id"));
+        }
+
+        List<AreaRange> areaRangeList = basicService.getAreaRangeList(building_id);
+        List<PriceRange> priceRangeList = basicService.getPriceRangeList(building_id);
+
+        JsonObject json = new JsonObject();
+        json.add("areaRangeList", new Gson().toJsonTree(areaRangeList));
+        json.add("priceRangeList", new Gson().toJsonTree(priceRangeList));
+        json.addProperty("checkedAreaRangeId", 1);
+        json.addProperty("checkedPriceRangeId", 1);
 
         response.getWriter().write(json.toString());
         response.getWriter().close();

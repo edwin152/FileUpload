@@ -7,4 +7,15 @@
     <select id="selectAreaRangeList" resultType="cn.ddzu.shop.entity.AreaRange">
         SELECT * FROM AREA_RANGE ORDER BY ID ASC;
     </select>
+
+    <select id="selectAreaRangeListByBuilding"
+            resultType="cn.ddzu.shop.entity.AreaRange"
+            parameterType="java.lang.Long">
+        SELECT * FROM AREA_RANGE WHERE ID IN
+        (
+            SELECT AREA_RANGE_ID AS ID
+            FROM OFFICE WHERE BUILDING_ID = #{BUILDING_ID}
+            GROUP BY AREA_RANGE_ID
+        ) ORDER BY ID ASC;
+    </select>
 </mapper>

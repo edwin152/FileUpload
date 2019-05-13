@@ -1,6 +1,6 @@
 package cn.ddzu.shop.entity;
 
-public class Metro {
+public class Metro implements Comparable<Metro> {
 
     private long id;
     private String name;
@@ -19,5 +19,16 @@ public class Metro {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Metro
+                && compareTo((Metro) obj) == 0;
+    }
+
+    @Override
+    public int compareTo(Metro o) {
+        return Long.compare(id, o.id);
     }
 }

@@ -7,4 +7,15 @@
     <select id="selectPriceRangeList" resultType="cn.ddzu.shop.entity.PriceRange">
         SELECT * FROM PRICE_RANGE ORDER BY ID ASC;
     </select>
+
+    <select id="selectPriceRangeListByBuilding"
+            resultType="cn.ddzu.shop.entity.AreaRange"
+            parameterType="java.lang.Long">
+        SELECT * FROM PRICE_RANGE WHERE ID IN
+        (
+            SELECT PRICE_RANGE_ID AS ID
+            FROM OFFICE WHERE BUILDING_ID = #{BUILDING_ID}
+            GROUP BY PRICE_RANGE_ID
+        ) ORDER BY ID ASC;
+    </select>
 </mapper>

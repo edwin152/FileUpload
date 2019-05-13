@@ -72,8 +72,24 @@ public class BasicServiceImpl implements BasicService {
     }
 
     @Override
+    public List<AreaRange> getAreaRangeList(Long building_id) {
+        if (building_id == null) {
+            return new ArrayList<>();
+        }
+        return areaRangeMapperDao.selectAreaRangeListByBuilding(building_id);
+    }
+
+    @Override
     public List<PriceRange> getPriceRangeList() {
         return priceRangeMapperDao.selectPriceRangeList();
+    }
+
+    @Override
+    public List<PriceRange> getPriceRangeList(Long building_id) {
+        if (building_id == null) {
+            return new ArrayList<>();
+        }
+        return priceRangeMapperDao.selectPriceRangeListByBuilding(building_id);
     }
 
     @Override

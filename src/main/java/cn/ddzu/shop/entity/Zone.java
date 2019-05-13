@@ -1,6 +1,6 @@
 package cn.ddzu.shop.entity;
 
-public class Zone {
+public class Zone implements Comparable<Zone> {
 
     private long id;
     private long district_id;
@@ -28,5 +28,16 @@ public class Zone {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Zone
+                && compareTo((Zone) obj) == 0;
+    }
+
+    @Override
+    public int compareTo(Zone o) {
+        return Long.compare(id, o.id);
     }
 }

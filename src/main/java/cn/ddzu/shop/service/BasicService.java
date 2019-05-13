@@ -48,9 +48,19 @@ public interface BasicService {
     List<AreaRange> getAreaRangeList();
 
     /**
+     * 查询面积区间列表
+     */
+    List<AreaRange> getAreaRangeList(Long building_id);
+
+    /**
      * 查询价格区间列表
      */
     List<PriceRange> getPriceRangeList();
+
+    /**
+     * 查询价格区间列表
+     */
+    List<PriceRange> getPriceRangeList(Long building_id);
 
     /**
      * 查询装修情况列表

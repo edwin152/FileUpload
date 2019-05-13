@@ -1,6 +1,6 @@
 package cn.ddzu.shop.entity;
 
-public class Type {
+public class Type implements Comparable<Type> {
 
     private long id;
     private String name;
@@ -19,5 +19,16 @@ public class Type {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Type
+                && compareTo((Type) obj) == 0;
+    }
+
+    @Override
+    public int compareTo(Type o) {
+        return Long.compare(id, o.id);
     }
 }

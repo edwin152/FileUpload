@@ -1,6 +1,6 @@
 package cn.ddzu.shop.entity;
 
-public class PriceRange {
+public class PriceRange implements Comparable<PriceRange> {
 
     private long id;
     private String name;
@@ -19,5 +19,16 @@ public class PriceRange {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof PriceRange
+                && compareTo((PriceRange) obj) == 0;
+    }
+
+    @Override
+    public int compareTo(PriceRange o) {
+        return Long.compare(id, o.id);
     }
 }
