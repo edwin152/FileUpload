@@ -169,8 +169,6 @@ public class SearchController {
      * 搜索办公室
      * keyword 关键词
      * building_id 商圈id
-     * zone_id 区域id
-     * metro_id 地铁id
      * type_id 办公室类型id
      * area_range_id 面积区间id
      * price_range_id 价格区间id

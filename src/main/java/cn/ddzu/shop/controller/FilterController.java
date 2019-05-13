@@ -73,6 +73,7 @@ public class FilterController {
             building_id = Long.parseLong(request.getParameter("building_id"));
         }
 
+
         List<AreaRange> areaRangeList = basicService.getAreaRangeList(building_id);
         List<PriceRange> priceRangeList = basicService.getPriceRangeList(building_id);
 

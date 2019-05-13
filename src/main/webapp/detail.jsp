@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="css/detail.css"/>
     <script src="js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/swiper.jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
 <script type="text/javascript">
@@ -20,9 +21,6 @@
     window.onload = function () {
         let params = window.location.href.split('?')[1];
         building_id = params.split("=")[1];
-        if (building_id === undefined || building_id === null) {
-            building_id = "null";
-        }
         getFilterList();
     };
 
@@ -37,6 +35,9 @@
     });
 
     function getFilterList() {
+        http.post({
+
+        })
         let xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function () {
             if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {

@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="css/all.css"/>
     <link rel="stylesheet" type="text/css" href="css/search.css"/>
     <script src="js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
 <script type="text/javascript">
@@ -23,26 +24,29 @@
     };
 
     function getFilterList() {
-        let xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function () {
-            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                // console.log(xmlHttp.responseText);
-                filter = JSON.parse(xmlHttp.responseText);
+        http.post({
+            url: "filter/all",
+            onSuccess: function (data) {
+                // console.log(data);
+                filter = JSON.parse(data);
                 search();
             }
-        };
-        xmlHttp.charset = "utf-8";
-        xmlHttp.open("POST", "filter/all", true);
-        xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlHttp.send();
+        });
     }
 
-    function search(id, keyword, building_id, page) {
-        let xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function () {
-            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                console.log(xmlHttp.responseText);
-                let officeData = JSON.parse(xmlHttp.responseText);
+    function search(keyword, building_id, page) {
+        http.post({
+            url: "search/buildings",
+            params: {
+                keyword: keyword,
+                district_id: filter.checkedDistrictId,
+                zone_id: filter.checkedZoneId,
+                metro_id: filter.checkedMetroId,
+                page: page,
+            },
+            onSuccess: function (data) {
+                // console.log(data);
+                let officeData = JSON.parse(data);
                 filter.checkedDistrictId = officeData.checkedDistrictId;
                 filter.checkedZoneId = officeData.checkedZoneId;
                 filter.checkedMetroId = officeData.checkedMetroId;
@@ -54,31 +58,12 @@
                 pageIndex = officeData.pageIndex;
                 pageNum = officeData.pageNum;
                 setBuildingList(officeData.buildingList);
-            }
-        };
-        xmlHttp.charset = "utf-8";
-        xmlHttp.open("POST", "search/buildings", true);
-        xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        if (page === undefined || page === null) {
-            page = 0;
-        }
-        if (id === undefined || id === null) {
-            id = "null";
-        }
-        if (keyword === undefined || keyword === null) {
-            keyword = "null";
-        }
-        xmlHttp.send("id=" + id +
-            "&keyword=" + keyword +
-            "&district_id=" + filter.checkedDistrictId +
-            "&zone_id=" + filter.checkedZoneId +
-            "&metro_id=" + filter.checkedMetroId +
-            "&page=" + page
-        );
+            },
+        });
     }
 
     function setFilterList() {
-        if (filter === undefined) {
+        if (filter) {
             return;
         }
         if (filter.districtList !== undefined) {
@@ -97,8 +82,8 @@
         if (filter.areaRangeList !== undefined) {
             setFilterListByName(filter.areaRangeList, 'areaRangeList', filter.checkedAreaRangeId);
         }
-        if (filter.priceRanges !== undefined) {
-            setFilterListByName(filter.priceRanges, 'priceRangeList', filter.checkedPriceRangeId);
+        if (filter.priceRangeList !== undefined) {
+            setFilterListByName(filter.priceRangeList, 'priceRangeList', filter.checkedPriceRangeId);
         }
         if (filter.decorationList !== undefined) {
             setFilterListByName(filter.decorationList, 'decorationList', filter.checkedDecorationId);
@@ -228,7 +213,7 @@
     }
 
     function nextPage() {
-        search(null, null, null, pageIndex + 1);
+        search(null, null, pageIndex + 1);
     }
 
     function openDetail(building_id) {
@@ -314,7 +299,7 @@
             <div class="condition_title">
                 价格：
             </div>
-            <div class="option_box flexed_row" id="priceRanges">
+            <div class="option_box flexed_row" id="priceRangeList">
             </div>
         </div>
         <div class="condition_line flexed_row">
