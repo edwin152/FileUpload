@@ -63,7 +63,7 @@
     }
 
     function setFilterList() {
-        if (filter) {
+        if (!filter) {
             return;
         }
         if (filter.districtList !== undefined) {
@@ -155,7 +155,7 @@
 
             conditionBox.className = "data_item_box flexed_row";
             let imgLeft = document.createElement("img");
-            imgLeft.className = 'item_image';
+            imgLeft.className = 'item_image clickable';
             imgLeft.setAttribute("src", building.img_list[0]);
             imgLeft.onclick = function () {
                 openDetail(building.id);
@@ -167,7 +167,7 @@
             conditionBox.appendChild(dataInfoBox);
 
             let itemName = document.createElement("div");
-            itemName.className = 'item_name';
+            itemName.className = 'item_name clickable';
             itemName.innerHTML = building.name;
             itemName.onclick = function () {
                 openDetail(building.id);
@@ -197,7 +197,7 @@
 
             for (let j = 0; j < building.area_list.length && j < 4; j++) { // -----------------------
                 let itemSizeBtn = document.createElement("div");
-                itemSizeBtn.className = 'item_size_btn hover_de';
+                itemSizeBtn.className = 'item_size_btn hover_de clickable';
                 itemSizeBtn.innerHTML = building.area_list[j] + "m²"; // -----------------------
                 itemSizeBtnBox.appendChild(itemSizeBtn);
             }
@@ -218,6 +218,12 @@
 
     function openDetail(building_id) {
         window.open("detail.jsp?building_id=" + building_id, "_blank");
+    }
+
+    function search(){
+        let searchInput = document.getElementById("top_search");
+        keyword = searchInput.value;
+        getBuildingList();
     }
 </script>
 
@@ -254,7 +260,7 @@
         <div class="top_search_box flexed_row">
             <input type="text" class="top_search" name="search" id="top_search" value=""
                    placeholder="输入您要查找的楼盘或者区域商圈名称"/>
-            <input class="top_search_btn" type="submit" value="搜索"/>
+            <div class="top_search_btn clickable" onclick="search()" >搜索</div>
         </div>
     </div>
 </div>

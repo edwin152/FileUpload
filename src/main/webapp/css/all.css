@@ -106,6 +106,18 @@ a {
     font-size: 14px;
 }
 
+.top_search_btn:hover {
+    border: none;
+    border-radius: 0 3px 3px 0;
+    -webkit-border-radius: 0 3px 3px 0;
+    background: #ffbe5e;
+    padding: 0 18px 0 20px;
+    height: 30px;
+    line-height: 30px;
+    color: #fff;
+    font-size: 14px;
+}
+
 input {
     outline: none
 }
@@ -333,4 +345,9 @@ input {
     width: 16px;
     height: 16px;
     margin-left: 15px;
+}
+
+
+.clickable{
+    cursor:pointer;
 }
