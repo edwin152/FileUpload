@@ -16,6 +16,10 @@
             ,#{office.price}
             ,#{office.price_range_id}
             ,#{office.decoration_id}
+            ,#{office.utilization_rate}
+            ,#{office.can_register}
+            ,#{office.rent_free_period}
+            ,#{office.notes}
             ,#{office.img_list}
         );
     </insert>
@@ -32,6 +36,10 @@
         OFFICE.PRICE,
         OFFICE.PRICE_RANGE_ID,
         OFFICE.DECORATION_ID,
+        OFFICE.UTILIZATION_RATE,
+        OFFICE.CAN_REGISTER,
+        OFFICE.RENT_FREE_PERIOD,
+        OFFICE.NOTES,
         OFFICE.IMG_LIST,
         TYPE.NAME AS TYPE_NAME,
         AREA_RANGE.NAME AS AREA_RANGE_NAME,
@@ -57,6 +65,10 @@
         OFFICE.PRICE,
         OFFICE.PRICE_RANGE_ID,
         OFFICE.DECORATION_ID,
+        OFFICE.UTILIZATION_RATE,
+        OFFICE.CAN_REGISTER,
+        OFFICE.RENT_FREE_PERIOD,
+        OFFICE.NOTES,
         OFFICE.IMG_LIST,
         DISTRICT.NAME AS DISTRICT_NAME,
         ZONE.NAME AS ZONE_NAME,

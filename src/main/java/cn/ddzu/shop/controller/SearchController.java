@@ -8,6 +8,7 @@ import cn.ddzu.shop.service.BasicService;
 import cn.ddzu.shop.service.OfficeService;
 import cn.ddzu.shop.util.JsonUtils;
 import cn.ddzu.shop.util.Log;
+import cn.ddzu.shop.util.StringUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -231,7 +232,7 @@ public class SearchController {
             String sourceInfo = building.getDistrict_name() + building.getZone_name()
                     + "【" + building.getName() + "】" + office.getType_name()
                     + "-" + office.getDecoration_name()
-                    + "-" + "可注册"
+                    + "-" + (office.getCan_register() ? "可注册" : "不可注册")
                     + "-" + office.getArea() + "m²";
             officeObject.addProperty("source_info", sourceInfo);
 
@@ -280,7 +281,6 @@ public class SearchController {
         JsonObject buildingObject = new Gson().toJsonTree(building).getAsJsonObject();
         buildingObject.add("metro_name_list", JsonUtils.strToStringArray(building.getMetro_name_list()));
         buildingObject.add("img_list", JsonUtils.strToStringArray(building.getImg_list()));
-        buildingObject.add("notes", JsonUtils.strToMapArray(building.getNotes()));
 
         OfficeService.SearchBean officeSearchBean = new OfficeService.SearchBean();
         officeSearchBean.setBuilding_id(id);
@@ -342,11 +342,38 @@ public class SearchController {
         JsonObject json = new JsonObject();
 
         Office office = officeService.getOffice(id);
-        if (office != null) {
-            Building building = officeService.getBuilding(office.getBuilding_id());
-            json.add("building", new Gson().toJsonTree(building));
-            json.add("office", new Gson().toJsonTree(office));
+        if (office == null) {
+            response.getWriter().write("{\"resultCode\":\"2\",\"resultMsg\":\"office_id错误\"}");
+            response.getWriter().close();
+            return;
         }
+        Building building = officeService.getBuilding(office.getBuilding_id());
+        if (building == null) {
+            response.getWriter().write("{\"resultCode\":\"2\",\"resultMsg\":\"office_id错误\"}");
+            response.getWriter().close();
+            return;
+        }
+        JsonObject officeObject = new Gson().toJsonTree(office).getAsJsonObject();
+        JsonObject buildingObject = new Gson().toJsonTree(building).getAsJsonObject();
+
+        // 房源信息
+        String sourceInfo = building.getDistrict_name() + building.getZone_name()
+                + "【" + building.getName() + "】" + office.getType_name()
+                + "-" + office.getDecoration_name()
+                + "-" + (office.getCan_register() ? "可注册" : "不可注册")
+                + "-" + office.getArea() + "m²";
+        officeObject.addProperty("source_info", sourceInfo);
+
+        int minAccommodation = (int) (office.getArea() / 8);
+        int maxAccommodation = (int) (office.getArea() / 4);
+        officeObject.addProperty("workplace_accommodation"
+                , minAccommodation + " ~ " + maxAccommodation);
+
+        Float totalPrice = office.getPrice() * office.getArea() * 30;
+        officeObject.addProperty("total_price", StringUtils.priceFormat(totalPrice));
+
+        json.add("building", buildingObject);
+        json.add("office", officeObject);
 
         response.getWriter().write(json.toString());
         response.getWriter().close();

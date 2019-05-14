@@ -70,7 +70,7 @@ public class EditController {
             introduce = request.getParameter("introduce");
         }
 
-        String notes = "[]";
+        String notes = "{}";
         if (request.getParameter("notes") != null) {
             notes = request.getParameter("notes");
         }
@@ -157,6 +157,26 @@ public class EditController {
             decoration_id = Long.parseLong(request.getParameter("decoration_id"));
         }
 
+        Float utilization_rate = null;
+        if (request.getParameter("utilization_rate") != null) {
+            utilization_rate = Float.valueOf(request.getParameter("utilization_rate"));
+        }
+
+        boolean can_register = false;
+        if (request.getParameter("can_register") != null) {
+            can_register = Boolean.parseBoolean(request.getParameter("can_register"));
+        }
+
+        String rent_free_period = null;
+        if (request.getParameter("rent_free_period") != null) {
+            rent_free_period = request.getParameter("rent_free_period");
+        }
+
+        String notes = "{}";
+        if (request.getParameter("notes") != null) {
+            notes = request.getParameter("notes");
+        }
+
         String img_list = null;
         if (request.getParameter("img_list") != null) {
             img_list = request.getParameter("img_list");
@@ -210,6 +230,10 @@ public class EditController {
         office.setPrice(price);
         office.setPrice_range_id(price_range_id);
         office.setDecoration_id(decoration_id);
+        office.setUtilization_rate(utilization_rate);
+        office.setCan_register(can_register);
+        office.setRent_free_period(rent_free_period);
+        office.setNotes(notes);
         office.setImg_list(img_list);
 
         officeService.addOffice(office);

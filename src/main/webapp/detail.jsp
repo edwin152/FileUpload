@@ -69,7 +69,7 @@
                 page: page,
             },
             onSuccess: function (data) {
-                // console.log(data);
+                console.log(data);
                 filter.checkedTypeId = data.checkedTypeId;
                 filter.checkedAreaRangeId = data.checkedAreaRangeId;
                 filter.checkedPriceRangeId = data.checkedPriceRangeId;
@@ -252,24 +252,26 @@
      * 设置底部写字楼信息
      */
     function setBottomInfo(building) {
+        let notes = JSON.parse(building.notes);
+        let detail_info = notes.detail_info;
         let bottom_info = document.getElementById("bottom_info");
         bottom_info.innerHTML = "";
-        if (!building.notes || building.notes.length === 0) {
+        if (!detail_info || detail_info.length === 0) {
             $("#bottom_info").hide();
         } else {
             $("#bottom_info").show();
         }
-        for (let note of building.notes) {
+        for (let info of detail_info) {
             let box = document.createElement("div");
             box.className = "bottom_info_item flexed_row";
 
             let key = document.createElement("div");
             key.className = "bottom_info_title";
-            key.innerHTML = note.key + ":";
+            key.innerHTML = info.key + ":";
 
             let value = document.createElement("div");
             value.className = "bottom_info_text";
-            value.innerHTML = note.value;
+            value.innerHTML = info.value;
 
             box.appendChild(key);
             box.appendChild(value);

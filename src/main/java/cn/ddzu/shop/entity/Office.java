@@ -12,6 +12,10 @@ public class Office {
     private Float price;
     private Long price_range_id;
     private Long decoration_id;
+    private Float utilization_rate;
+    private Boolean can_register;
+    private String rent_free_period;
+    private String notes;
     private String img_list;
 
     private String building_name;
@@ -118,6 +122,38 @@ public class Office {
 
     public void setDecoration_id(Long decoration_id) {
         this.decoration_id = decoration_id;
+    }
+
+    public Float getUtilization_rate() {
+        return utilization_rate;
+    }
+
+    public void setUtilization_rate(Float utilization_rate) {
+        this.utilization_rate = utilization_rate;
+    }
+
+    public Boolean getCan_register() {
+        return can_register;
+    }
+
+    public void setCan_register(Boolean can_register) {
+        this.can_register = can_register;
+    }
+
+    public String getRent_free_period() {
+        return rent_free_period;
+    }
+
+    public void setRent_free_period(String rent_free_period) {
+        this.rent_free_period = rent_free_period;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public String getImg_list() {

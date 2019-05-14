@@ -5,7 +5,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
-import java.util.Map;
 
 public class JsonUtils {
 
@@ -19,17 +18,5 @@ public class JsonUtils {
             return null;
         }
         return new Gson().toJsonTree(imgList).getAsJsonArray();
-    }
-
-    public static JsonArray strToMapArray(String str) {
-        if (str == null || str.isEmpty()) {
-            return null;
-        }
-        List<Map<String, String>> map = new Gson().fromJson(str, new TypeToken<List<Map<String, String>>>() {
-        }.getType());
-        if (map == null || map.isEmpty()) {
-            return null;
-        }
-        return new Gson().toJsonTree(map).getAsJsonArray();
     }
 }

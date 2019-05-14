@@ -32,8 +32,94 @@
             },
             onSuccess: function (data) {
                 console.log(data);
+                setOffice(data);
             }
         })
+    }
+
+    function setOffice(data) {
+        let office = data.office;
+        let building = data.building;
+        let officeNotes = JSON.parse(office.notes);
+        let buildingNotes = JSON.parse(building.notes);
+
+        document.getElementById("detail_info_name").innerHTML
+            = office.source_info;
+
+        document.getElementById("total_price").innerHTML
+            = office.total_price;
+
+        document.getElementById("price").innerHTML
+            = office.price;
+
+        document.getElementById("area").innerHTML
+            = office.area + "m²";
+
+        document.getElementById("workplace_accommodation").innerHTML
+            = office.workplace_accommodation + "个";
+
+        document.getElementById("decoration").innerHTML
+            = office.decoration_name;
+
+        document.getElementById("utilization_rate").innerHTML
+            = office.utilization_rate * 100 + "%";
+
+        document.getElementById("free_rent_period").innerHTML
+            = office.rent_free_period;
+
+        document.getElementById("can_register").innerHTML
+            = office.can_register ? "是" : "否";
+
+        document.getElementById("building_name").innerHTML
+            = building.name;
+
+        document.getElementById("metro_name_list").innerHTML
+            = building.metro_name_list;
+
+        document.getElementById("bottom_area").innerHTML
+            = "面积" + office.area + "m²";
+
+        document.getElementById("bottom_utilization_rate").innerHTML
+            = office.utilization_rate * 100
+            + "%，可容纳工位" + office.workplace_accommodation + "个";
+
+        document.getElementById("bottom_can_register").innerHTML
+            = office.can_register ? "是" : "否";
+
+        document.getElementById("price_advantage").innerHTML
+            = office.price + "元/m²/天" +
+            "，约" + office.total_price + "元/月" +
+            "，" + officeNotes.rent_payment;
+
+        document.getElementById("bottom_decoration").innerHTML
+            = office.decoration_name;
+
+        document.getElementById("bottom_free_rent_period").innerHTML
+            = office.rent_free_period;
+
+        document.getElementById("visit_time").innerHTML
+            = officeNotes.visit_time;
+
+        document.getElementById("earliest_rent").innerHTML
+            = officeNotes.earliest_rent;
+
+        document.getElementById("shortest_period").innerHTML
+            = officeNotes.shortest_period;
+
+        document.getElementById("floor_info").innerHTML
+            = officeNotes.floor_info;
+
+        document.getElementById("metro_intro").innerHTML
+            = buildingNotes.metro_intro;
+
+        document.getElementById("bus_intro").innerHTML
+            = buildingNotes.bus_intro;
+
+        document.getElementById("bottom_building_name").innerHTML
+            = building.name;
+
+        document.getElementById("building_introduce").innerHTML
+            = building.introduce;
     }
 
 </script>
@@ -77,7 +163,6 @@
 </div>
 <div class="top_info_box matop">
     <div class="detail_info_name" id="detail_info_name">
-        浦东竹园商贸区【浦东世纪大都会】普通办公-简装修-可注册-638m²
     </div>
     <div class="top_info flexed_row">
         <div class="swiper-container swiper_top_info" id="swiper_top_info">
@@ -87,34 +172,48 @@
         </div>
         <div class="detail_info_box flexed_column">
             <div class="detail_info_price_box">
-                <span class="detail_info_price" id="detail_info_price">2.8-3.3</span>元/m²/天
+                <span class="detail_info_price" id="total_price">0</span>
+                元/月 （单价:<span id="price"></span>元/m²/天）
             </div>
             <div class="infodown_box flexed_row">
                 <div class="infodown">
-                    <div class="infodown_top">
-                        2个
+                    <div class="infodown_top" id="area">
+                        0m²
                     </div>
                     <div class="infodown_bottom">
-                        在租房源
+                        建筑面积
                     </div>
                 </div>
                 <div class="infodown">
-                    <div class="infodown_top">
-                        130 - 173m²
+                    <div class="infodown_top" id="workplace_accommodation">
+                        0个
                     </div>
                     <div class="infodown_bottom">
-                        可租面积
+                        可容纳工位数
+                    </div>
+                </div>
+                <div class="infodown">
+                    <div class="infodown_top" id="decoration">
+                    </div>
+                    <div class="infodown_bottom">
+                        装修程度
                     </div>
                 </div>
             </div>
             <div class="page_info_more">
-                地址： [ 普陀 ] - [ 长风商务区 ] 同普路1220号
+                使用率： <span id="utilization_rate"></span>
+            </div>
+            <div class="page_info_more">
+                免租期： <span id="free_rent_period"></span>
+            </div>
+            <div class="page_info_more">
+                是否可注册： <span id="can_register"></span>
+            </div>
+            <div class="page_info_more">
+                所属楼盘： <span id="building_name"></span>
             </div>
             <div class="page_info_more mini_line_height flexed_row">
-                距离地铁：
-                <div id="metro_name_list">
-                    距离 13号线 祁连山南路 约598米 <br/> 距离 2号线 北新泾 约1807米
-                </div>
+                地铁：<span id="metro_name_list"></span>
             </div>
             <div class="page_info_service flexed_row">
                 <img src="img/phone.png" class="page_info_service_imgage" alt=""/>
@@ -147,80 +246,73 @@
                             <div class="bottom_info_title">
                                 面积信息：
                             </div>
-                            <div class="bottom_info_text" id="bottom_info_text">
-                                27703m²
+                            <div class="bottom_info_text" id="bottom_area">
+                                面积0m²
                             </div>
                         </div>
                         <div class="bottom_info_item flexed_row">
                             <div class="bottom_info_title">
                                 使用率：
                             </div>
-                            <div class="bottom_info_text">
-                                27703m²
+                            <div class="bottom_info_text" id="bottom_utilization_rate">
+                                0%，可容纳工位0个
                             </div>
                         </div>
                         <div class="bottom_info_item flexed_row">
                             <div class="bottom_info_title">
                                 可注册：
                             </div>
-                            <div class="bottom_info_text">
-                                27703m²
+                            <div class="bottom_info_text" id="bottom_can_register">
                             </div>
                         </div>
                         <div class="bottom_info_item flexed_row">
                             <div class="bottom_info_title">
                                 价格优势：
                             </div>
-                            <div class="bottom_info_text">
-                                27703m²
+                            <div class="bottom_info_text" id="price_advantage">
+                                0元/m²/天，约0元/月
                             </div>
                         </div>
                         <div class="bottom_info_item flexed_row">
                             <div class="bottom_info_title">
                                 装修情况：
                             </div>
-                            <div class="bottom_info_text">
-                                27703m²
+                            <div class="bottom_info_text" id="bottom_decoration">
                             </div>
                         </div>
                         <div class="bottom_info_item flexed_row">
                             <div class="bottom_info_title">
                                 免租时间：
                             </div>
-                            <div class="bottom_info_text">
-
+                            <div class="bottom_info_text" id="bottom_free_rent_period">
                             </div>
                         </div>
                         <div class="bottom_info_item flexed_row">
                             <div class="bottom_info_title">
                                 看房时间：
                             </div>
-                            <div class="bottom_info_text">
-
+                            <div class="bottom_info_text" id="visit_time">
                             </div>
                         </div>
                         <div class="bottom_info_item flexed_row">
                             <div class="bottom_info_title">
                                 最早可租：
                             </div>
-                            <div class="bottom_info_text">
-
+                            <div class="bottom_info_text" id="earliest_rent">
                             </div>
                         </div>
                         <div class="bottom_info_item flexed_row">
                             <div class="bottom_info_title">
                                 最短租期：
                             </div>
-                            <div class="bottom_info_text">
-
+                            <div class="bottom_info_text" id="shortest_period">
                             </div>
                         </div>
                         <div class="bottom_info_item flexed_row">
                             <div class="bottom_info_title">
                                 楼层信息：
                             </div>
-                            <div class="bottom_info_text">
-
+                            <div class="bottom_info_text" id="floor_info">
                             </div>
                         </div>
                     </div>
@@ -235,19 +327,15 @@
                         <div class="bottom_info_item flexed_row">
                             <div class="bottom_info_title">
                                 地 铁：
-
                             </div>
-                            <div class="bottom_info_text" id="bottom_info_text">
-                                27703m²
+                            <div class="bottom_info_text" id="metro_intro">
                             </div>
                         </div>
                         <div class="bottom_info_item flexed_row">
                             <div class="bottom_info_title">
                                 公 交：
-
                             </div>
-                            <div class="bottom_info_text">
-                                27703m²
+                            <div class="bottom_info_text" id="bus_intro">
                             </div>
                         </div>
                     </div>
@@ -259,11 +347,9 @@
             <div class="flexed_row matop">
                 <img src="" class="introduction_estate_img"/>
                 <div class="flexed_column introduction_estate_info_box">
-                    <div class="introduction_estate_name clickable">
-                        浦东世纪大都会
+                    <div class="introduction_estate_name clickable" id="bottom_building_name">
                     </div>
-                    <div class="introduction_estate_info">
-                        “世纪大都会”地处连接浦东金融中心与行政中心的世纪大道中段，毗邻上海城市轨道交通二、四、六、九号线“四线相交”的高效交通枢纽。
+                    <div class="introduction_estate_info" id="building_introduce">
                     </div>
                 </div>
             </div>
