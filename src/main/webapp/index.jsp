@@ -14,10 +14,10 @@
 <script>
 
     window.onload = function () {
-        addBuilding();
-        for (let i = 0; i < 15; i++) {
-            addOffice(i + 1);
-        }
+        // addBuilding();
+        // for (let i = 0; i < 15; i++) {
+        //     addOffice(i + 1);
+        // }
     };
 
     function getFilterList() {
