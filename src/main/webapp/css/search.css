@@ -88,6 +88,7 @@
     width: 100%;
     font: 14px Microsoft YaHei, SimHei, SimSun;
     color: #666;
+    border-bottom: 1px solid #f3f3f3;
 }
 
 .data_item_box .item_image {
