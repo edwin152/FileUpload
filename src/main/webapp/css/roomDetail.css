@@ -33,8 +33,8 @@
 	height: 440px;
 }
 
-.deteil_info_name {
-	font-size: 24px;
+.detail_info_name {
+	font-size: 18px;
 	line-height: 36px;
 	font-weight: normal;
 	padding-bottom: 20px;
@@ -268,6 +268,7 @@
 	color: #666;
 	font-size: 12px;
 	flex-direction: row;
+	align-items: start;
 }
 
 .bottom_info_title {

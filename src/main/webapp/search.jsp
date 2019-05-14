@@ -169,8 +169,8 @@
 
             let itemAddress = document.createElement("div");
             itemAddress.className = 'item_address item_margin';
-            itemAddress.innerHTML = "<span class=\"item_title\">地址：</span>[ <a class=\"hover_de\">" +
-                building.district_name + "</a> ] - [ <a class=\"hover_de\">" + building.zone_name + "</a> ] |   " + building.address;
+            itemAddress.innerHTML = "<span class=\"item_title\">地址：</span>[ <a class=\"hover_de clickable\">" +
+                building.district_name + "</a> ] - [ <a class=\"hover_de clickable\">" + building.zone_name + "</a> ] |   " + building.address;
             dataInfoBox.appendChild(itemAddress);
 
             let itemSize = document.createElement("div");

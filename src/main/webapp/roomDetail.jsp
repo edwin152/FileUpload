@@ -120,8 +120,30 @@
 
         document.getElementById("building_introduce").innerHTML
             = building.introduce;
+
+        let imageListBox = document.getElementById("top_image_list")
+        let imageListBean = JSON.parse( building.img_list);
+        for (let img of imageListBean) {
+            let itemBox = document.createElement("div");
+            itemBox.setAttribute("class", "swiper-slide");
+            imageListBox.appendChild(itemBox);
+            let itemImg = document.createElement("img");
+            itemImg.setAttribute("class", "top_info_image");
+            itemImg.setAttribute("src", img);
+            itemBox.appendChild(itemImg);
+        }
+        startSwiper();
     }
 
+    function startSwiper(){
+        new Swiper('#swiper_top_info', {
+            loop: true,
+            autoplay: 2000,
+            pagination: '.swiper_position',
+            paginationClickable: true,
+            autoplayDisableOnInteraction: false,
+        });
+    }
 </script>
 
 <body class="bg_gray">

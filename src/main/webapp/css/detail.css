@@ -321,6 +321,6 @@
 }
 
 
-.source_info_td:hover {
+.source_info_td div:hover {
     color: #FFBB33;
 }

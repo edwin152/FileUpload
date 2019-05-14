@@ -195,7 +195,7 @@
 
             // 图片
             let imageView = document.createElement("img");
-            imageView.className = "table_item_image";
+            imageView.className = "table_item_image clickable";
             if (office.img_list) {
                 imageView.setAttribute("src", office.img_list[0]);
             }
@@ -292,7 +292,7 @@
 
     function openRoomDetail(office_id) {
         // TODO 点击事件
-        // window.open("roomDetail.jsp?office_id=" + office_id, "_blank");
+        window.open("roomDetail.jsp?office_id=" + office_id, "_blank");
     }
 
     function openSwiper() {
