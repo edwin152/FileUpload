@@ -28,7 +28,7 @@
             url: "filter/all",
             onSuccess: function (data) {
                 // console.log(data);
-                filter = JSON.parse(data);
+                filter = data;
                 getBuildingList();
             }
         });
@@ -42,22 +42,25 @@
                 district_id: filter.checkedDistrictId,
                 zone_id: filter.checkedZoneId,
                 metro_id: filter.checkedMetroId,
+                type_id: filter.checkedTypeId,
+                area_range_id: filter.checkedAreaRangeId,
+                price_range_id: filter.checkedPriceRangeId,
+                decoration_id: filter.checkedDecorationId,
                 page: page,
             },
             onSuccess: function (data) {
                 // console.log(data);
-                let officeData = JSON.parse(data);
-                filter.checkedDistrictId = officeData.checkedDistrictId;
-                filter.checkedZoneId = officeData.checkedZoneId;
-                filter.checkedMetroId = officeData.checkedMetroId;
-                filter.checkedTypeId = officeData.checkedTypeId;
-                filter.checkedAreaRangeId = officeData.checkedAreaRangeId;
-                filter.checkedPriceRangeId = officeData.checkedPriceRangeId;
-                filter.checkedDecorationId = officeData.checkedDecorationId;
+                filter.checkedDistrictId = data.checkedDistrictId;
+                filter.checkedZoneId = data.checkedZoneId;
+                filter.checkedMetroId = data.checkedMetroId;
+                filter.checkedTypeId = data.checkedTypeId;
+                filter.checkedAreaRangeId = data.checkedAreaRangeId;
+                filter.checkedPriceRangeId = data.checkedPriceRangeId;
+                filter.checkedDecorationId = data.checkedDecorationId;
                 setFilterList();
-                pageIndex = officeData.pageIndex;
-                pageNum = officeData.pageNum;
-                setBuildingList(officeData.buildingList);
+                pageIndex = data.pageIndex;
+                pageNum = data.pageNum;
+                setBuildingList(data.buildingList);
             },
         });
     }
@@ -66,34 +69,25 @@
         if (!filter) {
             return;
         }
-        if (filter.districtList !== undefined) {
-            setFilterListByName(filter.districtList, 'districtList', filter.checkedDistrictId);
-        }
+        setFilterListByName(filter.districtList, 'districtList', filter.checkedDistrictId);
         let zoneList = filter.districtList[filter.checkedDistrictId - 1].zoneList;
-        if (zoneList !== undefined) {
-            setFilterListByName(zoneList, 'zoneList', filter.checkedZoneId);
-        }
-        if (filter.metroList !== undefined) {
-            setFilterListByName(filter.metroList, 'metroList', filter.checkedMetroId);
-        }
-        if (filter.typeList !== undefined) {
-            setFilterListByName(filter.typeList, 'typeList', filter.checkedTypeId);
-        }
-        if (filter.areaRangeList !== undefined) {
-            setFilterListByName(filter.areaRangeList, 'areaRangeList', filter.checkedAreaRangeId);
-        }
-        if (filter.priceRangeList !== undefined) {
-            setFilterListByName(filter.priceRangeList, 'priceRangeList', filter.checkedPriceRangeId);
-        }
-        if (filter.decorationList !== undefined) {
-            setFilterListByName(filter.decorationList, 'decorationList', filter.checkedDecorationId);
-        }
+        setFilterListByName(zoneList, 'zoneList', filter.checkedZoneId);
+        setFilterListByName(filter.metroList, 'metroList', filter.checkedMetroId);
+        setFilterListByName(filter.typeList, 'typeList', filter.checkedTypeId);
+        setFilterListByName(filter.areaRangeList, 'areaRangeList', filter.checkedAreaRangeId);
+        setFilterListByName(filter.priceRangeList, 'priceRangeList', filter.checkedPriceRangeId);
+        setFilterListByName(filter.decorationList, 'decorationList', filter.checkedDecorationId);
     }
 
     function setFilterListByName(list, name, checkedId) {
+        if (!list || list.length < 2) {
+            $("#" + name.substr(0, name.length - 4)).hide();
+        } else {
+            $("#" + name.substr(0, name.length - 4)).show();
+        }
         let conditionBox = document.getElementById(name);
         conditionBox.innerHTML = "";
-        for (let i = 0; i < list.length; i++) {
+        for (let i = 0; list && i < list.length; i++) {
             let optionItem = document.createElement("span");
             if (list[i].id === checkedId) {
                 optionItem.className = 'condition_option_select';
@@ -151,7 +145,6 @@
             let building = buildingList[i];
 
             let conditionBox = document.createElement("div");
-
 
             conditionBox.className = "data_item_box flexed_row";
             let imgLeft = document.createElement("img");
@@ -220,7 +213,7 @@
         window.open("detail.jsp?building_id=" + building_id, "_blank");
     }
 
-    function search(){
+    function search() {
         let searchInput = document.getElementById("top_search");
         keyword = searchInput.value;
         getBuildingList();
@@ -260,55 +253,55 @@
         <div class="top_search_box flexed_row">
             <input type="text" class="top_search" name="search" id="top_search" value=""
                    placeholder="输入您要查找的楼盘或者区域商圈名称"/>
-            <div class="top_search_btn clickable" onclick="search()" >搜索</div>
+            <div class="top_search_btn clickable" onclick="search()">搜索</div>
         </div>
     </div>
 </div>
 <div class="matop bg_white">
     <div class="win condition_box" id="condition_box">
         <div class="condition_line flexed_row">
-            <div class="condition_title">
+            <div class="condition_title" id="district">
                 区：
             </div>
             <div class="option_box flexed_row" id="districtList">
             </div>
         </div>
-        <div class="condition_line flexed_row">
+        <div class="condition_line flexed_row" id="zone">
             <div class="condition_title">
                 区域：
             </div>
             <div class="option_box flexed_row" id="zoneList">
             </div>
         </div>
-        <div class="condition_line flexed_row">
+        <div class="condition_line flexed_row" id="metro">
             <div class="condition_title">
                 地铁：
             </div>
             <div class="option_box flexed_row" id="metroList">
             </div>
         </div>
-        <div class="condition_line flexed_row">
+        <div class="condition_line flexed_row" id="type">
             <div class="condition_title">
                 类型：
             </div>
             <div class="option_box flexed_row" id="typeList">
             </div>
         </div>
-        <div class="condition_line flexed_row">
+        <div class="condition_line flexed_row" id="areaRange">
             <div class="condition_title">
                 面积：
             </div>
             <div class="option_box flexed_row" id="areaRangeList">
             </div>
         </div>
-        <div class="condition_line flexed_row">
+        <div class="condition_line flexed_row" id="priceRange">
             <div class="condition_title">
                 价格：
             </div>
             <div class="option_box flexed_row" id="priceRangeList">
             </div>
         </div>
-        <div class="condition_line flexed_row">
+        <div class="condition_line flexed_row" id="decoration">
             <div class="condition_title">
                 装修：
             </div>

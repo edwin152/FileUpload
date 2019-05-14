@@ -62,11 +62,13 @@ public interface OfficeService {
      */
     int getBuildingSize(SearchBean searchBean);
 
-    class SearchBean implements Cloneable{
+    class SearchBean implements Cloneable {
         // 关键词
         private String keyword;
         // 商圈id
         private Long building_id;
+        // 区id
+        private Long district_id;
         // 区域id
         private Long zone_id;
         // 地铁名字
@@ -94,6 +96,17 @@ public interface OfficeService {
 
         public void setBuilding_id(Long building_id) {
             this.building_id = building_id;
+        }
+
+        public Long getDistrict_id() {
+            return district_id;
+        }
+
+        public void setDistrict_id(Long district_id) {
+            if (district_id == 1) {
+                district_id = null;
+            }
+            this.district_id = district_id;
         }
 
         public Long getZone_id() {

@@ -7,7 +7,7 @@ public class Office {
     private Long building_id;
     private String address;
     private Long type_id;
-    private Float area_value;
+    private Float area;
     private Long area_range_id;
     private Float price;
     private Long price_range_id;
@@ -23,22 +23,6 @@ public class Office {
     private String area_range_name;
     private String price_range_name;
     private String decoration_name;
-
-    public Office() {
-    }
-
-    public Office(String name, Long building_id, String address, Long type_id, Float area_value, Long area_range_id, Float price, Long price_range_id, Long decoration_id, String img_list) {
-        this.name = name;
-        this.building_id = building_id;
-        this.address = address;
-        this.type_id = type_id;
-        this.area_value = area_value;
-        this.area_range_id = area_range_id;
-        this.price = price;
-        this.price_range_id = price_range_id;
-        this.decoration_id = decoration_id;
-        this.img_list = img_list;
-    }
 
     public long getId() {
         return id;
@@ -96,12 +80,12 @@ public class Office {
         this.type_id = type_id;
     }
 
-    public Float getArea_value() {
-        return area_value;
+    public Float getArea() {
+        return area;
     }
 
-    public void setArea_value(Float area_value) {
-        this.area_value = area_value;
+    public void setArea(Float area) {
+        this.area = area;
     }
 
     public Long getArea_range_id() {

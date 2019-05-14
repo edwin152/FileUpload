@@ -3,6 +3,7 @@ package cn.ddzu.shop.service.impl;
 import cn.ddzu.shop.dao.*;
 import cn.ddzu.shop.entity.*;
 import cn.ddzu.shop.service.BasicService;
+import cn.ddzu.shop.util.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,7 @@ public class BasicServiceImpl implements BasicService {
 
     @Override
     public List<District> getDistrictList() {
+        Log.d("start get district list");
         return districtMapperDao.selectDistrictList();
     }
 
@@ -37,6 +39,7 @@ public class BasicServiceImpl implements BasicService {
         if (district_id == null) {
             return new ArrayList<>();
         }
+        Log.d("start get zone list");
         return zoneMapperDao.selectZoneList(district_id);
     }
 
@@ -45,11 +48,13 @@ public class BasicServiceImpl implements BasicService {
         if (id == null) {
             return null;
         }
+        Log.d("start get zone list by id : " + id);
         return zoneMapperDao.selectZoneById(id);
     }
 
     @Override
     public List<Metro> getMetroList() {
+        Log.d("start get metro list");
         return metroMapperDao.selectMetroList();
     }
 
@@ -58,16 +63,28 @@ public class BasicServiceImpl implements BasicService {
         if (id == null) {
             return null;
         }
+        Log.d("start get metro list by id : " + id);
         return metroMapperDao.selectMetroById(id);
     }
 
     @Override
     public List<Type> getTypeList() {
+        Log.d("start get type list");
         return typeMapperDao.selectTypeList();
     }
 
     @Override
+    public List<Type> getTypeList(Long building_id) {
+        if (building_id == null) {
+            return new ArrayList<>();
+        }
+        Log.d("start get type list by building_id : " + building_id);
+        return typeMapperDao.selectTypeListByBuilding(building_id);
+    }
+
+    @Override
     public List<AreaRange> getAreaRangeList() {
+        Log.d("start get area range list");
         return areaRangeMapperDao.selectAreaRangeList();
     }
 
@@ -76,11 +93,13 @@ public class BasicServiceImpl implements BasicService {
         if (building_id == null) {
             return new ArrayList<>();
         }
+        Log.d("start get area range list by building_id : " + building_id);
         return areaRangeMapperDao.selectAreaRangeListByBuilding(building_id);
     }
 
     @Override
     public List<PriceRange> getPriceRangeList() {
+        Log.d("start get price range list");
         return priceRangeMapperDao.selectPriceRangeList();
     }
 
@@ -89,11 +108,22 @@ public class BasicServiceImpl implements BasicService {
         if (building_id == null) {
             return new ArrayList<>();
         }
+        Log.d("start get price range list by building_id : " + building_id);
         return priceRangeMapperDao.selectPriceRangeListByBuilding(building_id);
     }
 
     @Override
     public List<Decoration> getDecorationList() {
+        Log.d("start get decoration list");
         return decorationMapperDao.selectDecorationList();
+    }
+
+    @Override
+    public List<Decoration> getDecorationList(Long building_id) {
+        if (building_id == null) {
+            return new ArrayList<>();
+        }
+        Log.d("start get decoration list by building_id : " + building_id);
+        return decorationMapperDao.selectDecorationListByBuilding(building_id);
     }
 }

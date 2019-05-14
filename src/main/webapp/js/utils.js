@@ -1,36 +1,56 @@
 let http = {
     post: function (obj) {
-        let xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function () {
-            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                if (obj.onSuccess) {
-                    obj.onSuccess(xmlHttp.responseText);
-                }
+        let data = {};
+        for (let key in obj.params) {
+            if (!obj.params.hasOwnProperty(key)) {
+                continue;
             }
-        };
-        xmlHttp.charset = "utf-8";
-        xmlHttp.open("POST", obj.url, true);
-        xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-        let params = obj.params;
-        let p = "";
-        if (params || params === null) {
-            xmlHttp.send();
-        } else {
-            for (let key in params) {
-                // noinspection JSUnfilteredForInLoop
-                let value = params[key];
-                if (value != null) {
-                    if (p.length !== 0) {
-                        p += "&";
-                    }
-                    p += key + "=" + value;
-                }
+            let value = obj.params[key];
+            if (typeof (value) === "string") {
+                data[key] = obj.params[key];
+            } else {
+                data[key] = JSON.stringify(obj.params[key]);
             }
-            if (p === "") {
-                p = undefined;
-            }
-            xmlHttp.send(p);
         }
-    }
+
+        $.ajax({
+            type: "post",
+            url: obj.url,
+            dataType: "Json",
+            data: data,
+            success: function (data) {
+                if (obj.onSuccess) {
+                    obj.onSuccess(data);
+                }
+            },
+            error: function () {
+            }
+        });
+
+    },
+
+    getParameter: function (request, key) {
+        if (!request
+            || !key
+            || request.length === 0
+            || key.length === 0) {
+            return null;
+        }
+
+        request = request.substring(1);
+
+        let index = request.indexOf(key);
+        if (index === -1) return null;
+        while (index !== 0 && request[index - 1] !== "&") {
+            index = request.indexOf(key, index + 1);
+            if (index === -1) return null;
+        }
+
+        let end = request.indexOf("&", index);
+        if (end === -1) {
+            return request.substring(index + key.length + 1);
+        } else {
+            return request.substring(index + key.length + 1, end);
+        }
+    },
 };

@@ -4,24 +4,21 @@ public class Building {
 
     private long id;
     private String name;
+    // 区域id
     private Long zone_id;
+    // 详细地址
     private String address;
+    // 地铁列表
     private String metro_name_list;
+    // 介绍
+    private String introduce;
+    // 备注
+    private String notes;
+    // 图片列表
     private String img_list;
 
     private String district_name;
     private String zone_name;
-
-    public Building() {
-    }
-
-    public Building(String name, Long zone_id, String address, String metro_name_list, String img_list) {
-        this.name = name;
-        this.zone_id = zone_id;
-        this.address = address;
-        this.metro_name_list = metro_name_list;
-        this.img_list = img_list;
-    }
 
     public long getId() {
         return id;
@@ -61,6 +58,22 @@ public class Building {
 
     public void setMetro_name_list(String metro_name_list) {
         this.metro_name_list = metro_name_list;
+    }
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public String getImg_list() {

@@ -14,8 +14,8 @@
         SELECT * FROM AREA_RANGE WHERE ID IN
         (
             SELECT AREA_RANGE_ID AS ID
-            FROM OFFICE WHERE BUILDING_ID = #{BUILDING_ID}
+            FROM OFFICE WHERE OFFICE.BUILDING_ID = #{building_id}
             GROUP BY AREA_RANGE_ID
-        ) ORDER BY ID ASC;
+        ) OR ID = 1 ORDER BY ID ASC;
     </select>
 </mapper>

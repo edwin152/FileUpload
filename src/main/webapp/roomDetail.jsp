@@ -15,6 +15,27 @@
 </head>
 
 <script type="text/javascript">
+    let office_id;
+
+    window.onload = function () {
+        let request = window.location.search;
+        office_id = http.getParameter(request, "office_id");
+        office_id = parseInt(office_id);
+        getOffice();
+    };
+
+    function getOffice() {
+        http.post({
+            url: "search/office",
+            params: {
+                id: office_id,
+            },
+            onSuccess: function (data) {
+                console.log(data);
+            }
+        })
+    }
+
 </script>
 
 <body class="bg_gray">
@@ -234,16 +255,16 @@
             </div>
         </div>
         <div class="introduction_estate_box bg_white left_item matop">
-        	<h3 class="sec_title">楼盘介绍</h3>
-        	<div class="flexed_row matop">
-                <img src="img/test.jpg" class="introduction_estate_img"/>
+            <h3 class="sec_title">楼盘介绍</h3>
+            <div class="flexed_row matop">
+                <img src="" class="introduction_estate_img"/>
                 <div class="flexed_column introduction_estate_info_box">
-                	<div class="introduction_estate_name clickable">
-                		浦东世纪大都会
-                	</div>
-                	<div class="introduction_estate_info">
-                		“世纪大都会”地处连接浦东金融中心与行政中心的世纪大道中段，毗邻上海城市轨道交通二、四、六、九号线“四线相交”的高效交通枢纽。
-                	</div>
+                    <div class="introduction_estate_name clickable">
+                        浦东世纪大都会
+                    </div>
+                    <div class="introduction_estate_info">
+                        “世纪大都会”地处连接浦东金融中心与行政中心的世纪大道中段，毗邻上海城市轨道交通二、四、六、九号线“四线相交”的高效交通枢纽。
+                    </div>
                 </div>
             </div>
         </div>

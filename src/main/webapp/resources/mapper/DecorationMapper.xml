@@ -7,4 +7,15 @@
     <select id="selectDecorationList" resultType="cn.ddzu.shop.entity.Decoration">
         SELECT * FROM DECORATION ORDER BY ID ASC;
     </select>
+
+    <select id="selectDecorationListByBuilding"
+            resultType="cn.ddzu.shop.entity.AreaRange"
+            parameterType="java.lang.Long">
+        SELECT * FROM DECORATION WHERE ID IN
+        (
+            SELECT DECORATION_ID AS ID
+            FROM OFFICE WHERE BUILDING_ID = #{building_id}
+            GROUP BY DECORATION_ID
+        ) OR ID = 1 ORDER BY ID ASC;
+    </select>
 </mapper>

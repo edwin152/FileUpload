@@ -8,6 +8,8 @@
     <title>test</title>
     <link rel="stylesheet" type="text/css" href="css/all.css"/>
     <link rel="stylesheet" type="text/css" href="css/index.css"/>
+    <script src="js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <script>
 
@@ -19,65 +21,78 @@
     };
 
     function getFilterList() {
-        let xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function () {
-            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                document.getElementById("test").innerHTML = xmlHttp.responseText;
+        http.post({
+            url: "info/filters",
+            onSuccess: function (data) {
+                console.log(data);
             }
-        };
-        xmlHttp.charset = "utf-8";
-        xmlHttp.open("POST", "info/filters", true);
-        xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlHttp.send();
-    }
-
-    function getOfficeList() {
-        let xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function () {
-            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                document.getElementById("test").innerHTML = xmlHttp.responseText;
-            }
-        };
-        xmlHttp.charset = "utf-8";
-        xmlHttp.open("POST", "search/offices", true);
-        xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlHttp.send();
+        });
     }
 
     function addBuilding() {
-        let xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function () {
-            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                document.getElementById("test").innerHTML = xmlHttp.responseText;
+        http.post({
+            url: "edit/addBuilding",
+            params: {
+                name: "浦东世纪大都会",
+                zone_id: 36,
+                address: "世纪大道1229号",
+                metro_list: [2, 4, 6],
+                notes: [
+                    {
+                        "key": "建筑面积",
+                        "value": "284000m²"
+                    },
+                    {
+                        "key": "得房率",
+                        "value": "75%"
+                    },
+                    {
+                        "key": "客梯数",
+                        "value": "4个"
+                    },
+                    {
+                        "key": "开发商",
+                        "value": "和记黄埔地产"
+                    },
+                    {
+                        "key": "物业公司",
+                        "value": "上海德一置行物业管理有限公司"
+                    }
+                ],
+                introduce: "“世纪大都会”地处连接浦东金融中心与行政中心的世纪大道中段，毗邻上海城市轨道交通二、四、六、九号线“四线相交”的高效交通枢纽。",
+                img_list: [
+                    "https://www.tuotuozu.com/public/upload/20180509/c2124cee3b358c59b314beeadfdc63dc.jpg",
+                    "https://www.tuotuozu.com/public/upload/20180509/463f9d4fdc11d9f83fa76943458bffb2.jpg",
+                    "https://www.tuotuozu.com/public/upload/20180509/2cc119931c3715fe728c22de76e2a5d9.jpg",
+                    "https://www.tuotuozu.com/public/upload/20180509/fa46c12d7891a7a89711c658d5c5c5e5.jpg",
+                    "https://www.tuotuozu.com/public/upload/20180509/82d94882260d0abcde1968df183a0893.jpg",
+                    "https://www.tuotuozu.com/public/upload/20180509/b04a99bb978d27106c9ba512b0fc1ac5.jpg",
+                ],
+            },
+            onSuccess: function (data) {
+                console.log(data);
             }
-        };
-        xmlHttp.charset = "utf-8";
-        xmlHttp.open("POST", "edit/addBuilding", true);
-        xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlHttp.send("name=Four Lock Center" +
-            "&zone_id=41" +
-            "&address=The Bond No.1" +
-            "&metro_list=[3]" +
-            "&img_list=[\"https://www.tuotuozu.com/public/upload/20180325/cover/a572a2428ffc977a8d8748546986c7be.jpg\"]");
+        });
     }
 
     function addOffice(name) {
-        let xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function () {
-            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                document.getElementById("test").innerHTML = xmlHttp.responseText;
+        http.post({
+            url: "edit/addOffice",
+            params: {
+                name: name,
+                building_id: 1,
+                type_id: 2,
+                area: name % 2 === 0 ? 450 : name * 100,
+                price: 8,
+                decoration_id: 2,
+                img_list: [
+                    "https://www.tuotuozu.com/public/upload/20180325/cover/a572a2428ffc977a8d8748546986c7be.jpg",
+                ]
+            },
+            onSuccess: function (data) {
+                console.log(data);
             }
-        };
-        xmlHttp.charset = "utf-8";
-        xmlHttp.open("POST", "edit/addOffice", true);
-        xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlHttp.send("name=" + name +
-            "&building_id=1" +
-            "&type_id=2" +
-            "&area_value=" + (name % 2 === 0 ? 450 : name * 100) +
-            "&price=8" +
-            "&decoration_id=2" +
-            "&img_list=[\"https://www.tuotuozu.com/public/upload/20180325/cover/a572a2428ffc977a8d8748546986c7be.jpg\"]");
+        });
     }
 </script>
 

@@ -5,6 +5,7 @@ import cn.ddzu.shop.entity.Metro;
 import cn.ddzu.shop.entity.Office;
 import cn.ddzu.shop.service.BasicService;
 import cn.ddzu.shop.service.OfficeService;
+import cn.ddzu.shop.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -40,6 +41,8 @@ public class EditController {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
+        Log.d("edit-addBuilding", new Gson().toJson(request.getParameterMap()));
+
         String name = null;
         if (request.getParameter("name") != null) {
             name = request.getParameter("name");
@@ -62,7 +65,17 @@ public class EditController {
             }.getType());
         }
 
-        String img_list = null;
+        String introduce = null;
+        if (request.getParameter("introduce") != null) {
+            introduce = request.getParameter("introduce");
+        }
+
+        String notes = "[]";
+        if (request.getParameter("notes") != null) {
+            notes = request.getParameter("notes");
+        }
+
+        String img_list = "[]";
         if (request.getParameter("img_list") != null) {
             img_list = request.getParameter("img_list");
         }
@@ -75,11 +88,14 @@ public class EditController {
             }
         }
 
-        Building building = new Building(name
-                , zone_id
-                , address
-                , new Gson().toJson(metro_name_list)
-                , img_list);
+        Building building = new Building();
+        building.setName(name);
+        building.setZone_id(zone_id);
+        building.setAddress(address);
+        building.setMetro_name_list(new Gson().toJson(metro_name_list));
+        building.setIntroduce(introduce);
+        building.setNotes(notes);
+        building.setImg_list(img_list);
 
         officeService.addBuilding(building);
 
@@ -95,7 +111,7 @@ public class EditController {
      * building_id 商圈id
      * address 地址
      * type_id 办公室类型id
-     * area_value 面积
+     * area 面积
      * price 单平米价格
      * decoration_id 装修类型id
      */
@@ -103,6 +119,8 @@ public class EditController {
     public void addOffice(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
+
+        Log.d("edit-addOffice", new Gson().toJson(request.getParameterMap()));
 
         String name = null;
         if (request.getParameter("name") != null) {
@@ -124,9 +142,9 @@ public class EditController {
             type_id = Long.parseLong(request.getParameter("type_id"));
         }
 
-        Float area_value = null;
-        if (request.getParameter("area_value") != null) {
-            area_value = Float.valueOf(request.getParameter("area_value"));
+        Float area = null;
+        if (request.getParameter("area") != null) {
+            area = Float.valueOf(request.getParameter("area"));
         }
 
         Float price = null;
@@ -145,17 +163,17 @@ public class EditController {
         }
 
         long area_range_id;
-        if (area_value == null) {
+        if (area == null) {
             area_range_id = 1L;
-        } else if (area_value > 0 && area_value <= 100) {
+        } else if (area > 0 && area <= 100) {
             area_range_id = 2L;
-        } else if (area_value > 100 && area_value <= 300) {
+        } else if (area > 100 && area <= 300) {
             area_range_id = 3L;
-        } else if (area_value > 300 && area_value <= 500) {
+        } else if (area > 300 && area <= 500) {
             area_range_id = 4L;
-        } else if (area_value > 500 && area_value <= 1000) {
+        } else if (area > 500 && area <= 1000) {
             area_range_id = 5L;
-        } else if (area_value > 1000) {
+        } else if (area > 1000) {
             area_range_id = 6L;
         } else {
             area_range_id = 1L;
@@ -182,16 +200,17 @@ public class EditController {
             price_range_id = 1L;
         }
 
-        Office office = new Office(name
-                , building_id
-                , address
-                , type_id
-                , area_value
-                , area_range_id
-                , price
-                , price_range_id
-                , decoration_id
-                , img_list);
+        Office office = new Office();
+        office.setName(name);
+        office.setBuilding_id(building_id);
+        office.setAddress(address);
+        office.setType_id(type_id);
+        office.setArea(area);
+        office.setArea_range_id(area_range_id);
+        office.setPrice(price);
+        office.setPrice_range_id(price_range_id);
+        office.setDecoration_id(decoration_id);
+        office.setImg_list(img_list);
 
         officeService.addOffice(office);
 

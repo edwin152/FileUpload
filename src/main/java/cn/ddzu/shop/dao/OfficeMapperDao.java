@@ -26,6 +26,7 @@ public interface OfficeMapperDao {
      *
      * @param keyword        关键词
      * @param building_id    商圈id
+     * @param district_id    区id
      * @param zone_id        区域id
      * @param metro_name     地铁名字
      * @param type_id        办公室类型id
@@ -37,6 +38,7 @@ public interface OfficeMapperDao {
      */
     List<Office> selectOfficeList(@Param("keyword") String keyword
             , @Param("building_id") Long building_id
+            , @Param("district_id") Long district_id
             , @Param("zone_id") Long zone_id
             , @Param("metro_name") String metro_name
             , @Param("type_id") Long type_id
@@ -51,6 +53,7 @@ public interface OfficeMapperDao {
      *
      * @param keyword        关键词
      * @param building_id    商圈id
+     * @param district_id    区id
      * @param zone_id        区域id
      * @param metro_name     地铁名字
      * @param type_id        办公室类型id
@@ -60,6 +63,7 @@ public interface OfficeMapperDao {
      */
     Integer countOfficeList(@Param("keyword") String keyword
             , @Param("building_id") Long building_id
+            , @Param("district_id") Long district_id
             , @Param("zone_id") Long zone_id
             , @Param("metro_name") String metro_name
             , @Param("type_id") Long type_id

@@ -14,8 +14,8 @@
         SELECT * FROM PRICE_RANGE WHERE ID IN
         (
             SELECT PRICE_RANGE_ID AS ID
-            FROM OFFICE WHERE BUILDING_ID = #{BUILDING_ID}
+            FROM OFFICE WHERE BUILDING_ID = #{building_id}
             GROUP BY PRICE_RANGE_ID
-        ) ORDER BY ID ASC;
+        ) OR ID = 1 ORDER BY ID ASC;
     </select>
 </mapper>

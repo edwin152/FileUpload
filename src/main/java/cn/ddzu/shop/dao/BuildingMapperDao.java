@@ -25,6 +25,7 @@ public interface BuildingMapperDao {
      * 按条件筛选办公室
      *
      * @param keyword        关键词
+     * @param district_id    区id
      * @param zone_id        区域id
      * @param metro_name     地铁名字
      * @param type_id        办公室类型id
@@ -35,6 +36,7 @@ public interface BuildingMapperDao {
      * @param step           请求总量
      */
     List<Building> selectBuildingList(@Param("keyword") String keyword
+            , @Param("district_id") Long district_id
             , @Param("zone_id") Long zone_id
             , @Param("metro_name") String metro_name
             , @Param("type_id") Long type_id
@@ -48,6 +50,7 @@ public interface BuildingMapperDao {
      * 按条件筛选办公室数量
      *
      * @param keyword        关键词
+     * @param district_id    区id
      * @param zone_id        区域id
      * @param metro_name     地铁名字
      * @param type_id        办公室类型id
@@ -56,6 +59,7 @@ public interface BuildingMapperDao {
      * @param decoration_id  装修类型id
      */
     Integer countBuildingList(@Param("keyword") String keyword
+            , @Param("district_id") Long district_id
             , @Param("zone_id") Long zone_id
             , @Param("metro_name") String metro_name
             , @Param("type_id") Long type_id

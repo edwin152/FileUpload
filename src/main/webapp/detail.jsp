@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/all.css"/>
     <link rel="stylesheet" type="text/css" href="css/detail.css"/>
+    <link rel="stylesheet" type="text/css" href="css/search.css"/>
     <script src="js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/swiper.jquery.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
@@ -17,11 +18,15 @@
 <script type="text/javascript">
     let building_id;
     let filter;
+    let pageIndex = 0;
+    let pageNum = 0;
 
     window.onload = function () {
-        let params = window.location.href.split('?')[1];
-        building_id = params.split("=")[1];
+        let request = window.location.search;
+        building_id = http.getParameter(request, "building_id");
+        building_id = parseInt(building_id);
         getFilterList();
+        getBuilding();
     };
 
     $(function () {
@@ -41,36 +46,97 @@
                 building_id: building_id,
             },
             onSuccess: function (data) {
-                console.log(data);
-                filter = JSON.parse(xmlHttp.responseText);
-                search();
+                // console.log(data);
+                filter = data;
+                getOfficeList();
             }
         });
     }
 
-    function search() {
+    function getBuilding() {
+        http.post({
+            url: "search/building",
+            params: {
+                id: building_id,
+            },
+            onSuccess: function (data) {
+                // console.log(data);
+                setTopInfo(data);
+                setBottomInfo(data);
+            }
+        })
+    }
+
+    function getOfficeList(page) {
         http.post({
             url: "search/offices",
             params: {
                 building_id: building_id,
+                type_id: filter.checkedTypeId,
                 area_range_id: filter.checkedAreaRangeId,
                 price_range_id: filter.checkedPriceRangeId,
+                decoration_id: filter.checkedDecorationId,
+                page: page,
             },
             onSuccess: function (data) {
                 // console.log(data);
-                data = JSON.parse(data);
+                filter.checkedTypeId = data.checkedTypeId;
                 filter.checkedAreaRangeId = data.checkedAreaRangeId;
                 filter.checkedPriceRangeId = data.checkedPriceRangeId;
+                filter.checkedDecorationId = data.checkedDecorationId;
                 setFilterList();
-                setTopInfo(data.building);
-                setBottomInfo(data.building);
+                pageIndex = data.pageIndex;
+                pageNum = data.pageNum;
                 setOfficeList(data.officeList);
             }
         });
     }
 
     function setFilterList() {
+        if (!filter) {
+            return;
+        }
+        setFilterListByName(filter.typeList, 'typeList', filter.checkedTypeId);
+        setFilterListByName(filter.areaRangeList, 'areaRangeList', filter.checkedAreaRangeId);
+        setFilterListByName(filter.priceRangeList, 'priceRangeList', filter.checkedPriceRangeId);
+        setFilterListByName(filter.decorationList, 'decorationList', filter.checkedDecorationId);
+    }
 
+    function setFilterListByName(list, name, checkedId) {
+        if (!list || list.length <= 2) {
+            $("#" + name.substr(0, name.length - 4)).hide();
+        } else {
+            $("#" + name.substr(0, name.length - 4)).show();
+        }
+        let conditionBox = document.getElementById(name);
+        conditionBox.innerHTML = "";
+        for (let i = 0; list && i < list.length; i++) {
+            let optionItem = document.createElement("span");
+            if (list[i].id === checkedId) {
+                optionItem.className = 'condition_option_select';
+            } else {
+                optionItem.className = 'condition_option';
+            }
+            optionItem.innerHTML = list[i].name;
+            optionItem.onclick = function () {
+                switch (name) {
+                    case "typeList":
+                        filter.checkedTypeId = list[i].id;
+                        break;
+                    case "areaRangeList":
+                        filter.checkedAreaRangeId = list[i].id;
+                        break;
+                    case "priceRangeList":
+                        filter.checkedPriceRangeId = list[i].id;
+                        break;
+                    case "decorationList":
+                        filter.checkedDecorationId = list[i].id;
+                        break;
+                }
+                getOfficeList();
+            };
+            conditionBox.appendChild(optionItem);
+        }
     }
 
     /**
@@ -78,41 +144,59 @@
      * @param building 数据
      */
     function setTopInfo(building) {
-        document.getElementById("detail_info_name").innerHTML = building.name;
+        // 名字
+        document.getElementById("building_name").innerHTML = building.name;
+        // 图片
         let imgBox = document.getElementById("top_image_list");
-        // TODO 数据为字符串，如果变为数组，这里改动
-        let imageData = JSON.parse(building.img_list);
-        for (let i = 0; i < imageData.length; i++) {
+        for (let img of building.img_list) {
             let itemBox = document.createElement("div");
             itemBox.setAttribute("class", "swiper-slide");
             imgBox.appendChild(itemBox);
             let itemImg = document.createElement("img");
             itemImg.setAttribute("class", "top_info_image");
-            itemImg.setAttribute("src", imageData[i]);
+            itemImg.setAttribute("src", img);
             itemBox.appendChild(itemImg);
         }
-
-        // TODO 价格
-        document.getElementById("detail_info_price").innerHTML = "";
-
-        // TODO 地址
-        document.getElementById("page_info_more").innerHTML = "地址："
-            + "[" + building.district_name + "]"
-            + "[" + building.zone_name + "]"
+        // 价格范围
+        document.getElementById("detail_info_price").innerHTML = building.price_range;
+        // TODO 地址改成可点击模式
+        document.getElementById("area_detail").innerHTML = "地址："
+            + "[ " + building.district_name + " ]"
+            + " - "
+            + "[ " + building.zone_name + " ] "
             + building.address;
-
         // TODO 距离地铁距离
-        document.getElementById("metro_name_list").innerHTML = "距离地铁："
-            + "[" + building.metro_name_list + "]";
+        document.getElementById("metro_name_list").innerHTML = building.metro_name_list;
+        // 在租房源
+        document.getElementById("office_num").innerHTML = building.office_num + "个";
+        // 可租面积
+        document.getElementById("area_range").innerHTML = building.area_range + "m²";
     }
 
     /**
      * 设置办公室列表数据
-     * @param {Object} data
      */
-    function setOfficeList(data) {
+    function setOfficeList(officeList) {
         let contentBox = document.getElementById("data_item_box");
-        for (let i = 0; i < data.length; i++) {
+        if (pageIndex === 0) {
+            // 清除子view
+            let childList = contentBox.childNodes;
+            while (childList.length > 2) {
+                contentBox.removeChild(childList[2]);
+            }
+        }
+        if (pageNum > pageIndex + 1) {
+            $("#next_page").show();
+        } else {
+            $("#next_page").hide();
+        }
+        // if (pageIndex === 0 && buildingList.length === 0) {
+        //     $("#error_not_text").show();
+        // } else {
+        //     $("#error_not_text").hide();
+        // }
+
+        for (let office of officeList) {
             let trView = document.createElement("tr");
             contentBox.appendChild(trView);
             let tdImage = document.createElement("td");
@@ -121,39 +205,73 @@
             // 图片
             let imageView = document.createElement("img");
             imageView.className = "table_item_image";
-            imageView.setAttribute("src", ""); // TODO
+            if (office.img_list) {
+                imageView.setAttribute("src", office.img_list[0]);
+            }
             tdImage.appendChild(imageView);
 
-            // 名称
-            let tdName = document.createElement("td");
-            tdName.innerHTML = data[i].decoration_name;
-            trView.appendChild(tdName);
+            // 房源信息
+            let sourceInfo = document.createElement("td");
+            sourceInfo.innerHTML = office.source_info;
+            trView.appendChild(sourceInfo);
 
             // 面积
-            let areaName = document.createElement("td");
-            areaName.innerHTML = data[i].area_range_name;
-            trView.appendChild(areaName);
+            let area = document.createElement("td");
+            area.innerHTML = office.area;
+            trView.appendChild(area);
 
             // 单价
-            let priceName = document.createElement("td");
-            priceName.innerHTML = data[i].price_range_name;
-            trView.appendChild(priceName);
+            let price = document.createElement("td");
+            price.innerHTML = office.price;
+            trView.appendChild(price);
 
             // 总价
-            let areaValue = document.createElement("td");
-            areaValue.innerHTML = data[i].area_value;
-            trView.appendChild(areaValue);
+            let totalPrice = document.createElement("td");
+            totalPrice.innerHTML = office.total_price;
+            trView.appendChild(totalPrice);
         }
     }
 
     /**
      * 设置底部写字楼信息
-     * @param {Object} data
      */
-    function setBottomInfo(data) {
-        document.getElementById("bottom_info_text").innerHTML = data.sssss;
-        // TODO
+    function setBottomInfo(building) {
+        let bottom_info = document.getElementById("bottom_info");
+        bottom_info.innerHTML = "";
+        if (!building.notes || building.notes.length === 0) {
+            $("#bottom_info").hide();
+        } else {
+            $("#bottom_info").show();
+        }
+        for (let note of building.notes) {
+            let box = document.createElement("div");
+            box.className = "bottom_info_item flexed_row";
+
+            let key = document.createElement("div");
+            key.className = "bottom_info_title";
+            key.innerHTML = note.key + ":";
+
+            let value = document.createElement("div");
+            value.className = "bottom_info_text";
+            value.innerHTML = note.value;
+
+            box.appendChild(key);
+            box.appendChild(value);
+            bottom_info.appendChild(box);
+        }
+
+        // TODO 楼盘介绍 补进UI
+        // let introduce = building.introduce;
     }
+
+    /**
+     * 下一页
+     */
+    function nextPage() {
+        getOfficeList(pageIndex + 1);
+    }
+
+
 </script>
 
 <body class="bg_gray">
@@ -201,30 +319,30 @@
             <div class="swiper_position swiper_top"></div>
         </div>
         <div class="detail_info_box flexed_column">
-            <div class="detail_info_name" id="detail_info_name">
+            <div class="detail_info_name" id="building_name">
             </div>
             <div class="detail_info_price_box">
                 <span class="detail_info_price" id="detail_info_price">2.8-3.3</span>元/m²/天
             </div>
             <div class="infodown_box flexed_row">
                 <div class="infodown">
-                    <div class="infodown_top">
-                        2个
+                    <div class="infodown_top" id="office_num">
+                        0个
                     </div>
                     <div class="infodown_bottom">
                         在租房源
                     </div>
                 </div>
                 <div class="infodown">
-                    <div class="infodown_top">
-                        130 - 173m²
+                    <div class="infodown_top" id="area_range">
+                        0m²
                     </div>
                     <div class="infodown_bottom">
                         可租面积
                     </div>
                 </div>
             </div>
-            <div class="page_info_more">
+            <div class="page_info_more" id="area_detail">
                 地址： [ 普陀 ] - [ 长风商务区 ] 同普路1220号
             </div>
             <div class="page_info_more mini_line_height flexed_row">
@@ -258,24 +376,43 @@
         <div class="bg_white left_item">
             <h3 class="sec_title">默认搜索</h3>
 
-            <div class="condition_line flexed_row">
+            <div class="condition_line flexed_row" id="type">
+                <div class="condition_title">
+                    类型：
+                </div>
+                <div class="option_box flexed_row" id="typeList">
+                </div>
+            </div>
+
+            <div class="condition_line flexed_row" id="areaRange">
                 <div class="condition_title">
                     面积：
                 </div>
                 <div class="option_box flexed_row" id="areaRangeList">
                 </div>
             </div>
-            <div class="condition_line flexed_row">
+
+            <div class="condition_line flexed_row" id="priceRange">
                 <div class="condition_title">
                     价格：
                 </div>
-                <div class="option_box flexed_row" id="priceRanges">
+                <div class="option_box flexed_row" id="priceRangeList">
                 </div>
             </div>
+
+            <div class="condition_line flexed_row" id="decoration">
+                <div class="condition_title">
+                    装修：
+                </div>
+                <div class="option_box flexed_row" id="decorationList">
+                </div>
+            </div>
+
             <div class="data_list">
                 <div class="data_item_box flexed_row" id="dataList">
                 </div>
             </div>
+
             <table class="table_box" id="data_item_box">
                 <tr class="table_title">
                     <td>全部</td>
@@ -285,65 +422,23 @@
                     <td>总价排序</td>
                 </tr>
             </table>
+
+            <div class="paging" id="next_page">
+                <span class="paging_item" onclick="nextPage()">
+                    下一页
+                </span>
+            </div>
         </div>
+
         <div class="bg_white left_item matop">
             <h3 class="sec_title">写字楼信息</h3>
             <div class="data_list">
                 <div class="data_item_box flexed_row">
-                    <div class="bottom_info_box flexed_row">
-                        <div class="bottom_info_item flexed_row">
-                            <div class="bottom_info_title">
-                                建筑面积：
-                            </div>
-                            <div class="bottom_info_text" id="bottom_info_text">
-                                27703m²
-                            </div>
-                        </div>
-                        <div class="bottom_info_item flexed_row">
-                            <div class="bottom_info_title">
-                                得房率：
-                            </div>
-                            <div class="bottom_info_text">
-                                27703m²
-                            </div>
-                        </div>
-                        <div class="bottom_info_item flexed_row">
-                            <div class="bottom_info_title">
-                                标准层高：
-                            </div>
-                            <div class="bottom_info_text">
-                                27703m²
-                            </div>
-                        </div>
-                        <div class="bottom_info_item flexed_row">
-                            <div class="bottom_info_title">
-                                客梯数：
-                            </div>
-                            <div class="bottom_info_text">
-                                27703m²
-                            </div>
-                        </div>
-                        <div class="bottom_info_item flexed_row">
-                            <div class="bottom_info_title">
-                                开发商：
-                            </div>
-                            <div class="bottom_info_text">
-                                27703m²
-                            </div>
-                        </div>
-                        <div class="bottom_info_item flexed_row">
-                            <div class="bottom_info_title">
-                                已入驻企业：
-                            </div>
-                            <div class="bottom_info_text">
-                                上海荣戈机电设备有限公司、杰姆士（上海）酒业贸易、上海同为建筑设计有限公司、BOA上海源鸣文化传播有限公司
-                            </div>
-                        </div>
+                    <div class="bottom_info_box flexed_row" id="bottom_info">
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 
     <div class="content_right bg_white">

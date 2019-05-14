@@ -11,8 +11,10 @@
             ,#{building.zone_id}
             ,#{building.address}
             ,#{building.metro_name_list}
+            ,#{building.introduce}
+            ,#{building.notes}
             ,#{building.img_list}
-        );
+        )
     </insert>
 
     <select id="selectBuildingById" parameterType="java.lang.Long" resultType="cn.ddzu.shop.entity.Building">
@@ -22,6 +24,8 @@
         BUILDING.ZONE_ID,
         BUILDING.ADDRESS,
         BUILDING.METRO_NAME_LIST,
+        BUILDING.INTRODUCE,
+        BUILDING.NOTES,
         BUILDING.IMG_LIST,
         DISTRICT.NAME AS DISTRICT_NAME,
         ZONE.NAME AS ZONE_NAME
@@ -32,25 +36,16 @@
     </select>
 
     <select id="selectBuildingList" resultType="cn.ddzu.shop.entity.Building">
-        SELECT
-        BUILDING.ID,
+        SELECT BUILDING.ID,
         BUILDING.NAME,
         BUILDING.ZONE_ID,
         BUILDING.ADDRESS,
         BUILDING.METRO_NAME_LIST,
+        BUILDING.INTRODUCE,
+        BUILDING.NOTES,
         BUILDING.IMG_LIST,
-        OFFICE.TYPE_ID,
-        OFFICE.AREA_VALUE,
-        OFFICE.AREA_RANGE_ID,
-        OFFICE.PRICE,
-        OFFICE.PRICE_RANGE_ID,
-        OFFICE.DECORATION_ID,
         DISTRICT.NAME AS DISTRICT_NAME,
-        ZONE.NAME AS ZONE_NAME,
-        TYPE.NAME AS TYPE_NAME,
-        AREA_RANGE.NAME AS AREA_RANGE_NAME,
-        PRICE_RANGE.NAME AS PRICE_RANGE_NAME,
-        DECORATION.NAME AS DECORATION_NAME
+        ZONE.NAME AS ZONE_NAME
         FROM BUILDING
         LEFT JOIN OFFICE ON BUILDING.ID = OFFICE.BUILDING_ID
         LEFT JOIN ZONE ON BUILDING.ZONE_ID = ZONE.ID
@@ -59,28 +54,41 @@
         LEFT JOIN AREA_RANGE ON OFFICE.AREA_RANGE_ID = AREA_RANGE.ID
         LEFT JOIN PRICE_RANGE ON OFFICE.PRICE_RANGE_ID = PRICE_RANGE.ID
         LEFT JOIN DECORATION ON OFFICE.DECORATION_ID = DECORATION.ID
-        WHERE OFFICE.ID IN (SELECT MIN(ID) FROM OFFICE
-        <where>
-            <if test="type_id != null">
-                AND OFFICE.TYPE_ID = #{type_id}
+        WHERE OFFICE.ID IN (
+        SELECT MIN(OFFICE.ID)
+        FROM BUILDING
+        LEFT JOIN OFFICE ON BUILDING.ID = OFFICE.BUILDING_ID
+        LEFT JOIN ZONE ON BUILDING.ZONE_ID = ZONE.ID
+        LEFT JOIN DISTRICT ON ZONE.DISTRICT_ID = DISTRICT.ID
+        WHERE 1=1
+        <if test="type_id != null">
+            AND OFFICE.TYPE_ID = #{type_id}
+        </if>
+        <if test="area_range_id != null">
+            AND OFFICE.AREA_RANGE_ID = #{area_range_id}
+        </if>
+        <if test="price_range_id != null">
+            AND OFFICE.PRICE_RANGE_ID = #{price_range_id}
+        </if>
+        <if test="decoration_id != null">
+            AND OFFICE.DECORATION_ID = #{decoration_id}
+        </if>
+        <if test="district_id == zone_id">
+            AND BUILDING.ZONE_ID IN
+            (SELECT ZONE.ID
+            FROM ZONE
+            <if test="district_id != null">
+                WHERE DISTRICT_ID = #{district_id}
             </if>
-            <if test="area_range_id != null">
-                AND OFFICE.AREA_RANGE_ID = #{area_range_id}
-            </if>
-            <if test="price_range_id != null">
-                AND OFFICE.PRICE_RANGE_ID = #{price_range_id}
-            </if>
-            <if test="decoration_id != null">
-                AND OFFICE.DECORATION_ID = #{decoration_id}
-            </if>
-        </where>
+            )
+        </if>
+        <if test="district_id != zone_id">
+            AND BUILDING.ZONE_ID = #{zone_id}
+        </if>
         GROUP BY OFFICE.BUILDING_ID
         )
         <if test="keyword != null">
             AND BUILDING.NAME LIKE #{keyword}
-        </if>
-        <if test="zone_id != null">
-            AND BUILDING.ZONE_ID = #{zone_id}
         </if>
         <if test="metro_name != null">
             AND BUILDING.METRO_NAME_LIST LIKE #{metro_name}
@@ -114,14 +122,22 @@
         <if test="keyword != null">
             AND BUILDING.NAME LIKE #{keyword}
         </if>
-        <if test="zone_id != null">
-            AND BUILDING.ZONE_ID = #{zone_id}
-        </if>
         <if test="metro_name != null">
             AND BUILDING.METRO_NAME_LIST LIKE #{metro_name}
         </if>
+        <if test="district_id == zone_id">
+            AND BUILDING.ZONE_ID IN
+            (SELECT ZONE.ID
+            FROM ZONE
+            <if test="district_id != null">
+                WHERE DISTRICT_ID = #{district_id}
+            </if>
+            )
+        </if>
+        <if test="district_id != zone_id">
+            AND BUILDING.ZONE_ID = #{zone_id}
+        </if>
         GROUP BY BUILDING.ID
-        ;
     </select>
 </mapper>
 

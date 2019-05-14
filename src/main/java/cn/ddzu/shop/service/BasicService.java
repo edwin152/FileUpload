@@ -43,6 +43,11 @@ public interface BasicService {
     List<Type> getTypeList();
 
     /**
+     * 获取办公类型列表
+     */
+    List<Type> getTypeList(Long building_id);
+
+    /**
      * 查询面积区间列表
      */
     List<AreaRange> getAreaRangeList();
@@ -66,4 +71,9 @@ public interface BasicService {
      * 查询装修情况列表
      */
     List<Decoration> getDecorationList();
+
+    /**
+     * 查询装修情况列表
+     */
+    List<Decoration> getDecorationList(Long building_id);
 }
