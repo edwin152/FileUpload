@@ -46,6 +46,14 @@
     flex-grow: 1;
 }
 
+.detail_info_box .detail_info_name {
+    font-size: 24px;
+    line-height: 36px;
+    font-weight: normal;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
 .detail_info_price_box {
     padding: 5px 0 20px;
     color: #fff;
@@ -146,6 +154,11 @@
     margin-left: 15px;
 }
 
+.address_clickable:hover {
+    color: rgba(255, 255, 255, .6);
+    text-decoration: underline;
+}
+
 .content_box {
     align-items: flex-start;
 }
@@ -156,6 +169,7 @@
     margin-right: 20px;
     display: flex;
     flex-direction: column;
+    padding: 0;
 }
 
 .left_item {
@@ -212,7 +226,7 @@
 .condition_line {
     align-items: flex-start;
     width: 100%;
-    border-bottom: 1px solid #f3f3f3;
+    border-bottom: 1px dotted #f3f3f3;
     line-height: 28px;
     padding: 6px 0;
 }
@@ -243,6 +257,12 @@
     width: 100%;
     table-layout: fixed;
 }
+.table_box tr td {
+    border-bottom: 1px solid #f3f3f3;
+    color: #666;
+    font: 12px Microsoft YaHei,SimHei,SimSun;
+    line-height: 16px;
+}
 
 .table_box td {
     line-height: 32px;
@@ -255,6 +275,14 @@
     color: #333;
     text-align: left;
     height: 33px;
+}
+
+.table_box tr td .big_text{
+    font-size: 20px;
+}
+
+.table_box tr td .price_color{
+    color: #ff9931;
 }
 
 .bottom_info_box {
@@ -290,4 +318,9 @@
 .table_item_image {
     width: 140px;
     height: 105px;
+}
+
+
+.source_info_td:hover {
+    color: #FFBB33;
 }

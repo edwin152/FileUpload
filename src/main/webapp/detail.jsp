@@ -8,8 +8,8 @@
     <title></title>
     <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/all.css"/>
-    <link rel="stylesheet" type="text/css" href="css/detail.css"/>
     <link rel="stylesheet" type="text/css" href="css/search.css"/>
+    <link rel="stylesheet" type="text/css" href="css/detail.css"/>
     <script src="js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/swiper.jquery.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
@@ -28,16 +28,6 @@
         getFilterList();
         getBuilding();
     };
-
-    $(function () {
-        new Swiper('#swiper_top_info', {
-            loop: true,
-            autoplay: 2000,
-            pagination: '.swiper_position',
-            paginationClickable: true,
-            autoplayDisableOnInteraction: false,
-        });
-    });
 
     function getFilterList() {
         http.post({
@@ -159,18 +149,19 @@
         }
         // 价格范围
         document.getElementById("detail_info_price").innerHTML = building.price_range;
-        // TODO 地址改成可点击模式
-        document.getElementById("area_detail").innerHTML = "地址："
-            + "[ " + building.district_name + " ]"
-            + " - "
-            + "[ " + building.zone_name + " ] "
-            + building.address;
+        // 联系客服顶部价格
+        document.getElementById("service_info_price").innerHTML = building.price_range;
+        // 地址
+        document.getElementById("district_name").innerHTML = building.district_name;
+        document.getElementById("zone_name").innerHTML = building.zone_name;
+        document.getElementById("address_info_name").innerHTML = building.address;
         // TODO 距离地铁距离
         document.getElementById("metro_name_list").innerHTML = building.metro_name_list;
         // 在租房源
         document.getElementById("office_num").innerHTML = building.office_num + "个";
         // 可租面积
         document.getElementById("area_range").innerHTML = building.area_range + "m²";
+        openSwiper();
     }
 
     /**
@@ -208,26 +199,51 @@
             if (office.img_list) {
                 imageView.setAttribute("src", office.img_list[0]);
             }
+            tdImage.onclick = function () {
+                openRoomDetail(office.id);
+            };
             tdImage.appendChild(imageView);
 
             // 房源信息
             let sourceInfo = document.createElement("td");
-            sourceInfo.innerHTML = office.source_info;
+            sourceInfo.setAttribute("class", "source_info_td");
+            sourceInfo.innerHTML = "<div class='clickable'>" + office.source_info + "</div>";
+            sourceInfo.onclick = function () {
+                openRoomDetail(office.id);
+            };
             trView.appendChild(sourceInfo);
 
             // 面积
             let area = document.createElement("td");
-            area.innerHTML = office.area;
+            let areaName = document.createElement("span");
+            areaName.innerHTML = office.area;
+            areaName.setAttribute("class", "big_text");
+            let areaEnd = document.createElement("span");
+            areaEnd.innerHTML = "m²";
+            area.appendChild(areaName);
+            area.appendChild(areaEnd);
             trView.appendChild(area);
 
             // 单价
             let price = document.createElement("td");
-            price.innerHTML = office.price;
+            let priceName = document.createElement("span");
+            priceName.innerHTML = office.price;
+            priceName.setAttribute("class", "big_text price_color");
+            let priceEnd = document.createElement("span");
+            priceEnd.innerHTML = "元/m²/天";
+            price.appendChild(priceName);
+            price.appendChild(priceEnd);
             trView.appendChild(price);
 
             // 总价
             let totalPrice = document.createElement("td");
-            totalPrice.innerHTML = office.total_price;
+            let totalPriceName = document.createElement("span");
+            totalPriceName.innerHTML = office.total_price;
+            totalPriceName.setAttribute("class", "big_text");
+            let totalPriceEnd = document.createElement("span");
+            totalPriceEnd.innerHTML = "元/月";
+            totalPrice.appendChild(totalPriceName);
+            totalPrice.appendChild(totalPriceEnd);
             trView.appendChild(totalPrice);
         }
     }
@@ -262,6 +278,7 @@
 
         // TODO 楼盘介绍 补进UI
         // let introduce = building.introduce;
+        document.getElementById("introduce_info").innerHTML = building.introduce;
     }
 
     /**
@@ -271,6 +288,20 @@
         getOfficeList(pageIndex + 1);
     }
 
+    function openRoomDetail(office_id) {
+        // TODO 点击事件
+        // window.open("roomDetail.jsp?office_id=" + office_id, "_blank");
+    }
+
+    function openSwiper() {
+        new Swiper('#swiper_top_info', {
+            loop: true,
+            autoplay: 2000,
+            pagination: '.swiper_position',
+            paginationClickable: true,
+            autoplayDisableOnInteraction: false,
+        });
+    }
 
 </script>
 
@@ -327,7 +358,6 @@
             <div class="infodown_box flexed_row">
                 <div class="infodown">
                     <div class="infodown_top" id="office_num">
-                        0个
                     </div>
                     <div class="infodown_bottom">
                         在租房源
@@ -335,7 +365,6 @@
                 </div>
                 <div class="infodown">
                     <div class="infodown_top" id="area_range">
-                        0m²
                     </div>
                     <div class="infodown_bottom">
                         可租面积
@@ -343,12 +372,14 @@
                 </div>
             </div>
             <div class="page_info_more" id="area_detail">
-                地址： [ 普陀 ] - [ 长风商务区 ] 同普路1220号
+                地址： [
+                <span id="district_name" class="clickable address_clickable"></span>
+                ] - [ <span id="zone_name" class="clickable address_clickable"></span>
+                ] <span id="address_info_name"></span>
             </div>
             <div class="page_info_more mini_line_height flexed_row">
                 距离地铁：
                 <div id="metro_name_list">
-                    距离 13号线 祁连山南路 约598米 <br/> 距离 2号线 北新泾 约1807米
                 </div>
             </div>
             <div class="page_info_service flexed_row">
@@ -374,7 +405,7 @@
 <div class="content_box matop win flexed_row">
     <div class="content_left">
         <div class="bg_white left_item">
-            <h3 class="sec_title">默认搜索</h3>
+            <h3 class="sec_title">出租房源</h3>
 
             <div class="condition_line flexed_row" id="type">
                 <div class="condition_title">
@@ -417,9 +448,9 @@
                 <tr class="table_title">
                     <td>全部</td>
                     <td>房源信息</td>
-                    <td>面积排序</td>
-                    <td>单价排序</td>
-                    <td>总价排序</td>
+                    <td>面积</td>
+                    <td>单价</td>
+                    <td>总价</td>
                 </tr>
             </table>
 
@@ -438,11 +469,17 @@
                     </div>
                 </div>
             </div>
+            <div class="introduce_info" id="introduce_info">
+
+            </div>
         </div>
     </div>
 
     <div class="content_right bg_white">
         <div class="contact_way">
+            <div class="service_info_price_box">
+                <span class="service_info_price" id="service_info_price"></span>元/m²/天
+            </div>
             <div class="contact_info">
                 <img src="" class="contact_img" alt=""/>
                 <div class="service_box">
@@ -464,7 +501,7 @@
                     预约看房
                 </div>
             </div>
-            <div class="content_right_title">
+            <div class="content_right_title" style="display: none;">
                 <img src="" class="content_right_title_img" alt=""/>热门楼盘
             </div>
         </div>

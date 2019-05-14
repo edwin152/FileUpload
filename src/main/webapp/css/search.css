@@ -84,7 +84,7 @@
 }
 
 .data_item_box {
-    padding: 20px 0;
+    padding: 10px 0 20px 0;
     width: 100%;
     font: 14px Microsoft YaHei, SimHei, SimSun;
     color: #666;
@@ -161,3 +161,4 @@
     line-height: 30px;
     font-weight: normal;
 }
+
