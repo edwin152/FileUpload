@@ -1,7 +1,5 @@
 package cn.ddzu.shop.util;
 
-import com.sun.istack.internal.Nullable;
-
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -11,7 +9,7 @@ public class Log {
         d(null, log);
     }
 
-    public static void d(@Nullable String tag, String log) {
+    public static void d(String tag, String log) {
         StringBuilder logBuilder = new StringBuilder("------");
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT-8:00"));
         logBuilder.append(calendar.get(Calendar.HOUR_OF_DAY)).append(":")

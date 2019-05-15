@@ -31,10 +31,45 @@ public class FilterController {
 
         Log.d("filter-all", new Gson().toJson(request.getParameterMap()));
 
+        long district_id = 1L;
+        if (request.getParameter("district_id") != null) {
+            district_id = Long.parseLong(request.getParameter("district_id"));
+        }
+
+        long zone_id = 1L;
+        if (request.getParameter("zone_id") != null) {
+            zone_id = Long.parseLong(request.getParameter("zone_id"));
+        }
+
+        long metro_id = 1L;
+        if (request.getParameter("metro_id") != null) {
+            metro_id = Long.parseLong(request.getParameter("metro_id"));
+        }
+
+        long type_id = 1L;
+        if (request.getParameter("type_id") != null) {
+            type_id = Long.parseLong(request.getParameter("type_id"));
+        }
+
+        long area_range_id = 1L;
+        if (request.getParameter("area_range_id") != null) {
+            area_range_id = Long.parseLong(request.getParameter("area_range_id"));
+        }
+
+        long price_range_id = 1L;
+        if (request.getParameter("price_range_id") != null) {
+            price_range_id = Long.parseLong(request.getParameter("price_range_id"));
+        }
+
+        long decoration_id = 1L;
+        if (request.getParameter("decoration_id") != null) {
+            decoration_id = Long.parseLong(request.getParameter("decoration_id"));
+        }
+
         List<District> districtList = basicService.getDistrictList();
         for (District district : districtList) {
-            long district_id = district.getId();
-            List<Zone> zoneList = basicService.getZoneList(district_id);
+            long districtId = district.getId();
+            List<Zone> zoneList = basicService.getZoneList(districtId);
             district.setZoneList(zoneList);
         }
 
@@ -51,13 +86,13 @@ public class FilterController {
         json.add("areaRangeList", new Gson().toJsonTree(areaRangeList));
         json.add("priceRangeList", new Gson().toJsonTree(priceRangeList));
         json.add("decorationList", new Gson().toJsonTree(decorationList));
-        json.addProperty("checkedDistrictId", 1);
-        json.addProperty("checkedZoneId", 1);
-        json.addProperty("checkedMetroId", 1);
-        json.addProperty("checkedTypeId", 1);
-        json.addProperty("checkedAreaRangeId", 1);
-        json.addProperty("checkedPriceRangeId", 1);
-        json.addProperty("checkedDecorationId", 1);
+        json.addProperty("checkedDistrictId", district_id);
+        json.addProperty("checkedZoneId", zone_id);
+        json.addProperty("checkedMetroId", metro_id);
+        json.addProperty("checkedTypeId", type_id);
+        json.addProperty("checkedAreaRangeId", area_range_id);
+        json.addProperty("checkedPriceRangeId", price_range_id);
+        json.addProperty("checkedDecorationId", decoration_id);
 
         response.getWriter().write(json.toString());
         response.getWriter().close();
@@ -78,6 +113,26 @@ public class FilterController {
             building_id = Long.parseLong(request.getParameter("building_id"));
         }
 
+        long type_id = 1L;
+        if (request.getParameter("type_id") != null) {
+            type_id = Long.parseLong(request.getParameter("type_id"));
+        }
+
+        long area_range_id = 1L;
+        if (request.getParameter("area_range_id") != null) {
+            area_range_id = Long.parseLong(request.getParameter("area_range_id"));
+        }
+
+        long price_range_id = 1L;
+        if (request.getParameter("price_range_id") != null) {
+            price_range_id = Long.parseLong(request.getParameter("price_range_id"));
+        }
+
+        long decoration_id = 1L;
+        if (request.getParameter("decoration_id") != null) {
+            decoration_id = Long.parseLong(request.getParameter("decoration_id"));
+        }
+
         List<Type> typeList = basicService.getTypeList(building_id);
         List<AreaRange> areaRangeList = basicService.getAreaRangeList(building_id);
         List<PriceRange> priceRangeList = basicService.getPriceRangeList(building_id);
@@ -88,10 +143,10 @@ public class FilterController {
         json.add("areaRangeList", new Gson().toJsonTree(areaRangeList));
         json.add("priceRangeList", new Gson().toJsonTree(priceRangeList));
         json.add("decorationList", new Gson().toJsonTree(decorationList));
-        json.addProperty("checkedTypeId", 1);
-        json.addProperty("checkedAreaRangeId", 1);
-        json.addProperty("checkedPriceRangeId", 1);
-        json.addProperty("checkedDecorationId", 1);
+        json.addProperty("checkedTypeId", type_id);
+        json.addProperty("checkedAreaRangeId", area_range_id);
+        json.addProperty("checkedPriceRangeId", price_range_id);
+        json.addProperty("checkedDecorationId", decoration_id);
 
         response.getWriter().write(json.toString());
         response.getWriter().close();

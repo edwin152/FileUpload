@@ -308,6 +308,7 @@
 }
 
 .introduction_estate_info_box {
+	align-items: flex-start;
 	height: 150px;
 }
 
@@ -317,7 +318,6 @@
 	line-height: 24px;
 	font-weight: normal;
 	text-align: left;
-	width: 100%;
 }
 
 .introduction_estate_name:hover {

@@ -17,6 +17,7 @@ public class Building {
     // 图片列表
     private String img_list;
 
+    private Long district_id;
     private String district_name;
     private String zone_name;
 
@@ -82,6 +83,14 @@ public class Building {
 
     public void setImg_list(String img_list) {
         this.img_list = img_list;
+    }
+
+    public Long getDistrict_id() {
+        return district_id;
+    }
+
+    public void setDistrict_id(Long district_id) {
+        this.district_id = district_id;
     }
 
     public String getDistrict_name() {

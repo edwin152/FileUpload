@@ -5,10 +5,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>点点租</title>
     <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/all.css"/>
-    <link rel="stylesheet" type="text/css" href="css/roomDetail.css"/>
+    <link rel="stylesheet" type="text/css" href="css/officeDetail.css"/>
     <script src="js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/swiper.jquery.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
@@ -31,7 +31,7 @@
                 id: office_id,
             },
             onSuccess: function (data) {
-                console.log(data);
+                // console.log(data);
                 setOffice(data);
             }
         })
@@ -115,15 +115,17 @@
         document.getElementById("bus_intro").innerHTML
             = buildingNotes.bus_intro;
 
+        document.getElementById("building_img")
+            .setAttribute("src", building.img_list[0]);
+
         document.getElementById("bottom_building_name").innerHTML
             = building.name;
 
         document.getElementById("building_introduce").innerHTML
             = building.introduce;
 
-        let imageListBox = document.getElementById("top_image_list")
-        let imageListBean = JSON.parse( building.img_list);
-        for (let img of imageListBean) {
+        let imageListBox = document.getElementById("top_image_list");
+        for (let img of office.img_list) {
             let itemBox = document.createElement("div");
             itemBox.setAttribute("class", "swiper-slide");
             imageListBox.appendChild(itemBox);
@@ -135,7 +137,7 @@
         startSwiper();
     }
 
-    function startSwiper(){
+    function startSwiper() {
         new Swiper('#swiper_top_info', {
             loop: true,
             autoplay: 2000,
@@ -367,7 +369,7 @@
         <div class="introduction_estate_box bg_white left_item matop">
             <h3 class="sec_title">楼盘介绍</h3>
             <div class="flexed_row matop">
-                <img src="" class="introduction_estate_img"/>
+                <img src="" class="introduction_estate_img" id="building_img" alt=""/>
                 <div class="flexed_column introduction_estate_info_box">
                     <div class="introduction_estate_name clickable" id="bottom_building_name">
                     </div>

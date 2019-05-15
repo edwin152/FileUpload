@@ -119,6 +119,7 @@ public class SearchController {
             buildingObject.add("img_list", JsonUtils.strToStringArray(building.getImg_list()));
 
             OfficeService.SearchBean officeSearchBean = (OfficeService.SearchBean) searchBean.clone();
+            officeSearchBean.setKeyword(null);
             officeSearchBean.setBuilding_id(building.getId());
             List<Office> officeList = officeService.getOfficeList(officeSearchBean, 0, -1);
             if (officeList.isEmpty()) {
@@ -241,7 +242,7 @@ public class SearchController {
             if (office.getPrice() != null && office.getArea() != null) {
                 totalPrice = office.getPrice() * office.getArea() * 30;
             }
-            officeObject.addProperty("total_price", totalPrice);
+            officeObject.addProperty("total_price", StringUtils.priceFormat(totalPrice));
 
             officeArray.add(officeObject);
         }
@@ -355,6 +356,9 @@ public class SearchController {
         }
         JsonObject officeObject = new Gson().toJsonTree(office).getAsJsonObject();
         JsonObject buildingObject = new Gson().toJsonTree(building).getAsJsonObject();
+        officeObject.add("img_list", JsonUtils.strToStringArray(office.getImg_list()));
+        buildingObject.add("img_list", JsonUtils.strToStringArray(building.getImg_list()));
+        buildingObject.add("metro_name_list", JsonUtils.strToStringArray(building.getMetro_name_list()));
 
         // 房源信息
         String sourceInfo = building.getDistrict_name() + building.getZone_name()
@@ -364,12 +368,17 @@ public class SearchController {
                 + "-" + office.getArea() + "m²";
         officeObject.addProperty("source_info", sourceInfo);
 
+        // 可容纳工位数
         int minAccommodation = (int) (office.getArea() / 8);
         int maxAccommodation = (int) (office.getArea() / 4);
         officeObject.addProperty("workplace_accommodation"
                 , minAccommodation + " ~ " + maxAccommodation);
 
-        Float totalPrice = office.getPrice() * office.getArea() * 30;
+        // 总价
+        float totalPrice = 0F;
+        if (office.getPrice() != null && office.getArea() != null) {
+            totalPrice = office.getPrice() * office.getArea() * 30;
+        }
         officeObject.addProperty("total_price", StringUtils.priceFormat(totalPrice));
 
         json.add("building", buildingObject);

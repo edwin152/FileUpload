@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="utf-8"/>
-    <title></title>
+    <title>点点租</title>
     <link rel="stylesheet" type="text/css" href="css/all.css"/>
     <link rel="stylesheet" type="text/css" href="css/search.css"/>
     <script src="js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
@@ -15,17 +15,39 @@
 
 <script type="text/javascript">
     let keyword;
-    let filter;
+    let filter = {};
     let pageIndex = 0;
     let pageNum = 0;
 
     window.onload = function () {
+        let request = window.location.search;
+        keyword = http.getParameter(request, "keyword");
+        if (keyword) {
+            keyword = decodeURI(keyword);
+            document.getElementById("keyword_input").setAttribute("value", keyword);
+        }
+        filter.checkedDistrictId = http.getParameter(request, "district_id");
+        filter.checkedZoneId = http.getParameter(request, "zone_id");
+        filter.checkedMetroId = http.getParameter(request, "metro_id");
+        filter.checkedTypeId = http.getParameter(request, "type_id");
+        filter.checkedAreaRangeId = http.getParameter(request, "area_range_id");
+        filter.checkedPriceRangeId = http.getParameter(request, "price_range_id");
+        filter.checkedDecorationId = http.getParameter(request, "decoration_id");
         getFilterList();
     };
 
     function getFilterList() {
         http.post({
             url: "filter/all",
+            params: {
+                district_id: filter.checkedDistrictId,
+                zone_id: filter.checkedZoneId,
+                metro_id: filter.checkedMetroId,
+                type_id: filter.checkedTypeId,
+                area_range_id: filter.checkedAreaRangeId,
+                price_range_id: filter.checkedPriceRangeId,
+                decoration_id: filter.checkedDecorationId,
+            },
             onSuccess: function (data) {
                 // console.log(data);
                 filter = data;
@@ -169,8 +191,29 @@
 
             let itemAddress = document.createElement("div");
             itemAddress.className = 'item_address item_margin';
-            itemAddress.innerHTML = "<span class=\"item_title\">地址：</span>[ <a class=\"hover_de clickable\">" +
-                building.district_name + "</a> ] - [ <a class=\"hover_de clickable\">" + building.zone_name + "</a> ] |   " + building.address;
+            let item_title = document.createElement("span");
+            item_title.className = "item_title";
+            item_title.innerHTML = "地址：";
+            let district_name = document.createElement("a");
+            district_name.className = "hover_de clickable";
+            district_name.innerHTML = building.district_name;
+            district_name.onclick = function () {
+                window.open("search.jsp?district_id=" + building.district_id);
+            };
+            let zone_name = document.createElement("a");
+            zone_name.className = "hover_de clickable";
+            zone_name.innerHTML = building.zone_name;
+            zone_name.onclick = function () {
+                window.open("search.jsp?district_id=" + building.district_id
+                    + "&zone_id=" + building.zone_id
+                );
+            };
+            itemAddress.appendChild(item_title);
+            itemAddress.append("[ ");
+            itemAddress.appendChild(district_name);
+            itemAddress.append(" ] - [ ");
+            itemAddress.appendChild(zone_name);
+            itemAddress.append("] |  " + building.address);
             dataInfoBox.appendChild(itemAddress);
 
             let itemSize = document.createElement("div");
@@ -181,18 +224,21 @@
 
             let itemPosition = document.createElement("div");
             itemPosition.className = 'item_position item_margin';
-            itemPosition.innerHTML = "共有" + building.office_num + "个房源"; // -----------------------
+            itemPosition.innerHTML = "共有" + building.office_num + "个房源";
             dataInfoBox.appendChild(itemPosition);
 
             let itemSizeBtnBox = document.createElement("div");
             itemSizeBtnBox.className = 'item_size_btn_box flexed_row';
             dataInfoBox.appendChild(itemSizeBtnBox);
 
-            for (let j = 0; j < building.area_list.length && j < 4; j++) { // -----------------------
+            for (let j = 0; j < building.area_list.length && j < 4; j++) {
                 let itemSizeBtn = document.createElement("div");
                 itemSizeBtn.className = 'item_size_btn hover_de clickable';
                 itemSizeBtn.innerHTML = building.area_list[j] + "m²"; // -----------------------
                 itemSizeBtnBox.appendChild(itemSizeBtn);
+                itemSizeBtn.onclick = function () {
+                    openDetail(building.id);
+                }
             }
 
             let itemPrice = document.createElement("div");
@@ -209,14 +255,14 @@
         getBuildingList(pageIndex + 1);
     }
 
-    function openDetail(building_id) {
-        window.open("detail.jsp?building_id=" + building_id, "_blank");
-    }
-
     function search() {
         let searchInput = document.getElementById("top_search");
         keyword = searchInput.value;
         getBuildingList();
+    }
+
+    function openDetail(building_id) {
+        window.open("buildingDetail.jsp?building_id=" + building_id, "_blank");
     }
 </script>
 
@@ -251,9 +297,11 @@
         <img src="" class="top_logo" alt=""/>
         <a href="" class="black_a logo_right">上海写字楼出租</a>
         <div class="top_search_box flexed_row">
-            <input type="text" class="top_search" name="search" id="top_search" value=""
-                   placeholder="输入您要查找的楼盘或者区域商圈名称"/>
-            <div class="top_search_btn clickable" onclick="search()">搜索</div>
+            <form action="">
+                <input type="text" class="top_search" name="keyword" id="keyword_input"
+                       placeholder="输入您要查找的楼盘或者区域商圈名称"/>
+                <input type="submit" class="top_search_btn clickable" value="搜索"/>
+            </form>
         </div>
     </div>
 </div>

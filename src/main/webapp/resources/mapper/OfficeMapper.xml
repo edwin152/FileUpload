@@ -86,13 +86,13 @@
         LEFT JOIN DECORATION ON OFFICE.DECORATION_ID = DECORATION.ID
         <where>
             <if test="keyword != null">
-                AND OFFICE.NAME LIKE #{keyword}
+                AND OFFICE.NAME LIKE "%"#{keyword}"%"
             </if>
             <if test="building_id != null">
                 AND OFFICE.BUILDING_ID = #{building_id}
             </if>
             <if test="metro_name != null">
-                AND BUILDING.METRO_NAME_LIST LIKE #{metro_name}
+                AND BUILDING.METRO_NAME_LIST LIKE "%"#{metro_name}"%"
             </if>
             <if test="type_id != null">
                 AND OFFICE.TYPE_ID = #{type_id}
@@ -130,13 +130,13 @@
         LEFT JOIN BUILDING ON OFFICE.BUILDING_ID = BUILDING.ID
         <where>
             <if test="keyword != null">
-                AND OFFICE.NAME LIKE #{keyword}
+                AND OFFICE.NAME LIKE "%"#{keyword}"%"
             </if>
             <if test="building_id != null">
                 AND OFFICE.BUILDING_ID = #{building_id}
             </if>
             <if test="metro_name != null">
-                AND OFFICE.METRO_NAME_LIST LIKE #{metro_name}
+                AND OFFICE.METRO_NAME_LIST LIKE "%"#{metro_name}"%"
             </if>
             <if test="type_id != null">
                 AND OFFICE.TYPE_ID = #{type_id}

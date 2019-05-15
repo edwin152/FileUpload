@@ -5,11 +5,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>点点租</title>
     <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/all.css"/>
     <link rel="stylesheet" type="text/css" href="css/search.css"/>
-    <link rel="stylesheet" type="text/css" href="css/detail.css"/>
+    <link rel="stylesheet" type="text/css" href="css/buildingDetail.css"/>
     <script src="js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/swiper.jquery.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
@@ -17,14 +17,17 @@
 
 <script type="text/javascript">
     let building_id;
-    let filter;
+    let filter = {};
     let pageIndex = 0;
     let pageNum = 0;
 
     window.onload = function () {
         let request = window.location.search;
         building_id = http.getParameter(request, "building_id");
-        building_id = parseInt(building_id);
+        filter.checkedTypeId = http.getParameter(request, "type_id");
+        filter.checkedAreaRangeId = http.getParameter(request, "area_range_id");
+        filter.checkedPriceRangeId = http.getParameter(request, "price_range_id");
+        filter.checkedDecorationId = http.getParameter(request, "decoration_id");
         getFilterList();
         getBuilding();
     };
@@ -34,6 +37,10 @@
             url: "filter/office",
             params: {
                 building_id: building_id,
+                type_id: filter.checkedTypeId,
+                area_range_id: filter.checkedAreaRangeId,
+                price_range_id: filter.checkedPriceRangeId,
+                decoration_id: filter.checkedDecorationId,
             },
             onSuccess: function (data) {
                 // console.log(data);
@@ -69,7 +76,7 @@
                 page: page,
             },
             onSuccess: function (data) {
-                console.log(data);
+                // console.log(data);
                 filter.checkedTypeId = data.checkedTypeId;
                 filter.checkedAreaRangeId = data.checkedAreaRangeId;
                 filter.checkedPriceRangeId = data.checkedPriceRangeId;
@@ -152,8 +159,17 @@
         // 联系客服顶部价格
         document.getElementById("service_info_price").innerHTML = building.price_range;
         // 地址
-        document.getElementById("district_name").innerHTML = building.district_name;
-        document.getElementById("zone_name").innerHTML = building.zone_name;
+        let district_name = document.getElementById("district_name");
+        district_name.innerHTML = building.district_name;
+        district_name.onclick = function () {
+            window.open("search.jsp?district_id=" + building.district_id, "_blank");
+        };
+        let zone_name = document.getElementById("zone_name");
+        zone_name.innerHTML = building.zone_name;
+        zone_name.onclick = function () {
+            window.open("search.jsp?district_id=" + building.district_id
+                + "&zone_id=" + building.zone_id, "_blank");
+        };
         document.getElementById("address_info_name").innerHTML = building.address;
         // TODO 距离地铁距离
         document.getElementById("metro_name_list").innerHTML = building.metro_name_list;
@@ -283,16 +299,12 @@
         document.getElementById("introduce_info").innerHTML = building.introduce;
     }
 
-    /**
-     * 下一页
-     */
     function nextPage() {
         getOfficeList(pageIndex + 1);
     }
 
     function openRoomDetail(office_id) {
-        // TODO 点击事件
-        window.open("roomDetail.jsp?office_id=" + office_id, "_blank");
+        window.open("officeDetail.jsp?office_id=" + office_id, "_blank");
     }
 
     function openSwiper() {
@@ -355,7 +367,7 @@
             <div class="detail_info_name" id="building_name">
             </div>
             <div class="detail_info_price_box">
-                <span class="detail_info_price" id="detail_info_price">2.8-3.3</span>元/m²/天
+                <span class="detail_info_price" id="detail_info_price">0</span>元/m²/天
             </div>
             <div class="infodown_box flexed_row">
                 <div class="infodown">
@@ -380,7 +392,7 @@
                 ] <span id="address_info_name"></span>
             </div>
             <div class="page_info_more mini_line_height flexed_row">
-                距离地铁：
+                地铁：
                 <div id="metro_name_list">
                 </div>
             </div>

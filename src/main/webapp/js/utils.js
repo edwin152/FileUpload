@@ -2,7 +2,8 @@ let http = {
     post: function (obj) {
         let data = {};
         for (let key in obj.params) {
-            if (!obj.params.hasOwnProperty(key)) {
+            if (!obj.params.hasOwnProperty(key)
+                || !obj.params[key]) {
                 continue;
             }
             let value = obj.params[key];
