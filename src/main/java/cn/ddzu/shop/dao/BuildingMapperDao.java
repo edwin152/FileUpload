@@ -10,6 +10,21 @@ import java.util.List;
 public interface BuildingMapperDao {
 
     /**
+     * 删除表
+     */
+    void drop();
+
+    /**
+     * 创建表
+     */
+    void create();
+
+    /**
+     * 初始化表
+     */
+    void init();
+
+    /**
      * 插入办公室
      *
      * @param building 办公室信息

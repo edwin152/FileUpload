@@ -3,19 +3,41 @@
 
 <!--suppress ALL -->
 <mapper namespace="cn.ddzu.shop.dao.AreaRangeMapperDao">
+    <update id="drop">
+        drop table if exists area_range
+    </update>
+
+    <update id="create">
+        create table area_range
+        (
+            id   int(11) auto_increment,
+            name varchar(255),
+            primary key (id)
+        ) default charset = utf8
+    </update>
+
+    <update id="init">
+        insert into area_range(name)
+        values ('全部'),
+               ('0-100m²'),
+               ('100-300m²'),
+               ('300-500m²'),
+               ('500-1000m²'),
+               ('1000m²以上')
+    </update>
 
     <select id="selectAreaRangeList" resultType="cn.ddzu.shop.entity.AreaRange">
-        SELECT * FROM AREA_RANGE ORDER BY ID ASC;
+        select * from area_range order by id asc
     </select>
 
     <select id="selectAreaRangeListByBuilding"
             resultType="cn.ddzu.shop.entity.AreaRange"
             parameterType="java.lang.Long">
-        SELECT * FROM AREA_RANGE WHERE ID IN
+        select * from area_range where id in
         (
-            SELECT AREA_RANGE_ID AS ID
-            FROM OFFICE WHERE OFFICE.BUILDING_ID = #{building_id}
-            GROUP BY AREA_RANGE_ID
-        ) OR ID = 1 ORDER BY ID ASC;
+            select area_range_id as id
+            from office where office.building_id = #{building_id}
+            group by area_range_id
+        ) or id = 1 order by id asc
     </select>
 </mapper>

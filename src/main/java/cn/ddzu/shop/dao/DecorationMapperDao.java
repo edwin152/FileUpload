@@ -10,6 +10,21 @@ import java.util.List;
 public interface DecorationMapperDao {
 
     /**
+     * 删除表
+     */
+    void drop();
+
+    /**
+     * 创建表
+     */
+    void create();
+
+    /**
+     * 初始化表
+     */
+    void init();
+
+    /**
      * 查询装修情况列表
      */
     List<Decoration> selectDecorationList();

@@ -3,19 +3,41 @@
 
 <!--suppress ALL -->
 <mapper namespace="cn.ddzu.shop.dao.DecorationMapperDao">
+    <update id="drop">
+        drop table if exists decoration
+    </update>
+
+    <update id="create">
+        create table decoration
+        (
+            id   int(11) auto_increment,
+            name varchar(255),
+            primary key (id)
+        ) default charset = utf8
+    </update>
+
+    <update id="init">
+        insert into decoration(name)
+        values ('全部'),
+               ('豪华装修'),
+               ('精装修'),
+               ('中等装修'),
+               ('简装修'),
+               ('毛坯')
+    </update>
 
     <select id="selectDecorationList" resultType="cn.ddzu.shop.entity.Decoration">
-        SELECT * FROM DECORATION ORDER BY ID ASC;
+        select * from decoration order by id asc
     </select>
 
     <select id="selectDecorationListByBuilding"
             resultType="cn.ddzu.shop.entity.AreaRange"
             parameterType="java.lang.Long">
-        SELECT * FROM DECORATION WHERE ID IN
+        select * from decoration where id in
         (
-            SELECT DECORATION_ID AS ID
-            FROM OFFICE WHERE BUILDING_ID = #{building_id}
-            GROUP BY DECORATION_ID
-        ) OR ID = 1 ORDER BY ID ASC;
+            select decoration_id as id
+            from office where building_id = #{building_id}
+            group by decoration_id
+        ) or id = 1 order by id asc
     </select>
 </mapper>

@@ -29,6 +29,38 @@ public class BasicServiceImpl implements BasicService {
     private DecorationMapperDao decorationMapperDao;
 
     @Override
+    public void reset() {
+        Log.d("start reset database");
+        districtMapperDao.drop();
+        districtMapperDao.create();
+        districtMapperDao.init();
+
+        zoneMapperDao.drop();
+        zoneMapperDao.create();
+        zoneMapperDao.init();
+
+        metroMapperDao.drop();
+        metroMapperDao.create();
+        metroMapperDao.init();
+
+        typeMapperDao.drop();
+        typeMapperDao.create();
+        typeMapperDao.init();
+
+        areaRangeMapperDao.drop();
+        areaRangeMapperDao.create();
+        areaRangeMapperDao.init();
+
+        priceRangeMapperDao.drop();
+        priceRangeMapperDao.create();
+        priceRangeMapperDao.init();
+
+        decorationMapperDao.drop();
+        decorationMapperDao.create();
+        decorationMapperDao.init();
+    }
+
+    @Override
     public List<District> getDistrictList() {
         Log.d("start get district list");
         return districtMapperDao.selectDistrictList();

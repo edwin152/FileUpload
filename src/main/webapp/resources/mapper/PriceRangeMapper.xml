@@ -3,19 +3,43 @@
 
 <!--suppress ALL -->
 <mapper namespace="cn.ddzu.shop.dao.PriceRangeMapperDao">
+    <update id="drop">
+        drop table if exists price_range
+    </update>
+
+    <update id="create">
+        create table price_range
+        (
+            id   int(11) auto_increment,
+            name varchar(255),
+            primary key (id)
+        ) default charset = utf8
+    </update>
+
+    <update id="init">
+        insert into price_range(name)
+        values ('全部'),
+               ('0-3元/m²/天'),
+               ('3-4元/m²/天'),
+               ('4-5元/m²/天'),
+               ('5-7元/m²/天'),
+               ('7-9元/m²/天'),
+               ('9-12元/m²/天'),
+               ('12元/m²/天以上')
+    </update>
 
     <select id="selectPriceRangeList" resultType="cn.ddzu.shop.entity.PriceRange">
-        SELECT * FROM PRICE_RANGE ORDER BY ID ASC;
+        select * from price_range order by id asc
     </select>
 
     <select id="selectPriceRangeListByBuilding"
             resultType="cn.ddzu.shop.entity.AreaRange"
             parameterType="java.lang.Long">
-        SELECT * FROM PRICE_RANGE WHERE ID IN
+        select * from price_range where id in
         (
-            SELECT PRICE_RANGE_ID AS ID
-            FROM OFFICE WHERE BUILDING_ID = #{building_id}
-            GROUP BY PRICE_RANGE_ID
-        ) OR ID = 1 ORDER BY ID ASC;
+            select price_range_id as id
+            from office where building_id = #{building_id}
+            group by price_range_id
+        ) or id = 1 order by id asc
     </select>
 </mapper>

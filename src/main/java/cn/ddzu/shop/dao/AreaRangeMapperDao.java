@@ -10,6 +10,21 @@ import java.util.List;
 public interface AreaRangeMapperDao {
 
     /**
+     * 删除表
+     */
+    void drop();
+
+    /**
+     * 创建表
+     */
+    void create();
+
+    /**
+     * 初始化表
+     */
+    void init();
+
+    /**
      * 查询面积区间列表
      */
     List<AreaRange> selectAreaRangeList();

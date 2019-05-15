@@ -10,6 +10,21 @@ import java.util.List;
 public interface ZoneMapperDao {
 
     /**
+     * 删除表
+     */
+    void drop();
+
+    /**
+     * 创建表
+     */
+    void create();
+
+    /**
+     * 初始化表
+     */
+    void init();
+
+    /**
      * 通过区id查区域列表
      *
      * @param district_id 区id

@@ -3,10 +3,38 @@
 
 <!--suppress ALL -->
 <mapper namespace="cn.ddzu.shop.dao.OfficeMapperDao">
+    <update id="drop">
+        drop table if exists office
+    </update>
+
+    <update id="create">
+        create table office
+        (
+            id               int(11) auto_increment,
+            name             varchar(255),
+            building_id      int(11),
+            address          varchar(255),
+            type_id          int(11),
+            area             float,
+            area_range_id    int(11),
+            price            float,
+            price_range_id   int(11),
+            decoration_id    int(11),
+            utilization_rate float,
+            can_register     boolean,
+            rent_free_period varchar(255),
+            notes            varchar(8192),
+            img_list         varchar(8192),
+            primary key (id)
+        ) default charset = utf8
+    </update>
+
+    <update id="init">
+    </update>
 
     <insert id="insertOffice" parameterType="cn.ddzu.shop.entity.Office">
-        INSERT INTO OFFICE VALUES (
-            NULL
+        insert into office values (
+            null
             ,#{office.name}
             ,#{office.building_id}
             ,#{office.address}
@@ -21,148 +49,147 @@
             ,#{office.rent_free_period}
             ,#{office.notes}
             ,#{office.img_list}
-        );
+        )
     </insert>
 
     <select id="selectOfficeById" parameterType="java.lang.Long" resultType="cn.ddzu.shop.entity.Office">
-        SELECT
-        OFFICE.ID,
-        OFFICE.NAME,
-        OFFICE.BUILDING_ID,
-        OFFICE.ADDRESS,
-        OFFICE.TYPE_ID,
-        OFFICE.AREA,
-        OFFICE.AREA_RANGE_ID,
-        OFFICE.PRICE,
-        OFFICE.PRICE_RANGE_ID,
-        OFFICE.DECORATION_ID,
-        OFFICE.UTILIZATION_RATE,
-        OFFICE.CAN_REGISTER,
-        OFFICE.RENT_FREE_PERIOD,
-        OFFICE.NOTES,
-        OFFICE.IMG_LIST,
-        TYPE.NAME AS TYPE_NAME,
-        AREA_RANGE.NAME AS AREA_RANGE_NAME,
-        PRICE_RANGE.NAME AS PRICE_RANGE_NAME,
-        DECORATION.NAME AS DECORATION_NAME
-        FROM OFFICE
-        LEFT JOIN TYPE ON OFFICE.TYPE_ID = TYPE.ID
-        LEFT JOIN AREA_RANGE ON OFFICE.AREA_RANGE_ID = AREA_RANGE.ID
-        LEFT JOIN PRICE_RANGE ON OFFICE.PRICE_RANGE_ID = PRICE_RANGE.ID
-        LEFT JOIN DECORATION ON OFFICE.DECORATION_ID = DECORATION.ID
-        WHERE OFFICE.ID = #{id};
+        select
+        office.id,
+        office.name,
+        office.building_id,
+        office.address,
+        office.type_id,
+        office.area,
+        office.area_range_id,
+        office.price,
+        office.price_range_id,
+        office.decoration_id,
+        office.utilization_rate,
+        office.can_register,
+        office.rent_free_period,
+        office.notes,
+        office.img_list,
+        type.name as type_name,
+        area_range.name as area_range_name,
+        price_range.name as price_range_name,
+        decoration.name as decoration_name
+        from office
+        left join type on office.type_id = type.id
+        left join area_range on office.area_range_id = area_range.id
+        left join price_range on office.price_range_id = price_range.id
+        left join decoration on office.decoration_id = decoration.id
+        where office.id = #{id};
     </select>
 
     <select id="selectOfficeList" resultType="cn.ddzu.shop.entity.Office">
-        SELECT
-        OFFICE.ID,
-        OFFICE.NAME,
-        OFFICE.BUILDING_ID,
-        OFFICE.ADDRESS,
-        OFFICE.TYPE_ID,
-        OFFICE.AREA,
-        OFFICE.AREA_RANGE_ID,
-        OFFICE.PRICE,
-        OFFICE.PRICE_RANGE_ID,
-        OFFICE.DECORATION_ID,
-        OFFICE.UTILIZATION_RATE,
-        OFFICE.CAN_REGISTER,
-        OFFICE.RENT_FREE_PERIOD,
-        OFFICE.NOTES,
-        OFFICE.IMG_LIST,
-        DISTRICT.NAME AS DISTRICT_NAME,
-        ZONE.NAME AS ZONE_NAME,
-        TYPE.NAME AS TYPE_NAME,
-        AREA_RANGE.NAME AS AREA_RANGE_NAME,
-        PRICE_RANGE.NAME AS PRICE_RANGE_NAME,
-        DECORATION.NAME AS DECORATION_NAME
-        FROM OFFICE
-        LEFT JOIN BUILDING ON OFFICE.BUILDING_ID = BUILDING.ID
-        LEFT JOIN ZONE ON BUILDING.ZONE_ID = ZONE.ID
-        LEFT JOIN DISTRICT ON ZONE.DISTRICT_ID = DISTRICT.ID
-        LEFT JOIN TYPE ON OFFICE.TYPE_ID = TYPE.ID
-        LEFT JOIN AREA_RANGE ON OFFICE.AREA_RANGE_ID = AREA_RANGE.ID
-        LEFT JOIN PRICE_RANGE ON OFFICE.PRICE_RANGE_ID = PRICE_RANGE.ID
-        LEFT JOIN DECORATION ON OFFICE.DECORATION_ID = DECORATION.ID
+        select
+        office.id,
+        office.name,
+        office.building_id,
+        office.address,
+        office.type_id,
+        office.area,
+        office.area_range_id,
+        office.price,
+        office.price_range_id,
+        office.decoration_id,
+        office.utilization_rate,
+        office.can_register,
+        office.rent_free_period,
+        office.notes,
+        office.img_list,
+        district.name as district_name,
+        zone.name as zone_name,
+        type.name as type_name,
+        area_range.name as area_range_name,
+        price_range.name as price_range_name,
+        decoration.name as decoration_name
+        from office
+        left join building on office.building_id = building.id
+        left join zone on building.zone_id = zone.id
+        left join district on zone.district_id = district.id
+        left join type on office.type_id = type.id
+        left join area_range on office.area_range_id = area_range.id
+        left join price_range on office.price_range_id = price_range.id
+        left join decoration on office.decoration_id = decoration.id
         <where>
             <if test="keyword != null">
-                AND OFFICE.NAME LIKE "%"#{keyword}"%"
+                and office.name like "%"#{keyword}"%"
             </if>
             <if test="building_id != null">
-                AND OFFICE.BUILDING_ID = #{building_id}
+                and office.building_id = #{building_id}
             </if>
             <if test="metro_name != null">
-                AND BUILDING.METRO_NAME_LIST LIKE "%"#{metro_name}"%"
+                and building.metro_name_list like "%"#{metro_name}"%"
             </if>
             <if test="type_id != null">
-                AND OFFICE.TYPE_ID = #{type_id}
+                and office.type_id = #{type_id}
             </if>
             <if test="area_range_id != null">
-                AND OFFICE.AREA_RANGE_ID = #{area_range_id}
+                and office.area_range_id = #{area_range_id}
             </if>
             <if test="price_range_id != null">
-                AND OFFICE.PRICE_RANGE_ID = #{price_range_id}
+                and office.price_range_id = #{price_range_id}
             </if>
             <if test="decoration_id != null">
-                AND OFFICE.DECORATION_ID = #{decoration_id}
+                and office.decoration_id = #{decoration_id}
             </if>
             <if test="district_id == zone_id">
-                AND BUILDING.ZONE_ID IN
-                (SELECT ZONE.ID
-                FROM ZONE
+                and building.zone_id in
+                (select zone.id
+                from zone
                 <if test="district_id != null">
-                    WHERE DISTRICT_ID = #{district_id}
+                    where district_id = #{district_id}
                 </if>
                 )
             </if>
             <if test="district_id != zone_id">
-                AND BUILDING.ZONE_ID = #{zone_id}
+                and building.zone_id = #{zone_id}
             </if>
         </where>
-        ORDER BY OFFICE.ID DESC
+        order by office.id desc
         <if test="step > 0">
-            LIMIT #{start}, #{step};
+            limit #{start}, #{step};
         </if>
     </select>
 
     <select id="countOfficeList" resultType="java.lang.Integer">
-        SELECT COUNT(*) FROM OFFICE
-        LEFT JOIN BUILDING ON OFFICE.BUILDING_ID = BUILDING.ID
+        select count(*) from office
+        left join building on office.building_id = building.id
         <where>
             <if test="keyword != null">
-                AND OFFICE.NAME LIKE "%"#{keyword}"%"
+                and office.name like "%"#{keyword}"%"
             </if>
             <if test="building_id != null">
-                AND OFFICE.BUILDING_ID = #{building_id}
+                and office.building_id = #{building_id}
             </if>
             <if test="metro_name != null">
-                AND OFFICE.METRO_NAME_LIST LIKE "%"#{metro_name}"%"
+                and office.metro_name_list like "%"#{metro_name}"%"
             </if>
             <if test="type_id != null">
-                AND OFFICE.TYPE_ID = #{type_id}
+                and office.type_id = #{type_id}
             </if>
             <if test="area_range_id != null">
-                AND OFFICE.AREA_RANGE_ID = #{area_range_id}
+                and office.area_range_id = #{area_range_id}
             </if>
             <if test="price_range_id != null">
-                AND OFFICE.PRICE_RANGE_ID = #{price_range_id}
+                and office.price_range_id = #{price_range_id}
             </if>
             <if test="decoration_id != null">
-                AND OFFICE.DECORATION_ID = #{decoration_id}
+                and office.decoration_id = #{decoration_id}
             </if>
             <if test="district_id == zone_id">
-                AND BUILDING.ZONE_ID IN
-                (SELECT ZONE.ID
-                FROM ZONE
+                and building.zone_id in
+                (select zone.id
+                from zone
                 <if test="district_id != null">
-                    WHERE DISTRICT_ID = #{district_id}
+                    where district_id = #{district_id}
                 </if>
                 )
             </if>
             <if test="district_id != zone_id">
-                AND BUILDING.ZONE_ID = #{zone_id}
+                and building.zone_id = #{zone_id}
             </if>
         </where>
-        ;
     </select>
 </mapper>

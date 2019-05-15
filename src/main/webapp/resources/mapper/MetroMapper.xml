@@ -3,12 +3,47 @@
 
 <!--suppress ALL -->
 <mapper namespace="cn.ddzu.shop.dao.MetroMapperDao">
+    <update id="drop">
+        drop table if exists metro
+    </update>
+
+    <update id="create">
+        create table metro
+        (
+            id   int(11) auto_increment,
+            name varchar(255),
+            primary key (id)
+        ) default charset = utf8
+    </update>
+
+    <update id="init">
+        insert into metro(name)
+        values ('全部'),
+               ('1号线'),
+               ('2号线'),
+               ('3号线'),
+               ('4号线'),
+               ('5号线'),
+               ('6号线'),
+               ('7号线'),
+               ('8号线'),
+               ('9号线'),
+               ('13号线'),
+               ('16号线'),
+               ('10号线主线'),
+               ('10号线支线'),
+               ('11号线主线'),
+               ('11号线支线'),
+               ('12号线'),
+               ('磁悬浮'),
+               ('17号线')
+    </update>
 
     <select id="selectMetroList" resultType="cn.ddzu.shop.entity.Metro">
-        SELECT * FROM METRO ORDER BY ID ASC;
+        select * from metro order by id asc
     </select>
 
     <select id="selectMetroById" resultType="cn.ddzu.shop.entity.Metro" parameterType="Long">
-        SELECT * FROM METRO WHERE ID = #{id};
+        select * from metro where id = #{id}
     </select>
 </mapper>

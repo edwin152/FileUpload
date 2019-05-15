@@ -36,6 +36,29 @@ public class EditController {
      * metro_list 地铁集合[2,4,6]
      * decoration_id 装修类型id
      */
+    @RequestMapping("/reset")
+    public void reset(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+
+        Log.d("edit-reset", new Gson().toJson(request.getParameterMap()));
+
+        basicService.reset();
+        officeService.reset();
+        JsonObject json = new JsonObject();
+        json.addProperty("resultCode", 1);
+        response.getWriter().write(json.toString());
+        response.getWriter().close();
+    }
+
+    /**
+     * 新增楼
+     * name 名字
+     * zone_id 区域id
+     * address 地址
+     * metro_list 地铁集合[2,4,6]
+     * decoration_id 装修类型id
+     */
     @RequestMapping("/addBuilding")
     public void addBuilding(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");

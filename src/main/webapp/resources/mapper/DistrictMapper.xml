@@ -3,8 +3,43 @@
 
 <!--suppress ALL -->
 <mapper namespace="cn.ddzu.shop.dao.DistrictMapperDao">
+    <update id="drop">
+        drop table if exists district
+    </update>
+
+    <update id="create">
+        create table district
+        (
+            id   int(11) auto_increment,
+            name varchar(255),
+            primary key (id)
+        ) default charset = utf8
+    </update>
+
+    <update id="init">
+        insert into district(name)
+        values ('全部'),
+               ('浦东'),
+               ('黄浦'),
+               ('卢湾'),
+               ('徐汇'),
+               ('长宁'),
+               ('静安'),
+               ('普陀'),
+               ('闸北'),
+               ('虹口'),
+               ('杨浦'),
+               ('闵行'),
+               ('宝山'),
+               ('嘉定'),
+               ('松江'),
+               ('青浦'),
+               ('奉贤'),
+               ('上海周边'),
+               ('南汇')
+    </update>
 
     <select id="selectDistrictList" resultType="cn.ddzu.shop.entity.District">
-        SELECT * FROM DISTRICT ORDER BY ID ASC;
+        select * from district order by id asc
     </select>
 </mapper>

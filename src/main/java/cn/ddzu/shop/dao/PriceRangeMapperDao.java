@@ -10,6 +10,21 @@ import java.util.List;
 public interface PriceRangeMapperDao {
 
     /**
+     * 删除表
+     */
+    void drop();
+
+    /**
+     * 创建表
+     */
+    void create();
+
+    /**
+     * 初始化表
+     */
+    void init();
+
+    /**
      * 查询价格区间列表
      */
     List<PriceRange> selectPriceRangeList();

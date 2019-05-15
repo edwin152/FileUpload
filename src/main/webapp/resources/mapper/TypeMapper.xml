@@ -3,19 +3,39 @@
 
 <!--suppress ALL -->
 <mapper namespace="cn.ddzu.shop.dao.TypeMapperDao">
+    <update id="drop">
+        drop table if exists type
+    </update>
+
+    <update id="create">
+        create table type
+        (
+            id   int(11) auto_increment,
+            name varchar(255),
+            primary key (id)
+        ) default charset = utf8
+    </update>
+
+    <update id="init">
+        insert into type(name)
+        values ('全部'),
+               ('普通办公'),
+               ('联合办公'),
+               ('创意园区')
+    </update>
 
     <select id="selectTypeList" resultType="cn.ddzu.shop.entity.Type">
-        SELECT * FROM TYPE ORDER BY ID ASC;
+        select * from type order by id asc
     </select>
 
     <select id="selectTypeListByBuilding"
             resultType="cn.ddzu.shop.entity.AreaRange"
             parameterType="java.lang.Long">
-        SELECT * FROM TYPE WHERE ID IN
+        select * from type where id in
         (
-            SELECT TYPE_ID AS ID
-            FROM OFFICE WHERE BUILDING_ID = #{building_id}
-            GROUP BY TYPE_ID
-        ) OR ID = 1 ORDER BY ID ASC;
+            select type_id as id
+            from office where building_id = #{building_id}
+            group by type_id
+        ) or id = 1 order by id asc
     </select>
 </mapper>

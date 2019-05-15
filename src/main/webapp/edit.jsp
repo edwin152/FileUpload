@@ -1,15 +1,21 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%--suppress HtmlFormInputWithoutLabel --%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Initialize</title>
-    <script src="../../../../../js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../../../../js/utils.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <script>
-    window.onload = function () {
-        addBuilding();
-    };
+    function reset() {
+        http.post({
+            url:"edit/reset",
+            onSuccess: function (data) {
+                console.log(data);
+            }
+        });
+    }
 
     function addBuilding() {
         http.post({
@@ -42,9 +48,7 @@
                 ],
             },
             onSuccess: function (data) {
-                // console.log(data);
-                document.getElementById("init_building").innerHTML = data;
-                addOffice();
+                console.log(data);
             }
         });
     }
@@ -74,18 +78,14 @@
                 ]
             },
             onSuccess: function (data) {
-                // console.log(data);
-                document.getElementById("init_office").innerHTML = data;
+                console.log(data);
             }
         });
     }
 </script>
 <body>
-<div>
-    init building: <span id="init_building"></span>
-</div>
-<div>
-    init office: <span id="init_office"></span>
-</div>
+<button onclick="reset()">reset</button>
+<button onclick="addBuilding()">add building</button>
+<button onclick="addOffice()">add office</button>
 </body>
 </html>

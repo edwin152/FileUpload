@@ -7,6 +7,11 @@ import java.util.List;
 public interface BasicService {
 
     /**
+     * 重置数据库
+     */
+    void reset();
+
+    /**
      * 获取区列表
      */
     List<District> getDistrictList();

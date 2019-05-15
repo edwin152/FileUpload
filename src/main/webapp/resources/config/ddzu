@@ -1,0 +1,2 @@
+grant all privileges on shop.* to 'ddzu'@'%' identified by 'ddzu';
+grant all privileges on shop.* to 'ddzu'@'localhost' identified by 'ddzu';
