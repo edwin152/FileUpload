@@ -27,10 +27,10 @@ public interface DecorationMapperDao {
     /**
      * 查询装修情况列表
      */
-    List<Decoration> selectDecorationList();
+    List<Decoration> select();
 
     /**
      * 查询装修情况列表
      */
-    List<Decoration> selectDecorationListByBuilding(@Param("building_id") Long building_id);
+    List<Decoration> selectByBuilding(@Param("building_id") Long building_id);
 }

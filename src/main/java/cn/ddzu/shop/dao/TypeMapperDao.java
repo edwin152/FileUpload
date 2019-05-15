@@ -27,10 +27,10 @@ public interface TypeMapperDao {
     /**
      * 查询办公类型列表
      */
-    List<Type> selectTypeList();
+    List<Type> select();
 
     /**
      * 查询办公类型列表
      */
-    List<Type> selectTypeListByBuilding(@Param("building_id") Long building_id);
+    List<Type> selectByBuilding(@Param("building_id") Long building_id);
 }

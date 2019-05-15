@@ -26,5 +26,5 @@ public interface DistrictMapperDao {
     /**
      * 查询区列表
      */
-    List<District> selectDistrictList();
+    List<District> select();
 }

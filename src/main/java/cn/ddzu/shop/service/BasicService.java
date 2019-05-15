@@ -25,8 +25,6 @@ public interface BasicService {
 
     /**
      * 获取区域
-     *
-     * @param id 区域id
      */
     Zone getZone(Long id);
 
@@ -37,8 +35,6 @@ public interface BasicService {
 
     /**
      * 获取地铁
-     *
-     * @param id 地铁id
      */
     Metro getMetro(Long id);
 
@@ -63,6 +59,11 @@ public interface BasicService {
     List<AreaRange> getAreaRangeList(Long building_id);
 
     /**
+     * 通过面积获取面积区间id
+     */
+    Long getAreaRangeId(Float area);
+
+    /**
      * 查询价格区间列表
      */
     List<PriceRange> getPriceRangeList();
@@ -71,6 +72,11 @@ public interface BasicService {
      * 查询价格区间列表
      */
     List<PriceRange> getPriceRangeList(Long building_id);
+
+    /**
+     * 通过价格获取价格区间id
+     */
+    Long getPriceRangeId(Float price);
 
     /**
      * 查询装修情况列表

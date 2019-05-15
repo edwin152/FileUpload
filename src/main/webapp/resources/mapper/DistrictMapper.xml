@@ -39,7 +39,7 @@
                ('南汇')
     </update>
 
-    <select id="selectDistrictList" resultType="cn.ddzu.shop.entity.District">
+    <select id="select" resultType="cn.ddzu.shop.entity.District">
         select * from district order by id asc
     </select>
 </mapper>

@@ -10,10 +10,18 @@ public interface OfficeService {
 
     /**
      * 插入办公室
-     *
-     * @param office 办公室信息
      */
     void addOffice(Office office);
+
+    /**
+     * 删除办公室
+     */
+    void deleteOffice(Long id);
+
+    /**
+     * 修改办公室
+     */
+    void updateOffice(Office office);
 
     /**
      * 获得办公室
@@ -23,25 +31,30 @@ public interface OfficeService {
     /**
      * 按条件筛选办公室
      *
-     * @param searchBean 搜索模型
-     * @param page       当前页数 0开始
-     * @param step       每页数量
+     * @param page 当前页数 0开始
+     * @param step 每页数量
      */
     List<Office> getOfficeList(SearchBean searchBean, int page, int step);
 
     /**
      * 按条件筛选办公室数量
-     *
-     * @param searchBean 搜索模型
      */
     int getOfficeSize(SearchBean searchBean);
 
     /**
      * 插入楼
-     *
-     * @param office 办公室信息
      */
-    void addBuilding(Building office);
+    void addBuilding(Building building);
+
+    /**
+     * 删除办公室
+     */
+    void deleteBuilding(Long id);
+
+    /**
+     * 修改办公室
+     */
+    void updateBuilding(Building building);
 
     /**
      * 获得楼
@@ -51,16 +64,13 @@ public interface OfficeService {
     /**
      * 按条件筛选楼
      *
-     * @param searchBean 搜索模型
-     * @param page       当前页数 0开始
-     * @param step       每页数量
+     * @param page 当前页数 0开始
+     * @param step 每页数量
      */
     List<Building> getBuildingList(SearchBean searchBean, int page, int step);
 
     /**
      * 按条件筛选楼数量
-     *
-     * @param searchBean 搜索模型
      */
     int getBuildingSize(SearchBean searchBean);
 

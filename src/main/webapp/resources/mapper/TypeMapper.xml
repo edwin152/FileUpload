@@ -24,11 +24,11 @@
                ('创意园区')
     </update>
 
-    <select id="selectTypeList" resultType="cn.ddzu.shop.entity.Type">
+    <select id="select" resultType="cn.ddzu.shop.entity.Type">
         select * from type order by id asc
     </select>
 
-    <select id="selectTypeListByBuilding"
+    <select id="selectByBuilding"
             resultType="cn.ddzu.shop.entity.AreaRange"
             parameterType="java.lang.Long">
         select * from type where id in

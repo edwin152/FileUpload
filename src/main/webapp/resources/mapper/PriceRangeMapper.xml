@@ -28,11 +28,11 @@
                ('12元/m²/天以上')
     </update>
 
-    <select id="selectPriceRangeList" resultType="cn.ddzu.shop.entity.PriceRange">
+    <select id="select" resultType="cn.ddzu.shop.entity.PriceRange">
         select * from price_range order by id asc
     </select>
 
-    <select id="selectPriceRangeListByBuilding"
+    <select id="selectByBuilding"
             resultType="cn.ddzu.shop.entity.AreaRange"
             parameterType="java.lang.Long">
         select * from price_range where id in

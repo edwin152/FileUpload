@@ -43,7 +43,6 @@
                 decoration_id: filter.checkedDecorationId,
             },
             onSuccess: function (data) {
-                // console.log(data);
                 filter = data;
                 getOfficeList();
             }
@@ -57,7 +56,6 @@
                 id: building_id,
             },
             onSuccess: function (data) {
-                // console.log(data);
                 setTopInfo(data);
                 setBottomInfo(data);
             }
@@ -76,7 +74,6 @@
                 page: page,
             },
             onSuccess: function (data) {
-                // console.log(data);
                 filter.checkedTypeId = data.checkedTypeId;
                 filter.checkedAreaRangeId = data.checkedAreaRangeId;
                 filter.checkedPriceRangeId = data.checkedPriceRangeId;

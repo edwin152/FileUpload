@@ -20,21 +20,26 @@ public interface BuildingMapperDao {
     void create();
 
     /**
-     * 初始化表
-     */
-    void init();
-
-    /**
      * 插入办公室
      *
      * @param building 办公室信息
      */
-    void insertBuilding(@Param("building") Building building);
+    void add(@Param("building") Building building);
+
+    /**
+     * 删除楼
+     */
+    void delete(@Param("id") Long id);
+
+    /**
+     * 删除楼
+     */
+    void update(@Param("building") Building building);
 
     /**
      * 按id查找楼
      */
-    Building selectBuildingById(@Param("id") Long id);
+    Building selectById(@Param("id") Long id);
 
     /**
      * 按条件筛选办公室
@@ -50,7 +55,7 @@ public interface BuildingMapperDao {
      * @param start          开始位置
      * @param step           请求总量
      */
-    List<Building> selectBuildingList(@Param("keyword") String keyword
+    List<Building> select(@Param("keyword") String keyword
             , @Param("district_id") Long district_id
             , @Param("zone_id") Long zone_id
             , @Param("metro_name") String metro_name
@@ -73,7 +78,7 @@ public interface BuildingMapperDao {
      * @param price_range_id 价格区间id
      * @param decoration_id  装修类型id
      */
-    Integer countBuildingList(@Param("keyword") String keyword
+    Integer count(@Param("keyword") String keyword
             , @Param("district_id") Long district_id
             , @Param("zone_id") Long zone_id
             , @Param("metro_name") String metro_name

@@ -20,21 +20,26 @@ public interface OfficeMapperDao {
     void create();
 
     /**
-     * 初始化表
-     */
-    void init();
-
-    /**
      * 插入办公室
      *
      * @param office 办公室信息
      */
-    void insertOffice(@Param("office") Office office);
+    void add(@Param("office") Office office);
+
+    /**
+     * 删除楼
+     */
+    void delete(@Param("id") Long id);
+
+    /**
+     * 删除楼
+     */
+    void update(@Param("office") Office office);
 
     /**
      * 按id查询办公室
      */
-    Office selectOfficeById(@Param("id") Long id);
+    Office selectById(@Param("id") Long id);
 
     /**
      * 按条件筛选办公室
@@ -51,7 +56,7 @@ public interface OfficeMapperDao {
      * @param start          开始位置
      * @param step           请求总量
      */
-    List<Office> selectOfficeList(@Param("keyword") String keyword
+    List<Office> select(@Param("keyword") String keyword
             , @Param("building_id") Long building_id
             , @Param("district_id") Long district_id
             , @Param("zone_id") Long zone_id
@@ -76,7 +81,7 @@ public interface OfficeMapperDao {
      * @param price_range_id 价格区间id
      * @param decoration_id  装修类型id
      */
-    Integer countOfficeList(@Param("keyword") String keyword
+    Integer count(@Param("keyword") String keyword
             , @Param("building_id") Long building_id
             , @Param("district_id") Long district_id
             , @Param("zone_id") Long zone_id

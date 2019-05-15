@@ -31,7 +31,6 @@
                 id: office_id,
             },
             onSuccess: function (data) {
-                // console.log(data);
                 setOffice(data);
             }
         })

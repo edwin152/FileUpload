@@ -27,12 +27,12 @@ public interface MetroMapperDao {
     /**
      * 查询地铁列表
      */
-    List<Metro> selectMetroList();
+    List<Metro> select();
 
     /**
      * 查询地铁
      *
      * @param id 地铁id
      */
-    Metro selectMetroById(@Param("id") Long id);
+    Metro selectById(@Param("id") Long id);
 }

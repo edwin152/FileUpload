@@ -10,10 +10,7 @@
 <script>
     function reset() {
         http.post({
-            url:"edit/reset",
-            onSuccess: function (data) {
-                console.log(data);
-            }
+            url:"edit/reset"
         });
     }
 
@@ -46,9 +43,6 @@
                     "https://www.tuotuozu.com/public/upload/20180509/82d94882260d0abcde1968df183a0893.jpg",
                     "https://www.tuotuozu.com/public/upload/20180509/b04a99bb978d27106c9ba512b0fc1ac5.jpg",
                 ],
-            },
-            onSuccess: function (data) {
-                console.log(data);
             }
         });
     }
@@ -76,9 +70,6 @@
                 img_list: [
                     "https://www.tuotuozu.com/public/upload/20171213/afcb44f8590eb6ac46feff039374419b.jpg",
                 ]
-            },
-            onSuccess: function (data) {
-                console.log(data);
             }
         });
     }

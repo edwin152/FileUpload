@@ -49,7 +49,6 @@
                 decoration_id: filter.checkedDecorationId,
             },
             onSuccess: function (data) {
-                // console.log(data);
                 filter = data;
                 getBuildingList();
             }
@@ -71,7 +70,6 @@
                 page: page,
             },
             onSuccess: function (data) {
-                // console.log(data);
                 filter.checkedDistrictId = data.checkedDistrictId;
                 filter.checkedZoneId = data.checkedZoneId;
                 filter.checkedMetroId = data.checkedMetroId;

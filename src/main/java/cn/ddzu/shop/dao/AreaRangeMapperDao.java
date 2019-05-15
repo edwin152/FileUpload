@@ -27,12 +27,12 @@ public interface AreaRangeMapperDao {
     /**
      * 查询面积区间列表
      */
-    List<AreaRange> selectAreaRangeList();
+    List<AreaRange> select();
 
     /**
      * 查询面积区间列表
      */
-    List<AreaRange> selectAreaRangeListByBuilding(@Param("building_id") Long building_id);
+    List<AreaRange> selectByBuilding(@Param("building_id") Long building_id);
 
 
 }

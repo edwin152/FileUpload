@@ -72,11 +72,11 @@
                (19, '周浦'),(19, '康桥'),(19, '航头')
     </update>
 
-    <select id="selectZoneList" resultType="cn.ddzu.shop.entity.Zone" parameterType="long">
+    <select id="selectByDistrict" resultType="cn.ddzu.shop.entity.Zone" parameterType="long">
         select * from zone where district_id = #{district_id} order by id asc
     </select>
 
-    <select id="selectZoneById" resultType="cn.ddzu.shop.entity.Zone" parameterType="long">
+    <select id="selectById" resultType="cn.ddzu.shop.entity.Zone" parameterType="long">
         select * from zone where id = #{id}
     </select>
 </mapper>

@@ -63,7 +63,7 @@ public class BasicServiceImpl implements BasicService {
     @Override
     public List<District> getDistrictList() {
         Log.d("start get district list");
-        return districtMapperDao.selectDistrictList();
+        return districtMapperDao.select();
     }
 
     @Override
@@ -72,7 +72,7 @@ public class BasicServiceImpl implements BasicService {
             return new ArrayList<>();
         }
         Log.d("start get zone list");
-        return zoneMapperDao.selectZoneList(district_id);
+        return zoneMapperDao.selectByDistrict(district_id);
     }
 
     @Override
@@ -81,13 +81,13 @@ public class BasicServiceImpl implements BasicService {
             return null;
         }
         Log.d("start get zone list by id : " + id);
-        return zoneMapperDao.selectZoneById(id);
+        return zoneMapperDao.selectById(id);
     }
 
     @Override
     public List<Metro> getMetroList() {
         Log.d("start get metro list");
-        return metroMapperDao.selectMetroList();
+        return metroMapperDao.select();
     }
 
     @Override
@@ -96,13 +96,13 @@ public class BasicServiceImpl implements BasicService {
             return null;
         }
         Log.d("start get metro list by id : " + id);
-        return metroMapperDao.selectMetroById(id);
+        return metroMapperDao.selectById(id);
     }
 
     @Override
     public List<Type> getTypeList() {
         Log.d("start get type list");
-        return typeMapperDao.selectTypeList();
+        return typeMapperDao.select();
     }
 
     @Override
@@ -111,13 +111,13 @@ public class BasicServiceImpl implements BasicService {
             return new ArrayList<>();
         }
         Log.d("start get type list by building_id : " + building_id);
-        return typeMapperDao.selectTypeListByBuilding(building_id);
+        return typeMapperDao.selectByBuilding(building_id);
     }
 
     @Override
     public List<AreaRange> getAreaRangeList() {
         Log.d("start get area range list");
-        return areaRangeMapperDao.selectAreaRangeList();
+        return areaRangeMapperDao.select();
     }
 
     @Override
@@ -126,13 +126,34 @@ public class BasicServiceImpl implements BasicService {
             return new ArrayList<>();
         }
         Log.d("start get area range list by building_id : " + building_id);
-        return areaRangeMapperDao.selectAreaRangeListByBuilding(building_id);
+        return areaRangeMapperDao.selectByBuilding(building_id);
+    }
+
+    @Override
+    public Long getAreaRangeId(Float area) {
+        Long area_range_id;
+        if (area == null) {
+            area_range_id = null;
+        } else if (area > 0 && area <= 100) {
+            area_range_id = 2L;
+        } else if (area > 100 && area <= 300) {
+            area_range_id = 3L;
+        } else if (area > 300 && area <= 500) {
+            area_range_id = 4L;
+        } else if (area > 500 && area <= 1000) {
+            area_range_id = 5L;
+        } else if (area > 1000) {
+            area_range_id = 6L;
+        } else {
+            area_range_id = null;
+        }
+        return area_range_id;
     }
 
     @Override
     public List<PriceRange> getPriceRangeList() {
         Log.d("start get price range list");
-        return priceRangeMapperDao.selectPriceRangeList();
+        return priceRangeMapperDao.select();
     }
 
     @Override
@@ -141,13 +162,38 @@ public class BasicServiceImpl implements BasicService {
             return new ArrayList<>();
         }
         Log.d("start get price range list by building_id : " + building_id);
-        return priceRangeMapperDao.selectPriceRangeListByBuilding(building_id);
+        return priceRangeMapperDao.selectByBuilding(building_id);
+    }
+
+    @Override
+    public Long getPriceRangeId(Float price) {
+        Long price_range_id;
+        if (price == null) {
+            price_range_id = null;
+        } else if (price > 0 && price <= 3) {
+            price_range_id = 2L;
+        } else if (price > 3 && price <= 4) {
+            price_range_id = 3L;
+        } else if (price > 4 && price <= 5) {
+            price_range_id = 4L;
+        } else if (price > 5 && price <= 7) {
+            price_range_id = 5L;
+        } else if (price > 7 && price <= 9) {
+            price_range_id = 6L;
+        } else if (price > 9 && price <= 12) {
+            price_range_id = 7L;
+        } else if (price > 12) {
+            price_range_id = 8L;
+        } else {
+            price_range_id = null;
+        }
+        return price_range_id;
     }
 
     @Override
     public List<Decoration> getDecorationList() {
         Log.d("start get decoration list");
-        return decorationMapperDao.selectDecorationList();
+        return decorationMapperDao.select();
     }
 
     @Override
@@ -156,6 +202,6 @@ public class BasicServiceImpl implements BasicService {
             return new ArrayList<>();
         }
         Log.d("start get decoration list by building_id : " + building_id);
-        return decorationMapperDao.selectDecorationListByBuilding(building_id);
+        return decorationMapperDao.selectByBuilding(building_id);
     }
 }

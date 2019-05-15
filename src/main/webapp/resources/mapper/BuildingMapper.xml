@@ -22,10 +22,7 @@
         ) default charset = utf8
     </update>
 
-    <update id="init">
-    </update>
-
-    <insert id="insertBuilding" parameterType="cn.ddzu.shop.entity.Building">
+    <insert id="add" parameterType="cn.ddzu.shop.entity.Building">
         insert into building values (
             null
             ,#{building.name}
@@ -38,7 +35,24 @@
         )
     </insert>
 
-    <select id="selectBuildingById" parameterType="java.lang.Long" resultType="cn.ddzu.shop.entity.Building">
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from building where id = #{id}
+    </delete>
+
+    <update id="update" parameterType="cn.ddzu.shop.entity.Building">
+        update building
+        set
+            name = #{building.name},
+            zone_id = #{building.zone_id},
+            address = #{building.address},
+            metro_name_list = #{building.metro_name_list},
+            introduce = #{building.introduce},
+            notes = #{building.notes},
+            img_list = #{building.img_list}
+        where id = #{building.id}
+    </update>
+
+    <select id="selectById" parameterType="java.lang.Long" resultType="cn.ddzu.shop.entity.Building">
         select
         building.id,
         building.name,
@@ -57,7 +71,7 @@
         where building.id = #{id}
     </select>
 
-    <select id="selectBuildingList" resultType="cn.ddzu.shop.entity.Building">
+    <select id="select" resultType="cn.ddzu.shop.entity.Building">
         select building.id,
         building.name,
         building.zone_id,
@@ -122,7 +136,7 @@
         </if>
     </select>
 
-    <select id="countBuildingList" resultType="java.lang.Integer">
+    <select id="count" resultType="java.lang.Integer">
         select count(*) from building
         left join office on building.id = office.building_id
         where office.id in (select min(id) from office
@@ -150,8 +164,7 @@
         </if>
         <if test="district_id == zone_id">
             and building.zone_id in
-            (select zone.id
-            from zone
+            (select zone.id from zone
             <if test="district_id != null">
                 where district_id = #{district_id}
             </if>

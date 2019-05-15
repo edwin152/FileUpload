@@ -26,11 +26,11 @@
                ('毛坯')
     </update>
 
-    <select id="selectDecorationList" resultType="cn.ddzu.shop.entity.Decoration">
+    <select id="select" resultType="cn.ddzu.shop.entity.Decoration">
         select * from decoration order by id asc
     </select>
 
-    <select id="selectDecorationListByBuilding"
+    <select id="selectByBuilding"
             resultType="cn.ddzu.shop.entity.AreaRange"
             parameterType="java.lang.Long">
         select * from decoration where id in

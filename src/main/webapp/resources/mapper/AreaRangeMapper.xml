@@ -26,11 +26,11 @@
                ('1000m²以上')
     </update>
 
-    <select id="selectAreaRangeList" resultType="cn.ddzu.shop.entity.AreaRange">
+    <select id="select" resultType="cn.ddzu.shop.entity.AreaRange">
         select * from area_range order by id asc
     </select>
 
-    <select id="selectAreaRangeListByBuilding"
+    <select id="selectByBuilding"
             resultType="cn.ddzu.shop.entity.AreaRange"
             parameterType="java.lang.Long">
         select * from area_range where id in

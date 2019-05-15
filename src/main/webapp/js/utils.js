@@ -1,4 +1,5 @@
 let http = {
+
     post: function (obj) {
         let data = {};
         for (let key in obj.params) {
@@ -20,8 +21,16 @@ let http = {
             dataType: "Json",
             data: data,
             success: function (data) {
-                if (obj.onSuccess) {
-                    obj.onSuccess(data);
+                console.log(data);
+
+                if (data.code === 1) {
+                    if (!obj.onSuccess) return;
+                    obj.onSuccess(data.data);
+                } else {
+                    alert(data.code + ":" + data.msg);
+
+                    if (!obj.onError) return;
+                    obj.onError(code, msg);
                 }
             },
             error: function () {

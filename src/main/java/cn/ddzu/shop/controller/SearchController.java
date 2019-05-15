@@ -4,6 +4,7 @@ import cn.ddzu.shop.entity.Building;
 import cn.ddzu.shop.entity.Metro;
 import cn.ddzu.shop.entity.Office;
 import cn.ddzu.shop.entity.Zone;
+import cn.ddzu.shop.helper.RequestHelper;
 import cn.ddzu.shop.service.BasicService;
 import cn.ddzu.shop.service.OfficeService;
 import cn.ddzu.shop.util.JsonUtils;
@@ -26,9 +27,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/search")
-public class SearchController {
-
-    private static final int PAGE_SIZE = 10;
+public class SearchController extends BaseController {
 
     @Autowired
     private OfficeService officeService;
@@ -37,6 +36,7 @@ public class SearchController {
 
     /**
      * 搜索楼
+     * <p>
      * keyword 关键词
      * zone_id 区域id
      * metro_id 地铁id
@@ -44,58 +44,25 @@ public class SearchController {
      * area_range_id 面积区间id
      * price_range_id 价格区间id
      * decoration_id 装修类型id
+     * page 页码
      */
     @RequestMapping("/buildings")
     public void getBuildingList(HttpServletRequest request, HttpServletResponse response) throws IOException, CloneNotSupportedException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
-        Log.d("search-buildings", new Gson().toJson(request.getParameterMap()));
+        RequestHelper helper = new RequestHelper(request);
+        Log.d("search-buildings", helper);
 
-        String keyword = null;
-        if (request.getParameter("keyword") != null) {
-            keyword = request.getParameter("keyword");
-        }
-
-        Long district_id = 1L;
-        if (request.getParameter("district_id") != null) {
-            district_id = Long.parseLong(request.getParameter("district_id"));
-        }
-
-        Long zone_id = 1L;
-        if (request.getParameter("zone_id") != null) {
-            zone_id = Long.parseLong(request.getParameter("zone_id"));
-        }
-
-        Long metro_id = 1L;
-        if (request.getParameter("metro_id") != null) {
-            metro_id = Long.parseLong(request.getParameter("metro_id"));
-        }
-
-        Long type_id = 1L;
-        if (request.getParameter("type_id") != null) {
-            type_id = Long.parseLong(request.getParameter("type_id"));
-        }
-
-        Long area_range_id = 1L;
-        if (request.getParameter("area_range_id") != null) {
-            area_range_id = Long.parseLong(request.getParameter("area_range_id"));
-        }
-
-        Long price_range_id = 1L;
-        if (request.getParameter("price_range_id") != null) {
-            price_range_id = Long.parseLong(request.getParameter("price_range_id"));
-        }
-
-        Long decoration_id = 1L;
-        if (request.getParameter("decoration_id") != null) {
-            decoration_id = Long.parseLong(request.getParameter("decoration_id"));
-        }
-
-        int page = 0;
-        if (request.getParameter("page") != null) {
-            page = Integer.parseInt(request.getParameter("page"));
-        }
+        String keyword = helper.getString("keyword");
+        Long district_id = helper.getLong("district_id", 1L);
+        Long zone_id = helper.getLong("zone_id", 1L);
+        Long metro_id = helper.getLong("metro_id", 1L);
+        Long type_id = helper.getLong("type_id", 1L);
+        Long area_range_id = helper.getLong("area_range_id", 1L);
+        Long price_range_id = helper.getLong("price_range_id", 1L);
+        Long decoration_id = helper.getLong("decoration_id", 1L);
+        Integer page = helper.getInt("page", 0);
 
         Metro metro = basicService.getMetro(metro_id);
         Zone zone = basicService.getZone(zone_id);
@@ -164,55 +131,35 @@ public class SearchController {
         json.addProperty("checkedDecorationId", decoration_id);
         json.addProperty("pageNum", pageNum);
         json.addProperty("pageIndex", page);
-        response.getWriter().write(json.toString());
-        response.getWriter().close();
+
+        finish(response, SUCCESS_MESSAGE, json);
     }
 
     /**
      * 搜索办公室
+     * <p>
      * keyword 关键词
      * building_id 商圈id
      * type_id 办公室类型id
      * area_range_id 面积区间id
      * price_range_id 价格区间id
      * decoration_id 装修类型id
+     * page 页码
      */
     @RequestMapping("/offices")
     public void getOfficeList(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
-        Log.d("search-offices", new Gson().toJson(request.getParameterMap()));
+        RequestHelper helper = new RequestHelper(request);
+        Log.d("search-offices", helper);
 
-        Long building_id = null;
-        if (request.getParameter("building_id") != null) {
-            building_id = Long.parseLong(request.getParameter("building_id"));
-        }
-
-        Long type_id = 1L;
-        if (request.getParameter("type_id") != null) {
-            type_id = Long.parseLong(request.getParameter("type_id"));
-        }
-
-        Long area_range_id = 1L;
-        if (request.getParameter("area_range_id") != null) {
-            area_range_id = Long.parseLong(request.getParameter("area_range_id"));
-        }
-
-        Long price_range_id = 1L;
-        if (request.getParameter("price_range_id") != null) {
-            price_range_id = Long.parseLong(request.getParameter("price_range_id"));
-        }
-
-        Long decoration_id = 1L;
-        if (request.getParameter("decoration_id") != null) {
-            decoration_id = Long.parseLong(request.getParameter("decoration_id"));
-        }
-
-        int page = 0;
-        if (request.getParameter("page") != null) {
-            page = Integer.parseInt(request.getParameter("page"));
-        }
+        Long building_id = helper.getLong("building_id");
+        Long type_id = helper.getLong("type_id", 1L);
+        Long area_range_id = helper.getLong("area_range_id", 1L);
+        Long price_range_id = helper.getLong("price_range_id", 1L);
+        Long decoration_id = helper.getLong("decoration_id", 1L);
+        Integer page = helper.getInt("page", 0);
 
         OfficeService.SearchBean searchBean = new OfficeService.SearchBean();
         searchBean.setBuilding_id(building_id);
@@ -258,25 +205,24 @@ public class SearchController {
         json.addProperty("checkedDecorationId", decoration_id);
         json.addProperty("pageNum", pageNum);
         json.addProperty("pageIndex", page);
-        response.getWriter().write(json.toString());
-        response.getWriter().close();
+
+        finish(response, SUCCESS_MESSAGE, json);
     }
 
     /**
      * 查询楼
-     * id 办公室id
+     * <p>
+     * id 楼id
      */
     @RequestMapping("/building")
     public void getBuilding(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
-        Log.d("search-building", new Gson().toJson(request.getParameterMap()));
+        RequestHelper helper = new RequestHelper(request);
+        Log.d("search-building", helper);
 
-        Long id = null;
-        if (request.getParameter("id") != null) {
-            id = Long.parseLong(request.getParameter("id"));
-        }
+        Long id = helper.getLong("id");
 
         Building building = officeService.getBuilding(id);
         JsonObject buildingObject = new Gson().toJsonTree(building).getAsJsonObject();
@@ -320,12 +266,12 @@ public class SearchController {
 
         buildingObject.addProperty("office_num", officeList.size());
 
-        response.getWriter().write(buildingObject.toString());
-        response.getWriter().close();
+        finish(response, SUCCESS_MESSAGE, buildingObject);
     }
 
     /**
      * 查询办公室
+     * <p>
      * id 办公室id
      */
     @RequestMapping("/office")
@@ -333,12 +279,10 @@ public class SearchController {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
-        Log.d("search-office", new Gson().toJson(request.getParameterMap()));
+        RequestHelper helper = new RequestHelper(request);
+        Log.d("search-office", helper);
 
-        Long id = null;
-        if (request.getParameter("id") != null) {
-            id = Long.parseLong(request.getParameter("id"));
-        }
+        Long id = helper.getLong("id");
 
         JsonObject json = new JsonObject();
 
@@ -384,7 +328,6 @@ public class SearchController {
         json.add("building", buildingObject);
         json.add("office", officeObject);
 
-        response.getWriter().write(json.toString());
-        response.getWriter().close();
+        finish(response, SUCCESS_MESSAGE, json);
     }
 }

@@ -29,12 +29,12 @@ public interface ZoneMapperDao {
      *
      * @param district_id 区id
      */
-    List<Zone> selectZoneList(@Param("district_id") long district_id);
+    List<Zone> selectByDistrict(@Param("district_id") long district_id);
 
     /**
      * 通过id查区域
      *
      * @param id 区域id
      */
-    Zone selectZoneById(@Param("id") long id);
+    Zone selectById(@Param("id") long id);
 }

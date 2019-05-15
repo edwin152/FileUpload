@@ -39,11 +39,11 @@
                ('17号线')
     </update>
 
-    <select id="selectMetroList" resultType="cn.ddzu.shop.entity.Metro">
+    <select id="select" resultType="cn.ddzu.shop.entity.Metro">
         select * from metro order by id asc
     </select>
 
-    <select id="selectMetroById" resultType="cn.ddzu.shop.entity.Metro" parameterType="Long">
+    <select id="selectById" resultType="cn.ddzu.shop.entity.Metro" parameterType="Long">
         select * from metro where id = #{id}
     </select>
 </mapper>

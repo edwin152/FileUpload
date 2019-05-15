@@ -27,10 +27,10 @@ public interface PriceRangeMapperDao {
     /**
      * 查询价格区间列表
      */
-    List<PriceRange> selectPriceRangeList();
+    List<PriceRange> select();
 
     /**
      * 查询价格区间列表
      */
-    List<PriceRange> selectPriceRangeListByBuilding(@Param("building_id") Long building_id);
+    List<PriceRange> selectByBuilding(@Param("building_id") Long building_id);
 }

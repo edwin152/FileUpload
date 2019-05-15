@@ -5,11 +5,11 @@ import java.util.TimeZone;
 
 public class Log {
 
-    public static void d(String log) {
+    public static void d(Object log) {
         d(null, log);
     }
 
-    public static void d(String tag, String log) {
+    public static void d(String tag, Object log) {
         StringBuilder logBuilder = new StringBuilder("------");
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT-8:00"));
         logBuilder.append(calendar.get(Calendar.HOUR_OF_DAY)).append(":")
