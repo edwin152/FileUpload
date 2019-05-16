@@ -10,16 +10,16 @@
     <update id="create">
         create table office
         (
-            id               int(11) auto_increment,
+            id               bigint,
             name             varchar(255),
-            building_id      int(11),
+            building_id      bigint,
             address          varchar(255),
-            type_id          int(11),
+            type_id          bigint,
             area             float,
-            area_range_id    int(11),
+            area_range_id    bigint,
             price            float,
-            price_range_id   int(11),
-            decoration_id    int(11),
+            price_range_id   bigint,
+            decoration_id    bigint,
             utilization_rate float,
             can_register     boolean,
             rent_free_period varchar(255),
@@ -31,7 +31,7 @@
 
     <insert id="add" parameterType="cn.ddzu.shop.entity.Office">
         insert into office values (
-            null
+            #{office.id}
             ,#{office.name}
             ,#{office.building_id}
             ,#{office.address}

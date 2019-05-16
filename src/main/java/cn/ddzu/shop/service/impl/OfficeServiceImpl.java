@@ -5,6 +5,7 @@ import cn.ddzu.shop.dao.OfficeMapperDao;
 import cn.ddzu.shop.entity.Building;
 import cn.ddzu.shop.entity.Office;
 import cn.ddzu.shop.service.OfficeService;
+import cn.ddzu.shop.util.DataUtils;
 import cn.ddzu.shop.util.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class OfficeServiceImpl implements OfficeService {
     @Override
     public void addOffice(Office office) {
         Log.d("start insert office");
+        office.setId(DataUtils.generateId());
         officeMapperDao.add(office);
     }
 
@@ -90,6 +92,7 @@ public class OfficeServiceImpl implements OfficeService {
     @Override
     public void addBuilding(Building building) {
         Log.d("start insert building");
+        building.setId(DataUtils.generateId());
         buildingMapperDao.add(building);
     }
 

@@ -10,7 +10,7 @@
     <update id="create">
         create table metro
         (
-            id   int(11) auto_increment,
+            id   bigint auto_increment,
             name varchar(255),
             primary key (id)
         ) default charset = utf8

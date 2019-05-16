@@ -4,6 +4,7 @@ import cn.ddzu.shop.entity.Building;
 import cn.ddzu.shop.entity.Metro;
 import cn.ddzu.shop.entity.Office;
 import cn.ddzu.shop.entity.Zone;
+import cn.ddzu.shop.enums.ResultCode;
 import cn.ddzu.shop.helper.RequestHelper;
 import cn.ddzu.shop.service.BasicService;
 import cn.ddzu.shop.service.OfficeService;
@@ -132,7 +133,7 @@ public class SearchController extends BaseController {
         json.addProperty("pageNum", pageNum);
         json.addProperty("pageIndex", page);
 
-        finish(response, SUCCESS_MESSAGE, json);
+        finish(response, ResultCode.SUCCESS, json);
     }
 
     /**
@@ -206,7 +207,7 @@ public class SearchController extends BaseController {
         json.addProperty("pageNum", pageNum);
         json.addProperty("pageIndex", page);
 
-        finish(response, SUCCESS_MESSAGE, json);
+        finish(response, ResultCode.SUCCESS, json);
     }
 
     /**
@@ -235,7 +236,7 @@ public class SearchController extends BaseController {
         int lastIndex = officeList.size() == 0 ? 0 : officeList.size() - 1;
 
         // 价格区间
-        Collections.sort(officeList, new Comparator<Office>() {
+        officeList.sort(new Comparator<Office>() {
             @Override
             public int compare(Office o1, Office o2) {
                 return Float.compare(o1.getPrice(), o2.getPrice());
@@ -250,7 +251,7 @@ public class SearchController extends BaseController {
         buildingObject.addProperty("price_range", priceRange.toString());
 
         // 面积区间
-        Collections.sort(officeList, new Comparator<Office>() {
+        officeList.sort(new Comparator<Office>() {
             @Override
             public int compare(Office o1, Office o2) {
                 return Float.compare(o1.getArea(), o2.getArea());
@@ -266,7 +267,7 @@ public class SearchController extends BaseController {
 
         buildingObject.addProperty("office_num", officeList.size());
 
-        finish(response, SUCCESS_MESSAGE, buildingObject);
+        finish(response, ResultCode.SUCCESS, buildingObject);
     }
 
     /**
@@ -328,6 +329,6 @@ public class SearchController extends BaseController {
         json.add("building", buildingObject);
         json.add("office", officeObject);
 
-        finish(response, SUCCESS_MESSAGE, json);
+        finish(response, ResultCode.SUCCESS, json);
     }
 }

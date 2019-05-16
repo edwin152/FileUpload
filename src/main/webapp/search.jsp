@@ -48,7 +48,7 @@
                 price_range_id: filter.checkedPriceRangeId,
                 decoration_id: filter.checkedDecorationId,
             },
-            onSuccess: function (data) {
+            success: function (data) {
                 filter = data;
                 getBuildingList();
             }
@@ -69,7 +69,7 @@
                 decoration_id: filter.checkedDecorationId,
                 page: page,
             },
-            onSuccess: function (data) {
+            success: function (data) {
                 filter.checkedDistrictId = data.checkedDistrictId;
                 filter.checkedZoneId = data.checkedZoneId;
                 filter.checkedMetroId = data.checkedMetroId;

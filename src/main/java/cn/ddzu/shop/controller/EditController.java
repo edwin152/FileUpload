@@ -4,6 +4,7 @@ import cn.ddzu.shop.entity.Building;
 import cn.ddzu.shop.entity.Metro;
 import cn.ddzu.shop.entity.Office;
 import cn.ddzu.shop.entity.Zone;
+import cn.ddzu.shop.enums.ResultCode;
 import cn.ddzu.shop.helper.RequestHelper;
 import cn.ddzu.shop.service.BasicService;
 import cn.ddzu.shop.service.OfficeService;
@@ -46,7 +47,7 @@ public class EditController extends BaseController {
         basicService.reset();
         officeService.reset();
 
-        finish(response, SUCCESS_MESSAGE);
+        finish(response, ResultCode.SUCCESS);
     }
 
     /**
@@ -72,7 +73,7 @@ public class EditController extends BaseController {
         String name = helper.getString("name");
         Long zone_id = helper.getLong("zone_id");
         String address = helper.getString("address");
-        List<Long> metro_list = helper.getLongList("metro_list");
+        List<Long> metro_list = helper.getList("metro_list", LONG_LIST_TYPE);
         String introduce = helper.getString("introduce");
         String notes = helper.getString("notes", "{}");
         String img_list = helper.getString("img_list", "[]");
@@ -97,7 +98,11 @@ public class EditController extends BaseController {
 
         officeService.addBuilding(building);
 
-        finish(response, SUCCESS_MESSAGE);
+        JsonObject buildingObject = new Gson().toJsonTree(building).getAsJsonObject();
+        buildingObject.add("img_list", JsonUtils.strToStringArray(img_list));
+        buildingObject.add("metro_name_list", new Gson().toJsonTree(metro_name_list));
+
+        finish(response, ResultCode.SUCCESS, buildingObject);
     }
 
     /**
@@ -116,7 +121,7 @@ public class EditController extends BaseController {
         Long id = helper.getLong("id");
         officeService.deleteBuilding(id);
 
-        finish(response, SUCCESS_MESSAGE);
+        finish(response, ResultCode.SUCCESS);
     }
 
     /**
@@ -144,7 +149,7 @@ public class EditController extends BaseController {
         String name = helper.getString("name");
         Long zone_id = helper.getLong("zone_id");
         String address = helper.getString("address");
-        List<Long> metro_list = helper.getLongList("metro_list");
+        List<Long> metro_list = helper.getList("metro_list", LONG_LIST_TYPE);
         String introduce = helper.getString("introduce");
         String notes = helper.getString("notes", "{}");
         String img_list = helper.getString("img_list", "[]");
@@ -179,7 +184,7 @@ public class EditController extends BaseController {
             officeService.updateBuilding(building);
         }
 
-        finish(response, SUCCESS_MESSAGE);
+        finish(response, ResultCode.SUCCESS);
     }
 
     /**
@@ -252,7 +257,7 @@ public class EditController extends BaseController {
         json.addProperty("pageNum", pageNum);
         json.addProperty("pageIndex", page);
 
-        finish(response, SUCCESS_MESSAGE, json);
+        finish(response, ResultCode.SUCCESS, json);
     }
 
     /**
@@ -313,7 +318,10 @@ public class EditController extends BaseController {
 
         officeService.addOffice(office);
 
-        finish(response, SUCCESS_MESSAGE);
+        JsonObject officeObject = new Gson().toJsonTree(office).getAsJsonObject();
+        officeObject.add("img_list", JsonUtils.strToStringArray(img_list));
+
+        finish(response, ResultCode.SUCCESS, officeObject);
     }
 
     /**
@@ -332,7 +340,7 @@ public class EditController extends BaseController {
         Long id = helper.getLong("id");
         officeService.deleteOffice(id);
 
-        finish(response, SUCCESS_MESSAGE);
+        finish(response, ResultCode.SUCCESS);
     }
 
     /**
@@ -405,7 +413,7 @@ public class EditController extends BaseController {
             officeService.updateOffice(office);
         }
 
-        finish(response, SUCCESS_MESSAGE);
+        finish(response, ResultCode.SUCCESS);
     }
 
     /**
@@ -461,6 +469,6 @@ public class EditController extends BaseController {
         json.addProperty("pageNum", pageNum);
         json.addProperty("pageIndex", page);
 
-        finish(response, SUCCESS_MESSAGE, json);
+        finish(response, ResultCode.SUCCESS, json);
     }
 }

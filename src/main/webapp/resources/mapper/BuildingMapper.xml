@@ -10,9 +10,9 @@
     <update id="create">
         create table building
         (
-            id              int(11) auto_increment,
+            id              bigint,
             name            varchar(255),
-            zone_id         int(11),
+            zone_id         bigint,
             address         varchar(255),
             metro_name_list varchar(255),
             introduce       varchar(2048),
@@ -24,7 +24,7 @@
 
     <insert id="add" parameterType="cn.ddzu.shop.entity.Building">
         insert into building values (
-            null
+            #{building.id}
             ,#{building.name}
             ,#{building.zone_id}
             ,#{building.address}

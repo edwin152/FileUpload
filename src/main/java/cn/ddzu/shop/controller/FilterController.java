@@ -1,12 +1,12 @@
 package cn.ddzu.shop.controller;
 
 import cn.ddzu.shop.entity.*;
+import cn.ddzu.shop.enums.ResultCode;
 import cn.ddzu.shop.helper.RequestHelper;
 import cn.ddzu.shop.service.BasicService;
 import cn.ddzu.shop.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -58,7 +58,7 @@ public class FilterController extends BaseController {
             long districtId = district.getId();
             List<Zone> zoneList = basicService.getZoneList(districtId);
             JsonArray zoneArray = new Gson().toJsonTree(zoneList).getAsJsonArray();
-            districtObject.add("zone_list", zoneArray);
+            districtObject.add("zoneList", zoneArray);
             districtArray.add(districtObject);
         }
 
@@ -69,7 +69,7 @@ public class FilterController extends BaseController {
         List<Decoration> decorationList = basicService.getDecorationList();
 
         JsonObject json = new JsonObject();
-        json.add("districtList", new Gson().toJsonTree(districtList));
+        json.add("districtList", districtArray);
         json.add("metroList", new Gson().toJsonTree(metroList));
         json.add("typeList", new Gson().toJsonTree(typeList));
         json.add("areaRangeList", new Gson().toJsonTree(areaRangeList));
@@ -83,7 +83,7 @@ public class FilterController extends BaseController {
         json.addProperty("checkedPriceRangeId", price_range_id);
         json.addProperty("checkedDecorationId", decoration_id);
 
-        finish(response, SUCCESS_MESSAGE, json);
+        finish(response, ResultCode.SUCCESS, json);
     }
 
     /**
@@ -110,8 +110,7 @@ public class FilterController extends BaseController {
         Long decoration_id = helper.getLong("decoration_id", 1L);
 
         if (building_id == null) {
-            Message error = new Message(1001, "building_id为空");
-            finish(response, error);
+            finish(response, ResultCode.ERROR_PARAM_EMPTY);
             return;
         }
 
@@ -130,6 +129,6 @@ public class FilterController extends BaseController {
         json.addProperty("checkedPriceRangeId", price_range_id);
         json.addProperty("checkedDecorationId", decoration_id);
 
-        finish(response, SUCCESS_MESSAGE, json);
+        finish(response, ResultCode.SUCCESS, json);
     }
 }

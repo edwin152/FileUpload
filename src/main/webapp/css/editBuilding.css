@@ -1,8 +1,33 @@
-
-body{
+body {
     background: #F5F6FB;
 }
-.table_box{
+
+input {
+    width: 200px;
+    height: 20px;
+    padding: 2px;
+    font-size: 13px;
+    margin-right: 10px;
+}
+
+button {
+    width: 80px;
+    height: 20px;
+    font-size: 13px;
+}
+
+img {
+    width: 100px;
+    height: 100px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.box {
     display: flex;
     flex-direction: column;
     background: #FFFFFF;
@@ -10,58 +35,28 @@ body{
     width: 1142px;
     padding: 20px;
 }
-.table_tr{
+
+.row {
     display: flex;
     flex-direction: row;
-    margin: 10px 0;
+    margin-top: 10px;
+    align-items: center;
 }
 
-.table_title{
+.title {
     font-size: 20px;
     font-weight: bold;
 }
 
-.table_key{
-    min-width: 80px;
-    margin-right: 10px;
+.key {
+    width: 80px;
     font-size: 16px;
 }
 
-.table_value{
-    font-size: 16px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: row;
-}
-
-.table_value input{
-    margin: 0 10px 0 0;
-}
-
-.building_image_item{
-    width: 100px;
-    height: 100px;
-}
-
-.table_menu{
-    cursor: pointer;
-}
-
-.table_menu:hover{
-    text-decoration: underline;
-}
-
-.table_add{
-    cursor: pointer;
-}
-
-.table_add:hover{
-    text-decoration: underline;
-}
-
-.building_textarea{
+.introduce {
     width: 100%;
     height: auto;
-    resize:none;
+    resize: none;
     overflow: visible;
+    padding: 5px;
 }

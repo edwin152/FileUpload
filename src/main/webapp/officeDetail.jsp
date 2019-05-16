@@ -30,7 +30,7 @@
             params: {
                 id: office_id,
             },
-            onSuccess: function (data) {
+            success: function (data) {
                 setOffice(data);
             }
         })

@@ -1,5 +1,6 @@
 package cn.ddzu.shop.controller;
 
+import cn.ddzu.shop.enums.ResultCode;
 import cn.ddzu.shop.helper.RequestHelper;
 import cn.ddzu.shop.util.Log;
 import org.springframework.stereotype.Controller;
@@ -50,14 +51,14 @@ public class UserController extends BaseController {
 
         String pwd = USER_MAP.get(username);
 
-        Message message;
+        ResultCode resultCode;
         if (pwd == null) {
-            message = new Message(1002, "用户名错误");
+            resultCode = ResultCode.ERROR_NO_USER;
         } else if (!password.equals(pwd)) {
-            message = new Message(1002, "密码错误");
+            resultCode = ResultCode.ERROR_WRONG_PASSWORD;
         } else {
-            message = SUCCESS_MESSAGE;
+            resultCode = ResultCode.SUCCESS;
         }
-        finish(response, message);
+        finish(response, resultCode);
     }
 }

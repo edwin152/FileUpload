@@ -1,7 +1,6 @@
 package cn.ddzu.shop.helper;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,11 +22,8 @@ public class RequestHelper {
     }
 
     public String getString(String key, String defaultValue) {
-        String str = request.getParameter(key);
-        if (str == null || str.isEmpty()) {
-            return defaultValue;
-        }
-        return str;
+        return (String) get(key, defaultValue, new TypeToken<String>() {
+        }.getType());
     }
 
     public Integer getInt(String key) {
@@ -35,15 +31,8 @@ public class RequestHelper {
     }
 
     public Integer getInt(String key, Integer defaultValue) {
-        String str = request.getParameter(key);
-        if (str == null || str.isEmpty()) {
-            return defaultValue;
-        }
-        try {
-            return Integer.parseInt(str);
-        } catch (NumberFormatException ignore) {
-            return defaultValue;
-        }
+        return (Integer) get(key, defaultValue, new TypeToken<Integer>() {
+        }.getType());
     }
 
     public Long getLong(String key) {
@@ -51,15 +40,8 @@ public class RequestHelper {
     }
 
     public Long getLong(String key, Long defaultValue) {
-        String str = request.getParameter(key);
-        if (str == null || str.isEmpty()) {
-            return defaultValue;
-        }
-        try {
-            return Long.parseLong(str);
-        } catch (NumberFormatException ignore) {
-            return defaultValue;
-        }
+        return (Long) get(key, defaultValue, new TypeToken<Long>() {
+        }.getType());
     }
 
     public Float getFloat(String key) {
@@ -67,15 +49,8 @@ public class RequestHelper {
     }
 
     public Float getFloat(String key, Float defaultValue) {
-        String str = request.getParameter(key);
-        if (str == null || str.isEmpty()) {
-            return defaultValue;
-        }
-        try {
-            return Float.valueOf(str);
-        } catch (NumberFormatException ignore) {
-            return defaultValue;
-        }
+        return (Float) get(key, defaultValue, new TypeToken<Float>() {
+        }.getType());
     }
 
     public Boolean getBoolean(String key) {
@@ -83,49 +58,55 @@ public class RequestHelper {
     }
 
     public Boolean getBoolean(String key, Boolean defaultValue) {
-        String str = request.getParameter(key);
-        if (str == null || str.isEmpty()) {
-            return defaultValue;
-        }
-        try {
-            return Boolean.valueOf(str);
-        } catch (NumberFormatException ignore) {
-            return defaultValue;
-        }
-    }
-
-    public List<Long> getLongList(String key) {
-        return getLongList(key, new ArrayList<Long>());
-    }
-
-    public List<Long> getLongList(String key, List<Long> defaultValue) {
-        String str = request.getParameter(key);
-        if (str == null || str.isEmpty()) {
-            return defaultValue;
-        }
-        try {
-            Type type = new TypeToken<List<Long>>() {
-            }.getType();
-            return new Gson().fromJson(str, type);
-        } catch (JsonSyntaxException ignore) {
-            return defaultValue;
-        }
+        return (Boolean) get(key, defaultValue, new TypeToken<Boolean>() {
+        }.getType());
     }
 
     public <T> List<T> getList(String key) {
-        return getList(key, new ArrayList<T>());
+        return getList(key, new ArrayList<>());
+    }
+
+    public <T> List<T> getList(String key, Type type) {
+        return getList(key, new ArrayList<>(), type);
     }
 
     public <T> List<T> getList(String key, List<T> defaultValue) {
+        return getList(key, defaultValue, new TypeToken<List<T>>() {
+        }.getType());
+    }
+
+    public <T> List<T> getList(String key, List<T> defaultValue, Type type) {
+        //noinspection unchecked
+        return (List<T>) get(key, defaultValue, type);
+    }
+
+    private Object get(String key, Object defaultValue, Type type) {
         String str = request.getParameter(key);
         if (str == null || str.isEmpty()) {
             return defaultValue;
         }
+        String typeName = type.getTypeName();
+        Class clz;
         try {
-            Type type = new TypeToken<List<T>>() {
-            }.getType();
-            return new Gson().fromJson(str, type);
-        } catch (JsonSyntaxException ignore) {
+            clz = Class.forName(typeName);
+        } catch (ClassNotFoundException ignore) {
+            clz = null;
+        }
+        try {
+            if (String.class.equals(clz)) {
+                return str;
+            } else if (Long.class.equals(clz)) {
+                return Long.parseLong(str);
+            } else if (Integer.class.equals(clz)) {
+                return Integer.parseInt(str);
+            } else if (Boolean.class.equals(clz)) {
+                return Boolean.valueOf(str);
+            } else if (Float.class.equals(clz)) {
+                return Float.valueOf(str);
+            } else {
+                return new Gson().fromJson(str, type);
+            }
+        } catch (RuntimeException ignore) {
             return defaultValue;
         }
     }

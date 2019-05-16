@@ -24,8 +24,8 @@ let http = {
                 console.log(data);
 
                 if (data.code === 1) {
-                    if (!obj.onSuccess) return;
-                    obj.onSuccess(data.data);
+                    if (!obj.success) return;
+                    obj.success(data.data);
                 } else {
                     alert(data.code + ":" + data.msg);
 

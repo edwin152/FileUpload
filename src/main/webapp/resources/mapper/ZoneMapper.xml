@@ -10,8 +10,8 @@
     <update id="create">
         create table zone
         (
-            id          int(11) auto_increment,
-            district_id int(11),
+            id          bigint auto_increment,
+            district_id bigint,
             name        varchar(255),
             primary key (id)
         ) default charset = utf8
