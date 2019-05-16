@@ -42,8 +42,13 @@
         }
 
         function freshDistrictList(district_id) {
+            district_id = parseInt(district_id);
+
             let district_list = document.getElementById("district_list");
             district_list.innerHTML = "";
+            let zone_list = document.getElementById("zone_list");
+            zone_list.innerHTML = "";
+
             for (let district of districtList) {
                 let option = document.createElement("option");
                 option.setAttribute("value", district.id);
@@ -51,8 +56,7 @@
                 district_list.appendChild(option);
 
                 if (district.id === district_id) {
-                    let zone_list = document.getElementById("zone_list");
-                    zone_list.innerHTML = "";
+                    option.setAttribute("selected", "selected");
                     for (let zone of district.zoneList) {
                         let option = document.createElement("option");
                         option.setAttribute("value", zone.id);
@@ -61,6 +65,10 @@
                     }
                 }
             }
+        }
+
+        function changeDistrict(district_id) {
+            freshDistrictList(district_id);
         }
 
         function freshDetailInfoList() {
@@ -150,21 +158,11 @@
         <div class="row">
             <span>区:&nbsp;</span>
 
-            <select id="district_list">
-                <%-- <option value="volvo">Volvo</option>--%>
-                <%-- <option value="saab">Saab</option>--%>
-                <%-- <option value="opel">Opel</option>--%>
-                <%-- <option value="audi">Audi</option>--%>
-            </select>
+            <select id="district_list" onchange="changeDistrict(this.value)"></select>
 
             <span>&nbsp;&nbsp;区域:&nbsp;</span>
 
-            <select id="zone_list">
-                <%-- <option value="volvo">Volvo</option>--%>
-                <%-- <option value="saab">Saab</option>--%>
-                <%-- <option value="opel">Opel</option>--%>
-                <%-- <option value="audi">Audi</option>--%>
-            </select>
+            <select id="zone_list"></select>
 
             <span>&nbsp;&nbsp;详细地址:&nbsp;</span>
 
