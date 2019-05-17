@@ -15,6 +15,8 @@ let http = {
             }
         }
 
+        console.log(data);
+
         $.ajax({
             type: "post",
             url: obj.url,

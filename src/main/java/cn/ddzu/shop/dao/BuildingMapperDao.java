@@ -48,6 +48,23 @@ public interface BuildingMapperDao {
      * @param district_id    区id
      * @param zone_id        区域id
      * @param metro_name     地铁名字
+     * @param start          开始位置
+     * @param step           请求总量
+     */
+    List<Building> select(@Param("keyword") String keyword
+            , @Param("district_id") Long district_id
+            , @Param("zone_id") Long zone_id
+            , @Param("metro_name") String metro_name
+            , @Param("start") int start
+            , @Param("step") int step);
+
+    /**
+     * 按条件筛选办公室
+     *
+     * @param keyword        关键词
+     * @param district_id    区id
+     * @param zone_id        区域id
+     * @param metro_name     地铁名字
      * @param type_id        办公室类型id
      * @param area_range_id  面积区间id
      * @param price_range_id 价格区间id
@@ -55,7 +72,7 @@ public interface BuildingMapperDao {
      * @param start          开始位置
      * @param step           请求总量
      */
-    List<Building> select(@Param("keyword") String keyword
+    List<Building> selectWithOffice(@Param("keyword") String keyword
             , @Param("district_id") Long district_id
             , @Param("zone_id") Long zone_id
             , @Param("metro_name") String metro_name
@@ -73,12 +90,25 @@ public interface BuildingMapperDao {
      * @param district_id    区id
      * @param zone_id        区域id
      * @param metro_name     地铁名字
+     */
+    Integer count(@Param("keyword") String keyword
+            , @Param("district_id") Long district_id
+            , @Param("zone_id") Long zone_id
+            , @Param("metro_name") String metro_name);
+
+    /**
+     * 按条件筛选办公室数量
+     *
+     * @param keyword        关键词
+     * @param district_id    区id
+     * @param zone_id        区域id
+     * @param metro_name     地铁名字
      * @param type_id        办公室类型id
      * @param area_range_id  面积区间id
      * @param price_range_id 价格区间id
      * @param decoration_id  装修类型id
      */
-    Integer count(@Param("keyword") String keyword
+    Integer countWithOffice(@Param("keyword") String keyword
             , @Param("district_id") Long district_id
             , @Param("zone_id") Long zone_id
             , @Param("metro_name") String metro_name

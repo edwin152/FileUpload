@@ -1,7 +1,6 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: Microsoft YaHei,SimHei,SimSun;
 }
 
 .bg_gray {
@@ -381,6 +380,6 @@ input {
     border-bottom: 1px solid #f3f3f3;
 }
 
-.hideSelf{
+.hideSelf {
     display: none;
 }

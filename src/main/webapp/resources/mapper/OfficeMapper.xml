@@ -53,22 +53,26 @@
         delete from office where id = #{id}
     </delete>
 
+    <delete id="deleteByBuilding" parameterType="java.lang.Long">
+        delete from office where building_id = #{building_id}
+    </delete>
+
     <update id="update" parameterType="cn.ddzu.shop.entity.Office">
         update office
         set
-            name = #{office.name}
-            building_id = #{office.building_id}
-            address = #{office.address}
-            type_id = #{office.type_id}
-            area = #{office.area}
-            area_range_id = #{office.area_range_id}
-            price = #{office.price}
-            price_range_id = #{office.price_range_id}
-            decoration_id = #{office.decoration_id}
-            utilization_rate = #{office.utilization_rate}
-            can_register = #{office.can_register}
-            rent_free_period = #{office.rent_free_period}
-            notes = #{office.notes}
+            name = #{office.name},
+            building_id = #{office.building_id},
+            address = #{office.address},
+            type_id = #{office.type_id},
+            area = #{office.area},
+            area_range_id = #{office.area_range_id},
+            price = #{office.price},
+            price_range_id = #{office.price_range_id},
+            decoration_id = #{office.decoration_id},
+            utilization_rate = #{office.utilization_rate},
+            can_register = #{office.can_register},
+            rent_free_period = #{office.rent_free_period},
+            notes = #{office.notes},
             img_list = #{office.img_list}
         where id = #{office.id}
     </update>

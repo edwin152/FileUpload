@@ -84,6 +84,45 @@
         district.name as district_name,
         zone.name as zone_name
         from building
+        left join zone on building.zone_id = zone.id
+        left join district on zone.district_id = district.id
+        where 1 = 1
+        <if test="keyword != null">
+            and building.name like "%"#{keyword}"%"
+        </if>
+        <if test="district_id == zone_id">
+            and building.zone_id in
+            (select zone.id from zone
+            <if test="district_id != null">
+                where district_id = #{district_id}
+            </if>
+            )
+        </if>
+        <if test="district_id != zone_id">
+            and building.zone_id = #{zone_id}
+        </if>
+        <if test="metro_name != null">
+            and building.metro_name_list like "%"#{metro_name}"%"
+        </if>
+        order by building.id desc
+        <if test="step > 0">
+            limit #{start}, #{step};
+        </if>
+    </select>
+
+    <select id="selectWithOffice" resultType="cn.ddzu.shop.entity.Building">
+        select building.id,
+        building.name,
+        building.zone_id,
+        building.address,
+        building.metro_name_list,
+        building.introduce,
+        building.notes,
+        building.img_list,
+        district.id as district_id,
+        district.name as district_name,
+        zone.name as zone_name
+        from building
         left join office on building.id = office.building_id
         left join zone on building.zone_id = zone.id
         left join district on zone.district_id = district.id
@@ -137,6 +176,27 @@
     </select>
 
     <select id="count" resultType="java.lang.Integer">
+        select count(*) from building where 1 = 1
+        <if test="keyword != null">
+            and building.name like "%"#{keyword}"%"
+        </if>
+        <if test="metro_name != null">
+            and building.metro_name_list like "%"#{metro_name}"%"
+        </if>
+        <if test="district_id == zone_id">
+            and building.zone_id in
+            (select zone.id from zone
+            <if test="district_id != null">
+                where district_id = #{district_id}
+            </if>
+            )
+        </if>
+        <if test="district_id != zone_id">
+            and building.zone_id = #{zone_id}
+        </if>
+    </select>
+
+    <select id="countWithOffice" resultType="java.lang.Integer">
         select count(*) from building
         left join office on building.id = office.building_id
         where office.id in (select min(id) from office

@@ -1,5 +1,6 @@
 body {
     background: #F5F6FB;
+    margin: 20px 0 100px 0;
 }
 
 input {
@@ -14,24 +15,34 @@ button {
     width: 80px;
     height: 20px;
     font-size: 13px;
+    margin: 0 5px;
+}
+
+button:hover {
+    cursor: pointer;
 }
 
 img {
     width: 100px;
     height: 100px;
+    margin-right: 10px;
 }
 
-.row {
+span {
+    font-size: 13px;
+    margin: 0 5px;
+}
+
+.column {
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
 }
 
 .box {
     display: flex;
     flex-direction: column;
     background: #FFFFFF;
-    margin: 20px auto;
+    margin: 0 auto 40px auto;
     width: 1142px;
     padding: 20px;
 }
@@ -59,4 +70,40 @@ img {
     resize: none;
     overflow: visible;
     padding: 5px;
+}
+
+.submit {
+    display: flex;
+    flex-direction: column;
+    background: #FFFFFF;
+    color: #333333;
+    margin: 20px auto;
+    width: 1142px;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.submit:hover {
+    cursor: pointer;
+    color: #FFFFFF;
+    background: #333333;
+}
+
+.choose_value {
+}
+
+.choose_value:hover {
+    cursor: pointer;
+    color: #f3b100;
+}
+
+.choose_value_positive {
+    margin: 0 5px;
+    color: #f3b100;
+}
+
+.choose_value_positive:hover {
+    cursor: pointer;
+    color: #f3b100;
 }

@@ -10,6 +10,7 @@ import cn.ddzu.shop.service.BasicService;
 import cn.ddzu.shop.service.OfficeService;
 import cn.ddzu.shop.util.JsonUtils;
 import cn.ddzu.shop.util.Log;
+import cn.ddzu.shop.util.StringUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -188,6 +189,29 @@ public class EditController extends BaseController {
     }
 
     /**
+     * 查询楼
+     * <p>
+     * id 楼id
+     */
+    @RequestMapping("/building")
+    public void getBuilding(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+
+        RequestHelper helper = new RequestHelper(request);
+        Log.d("search-building", helper);
+
+        Long id = helper.getLong("id");
+
+        Building building = officeService.getBuilding(id);
+        JsonObject buildingObject = new Gson().toJsonTree(building).getAsJsonObject();
+        buildingObject.add("img_list", JsonUtils.strToStringArray(building.getImg_list()));
+        buildingObject.add("metro_name_list", JsonUtils.strToStringArray(building.getMetro_name_list()));
+
+        finish(response, ResultCode.SUCCESS, buildingObject);
+    }
+
+    /**
      * 搜索楼
      * <p>
      * keyword 关键词
@@ -200,7 +224,7 @@ public class EditController extends BaseController {
      * page 页码
      */
     @RequestMapping("/buildings")
-    public void getBuildingList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void getBuildingList(HttpServletRequest request, HttpServletResponse response) throws IOException, CloneNotSupportedException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
@@ -236,9 +260,16 @@ public class EditController extends BaseController {
         List<Building> buildingList = officeService.getBuildingList(searchBean, page, PAGE_SIZE);
         JsonArray buildingArray = new JsonArray();
         for (Building building : buildingList) {
+            OfficeService.SearchBean officeSearchBean = (OfficeService.SearchBean) searchBean.clone();
+            officeSearchBean.setKeyword(null);
+            officeSearchBean.setBuilding_id(building.getId());
+            int officeCount = officeService.getOfficeSize(officeSearchBean);
+
             JsonObject buildingObject = new Gson().toJsonTree(building).getAsJsonObject();
             buildingObject.add("img_list", JsonUtils.strToStringArray(building.getImg_list()));
             buildingObject.add("metro_name_list", JsonUtils.strToStringArray(building.getMetro_name_list()));
+            buildingObject.addProperty("office_num", officeCount);
+
             buildingArray.add(buildingObject);
         }
 
@@ -417,6 +448,28 @@ public class EditController extends BaseController {
     }
 
     /**
+     * 查询楼
+     * <p>
+     * id 办公室id
+     */
+    @RequestMapping("/office")
+    public void getOffice(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+
+        RequestHelper helper = new RequestHelper(request);
+        Log.d("search-building", helper);
+
+        Long id = helper.getLong("id");
+
+        Office office = officeService.getOffice(id);
+        JsonObject officeObject = new Gson().toJsonTree(office).getAsJsonObject();
+        officeObject.add("img_list", JsonUtils.strToStringArray(office.getImg_list()));
+
+        finish(response, ResultCode.SUCCESS, officeObject);
+    }
+
+    /**
      * 搜索办公室
      * <p>
      * keyword 关键词
@@ -433,7 +486,7 @@ public class EditController extends BaseController {
         response.setCharacterEncoding("utf-8");
 
         RequestHelper helper = new RequestHelper(request);
-        Log.d("search-offices", helper);
+        Log.d("edit-offices", helper);
 
         Long building_id = helper.getLong("building_id");
         Long type_id = helper.getLong("type_id", 1L);
@@ -449,11 +502,29 @@ public class EditController extends BaseController {
         searchBean.setPrice_range_id(price_range_id);
         searchBean.setDecoration_id(decoration_id);
 
+        Building building = officeService.getBuilding(building_id);
+
         List<Office> officeList = officeService.getOfficeList(searchBean, page, PAGE_SIZE);
         JsonArray officeArray = new JsonArray();
         for (Office office : officeList) {
             JsonObject officeObject = new Gson().toJsonTree(office).getAsJsonObject();
             officeObject.add("img_list", JsonUtils.strToStringArray(office.getImg_list()));
+
+            // 房源信息
+            String sourceInfo = building.getDistrict_name() + building.getZone_name()
+                    + "【" + building.getName() + "】" + office.getType_name()
+                    + "-" + office.getDecoration_name()
+                    + "-" + (office.getCan_register() ? "可注册" : "不可注册")
+                    + "-" + office.getArea() + "m²";
+            officeObject.addProperty("source_info", sourceInfo);
+
+            // 总价
+            float totalPrice = 0F;
+            if (office.getPrice() != null && office.getArea() != null) {
+                totalPrice = office.getPrice() * office.getArea() * 30;
+            }
+            officeObject.addProperty("total_price", StringUtils.priceFormat(totalPrice));
+
             officeArray.add(officeObject);
         }
 

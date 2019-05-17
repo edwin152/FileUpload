@@ -70,9 +70,22 @@ public interface OfficeService {
     List<Building> getBuildingList(SearchBean searchBean, int page, int step);
 
     /**
+     * 按条件筛选楼
+     *
+     * @param page 当前页数 0开始
+     * @param step 每页数量
+     */
+    List<Building> getBuildingListWithOffice(SearchBean searchBean, int page, int step);
+
+    /**
      * 按条件筛选楼数量
      */
     int getBuildingSize(SearchBean searchBean);
+
+    /**
+     * 按条件筛选楼数量
+     */
+    int getBuildingSizeWithOffice(SearchBean searchBean);
 
     class SearchBean implements Cloneable {
         // 关键词

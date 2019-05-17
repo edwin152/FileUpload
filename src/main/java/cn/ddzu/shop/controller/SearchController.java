@@ -80,7 +80,7 @@ public class SearchController extends BaseController {
         searchBean.setArea_range_id(area_range_id);
         searchBean.setPrice_range_id(price_range_id);
         searchBean.setDecoration_id(decoration_id);
-        List<Building> buildingList = officeService.getBuildingList(searchBean, page, PAGE_SIZE);
+        List<Building> buildingList = officeService.getBuildingListWithOffice(searchBean, page, PAGE_SIZE);
         JsonArray buildingArray = new JsonArray();
         for (Building building : buildingList) {
             JsonObject buildingObject = new Gson().toJsonTree(building).getAsJsonObject();
@@ -118,7 +118,7 @@ public class SearchController extends BaseController {
             buildingArray.add(buildingObject);
         }
 
-        int size = officeService.getBuildingSize(searchBean);
+        int size = officeService.getBuildingSizeWithOffice(searchBean);
         int pageNum = size == 0 ? 0 : (size - 1) / PAGE_SIZE + 1;
 
         JsonObject json = new JsonObject();

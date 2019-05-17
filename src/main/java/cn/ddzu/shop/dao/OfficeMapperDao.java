@@ -27,12 +27,17 @@ public interface OfficeMapperDao {
     void add(@Param("office") Office office);
 
     /**
-     * 删除楼
+     * 删除办公室
      */
     void delete(@Param("id") Long id);
 
     /**
-     * 删除楼
+     * 删除办公室
+     */
+    void deleteByBuilding(@Param("building_id") Long building_id);
+
+    /**
+     * 更新办公室
      */
     void update(@Param("office") Office office);
 

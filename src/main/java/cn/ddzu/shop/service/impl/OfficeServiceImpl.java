@@ -101,6 +101,7 @@ public class OfficeServiceImpl implements OfficeService {
         if (id == null) return;
         Log.d("start delete building : id = " + id);
         buildingMapperDao.delete(id);
+        officeMapperDao.deleteByBuilding(id);
     }
 
     @Override
@@ -126,6 +127,17 @@ public class OfficeServiceImpl implements OfficeService {
                 , searchBean.getDistrict_id()
                 , searchBean.getZone_id()
                 , searchBean.getMetro_name()
+                , page < 0 ? 0 : page * step
+                , step);
+    }
+
+    @Override
+    public List<Building> getBuildingListWithOffice(SearchBean searchBean, int page, int step) {
+        Log.d("start get building list");
+        return buildingMapperDao.selectWithOffice(searchBean.getKeyword()
+                , searchBean.getDistrict_id()
+                , searchBean.getZone_id()
+                , searchBean.getMetro_name()
                 , searchBean.getType_id()
                 , searchBean.getArea_range_id()
                 , searchBean.getPrice_range_id()
@@ -138,6 +150,16 @@ public class OfficeServiceImpl implements OfficeService {
     public int getBuildingSize(SearchBean searchBean) {
         Log.d("start get building size");
         Integer size = buildingMapperDao.count(searchBean.getKeyword()
+                , searchBean.getDistrict_id()
+                , searchBean.getZone_id()
+                , searchBean.getMetro_name());
+        return size == null ? 0 : size;
+    }
+
+    @Override
+    public int getBuildingSizeWithOffice(SearchBean searchBean) {
+        Log.d("start get building size");
+        Integer size = buildingMapperDao.countWithOffice(searchBean.getKeyword()
                 , searchBean.getDistrict_id()
                 , searchBean.getZone_id()
                 , searchBean.getMetro_name()
