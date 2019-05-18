@@ -14,7 +14,7 @@
 </head>
 
 <body>
-	<div class="content_box flexed_column">
+	<div class="content_box flex_column">
 		<h3>登录</h3>
 		<input type="text" id="user_name" value="" placeholder="用户名" />
 		<input type="password" id="user_password" value="" placeholder="密码" />

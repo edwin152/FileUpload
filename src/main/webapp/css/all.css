@@ -17,12 +17,12 @@
     margin: 0 auto;
 }
 
-.flexed_row {
+.flex_row {
     display: flex;
     align-items: center;
 }
 
-.flexed_column {
+.flex_column {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -60,6 +60,7 @@
     width: 108px;
     height: 40px;
     display: flex;
+    margin-right: 10px;
 }
 
 a {
@@ -155,7 +156,7 @@ input {
     line-height: 34px;
 }
 
-.bottom_box .foot_m .flexed_row {
+.bottom_box .foot_m .flex_row {
     margin-top: 50px;
 }
 
