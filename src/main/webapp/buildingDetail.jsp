@@ -276,7 +276,7 @@
         }
         for (let info of detail_info) {
             let box = document.createElement("div");
-            box.className = "bottom_info_item flexed_row";
+            box.className = "bottom_info_item flex_row";
 
             let key = document.createElement("div");
             key.className = "bottom_info_title";

@@ -166,7 +166,7 @@
 
             let conditionBox = document.createElement("div");
 
-            conditionBox.className = "data_item_box flexed_row";
+            conditionBox.className = "data_item_box flex_row";
             let imgLeft = document.createElement("img");
             imgLeft.className = 'item_image clickable';
             imgLeft.setAttribute("src", building.img_list[0]);
@@ -226,7 +226,7 @@
             dataInfoBox.appendChild(itemPosition);
 
             let itemSizeBtnBox = document.createElement("div");
-            itemSizeBtnBox.className = 'item_size_btn_box flexed_row';
+            itemSizeBtnBox.className = 'item_size_btn_box flex_row';
             dataInfoBox.appendChild(itemSizeBtnBox);
 
             for (let j = 0; j < building.area_list.length && j < 4; j++) {
