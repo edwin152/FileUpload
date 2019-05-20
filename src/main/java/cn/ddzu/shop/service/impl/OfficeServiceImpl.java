@@ -134,6 +134,9 @@ public class OfficeServiceImpl implements OfficeService {
     @Override
     public List<Building> getBuildingListWithOffice(SearchBean searchBean, int page, int step) {
         Log.d("start get building list");
+        if (searchBean == null) {
+            searchBean = new SearchBean();
+        }
         return buildingMapperDao.selectWithOffice(searchBean.getKeyword()
                 , searchBean.getDistrict_id()
                 , searchBean.getZone_id()

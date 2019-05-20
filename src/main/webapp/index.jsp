@@ -150,12 +150,12 @@
                 buildingImageBox.setAttribute("class", "fine_building_image_box");
                 buildingItemBox.appendChild(buildingImageBox);
                 let buildingImage = document.createElement("img");
-                buildingImage.setAttribute("src", buildingList[i].imageUrl);
+                buildingImage.setAttribute("src", buildingList[i].img_list[0]);
                 buildingImageBox.appendChild(buildingImage);
 
                 let buildingTitle = document.createElement("a");
                 buildingTitle.setAttribute("class", "fine_building_title");
-                buildingTitle.innerHTML = buildingList[i].title;
+                buildingTitle.innerHTML = buildingList[i].name;
                 buildingItemBox.appendChild(buildingTitle);
 
                 let buildingInfoBox = document.createElement("div");
@@ -170,7 +170,7 @@
                 buildingAddressBox.appendChild(buildingAddressIcon);
                 let buildingAddressText = document.createElement("span");
                 buildingAddressText.setAttribute("class", "address_text");
-                buildingAddressText.innerHTML = buildingList[i].address;
+                buildingAddressText.innerHTML = buildingList[i].district_name + "-" + buildingList[i].zone_name;
                 buildingAddressBox.appendChild(buildingAddressText);
 
                 let buildingPriceBox = document.createElement("div");
@@ -178,9 +178,9 @@
                 buildingInfoBox.appendChild(buildingPriceBox);
                 let buildingPriceText = document.createElement("span");
                 buildingPriceText.setAttribute("class", "price_number");
-                buildingPriceText.innerHTML = buildingList[i].price;
+                buildingPriceText.innerHTML = buildingList[i].price_average;
                 buildingPriceBox.appendChild(buildingPriceText);
-
+                buildingPriceBox.append("元/m²/天");
             }
         }
 
@@ -200,57 +200,31 @@
         }
 
         window.onload = function () {
-            let imgUrl = ["img/test.jpg", "img/test.jpg", "img/test.jpg", "img/test.jpg"];
-            setTopBackground(imgUrl);
             getFilterList();
         };
 
         function getFilterList() {
-            let request = window.location.search;
-            let keyword = http.getParameter(request, "keyword");
-            if (keyword) {
-                keyword = decodeURI(keyword);
-                document.getElementById("keyword_input").setAttribute("value", keyword);
-            }
-            let filter = {};
-            filter.checkedDistrictId = http.getParameter(request, "district_id");
-            filter.checkedZoneId = http.getParameter(request, "zone_id");
-            filter.checkedMetroId = http.getParameter(request, "metro_id");
-            filter.checkedTypeId = http.getParameter(request, "type_id");
-            filter.checkedAreaRangeId = http.getParameter(request, "area_range_id");
-            filter.checkedPriceRangeId = http.getParameter(request, "price_range_id");
-            filter.checkedDecorationId = http.getParameter(request, "decoration_id");
             http.post({
-                url: "filter/all",
-                params: {
-                    district_id: filter.checkedDistrictId,
-                    zone_id: filter.checkedZoneId,
-                    metro_id: filter.checkedMetroId,
-                    type_id: filter.checkedTypeId,
-                    area_range_id: filter.checkedAreaRangeId,
-                    price_range_id: filter.checkedPriceRangeId,
-                    decoration_id: filter.checkedDecorationId,
-                },
+                url: "index/all",
                 success: function (data) {
                     filter = data;
-                    setConditionScreen(filter.districtList);
-                    setTypeScreen(filter.typeList);
-                    setAreaRangeScreen(filter.areaRangeList);
-                    setPriceRangeScreen(filter.priceRangeList);
+                    setTopBackground(data.bannerList);
+                    setConditionScreen(data.districtList);
+                    setTypeScreen(data.typeList);
+                    setAreaRangeScreen(data.areaRangeList);
+                    setPriceRangeScreen(data.priceRangeList);
+                    setCoreBuilding(data.coreList);
+                    setFineBuildingList(data.fineList);
 
-                    // TODO
-                    setCoreBuilding(buildingList);
-                    setFineBuildingList(fineList);
-
-                    openSwiper();
+                    openSwiper(data.bannerList.length !== 1);
                 }
             });
         }
 
-        function openSwiper(){
+        function openSwiper(loop) {
             // 启动轮播图
             new Swiper('#top_bg', {
-                loop: true,
+                loop: loop,
                 autoplay: 2000,
                 pagination: '#top_bg_position',
                 paginationClickable: true,
@@ -269,15 +243,9 @@
     </div>
     <div class="title_box">
         <div class="win flex_row position_relative">
-            <img src="img/nav_logo_white.png" class="top_logo">
+            <img src="img/nav_logo_white.png" class="top_logo" alt="">
             <div class="clickable">
-                上海&nbsp;&nbsp;
-            </div>
-            <div class="clickable">
-                [切换城市]
-            </div>
-            <div>
-                |
+                上海
             </div>
             <div class="position_right">
                 <div class="title_text_right">
@@ -325,7 +293,7 @@
             <div class="screen_title">
                 面积<span class="screen_subtitle">（单位：m²）</span>
             </div>
-            <div class="screen_option_box flex_column" >
+            <div class="screen_option_box flex_column">
                 <div class="flex_row" id="screen_area_box">
                 </div>
                 <div class="flex_row">
@@ -376,8 +344,8 @@
     <div class="win">
         <div class="flex_row bottom_top">
             <div class="foot_l">
-                <div class="ad_title">办公选址上妥妥租，妥妥的 !</div>
-                <a href="https://www.tuotuozu.com/sh/zxd/id/9.html">关于妥妥租</a> -
+                <div class="ad_title">办公选址上点点租，点点的 !</div>
+                <a href="https://www.tuotuozu.com/sh/zxd/id/9.html">关于点点租</a> -
                 <a href="https://www.tuotuozu.com/sh/zxd/id/10.html">服务介绍</a> -
                 <br/> ©2017-2018 京ICP备17066298号-1 地址：北京市朝阳区凯旋城E座1807
             </div>
