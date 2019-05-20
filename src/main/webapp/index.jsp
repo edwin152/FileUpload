@@ -9,21 +9,102 @@
     <link rel="stylesheet" href="layUI/css/layui.css">
     <link rel="stylesheet" type="text/css" href="css/all.css"/>
     <link rel="stylesheet" type="text/css" href="css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
     <script src="layUI/layui.js" type="text/javascript" charset="UTF-8"></script>
+    <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/swiper.jquery.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
         /**
          * 区域
          * @param conditionList
          */
         function setConditionScreen(conditionList) {
-            conditionList.push("更多>>");
             let conditionBox = document.getElementById("screen_condition_box");
-            for (let i = 0, len = conditionList.length; i < len; i++) {
+            for (let i = 0, len = conditionList.length; i < len && i < 10; i++) {
+                if (conditionList[i].id === 1) {
+                    continue;
+                }
                 let conditionItem = document.createElement("div");
                 conditionBox.appendChild(conditionItem);
                 let conditionText = document.createElement("a");
-                conditionText.innerHTML = conditionList[i];
+                conditionText.setAttribute("href", "search.jsp?district_id=" + conditionList[i].id);
+                conditionText.innerHTML = conditionList[i].name;
                 conditionItem.appendChild(conditionText);
+            }
+            let conditionItem = document.createElement("div");
+            conditionBox.appendChild(conditionItem);
+            let conditionText = document.createElement("a");
+            conditionText.setAttribute("href", "search.jsp");
+            conditionText.innerHTML = "更多>>";
+            conditionItem.appendChild(conditionText);
+        }
+
+        /**
+         * 类型
+         * @param typeList
+         */
+        function setTypeScreen(typeList) {
+            let typeBox = document.getElementById("screen_type_box");
+            for (let i = 0, len = typeList.length; i < len; i++) {
+                if (typeList[i].id === 1) {
+                    continue;
+                }
+                let typeItem = document.createElement("a");
+                typeItem.setAttribute("href", "search.jsp?type_id=" + typeList[i].id);
+                typeBox.appendChild(typeItem);
+                let typeImg = document.createElement("img");
+                typeImg.setAttribute("class", "screen_type_icon");
+                switch (typeList[i].id) {
+                    case 2:
+                        typeImg.setAttribute("src", "img/icon_type_1.png");
+                        break;
+                    case 3:
+                        typeImg.setAttribute("src", "img/icon_type_2.png");
+                        break;
+                    case 4:
+                        typeImg.setAttribute("src", "img/icon_type_3.png");
+                        break;
+                }
+                typeItem.appendChild(typeImg);
+                let typeText = document.createElement("div");
+                typeText.setAttribute("class", "screen_type_text");
+                typeText.innerHTML = typeList[i].name;
+                typeItem.appendChild(typeText);
+            }
+        }
+
+        /**
+         * 面积
+         * @param areaRangeList
+         */
+        function setAreaRangeScreen(areaRangeList) {
+            let areaRangeBox = document.getElementById("screen_area_box");
+            for (let i = 0, len = areaRangeList.length; i < len && i < 10; i++) {
+                if (areaRangeList[i].id === 1) {
+                    continue;
+                }
+                let areaRangeText = document.createElement("a");
+                areaRangeText.setAttribute("class", "screen_option");
+                areaRangeText.setAttribute("href", "search.jsp?area_range_id=" + areaRangeList[i].id);
+                areaRangeBox.appendChild(areaRangeText);
+            }
+        }
+
+        /**
+         * 价格
+         * @param priceRangeList
+         */
+        function setPriceRangeScreen(priceRangeList) {
+            let priceRangeBox = document.getElementById("screen_price_box");
+            for (let i = 0, len = priceRangeList.length; i < len && i < 10; i++) {
+                if (priceRangeList[i].id === 1) {
+                    continue;
+                }
+                let priceRangeText = document.createElement("a");
+                priceRangeText.setAttribute("class", "screen_option");
+                priceRangeText.setAttribute("href", "search.jsp?price_range_id=" + priceRangeList[i].id);
+                priceRangeBox.appendChild(priceRangeText);
             }
         }
 
@@ -35,7 +116,7 @@
             let coreBuildingListBox = document.getElementById("core_building");
             for (let i = 0, len = buildingList.length; i < len && i < 4; i++) {
                 let buildingItemBox = document.createElement("div");
-                buildingItemBox.setAttribute("class", "image_item_in_title image_big");
+                buildingItemBox.setAttribute("class", "image_item_in_title image_big clickable");
                 coreBuildingListBox.appendChild(buildingItemBox);
                 let buildingItemImage = document.createElement("img");
                 buildingItemImage.setAttribute("src", buildingList[i].imageUrl);
@@ -62,7 +143,7 @@
             let fineBuildingListBox = document.getElementById("fine_building");
             for (let i = 0, len = buildingList.length; i < len; i++) {
                 let buildingItemBox = document.createElement("div");
-                buildingItemBox.setAttribute("class", "fine_building_item_box image_big flex_column");
+                buildingItemBox.setAttribute("class", "fine_building_item_box image_big flex_column clickable");
                 fineBuildingListBox.appendChild(buildingItemBox);
 
                 let buildingImageBox = document.createElement("div");
@@ -106,106 +187,89 @@
         /**
          * 设置头部背景图
          */
-        function setTopBackground(imageUrl){
+        function setTopBackground(imageUrl) {
             let topBgBox = document.getElementById("top_bg_item_box");
-            for (let i = 0, len = imageUrl.length; i < len; i++){
+            for (let i = 0, len = imageUrl.length; i < len; i++) {
+                let itemBox = document.createElement("div");
+                itemBox.setAttribute("class", "swiper-slide");
+                topBgBox.appendChild(itemBox);
                 let imgView = document.createElement("img");
                 imgView.setAttribute("src", imageUrl[i]);
-                topBgBox.appendChild(imgView);
+                itemBox.appendChild(imgView);
             }
-
-            // 启动轮播图
-            layui.use('carousel', function () {
-                let carousel = layui.carousel;
-                //建造实例
-                carousel.render({
-                    elem: '#top_bg'
-                    , width: '100%' //设置容器宽度
-                    , height: '500'
-                    , arrow: 'none' //始终显示箭头
-                    // ,anim: 'fade' //切换动画方式
-                    , interval: 3000
-                });
-            });
         }
 
         window.onload = function () {
-            // TODO 假数据
-            let conditionScreen = ["浦东", "黄浦", "卢湾", "徐汇", "长宁", "静安", "普陀", "闸北", "虹口"];
-            setConditionScreen(conditionScreen);
-            let buildingList = [
-                {
-                    imageUrl: "img/test.jpg",
-                    title: "南京西路/江宁路写字楼",
-                    subtitle: "南京西路是被称为“中华商业第一街”──南京路（南京东路和南京西路）的西半部，跨黄浦、静安两区。"
-                },
-                {
-                    imageUrl: "img/test.jpg",
-                    title: "南京西路/江宁路写字楼",
-                    subtitle: "南京西路是被称为“中华商业第一街”──南京路（南京东路和南京西路）的西半部，跨黄浦、静安两区。"
-                },
-                {
-                    imageUrl: "img/test.jpg",
-                    title: "南京西路/江宁路写字楼",
-                    subtitle: "南京西路是被称为“中华商业第一街”──南京路（南京东路和南京西路）的西半部，跨黄浦、静安两区。"
-                },
-                {
-                    imageUrl: "img/test.jpg",
-                    title: "南京西路/江宁路写字楼",
-                    subtitle: "南京西路是被称为“中华商业第一街”──南京路（南京东路和南京西路）的西半部，跨黄浦、静安两区。"
-                }
-            ];
-            setCoreBuilding(buildingList)
-
-            let fineList = [
-                {
-                    imageUrl: "img/test.jpg",
-                    title: "南京西路/江宁路写字楼",
-                    address: "南京西路",
-                    price: "1.2"
-                },
-                {
-                    imageUrl: "img/test.jpg",
-                    title: "南京西路/江宁路写字楼",
-                    address: "南京西路",
-                    price: "1.2"
-                },
-                {
-                    imageUrl: "img/test.jpg",
-                    title: "南京西路/江宁路写字楼",
-                    address: "南京西路",
-                    price: "1.2"
-                },
-                {
-                    imageUrl: "img/test.jpg",
-                    title: "南京西路/江宁路写字楼",
-                    address: "南京西路",
-                    price: "1.2"
-                },
-                {
-                    imageUrl: "img/test.jpg",
-                    title: "南京西路/江宁路写字楼",
-                    address: "南京西路",
-                    price: "1.2"
-                }
-            ];
-            setFineBuildingList(fineList);
-
             let imgUrl = ["img/test.jpg", "img/test.jpg", "img/test.jpg", "img/test.jpg"];
             setTopBackground(imgUrl);
+            getFilterList();
+        };
+
+        function getFilterList() {
+            let request = window.location.search;
+            let keyword = http.getParameter(request, "keyword");
+            if (keyword) {
+                keyword = decodeURI(keyword);
+                document.getElementById("keyword_input").setAttribute("value", keyword);
+            }
+            let filter = {};
+            filter.checkedDistrictId = http.getParameter(request, "district_id");
+            filter.checkedZoneId = http.getParameter(request, "zone_id");
+            filter.checkedMetroId = http.getParameter(request, "metro_id");
+            filter.checkedTypeId = http.getParameter(request, "type_id");
+            filter.checkedAreaRangeId = http.getParameter(request, "area_range_id");
+            filter.checkedPriceRangeId = http.getParameter(request, "price_range_id");
+            filter.checkedDecorationId = http.getParameter(request, "decoration_id");
+            http.post({
+                url: "filter/all",
+                params: {
+                    district_id: filter.checkedDistrictId,
+                    zone_id: filter.checkedZoneId,
+                    metro_id: filter.checkedMetroId,
+                    type_id: filter.checkedTypeId,
+                    area_range_id: filter.checkedAreaRangeId,
+                    price_range_id: filter.checkedPriceRangeId,
+                    decoration_id: filter.checkedDecorationId,
+                },
+                success: function (data) {
+                    filter = data;
+                    setConditionScreen(filter.districtList);
+                    setTypeScreen(filter.typeList);
+                    setAreaRangeScreen(filter.areaRangeList);
+                    setPriceRangeScreen(filter.priceRangeList);
+
+                    // TODO
+                    setCoreBuilding(buildingList);
+                    setFineBuildingList(fineList);
+
+                    openSwiper();
+                }
+            });
+        }
+
+        function openSwiper(){
+            // 启动轮播图
+            new Swiper('#top_bg', {
+                loop: true,
+                autoplay: 2000,
+                pagination: '#top_bg_position',
+                paginationClickable: true,
+                autoplayDisableOnInteraction: false,
+            });
         }
     </script>
 </head>
 
 <body>
 <div class="search_box">
-    <div class="top_bg_box layui-carousel" id="top_bg">
-        <div carousel-item id="top_bg_item_box">
+    <div class="top_bg_box swiper-container" id="top_bg">
+        <div class="swiper-wrapper" id="top_bg_item_box">
         </div>
+        <div class="swiper_position swiper_top" id="top_bg_position"></div>
     </div>
     <div class="title_box">
         <div class="win flex_row position_relative">
-            <img src="img/phone.png" class="top_logo">
+            <img src="img/nav_logo_white.png" class="top_logo">
             <div class="clickable">
                 上海&nbsp;&nbsp;
             </div>
@@ -255,31 +319,14 @@
                 办公类型
             </div>
             <div class="screen_item_box" id="screen_type_box">
-                <div>
-                    <img src="img/phone.png" class="screen_type_icon"/>
-                    <a class="screen_type_text">普通办公</a>
-                </div>
-                <div>
-                    <img src="img/phone.png" class="screen_type_icon"/>
-                    <a class="screen_type_text">共享办公</a>
-                </div>
-                <div>
-                    <img src="img/phone.png" class="screen_type_icon"/>
-                    <a class="screen_type_text">创意园区</a>
-                </div>
             </div>
         </div>
         <div class="screen_item">
             <div class="screen_title">
                 面积<span class="screen_subtitle">（单位：m²）</span>
             </div>
-            <div class="screen_option_box flex_column" id="screen_area_box">
-                <div class="flex_row">
-                    <a href="" class="screen_option"></a>
-                    <a href="" class="screen_option"></a>
-                    <a href="" class="screen_option"></a>
-                    <a href="" class="screen_option"></a>
-                    <a href="" class="screen_option"></a>
+            <div class="screen_option_box flex_column" >
+                <div class="flex_row" id="screen_area_box">
                 </div>
                 <div class="flex_row">
                     <div class="screen_option_text">0</div>
@@ -295,15 +342,8 @@
             <div class="screen_title">
                 价格<span class="screen_subtitle">（单位：元/m²/天）</span>
             </div>
-            <div class="screen_option_box flex_column" id="screen_price_box">
-                <div class="flex_row">
-                    <a href="" class="screen_option"></a>
-                    <a href="" class="screen_option"></a>
-                    <a href="" class="screen_option"></a>
-                    <a href="" class="screen_option"></a>
-                    <a href="" class="screen_option"></a>
-                    <a href="" class="screen_option"></a>
-                    <a href="" class="screen_option"></a>
+            <div class="screen_option_box flex_column">
+                <div class="flex_row" id="screen_price_box">
                 </div>
                 <div class="flex_row">
                     <div class="screen_option_text">0</div>

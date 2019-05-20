@@ -2,6 +2,32 @@ body {
     background: #FFFFFF;
 }
 
+.search_box .top_bg_box{
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+    position: relative;
+    margin: 0;
+}
+
+.swiper_top{
+    position: absolute;
+    bottom: 20px;
+}
+
+.swiper_position {
+    position: absolute;
+    bottom: 20px;
+    display: inline-flex;
+    justify-content: center;
+    z-index: 10;
+    width: 100%;
+}
+
+.top_bg_box img{
+    width: 100%;
+}
+
 .search_box {
     position: relative;
     height: 500px;
@@ -19,6 +45,7 @@ body {
     font: 12px Microsoft YaHei, SimHei, SimSun;
     line-height: 16px;
     color: #FFFFFF;
+    z-index: 10;
 }
 
 .position_relative {
@@ -55,6 +82,7 @@ body {
     align-items: center;
     width: 1000px;
     margin: -180px auto 0 auto;
+    z-index: 10;
 }
 
 .top_search {
@@ -105,6 +133,7 @@ body {
 .screen_wrap {
     padding: 20px 0;
     border-bottom: 1px solid #f3f3f3;
+    width: 100%;
 }
 
 .screen_box {
@@ -140,7 +169,7 @@ body {
     margin-top: 20px;
 }
 
-.screen_item_box div {
+.screen_item_box a {
     margin: 5px 0;
     padding-right: 15px;
     display: flex;
@@ -276,7 +305,7 @@ body {
 }
 
 .fine_building_item_box {
-    width: 270px;
+    width: 278px;
     overflow: hidden;
     transition: all 0.6s;
     margin-bottom: 20px;
@@ -284,13 +313,13 @@ body {
 }
 
 .fine_building_item_box .fine_building_image_box{
-    width: 270px;
+    width: 100%;
     height: 200px;;
     overflow: hidden;
 }
 
 .fine_building_item_box img {
-    width: 270px;
+    width: 100%;
     height: 200px;
     transition: all 0.6s;
 }

@@ -384,3 +384,7 @@ input {
 .hideSelf {
     display: none;
 }
+
+img{
+    object-fit: cover;
+}
