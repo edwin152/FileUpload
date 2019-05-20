@@ -176,7 +176,7 @@
             conditionBox.appendChild(imgLeft);
 
             let dataInfoBox = document.createElement("div");
-            dataInfoBox.className = 'data_info_box flexed_column';
+            dataInfoBox.className = 'data_info_box flex_column';
             conditionBox.appendChild(dataInfoBox);
 
             let itemName = document.createElement("div");
