@@ -79,7 +79,7 @@
                         for (let metroName of metroNameList) {
                             for (let metro of metroList) {
                                 if (metro.name === metroName) {
-                                    metroIdList.push(metro.id);
+                                    idList.push(metro.id);
                                     break;
                                 }
                             }
@@ -267,8 +267,8 @@
                 if (!detail_info_value || isEmpty(detail_info_value.value)) continue;
 
                 detail_info_list.push({
-                    key: detail_info_key,
-                    value: detail_info_value,
+                    key: detail_info_key.value,
+                    value: detail_info_value.value,
                 });
             }
 

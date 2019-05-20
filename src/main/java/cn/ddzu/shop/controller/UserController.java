@@ -5,7 +5,9 @@ import cn.ddzu.shop.helper.RequestHelper;
 import cn.ddzu.shop.util.Log;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -39,12 +41,12 @@ public class UserController extends BaseController {
      * password 密码
      */
     @RequestMapping("/login")
-    public void reset(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
         RequestHelper helper = new RequestHelper(request);
-        Log.d("edit-reset", helper);
+        Log.d("login", helper);
 
         String username = helper.getString("username", "");
         String password = helper.getString("password", "");
@@ -60,5 +62,15 @@ public class UserController extends BaseController {
             resultCode = ResultCode.SUCCESS;
         }
         finish(response, resultCode);
+    }
+
+    @RequestMapping("/manage")
+    public ModelAndView manage(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+
+        RequestHelper helper = new RequestHelper(request);
+        Log.d("login", helper);
+        return new ModelAndView("login");
     }
 }
