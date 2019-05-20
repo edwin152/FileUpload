@@ -266,7 +266,7 @@
 
 <body class="bg_gray">
 <div class="title_box">
-    <div class="win flexed_row">
+    <div class="win flex_row">
         <div class="title_text">
             上海
         </div>
@@ -291,10 +291,10 @@
     </div>
 </div>
 <div class="bg_white">
-    <div class="win top_box flexed_row">
+    <div class="win top_box flex_row">
         <img src="" class="top_logo" alt=""/>
         <a href="" class="black_a logo_right">上海写字楼出租</a>
-        <div class="top_search_box flexed_row">
+        <div class="top_search_box flex_row">
             <form action="">
                 <input type="text" class="top_search" name="keyword" id="keyword_input"
                        placeholder="输入您要查找的楼盘或者区域商圈名称"/>
@@ -305,65 +305,65 @@
 </div>
 <div class="matop bg_white">
     <div class="win condition_box" id="condition_box">
-        <div class="condition_line flexed_row">
+        <div class="condition_line flex_row">
             <div class="condition_title" id="district">
                 区：
             </div>
-            <div class="option_box flexed_row" id="districtList">
+            <div class="option_box flex_row" id="districtList">
             </div>
         </div>
-        <div class="condition_line flexed_row" id="zone">
+        <div class="condition_line flex_row" id="zone">
             <div class="condition_title">
                 区域：
             </div>
-            <div class="option_box flexed_row" id="zoneList">
+            <div class="option_box flex_row" id="zoneList">
             </div>
         </div>
-        <div class="condition_line flexed_row" id="metro">
+        <div class="condition_line flex_row" id="metro">
             <div class="condition_title">
                 地铁：
             </div>
-            <div class="option_box flexed_row" id="metroList">
+            <div class="option_box flex_row" id="metroList">
             </div>
         </div>
-        <div class="condition_line flexed_row" id="type">
+        <div class="condition_line flex_row" id="type">
             <div class="condition_title">
                 类型：
             </div>
-            <div class="option_box flexed_row" id="typeList">
+            <div class="option_box flex_row" id="typeList">
             </div>
         </div>
-        <div class="condition_line flexed_row" id="areaRange">
+        <div class="condition_line flex_row" id="areaRange">
             <div class="condition_title">
                 面积：
             </div>
-            <div class="option_box flexed_row" id="areaRangeList">
+            <div class="option_box flex_row" id="areaRangeList">
             </div>
         </div>
-        <div class="condition_line flexed_row" id="priceRange">
+        <div class="condition_line flex_row" id="priceRange">
             <div class="condition_title">
                 价格：
             </div>
-            <div class="option_box flexed_row" id="priceRangeList">
+            <div class="option_box flex_row" id="priceRangeList">
             </div>
         </div>
-        <div class="condition_line flexed_row" id="decoration">
+        <div class="condition_line flex_row" id="decoration">
             <div class="condition_title">
                 装修：
             </div>
-            <div class="option_box flexed_row" id="decorationList">
+            <div class="option_box flex_row" id="decorationList">
             </div>
         </div>
     </div>
 </div>
-<div class="content_box matop win flexed_row">
+<div class="content_box matop win flex_row">
     <div class="content_left bg_white">
         <h3 class="sec_title">默认排序</h3>
         <div class="error_not_text" id="error_not_text">
             抱歉，暂无数据！
         </div>
-        <div class="data_list flexed_column" id="data_list_box">
-            <div class="data_item_box flexed_row" id="dataList">
+        <div class="data_list flex_column" id="data_list_box">
+            <div class="data_item_box flex_row" id="dataList">
             </div>
         </div>
 
@@ -381,7 +381,7 @@
                     <span class="service_name">妥妥租</span>上海写字楼专属顾问
                 </div>
             </div>
-            <div class="service_phone flexed_row">
+            <div class="service_phone flex_row">
                 <div class="icon_phone"></div>
                 <div class="service_phone_text">
                     400-865-9520
@@ -402,9 +402,9 @@
         </div>
     </div>
 </div>
-<div class="bottom_box flexed_column">
+<div class="bottom_box flex_column">
     <div class="win">
-        <div class="flexed_row bottom_top">
+        <div class="flex_row bottom_top">
             <div class="foot_l">
                 <div class="ad_title">办公选址上妥妥租，妥妥的 !</div>
                 <a href="https://www.tuotuozu.com/sh/zxd/id/9.html">关于妥妥租</a> -
@@ -414,7 +414,7 @@
             <div class="foot_m">
                 客服服务：（早9:00-晚21:00）<br/>
                 <span>400-865-9520</span>
-                <div class="flexed_row">
+                <div class="flex_row">
                     <div>SOCIAL MEDIA</div>
                     <div>
                         <a href="#">facebook</a>
