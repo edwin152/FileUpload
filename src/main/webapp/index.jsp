@@ -274,7 +274,7 @@
                 上海&nbsp;&nbsp;
             </div>
             <div class="clickable">
-                [切换城市]
+                <%--[切换城市]--%>
             </div>
             <div>
                 |
