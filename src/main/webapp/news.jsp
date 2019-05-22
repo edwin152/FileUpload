@@ -266,7 +266,7 @@
 </div>
 <div class="bg_white">
     <div class="win top_box flex_row">
-        <img src="" class="top_logo" alt=""/>
+        <img src="img/nav_logo_white.png" class="top_logo" alt=""/>
         <div class="flex_row" id="news_type">
         </div>
     </div>
