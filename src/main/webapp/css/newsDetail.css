@@ -1,0 +1,25 @@
+
+.content_box .content_right_box{
+    padding: 20px;
+    background: #FFFFFF;
+}
+.news_detail_title{
+    font-size: 22px;
+    line-height: 28px;
+    text-align: center;
+    padding-bottom: 15px;
+    margin-top: 10px;
+}
+
+.news_time{
+    margin-top: 10px;
+    color: #666;
+    text-align: center;
+    font-size: 12px;
+}
+
+.news_content{
+    line-height: 28px;
+    margin-top: 10px;
+    font-size: 14px;
+}

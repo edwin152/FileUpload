@@ -284,9 +284,6 @@
     </div>
     <div class="content_right_box" id="news_list_box">
         <div class="news_item_box">
-            <img src="img/test.jpg" alt="" class="news_img">
-            <div class="news_info_box">
-            </div>
         </div>
         <div id="page_box"></div>
     </div>
