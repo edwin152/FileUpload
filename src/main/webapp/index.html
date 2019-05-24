@@ -18,6 +18,9 @@
          */
         function setConditionScreen(conditionList) {
             let conditionBox = document.getElementById("screen_condition_box");
+            if (!conditionBox) {
+                return;
+            }
             for (let i = 0, len = conditionList.length; i < len && i < 10; i++) {
                 if (conditionList[i].id === 1) {
                     continue;
@@ -43,6 +46,9 @@
          */
         function setTypeScreen(typeList) {
             let typeBox = document.getElementById("screen_type_box");
+            if (!typeBox) {
+                return;
+            }
             for (let i = 0, len = typeList.length; i < len; i++) {
                 if (typeList[i].id === 1) {
                     continue;
@@ -77,6 +83,9 @@
          */
         function setAreaRangeScreen(areaRangeList) {
             let areaRangeBox = document.getElementById("screen_area_box");
+            if (!areaRangeBox) {
+                return;
+            }
             for (let i = 0, len = areaRangeList.length; i < len && i < 10; i++) {
                 if (areaRangeList[i].id === 1) {
                     continue;
@@ -94,6 +103,9 @@
          */
         function setPriceRangeScreen(priceRangeList) {
             let priceRangeBox = document.getElementById("screen_price_box");
+            if (!priceRangeBox) {
+                return;
+            }
             for (let i = 0, len = priceRangeList.length; i < len && i < 10; i++) {
                 if (priceRangeList[i].id === 1) {
                     continue;
@@ -232,98 +244,76 @@
 </head>
 
 <body>
-<div class="search_box">
+<div class="top_bg_search">
     <div class="top_bg_box swiper-container" id="top_bg">
         <div class="swiper-wrapper" id="top_bg_item_box">
         </div>
         <div class="swiper_position swiper_top" id="top_bg_position"></div>
     </div>
-    <div class="title_box">
-        <div class="win flex_row position_relative">
-            <img src="img/nav_logo_white.png" class="top_logo" alt="">
-            <div class="clickable">
-                上海
+    <div class="index_top_box">
+        <div class="title_box">
+            <div class="win flex_row position_relative">
+                <img src="img/nav_logo_white.png" class="top_logo" alt="">
+                <div class="clickable">
+                    上海
+                </div>
+                <div class="position_right">
+                    <div class="title_text_right">
+                        <a href="" class="clickable">首页</a>
+                    </div>
+                    <div class="title_text_right title_obvious">
+                        <a href="" class="clickable">写字楼出租</a>
+                    </div>
+                    <div class="title_text_right">
+                        <a href="" class="clickable">共享办公</a>
+                    </div>
+                    <div class="title_text_right">
+                        <a href="" class="clickable">资讯中心</a>
+                    </div>
+                </div>
             </div>
-            <div class="position_right">
-                <div class="title_text_right">
-                    <a href="" class="clickable">首页</a>
+        </div>
+        <div class="win win_center">
+            <div class="top_screen_box">
+                <div class="screen_type_box">
+                    <div class="screen_item">
+                        <div class="screen_title">
+                            区域
+                        </div>
+                        <div class="screen_item_box" id="screen_condition_box">
+
+                        </div>
+                    </div>
+                    <div class="screen_item">
+                        <div class="screen_title">
+                            面积<span class="screen_subtitle">（单位：m²）</span>
+                        </div>
+                        <div class="screen_option_box flex_column">
+                            <div class="flex_row option_select_box" id="screen_area_box">
+                            </div>
+                            <div class="flex_row option_text">
+                                <div class="screen_option_text">0</div>
+                                <div class="screen_option_text">100</div>
+                                <div class="screen_option_text">300</div>
+                                <div class="screen_option_text">500</div>
+                                <div class="screen_option_text">1000</div>
+                                <div class="screen_option_text">∞</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="title_text_right title_obvious">
-                    <a href="" class="clickable">写字楼出租</a>
+                <div class="new_search_btn_box">
+                    <a href="search.html">马上找房</a>
                 </div>
-                <div class="title_text_right">
-                    <a href="" class="clickable">共享办公</a>
-                </div>
-                <div class="title_text_right">
-                    <a href="" class="clickable">资讯中心</a>
+                <div class="top_search_box">
+                    <form action="search.html">
+                        <input type="text" class="top_search" name="keyword" placeholder="楼盘名称或区域商圈名称"/>
+                        <input class="search_btn" type="submit" value="搜索"/>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <div class="top_search_box flex_row">
-        <form action="search.html">
-            <input type="text" class="top_search" name="keyword" placeholder="输入您要查找的楼盘或者区域商圈名称"/><input
-                class="search_btn" type="submit" value="搜索"/>
-
-        </form>
-    </div>
-</div>
-<div class="screen_wrap">
-
-    <div class="win screen_box">
-        <div class="screen_item">
-            <div class="screen_title">
-                区域
-            </div>
-            <div class="screen_item_box" id="screen_condition_box">
-
-            </div>
-        </div>
-        <div class="screen_item">
-            <div class="screen_title">
-                办公类型
-            </div>
-            <div class="screen_item_box" id="screen_type_box">
-            </div>
-        </div>
-        <div class="screen_item">
-            <div class="screen_title">
-                面积<span class="screen_subtitle">（单位：m²）</span>
-            </div>
-            <div class="screen_option_box flex_column">
-                <div class="flex_row" id="screen_area_box">
-                </div>
-                <div class="flex_row">
-                    <div class="screen_option_text">0</div>
-                    <div class="screen_option_text">100</div>
-                    <div class="screen_option_text">300</div>
-                    <div class="screen_option_text">500</div>
-                    <div class="screen_option_text">1000</div>
-                    <div class="screen_option_text">∞</div>
-                </div>
-            </div>
-        </div>
-        <div class="screen_item">
-            <div class="screen_title">
-                价格<span class="screen_subtitle">（单位：元/m²/天）</span>
-            </div>
-            <div class="screen_option_box flex_column">
-                <div class="flex_row" id="screen_price_box">
-                </div>
-                <div class="flex_row">
-                    <div class="screen_option_text">0</div>
-                    <div class="screen_option_text">3</div>
-                    <div class="screen_option_text">4</div>
-                    <div class="screen_option_text">5</div>
-                    <div class="screen_option_text">7</div>
-                    <div class="screen_option_text">9</div>
-                    <div class="screen_option_text">12</div>
-                    <div class="screen_option_text">∞</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </div>
 
 <div class="win">
