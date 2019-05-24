@@ -1,7 +1,3 @@
-<%--suppress HtmlFormInputWithoutLabel --%>
-<%--suppress JSJQueryEfficiency --%>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html>
 <html>
 
 <head>
@@ -196,13 +192,13 @@
             district_name.className = "hover_de clickable";
             district_name.innerHTML = building.district_name;
             district_name.onclick = function () {
-                window.open("search.jsp?district_id=" + building.district_id);
+                window.open("search.html?district_id=" + building.district_id);
             };
             let zone_name = document.createElement("a");
             zone_name.className = "hover_de clickable";
             zone_name.innerHTML = building.zone_name;
             zone_name.onclick = function () {
-                window.open("search.jsp?district_id=" + building.district_id
+                window.open("search.html?district_id=" + building.district_id
                     + "&zone_id=" + building.zone_id
                 );
             };
@@ -260,7 +256,7 @@
     }
 
     function openDetail(building_id) {
-        window.open("buildingDetail.jsp?building_id=" + building_id, "_blank");
+        window.open("buildingDetail.html?building_id=" + building_id, "_blank");
     }
 </script>
 

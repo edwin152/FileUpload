@@ -1,16 +1,10 @@
+<%--suppress HtmlUnknownTarget --%>
 <%--suppress HtmlFormInputWithoutLabel --%>
-<%--
-  Created by IntelliJ IDEA.
-  User: mlt
-  Date: 2019/5/15
-  Time: 21:24
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>编辑写字楼信息</title>
-    <link rel="stylesheet" type="text/css" href="../css/editBuilding.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/manage.css"/>
     <script src="../js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="../js/utils.js" type="text/javascript" charset="utf-8"></script>
 

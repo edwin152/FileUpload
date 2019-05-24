@@ -1,12 +1,12 @@
 <%--suppress HtmlFormInputWithoutLabel --%>
 <%--suppress JSJQueryEfficiency --%>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8"/>
     <title>楼列表</title>
-    <link rel="stylesheet" type="text/css" href="../css/editBuilding.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/manage.css"/>
     <script src="../js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="../js/utils.js" type="text/javascript" charset="utf-8"></script>
 </head>
@@ -176,13 +176,13 @@
             district_name.className = "choose_value";
             district_name.innerHTML = building.district_name;
             district_name.onclick = function () {
-                window.open("search.jsp?district_id=" + building.district_id);
+                window.open("../search.jsp?district_id=" + building.district_id);
             };
             let zone_name = document.createElement("span");
             zone_name.className = "choose_value";
             zone_name.innerHTML = building.zone_name;
             zone_name.onclick = function () {
-                window.open("search.jsp?district_id=" + building.district_id
+                window.open("../search.jsp?district_id=" + building.district_id
                     + "&zone_id=" + building.zone_id
                 );
             };
@@ -202,19 +202,19 @@
             let edit_building = document.createElement("button");
             edit_building.innerHTML = "编辑";
             edit_building.onclick = function () {
-                window.open("editBuilding.jsp?building_id=" + building.id, "_blank");
+                window.open("editBuilding?building_id=" + building.id, "_blank");
             };
 
             let add_office = document.createElement("button");
             add_office.innerHTML = "新增办公室";
             add_office.onclick = function () {
-                window.open("editOffice.jsp?building_id=" + building.id, "_blank");
+                window.open("editOffice?building_id=" + building.id, "_blank");
             };
 
             let manage_office = document.createElement("button");
             manage_office.innerHTML = "管理办公室";
             manage_office.onclick = function () {
-                window.open("offices.jsp?building_id=" + building.id, "_blank");
+                window.open("offices?building_id=" + building.id, "_blank");
             };
 
             let delete_building = document.createElement("button");
@@ -251,7 +251,7 @@
     }
 
     function openDetail(building_id) {
-        window.open("../buildingDetail.jsp?building_id=" + building_id, "_blank");
+        window.open("../buildingDetail.html?building_id=" + building_id, "_blank");
     }
 
     function deleteBuilding(building_id, view) {
@@ -268,7 +268,7 @@
     }
 
     function addBuilding() {
-        window.open("editBuilding.jsp", "_blank");
+        window.open("editBuilding", "_blank");
     }
 </script>
 

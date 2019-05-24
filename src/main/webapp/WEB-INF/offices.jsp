@@ -1,11 +1,12 @@
+<%--suppress HtmlUnknownTarget --%>
 <%--suppress HtmlFormInputWithoutLabel --%>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>点点租</title>
-    <link rel="stylesheet" type="text/css" href="../css/editBuilding.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/manage.css"/>
     <script src="../js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="../js/utils.js" type="text/javascript" charset="utf-8"></script>
 </head>
@@ -127,6 +128,7 @@
 
             // 图片
             let image = document.createElement("img");
+            image.className = "choose_value";
             if (office.img_list && office.img_list.length > 0) {
                 image.setAttribute("src", office.img_list[0]);
             }
@@ -139,6 +141,7 @@
             column.className = "column";
 
             let source_info = document.createElement("span");
+            source_info.className = "choose_value";
             source_info.innerHTML = office.source_info;
             source_info.onclick = function () {
                 openRoomDetail(office.id);
@@ -153,7 +156,7 @@
             box.appendChild(column);
 
             let total_price = document.createElement("span");
-            total_price.innerHTML = office.total_price + " 元/m²/天";
+            total_price.innerHTML = office.total_price + " 元/月";
             box.appendChild(total_price);
 
 
@@ -164,7 +167,7 @@
             edit_office.innerHTML = "编辑";
             button_list.appendChild(edit_office);
             edit_office.onclick = function () {
-                window.open("editOffice.jsp?building_id=" + building_id + "&office_id=" + office.id, "_blank");
+                window.open("editOffice?building_id=" + building_id + "&office_id=" + office.id, "_blank");
             };
             let delete_office = document.createElement("button");
             delete_office.innerHTML = "删除";
@@ -200,7 +203,7 @@
     }
 
     function addOffice() {
-        window.open("editOffice.jsp?building_id=" + building_id, "_blank");
+        window.open("editOffice?building_id=" + building_id, "_blank");
     }
 </script>
 
