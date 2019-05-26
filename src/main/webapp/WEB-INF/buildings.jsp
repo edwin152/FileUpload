@@ -273,7 +273,8 @@
 </script>
 
 <body>
-<form action="buildings.jsp">
+<%--suppress HtmlUnknownTarget --%>
+<form action="buildings">
     <div class="box row">
         <input type="text" name="keyword" id="keyword_input"/>
 

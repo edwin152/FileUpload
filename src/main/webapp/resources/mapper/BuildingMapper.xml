@@ -38,7 +38,7 @@
     </insert>
 
     <update id="delete" parameterType="java.lang.Long">
-        update table building
+        update building
         set valid = false
         where id = #{id}
     </update>

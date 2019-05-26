@@ -79,7 +79,7 @@
                 let img = document.createElement("img");
                 img.setAttribute("src", image);
                 img.onclick = function () {
-                    imgList.slice(parseInt(index), 1);
+                    imgList.splice(parseInt(index), 1);
                     freshImgList();
                 };
                 img_list.append(img);
