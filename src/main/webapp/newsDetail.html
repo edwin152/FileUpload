@@ -5,6 +5,8 @@
     <link rel="stylesheet" type="text/css" href="css/all.css"/>
     <link rel="stylesheet" type="text/css" href="css/news.css"/>
     <link rel="stylesheet" type="text/css" href="css/newsDetail.css"/>
+    <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
         window.onload = function () {
             let typeList = [
@@ -44,15 +46,23 @@
                 },
             ];
             setHeatNews(heatNewsList);
-
-            let newsBean = {
-                title: "租写字间注意事项有哪些_写字间租赁过程中应该注意哪些？",
-                time: "2019-04-09 17:47:24",
-                content: "<p>　首先，先了解下“写字间”是指的什么意思。“写字间”是相较于写字楼来说单独独立的房间，包括在写字楼之内的房间。是开发商用来提供给中小企业或者个人用来办公或者休憩的场所。可以用来作为临时住宿的地方。写字间一般实用面积比较狭小。这种房间多设在商业繁华的地段，因为选址周围环境较为繁华，导致其写字间租赁价格相对较高，需要租房的企业在进行选择的时候较为被动。那么今儿我们来聊一聊<strong>租写字间注意事项</strong>。</p><p style=\"text-align: center;\"><img width=\"600\" height=\"350\" title=\"租写字间注意事项有哪些_写字间租赁过程中应该注意哪些？\" alt=\"租写字间注意事项有哪些_写字间租赁过程中应该注意哪些？\" src=\"https://www.tuotuozu.com/ueditor/php/upload/image/20190409/1554803227.png\" border=\"0\" vspace=\"0\"></p><p>　　<strong>首先是房屋租期</strong><br>　　租写字间和租写字楼还是有些差别。租写字楼的话，一般会被要求租一年起租，三年之内。而租写字间的一般短租人群更多，同样的也只有极少数商务中心会做，面积较小，价格也高很多。短租超过三年，一般房东不会同意，如果短租时间较长，中间答应对方租金上有一定的涨幅，租到的成功率会高一些。这是<strong>租写字间注意事项</strong>中最需要了解的一点。<br>　　<strong>其次是管理费用</strong><br>　　管理费用中，包含公共部分的水电，维修保养和清洁卫生等，而需要注意的是20元以下的多半是没有包含中央空调的费用，20元以上的可能会包含到空调空调的费用。（写字楼的中央空调很少24小时提供，一般会根据各个单位的上班下班时间来定，比如早八点晚七）这点在了解该房屋信息的时候需要和对方了解清楚。<br>　　<strong>最后是租赁合同</strong><br>　　房屋敲定好，之后就是租赁合同的签订。签两份合同，一份用来房管局的标准备案，一份是详细的补充协议。房管局的合同相对笼统，写清楚租金，年限双方盖章签字就可以。<br>　　我们选择办公写字楼的时候不能只看地理位置，其实需要考虑的因素很多，重要的是在租赁的过程中要签订合同，合同可以保护双方的权益，这一点要引起大家的注意，以上就是针对<strong>租写字间注意事项</strong>提到的一些建议，希望小编的介绍可以帮助到大家。</p>"
-            };
-
-            setNewsContent(newsBean);
+            let request = window.location.search;
+            let newsId = http.getParameter(request, "newsId");
+            getNewsDetail(newsId);
         };
+
+        function getNewsDetail(id) {
+
+            http.post({
+                url: "edit/news",
+                params: {
+                    id: id,
+                },
+                success: function (data) {
+                    setNewsContent(data);
+                }
+            });
+        }
 
         /**
          * 设置类型
@@ -85,11 +95,11 @@
             }
         }
 
-        function setNewsContent(newsBean){
+        function setNewsContent(newsBean) {
             let newsTitle = document.getElementById("news_detail_title");
             newsTitle.innerHTML = newsBean.title;
             let newsTime = document.getElementById("news_time");
-            newsTime.innerHTML = newsBean.time;
+            newsTime.innerHTML = newsBean.last_edit_time;
             let newsContent = document.getElementById("news_content");
             newsContent.innerHTML = newsBean.content;
         }
