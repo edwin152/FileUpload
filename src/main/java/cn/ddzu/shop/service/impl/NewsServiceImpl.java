@@ -45,12 +45,18 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public List<News> getNewsList() {
-        return newsMapperDao.select();
+    public News getNews(Long id) {
+        return newsMapperDao.selectById(id);
     }
 
     @Override
-    public News getNews(Long id) {
-        return newsMapperDao.selectById(id);
+    public List<News> getNewsList(int page, int step) {
+        return newsMapperDao.select(page < 0 ? 0 : page * step, step);
+    }
+
+    @Override
+    public int getNewsSize() {
+        Integer size = newsMapperDao.count();
+        return size == null ? 0 : size;
     }
 }

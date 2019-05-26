@@ -37,10 +37,15 @@ public interface NewsMapperDao {
     /**
      * 查询地铁列表
      */
-    List<News> select();
+    List<News> select(@Param("start") int start, @Param("step") int step);
 
     /**
      * 查询地铁
      */
     News selectById(@Param("id") Long id);
+
+    /**
+     * 按条件筛选咨询数量
+     */
+    Integer count();
 }

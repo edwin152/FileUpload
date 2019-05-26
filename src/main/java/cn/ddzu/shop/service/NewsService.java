@@ -14,7 +14,9 @@ public interface NewsService {
 
     void updateNews(News news);
 
-    List<News> getNewsList();
-
     News getNews(Long id);
+
+    List<News> getNewsList(int page, int step);
+
+    int getNewsSize();
 }

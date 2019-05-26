@@ -670,9 +670,18 @@ public class EditController extends BaseController {
         RequestHelper helper = new RequestHelper(request);
         Log.d("edit-newsList", helper);
 
-        List<News> newsList = newsService.getNewsList();
+        Integer page = helper.getInt("page", 0);
 
+        List<News> newsList = newsService.getNewsList(page, PAGE_SIZE);
+
+        int size = newsService.getNewsSize();
+        int pageNum = size == 0 ? 0 : (size - 1) / PAGE_SIZE + 1;
+
+        JsonObject json = new JsonObject();
         JsonArray newsArray = new Gson().toJsonTree(newsList).getAsJsonArray();
+        json.add("news_list", newsArray);
+        json.addProperty("pageNum", pageNum);
+        json.addProperty("pageIndex", page);
 
         finish(response, ResultCode.SUCCESS, newsArray);
     }

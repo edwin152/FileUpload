@@ -62,4 +62,8 @@
         select * from news
         where valid = true and id = #{id}
     </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        select count(*) from news where valid = true
+    </select>
 </mapper>
