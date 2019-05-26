@@ -676,6 +676,4 @@ public class EditController extends BaseController {
 
         finish(response, ResultCode.SUCCESS, newsArray);
     }
-
-
 }
