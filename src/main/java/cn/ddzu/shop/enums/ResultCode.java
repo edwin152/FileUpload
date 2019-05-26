@@ -4,7 +4,8 @@ public enum ResultCode {
     SUCCESS,
     ERROR_NO_USER,
     ERROR_WRONG_PASSWORD,
-    ERROR_PARAM_EMPTY;
+    ERROR_PARAM_EMPTY,
+    ERROE_UPLOAD_FAILED;
 
     public int getCode() {
         switch (this) {
@@ -16,6 +17,8 @@ public enum ResultCode {
                 return 1002;
             case ERROR_PARAM_EMPTY:
                 return 1003;
+            case ERROE_UPLOAD_FAILED:
+                return 1004;
             default:
                 return 0;
         }
@@ -31,6 +34,8 @@ public enum ResultCode {
                 return "密码错误";
             case ERROR_PARAM_EMPTY:
                 return "参数异常";
+            case ERROE_UPLOAD_FAILED:
+                return "上传失败";
             default:
                 return "error";
         }

@@ -26,9 +26,15 @@ img {
     width: 100px;
     height: 100px;
     margin-right: 10px;
+    object-fit: cover;
 }
 
 span {
+    font-size: 13px;
+    margin: 0 5px;
+}
+
+label {
     font-size: 13px;
     margin: 0 5px;
 }

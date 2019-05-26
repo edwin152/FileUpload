@@ -1,5 +1,3 @@
-<%--suppress HtmlUnknownTarget --%>
-<%--suppress HtmlFormInputWithoutLabel --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
@@ -15,6 +13,7 @@
         let metroNameList = [];
         let districtList = [];
         let metroList = [];
+        let imgList = [];
         let metroIdList = [1];
         let detailInfoSize = 0;
         let detailInfoList = [
@@ -40,7 +39,7 @@
                         id: building_id,
                     },
                     success(data) {
-                        // let img_list = [];
+                        imgList = data.img_list;
                         let notes = JSON.parse(data.notes);
                         district_id = data.district_id;
                         zone_id = data.zone_id;
@@ -51,6 +50,7 @@
                         document.getElementById("bus_intro").value = notes.bus_intro;
                         document.getElementById("introduce").value = data.introduce;
                         detailInfoList = notes.detail_info;
+                        freshImgList();
                         freshDetailInfoList();
                         getFilters();
                     }
@@ -84,6 +84,23 @@
                     freshMetroList();
                 },
             });
+        }
+
+        function freshImgList() {
+            let img_list = document.getElementById("img_list");
+            img_list.innerHTML = "";
+            for (let index in imgList) {
+                if (!imgList.hasOwnProperty(index)) continue;
+
+                let image = imgList[index];
+                let img = document.createElement("img");
+                img.setAttribute("src", image);
+                img.onclick = function(){
+                    imgList.slice(parseInt(index), 1);
+                    freshImgList();
+                };
+                img_list.append(img);
+            }
         }
 
         function freshDistrictList(district_id, zone_id) {
@@ -236,7 +253,6 @@
         }
 
         function submit() {
-            let img_list = ["https://www.tuotuozu.com/public/upload/20180509/c2124cee3b358c59b314beeadfdc63dc.jpg"];
             let name = document.getElementById("name").value;
             let district_id = document.getElementById("district_list").value;
             let zone_id = document.getElementById("zone_list").value;
@@ -266,6 +282,10 @@
                 });
             }
 
+            if (isEmpty(imgList)) {
+                alert("请上传图片");
+                return;
+            }
             if (isEmpty(name)) {
                 alert("请输入名字");
                 return;
@@ -297,7 +317,7 @@
                         bus_intro: bus_intro,
                     },
                     introduce: introduce,
-                    img_list: img_list,
+                    img_list: imgList,
                 },
                 success: function () {
                     window.close();
@@ -308,6 +328,20 @@
         function isEmpty(value) {
             return !value || value.length === 0;
         }
+
+        function upload(e) {
+            console.log(e);
+            http.upload({
+                url: "../file/upload",
+                file: e[0],
+                success: function (data) {
+                    imgList.push(data.src);
+                    freshImgList();
+                }
+            });
+
+            $("#add_image").val("");
+        }
     </script>
 </head>
 <body>
@@ -317,12 +351,12 @@
     </div>
 
     <div class="row" id="img_list">
-        <img src="../img/test.jpg" alt=""/>
     </div>
 
-    <div class="row">
-        <button>添加图片</button>
-    </div>
+    <button onclick="$('#add_image').click()">添加图片</button>
+
+    <input type="file" name="image" value="添加图片" id="add_image" onchange="upload(this.files)"
+           style="display: none;" accept="image/jpeg,image/png,image/jpg,image/gif">
 </div>
 
 <div class="box">
@@ -331,8 +365,7 @@
     </div>
 
     <div class="row">
-        <span class="key">楼盘名称</span>
-
+        <label class="key" for="name">楼盘名称</label>
         <input type="text" id="name"/>
     </div>
 
@@ -340,15 +373,15 @@
         <span class="key">地址</span>
 
         <div class="flexed_row">
-            <span>区:&nbsp;</span>
+            <label for="district_list">区:&nbsp;</label>
 
             <select id="district_list" onchange="changeDistrict(this.value)"></select>
 
-            <span>&nbsp;&nbsp;区域:&nbsp;</span>
+            <label for="zone_list">&nbsp;&nbsp;区域:&nbsp;</label>
 
             <select id="zone_list"></select>
 
-            <span>&nbsp;&nbsp;详细地址:&nbsp;</span>
+            <label for="address">&nbsp;&nbsp;详细地址:&nbsp;</label>
 
             <input type="text" id="address"/>
         </div>
@@ -363,13 +396,13 @@
     </div>
 
     <div class="row">
-        <span class="key">地铁</span>
+        <label class="key" for="metro_intro">地铁</label>
 
         <textarea class="introduce" rows="2" id="metro_intro"></textarea>
     </div>
 
     <div class="row">
-        <span class="key">公交</span>
+        <label class="key" for="bus_intro">公交</label>
 
         <textarea class="introduce" rows="2" id="bus_intro"></textarea>
     </div>
@@ -388,7 +421,7 @@
     </div>
 
     <div class="row">
-        <span class="key">楼盘介绍</span>
+        <label class="key" for="introduce">楼盘介绍</label>
 
         <textarea class="introduce" rows="5" id="introduce"></textarea>
     </div>

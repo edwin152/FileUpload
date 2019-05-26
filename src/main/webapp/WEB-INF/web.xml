@@ -31,6 +31,11 @@
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:/config/spring/spring-*.xml</param-value>
         </init-param>
+        <!--取消只读-->
+        <init-param>
+            <param-name>readonly</param-name>
+            <param-value>false</param-value>
+        </init-param>
         <load-on-startup>1</load-on-startup>
         <async-supported>true</async-supported>
     </servlet>

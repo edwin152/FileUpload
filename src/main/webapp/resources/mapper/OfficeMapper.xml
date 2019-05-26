@@ -25,37 +25,43 @@
             rent_free_period varchar(255),
             notes            varchar(8192),
             img_list         varchar(8192),
+            valid            boolean default true,
             primary key (id)
         ) default charset = utf8
     </update>
 
     <insert id="add" parameterType="cn.ddzu.shop.entity.Office">
         insert into office values (
-            #{office.id}
-            ,#{office.name}
-            ,#{office.building_id}
-            ,#{office.address}
-            ,#{office.type_id}
-            ,#{office.area}
-            ,#{office.area_range_id}
-            ,#{office.price}
-            ,#{office.price_range_id}
-            ,#{office.decoration_id}
-            ,#{office.utilization_rate}
-            ,#{office.can_register}
-            ,#{office.rent_free_period}
-            ,#{office.notes}
-            ,#{office.img_list}
+            #{office.id},
+            #{office.name},
+            #{office.building_id},
+            #{office.address},
+            #{office.type_id},
+            #{office.area},
+            #{office.area_range_id},
+            #{office.price},
+            #{office.price_range_id},
+            #{office.decoration_id},
+            #{office.utilization_rate},
+            #{office.can_register},
+            #{office.rent_free_period},
+            #{office.notes},
+            #{office.img_list},
+            true
         )
     </insert>
 
-    <delete id="delete" parameterType="java.lang.Long">
-        delete from office where id = #{id}
-    </delete>
+    <update id="delete" parameterType="java.lang.Long">
+        update office
+        set valid = false
+        where id = #{id}
+    </update>
 
-    <delete id="deleteByBuilding" parameterType="java.lang.Long">
-        delete from office where building_id = #{building_id}
-    </delete>
+    <update id="deleteByBuilding" parameterType="java.lang.Long">
+        update office
+        set valid = false
+        where building_id = #{building_id}
+    </update>
 
     <update id="update" parameterType="cn.ddzu.shop.entity.Office">
         update office
@@ -103,7 +109,7 @@
         left join area_range on office.area_range_id = area_range.id
         left join price_range on office.price_range_id = price_range.id
         left join decoration on office.decoration_id = decoration.id
-        where office.id = #{id};
+        where valid = true and office.id = #{id};
     </select>
 
     <select id="select" resultType="cn.ddzu.shop.entity.Office">
@@ -137,41 +143,40 @@
         left join area_range on office.area_range_id = area_range.id
         left join price_range on office.price_range_id = price_range.id
         left join decoration on office.decoration_id = decoration.id
-        <where>
-            <if test="keyword != null">
-                and office.name like "%"#{keyword}"%"
+        where building.valid = true and office.valid = true
+        <if test="keyword != null">
+            and office.name like "%"#{keyword}"%"
+        </if>
+        <if test="building_id != null">
+            and office.building_id = #{building_id}
+        </if>
+        <if test="metro_name != null">
+            and building.metro_name_list like "%"#{metro_name}"%"
+        </if>
+        <if test="type_id != null">
+            and office.type_id = #{type_id}
+        </if>
+        <if test="area_range_id != null">
+            and office.area_range_id = #{area_range_id}
+        </if>
+        <if test="price_range_id != null">
+            and office.price_range_id = #{price_range_id}
+        </if>
+        <if test="decoration_id != null">
+            and office.decoration_id = #{decoration_id}
+        </if>
+        <if test="district_id == zone_id">
+            and building.zone_id in
+            (select zone.id
+            from zone
+            <if test="district_id != null">
+                where district_id = #{district_id}
             </if>
-            <if test="building_id != null">
-                and office.building_id = #{building_id}
-            </if>
-            <if test="metro_name != null">
-                and building.metro_name_list like "%"#{metro_name}"%"
-            </if>
-            <if test="type_id != null">
-                and office.type_id = #{type_id}
-            </if>
-            <if test="area_range_id != null">
-                and office.area_range_id = #{area_range_id}
-            </if>
-            <if test="price_range_id != null">
-                and office.price_range_id = #{price_range_id}
-            </if>
-            <if test="decoration_id != null">
-                and office.decoration_id = #{decoration_id}
-            </if>
-            <if test="district_id == zone_id">
-                and building.zone_id in
-                (select zone.id
-                from zone
-                <if test="district_id != null">
-                    where district_id = #{district_id}
-                </if>
-                )
-            </if>
-            <if test="district_id != zone_id">
-                and building.zone_id = #{zone_id}
-            </if>
-        </where>
+            )
+        </if>
+        <if test="district_id != zone_id">
+            and building.zone_id = #{zone_id}
+        </if>
         order by office.id desc
         <if test="step > 0">
             limit #{start}, #{step};
@@ -181,40 +186,39 @@
     <select id="count" resultType="java.lang.Integer">
         select count(*) from office
         left join building on office.building_id = building.id
-        <where>
-            <if test="keyword != null">
-                and office.name like "%"#{keyword}"%"
+        where building.valid = true and office.valid = true
+        <if test="keyword != null">
+            and office.name like "%"#{keyword}"%"
+        </if>
+        <if test="building_id != null">
+            and office.building_id = #{building_id}
+        </if>
+        <if test="metro_name != null">
+            and office.metro_name_list like "%"#{metro_name}"%"
+        </if>
+        <if test="type_id != null">
+            and office.type_id = #{type_id}
+        </if>
+        <if test="area_range_id != null">
+            and office.area_range_id = #{area_range_id}
+        </if>
+        <if test="price_range_id != null">
+            and office.price_range_id = #{price_range_id}
+        </if>
+        <if test="decoration_id != null">
+            and office.decoration_id = #{decoration_id}
+        </if>
+        <if test="district_id == zone_id">
+            and building.zone_id in
+            (select zone.id
+            from zone
+            <if test="district_id != null">
+                where district_id = #{district_id}
             </if>
-            <if test="building_id != null">
-                and office.building_id = #{building_id}
-            </if>
-            <if test="metro_name != null">
-                and office.metro_name_list like "%"#{metro_name}"%"
-            </if>
-            <if test="type_id != null">
-                and office.type_id = #{type_id}
-            </if>
-            <if test="area_range_id != null">
-                and office.area_range_id = #{area_range_id}
-            </if>
-            <if test="price_range_id != null">
-                and office.price_range_id = #{price_range_id}
-            </if>
-            <if test="decoration_id != null">
-                and office.decoration_id = #{decoration_id}
-            </if>
-            <if test="district_id == zone_id">
-                and building.zone_id in
-                (select zone.id
-                from zone
-                <if test="district_id != null">
-                    where district_id = #{district_id}
-                </if>
-                )
-            </if>
-            <if test="district_id != zone_id">
-                and building.zone_id = #{zone_id}
-            </if>
-        </where>
+            )
+        </if>
+        <if test="district_id != zone_id">
+            and building.zone_id = #{zone_id}
+        </if>
     </select>
 </mapper>

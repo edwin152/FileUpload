@@ -36,6 +36,7 @@ let http = {
                 }
             },
             error: function () {
+                console.log(data);
             }
         });
 
@@ -65,4 +66,34 @@ let http = {
             return request.substring(index + key.length + 1, end);
         }
     },
+
+    upload: function (obj) {
+        let formData = new FormData();
+        formData.append('uploadImage', obj.file);
+
+        $.ajax({
+            type: "post",
+            url: obj.url,
+            contentType: false,
+            data: formData,
+            processData: false,
+            success: function (data) {
+                data = JSON.parse(data);
+                console.log(data);
+
+                if (data.code === 1) {
+                    if (!obj.success) return;
+                    obj.success(data.data);
+                } else {
+                    alert(data.code + ":" + data.msg);
+
+                    if (!obj.onError) return;
+                    obj.onError(code, msg);
+                }
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
+    }
 };

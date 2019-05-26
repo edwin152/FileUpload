@@ -202,8 +202,22 @@ public interface OfficeService {
         }
 
         @Override
-        public Object clone() throws CloneNotSupportedException {
-            return super.clone();
+        public Object clone() {
+            try {
+                return super.clone();
+            } catch (CloneNotSupportedException ignore) {
+                SearchBean searchBean = new SearchBean();
+                searchBean.keyword = keyword;
+                searchBean.building_id = building_id;
+                searchBean.district_id = district_id;
+                searchBean.zone_id = zone_id;
+                searchBean.metro_name = metro_name;
+                searchBean.type_id = type_id;
+                searchBean.area_range_id = area_range_id;
+                searchBean.price_range_id = price_range_id;
+                searchBean.decoration_id = decoration_id;
+                return searchBean;
+            }
         }
     }
 }

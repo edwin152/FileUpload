@@ -14,6 +14,7 @@
         let type_id;
         let decoration_id;
         let canRegister;
+        let imgList = [];
         let typeList = [];
         let decorationList = [];
 
@@ -31,17 +32,17 @@
                     params: {
                         id: office_id,
                     },
-                    success(httpData) {
-                        // let img_list = [];
-                        let notes = JSON.parse(httpData.notes);
-                        type_id = httpData.type_id;
-                        decoration_id = httpData.decoration_id;
-                        metroNameList = httpData.metro_name_list;
-                        canRegister = httpData.can_register;
-                        document.getElementById("area").value = httpData.area;
-                        document.getElementById("price").value = httpData.price;
-                        document.getElementById("utilization_rate").value = httpData.utilization_rate * 100;
-                        document.getElementById("rent_free_period").value = httpData.rent_free_period;
+                    success(data) {
+                        imgList = data.img_list;
+                        let notes = JSON.parse(data.notes);
+                        type_id = data.type_id;
+                        decoration_id = data.decoration_id;
+                        metroNameList = data.metro_name_list;
+                        canRegister = data.can_register;
+                        document.getElementById("area").value = data.area;
+                        document.getElementById("price").value = data.price;
+                        document.getElementById("utilization_rate").value = data.utilization_rate * 100;
+                        document.getElementById("rent_free_period").value = data.rent_free_period;
                         document.getElementById("rent_payment").value = notes.rent_payment;
                         document.getElementById("visit_time").value = notes.visit_time;
                         document.getElementById("earliest_rent").value = notes.earliest_rent;
@@ -66,6 +67,23 @@
                     freshCanRegisterList(canRegister === undefined ? true : canRegister);
                 },
             });
+        }
+
+        function freshImgList() {
+            let img_list = document.getElementById("img_list");
+            img_list.innerHTML = "";
+            for (let index in imgList) {
+                if (!imgList.hasOwnProperty(index)) continue;
+
+                let image = imgList[index];
+                let img = document.createElement("img");
+                img.setAttribute("src", image);
+                img.onclick = function () {
+                    imgList.slice(parseInt(index), 1);
+                    freshImgList();
+                };
+                img_list.append(img);
+            }
         }
 
         function freshTypeList(type_id) {
@@ -123,7 +141,6 @@
         }
 
         function submit() {
-            let img_list = ["https://www.tuotuozu.com/public/upload/20180509/c2124cee3b358c59b314beeadfdc63dc.jpg"];
             let type_id = document.getElementById("type_list").value;
             let area = document.getElementById("area").value;
             let price = document.getElementById("price").value;
@@ -137,6 +154,10 @@
             let shortest_period = document.getElementById("shortest_period").value;
             let floor_info = document.getElementById("floor_info").value;
 
+            if (isEmpty(imgList)) {
+                alert("请上传图片");
+                return;
+            }
             if (isEmpty(area)) {
                 alert("请输入地址");
                 return;
@@ -199,7 +220,7 @@
                         shortest_period: shortest_period,
                         floor_info: floor_info,
                     },
-                    img_list: img_list
+                    img_list: imgList
                 },
                 success: function () {
                     window.close();
@@ -210,21 +231,35 @@
         function isEmpty(value) {
             return !value || value.length === 0;
         }
+
+        function upload(e) {
+            console.log(e);
+            http.upload({
+                url: "../file/upload",
+                file: e[0],
+                success: function (data) {
+                    imgList.push(data.src);
+                    freshImgList();
+                }
+            });
+
+            $("#add_image").val("");
+        }
     </script>
 </head>
 <body>
 <div class="box">
     <div class="row">
-        <span class="title">办公室图片</span>
+        <span class="title">写字楼图片</span>
     </div>
 
     <div class="row" id="img_list">
-        <img src="../img/test.jpg" alt=""/>
     </div>
 
-    <div class="row">
-        <button>添加图片</button>
-    </div>
+    <button onclick="$('#add_image').click()">添加图片</button>
+
+    <input type="file" name="image" value="添加图片" id="add_image" onchange="upload(this.files)"
+           style="display: none;" accept="image/jpeg,image/png,image/jpg,image/gif">
 </div>
 
 <div class="box">
@@ -233,43 +268,43 @@
     </div>
 
     <div class="row">
-        <span class="key">面积</span>
+        <label class="key" for="area">面积</label>
 
         <input type="text" id="area"/>m²
     </div>
 
     <div class="row">
-        <span class="key">价格</span>
+        <label class="key" for="price">价格</label>
 
         <input type="text" id="price"/>元/m²/天
     </div>
 
     <div class="row">
-        <span class="key">使用率</span>
+        <label class="key" for="utilization_rate">使用率</label>
 
         <input type="text" id="utilization_rate"/>%
     </div>
 
     <div class="row">
-        <span class="key">免租期</span>
+        <label class="key" for="rent_free_period">免租期</label>
 
         <input type="text" id="rent_free_period"/>
     </div>
 
     <div class="row">
-        <span class="key">类型</span>
+        <label class="key" for="type_list">类型</label>
 
         <select id="type_list"></select>
     </div>
 
     <div class="row">
-        <span class="key">装修</span>
+        <label class="key" for="decoration_list">装修</label>
 
         <select id="decoration_list"></select>
     </div>
 
     <div class="row">
-        <span class="key">能否注册</span>
+        <label class="key" for="can_register_list">能否注册</label>
 
         <select id="can_register_list"></select>
     </div>
@@ -281,31 +316,31 @@
     </div>
 
     <div class="row">
-        <span class="key">支付方式</span>
+        <label class="key" for="rent_payment">支付方式</label>
 
         <input type="text" id="rent_payment"/>
     </div>
 
     <div class="row">
-        <span class="key">看房时间</span>
+        <label class="key" for="visit_time">看房时间</label>
 
         <input type="text" id="visit_time"/>
     </div>
 
     <div class="row">
-        <span class="key">最早可租</span>
+        <label class="key" for="earliest_rent">最早可租</label>
 
         <input type="text" id="earliest_rent"/>
     </div>
 
     <div class="row">
-        <span class="key">最短租期</span>
+        <label class="key" for="shortest_period">最短租期</label>
 
         <input type="text" id="shortest_period"/>
     </div>
 
     <div class="row">
-        <span class="key">楼层信息</span>
+        <label class="key" for="floor_info">楼层信息</label>
 
         <input type="text" id="floor_info"/>
     </div>

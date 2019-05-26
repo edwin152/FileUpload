@@ -18,26 +18,30 @@
             introduce       varchar(2048),
             notes           varchar(8192),
             img_list        varchar(8192),
+            valid           boolean default true,
             primary key (id)
         ) default charset = utf8
     </update>
 
     <insert id="add" parameterType="cn.ddzu.shop.entity.Building">
         insert into building values (
-            #{building.id}
-            ,#{building.name}
-            ,#{building.zone_id}
-            ,#{building.address}
-            ,#{building.metro_name_list}
-            ,#{building.introduce}
-            ,#{building.notes}
-            ,#{building.img_list}
+            #{building.id},
+            #{building.name},
+            #{building.zone_id},
+            #{building.address},
+            #{building.metro_name_list},
+            #{building.introduce},
+            #{building.notes},
+            #{building.img_list},
+            true
         )
     </insert>
 
-    <delete id="delete" parameterType="java.lang.Long">
-        delete from building where id = #{id}
-    </delete>
+    <update id="delete" parameterType="java.lang.Long">
+        update table building
+        set valid = false
+        where id = #{id}
+    </update>
 
     <update id="update" parameterType="cn.ddzu.shop.entity.Building">
         update building
@@ -68,7 +72,7 @@
         from building
         left join zone on building.zone_id = zone.id
         left join district on zone.district_id = district.id
-        where building.id = #{id}
+        where valid = true and building.id = #{id}
     </select>
 
     <select id="select" resultType="cn.ddzu.shop.entity.Building">
@@ -86,7 +90,7 @@
         from building
         left join zone on building.zone_id = zone.id
         left join district on zone.district_id = district.id
-        where 1 = 1
+        where building.valid = true
         <if test="keyword != null">
             and building.name like "%"#{keyword}"%"
         </if>
@@ -130,13 +134,14 @@
         left join area_range on office.area_range_id = area_range.id
         left join price_range on office.price_range_id = price_range.id
         left join decoration on office.decoration_id = decoration.id
-        where office.id in (
+        where building.valid = true and office.valid = true
+        and office.id in (
         select min(office.id)
         from building
         left join office on building.id = office.building_id
         left join zone on building.zone_id = zone.id
         left join district on zone.district_id = district.id
-        where 1=1
+        where building.valid = true and office.valid = true
         <if test="type_id != null">
             and office.type_id = #{type_id}
         </if>
@@ -176,7 +181,8 @@
     </select>
 
     <select id="count" resultType="java.lang.Integer">
-        select count(*) from building where 1 = 1
+        select count(*) from building
+        where valid = true
         <if test="keyword != null">
             and building.name like "%"#{keyword}"%"
         </if>
@@ -199,7 +205,8 @@
     <select id="countWithOffice" resultType="java.lang.Integer">
         select count(*) from building
         left join office on building.id = office.building_id
-        where office.id in (select min(id) from office
+        where building.valid = true and office.valid = true
+        and office.id in (select min(id) from office
         <where>
             <if test="type_id != null">
                 and office.type_id = #{type_id}

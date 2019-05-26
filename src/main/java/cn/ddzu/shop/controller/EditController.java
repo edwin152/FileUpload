@@ -1,12 +1,10 @@
 package cn.ddzu.shop.controller;
 
-import cn.ddzu.shop.entity.Building;
-import cn.ddzu.shop.entity.Metro;
-import cn.ddzu.shop.entity.Office;
-import cn.ddzu.shop.entity.Zone;
+import cn.ddzu.shop.entity.*;
 import cn.ddzu.shop.enums.ResultCode;
 import cn.ddzu.shop.helper.RequestHelper;
 import cn.ddzu.shop.service.BasicService;
+import cn.ddzu.shop.service.NewsService;
 import cn.ddzu.shop.service.OfficeService;
 import cn.ddzu.shop.util.JsonUtils;
 import cn.ddzu.shop.util.Log;
@@ -18,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.enterprise.inject.New;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -33,6 +32,8 @@ public class EditController extends BaseController {
     private BasicService basicService;
     @Autowired
     private OfficeService officeService;
+    @Autowired
+    private NewsService newsService;
 
     /**
      * 重置
@@ -47,6 +48,7 @@ public class EditController extends BaseController {
 
         basicService.reset();
         officeService.reset();
+        newsService.reset();
 
         finish(response, ResultCode.SUCCESS);
     }
@@ -224,7 +226,7 @@ public class EditController extends BaseController {
      * page 页码
      */
     @RequestMapping("/buildings")
-    public void getBuildingList(HttpServletRequest request, HttpServletResponse response) throws IOException, CloneNotSupportedException {
+    public void getBuildingList(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
@@ -542,4 +544,162 @@ public class EditController extends BaseController {
 
         finish(response, ResultCode.SUCCESS, json);
     }
+
+    /**
+     * 新增办公室
+     * <p>
+     * name 名字
+     * building_id 商圈id
+     * address 地址
+     * type_id 办公室类型id
+     * area 面积
+     * price 单平米价格
+     * decoration_id 装修类型id
+     * utilization_rate 使用率 0.7
+     * can_register 是否可注册 true false
+     * rent_free_period 免租期
+     * notes 备注
+     * img_list 图片
+     */
+    @RequestMapping("/addNews")
+    public void addNews(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+
+        RequestHelper helper = new RequestHelper(request);
+        Log.d("edit-addNews", helper);
+
+        String title = helper.getString("title");
+        String sub_title = helper.getString("sub_title");
+        String content = helper.getString("content");
+
+        News news = new News();
+        news.setTitle(title);
+        news.setSub_title(sub_title);
+        news.setContent(content);
+
+        newsService.addNews(news);
+
+        JsonObject newsObject = new Gson().toJsonTree(news).getAsJsonObject();
+
+        finish(response, ResultCode.SUCCESS, newsObject);
+    }
+
+    /**
+     * 删除办公室
+     * <p>
+     * id 办公室id
+     */
+    @RequestMapping("/deleteNews")
+    public void deleteNews(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+
+        RequestHelper helper = new RequestHelper(request);
+        Log.d("edit-deleteNews", helper);
+
+        Long id = helper.getLong("id");
+        newsService.deleteNews(id);
+
+        finish(response, ResultCode.SUCCESS);
+    }
+
+    /**
+     * 修改办公室
+     * <p>
+     * id 办公室id
+     * name 名字
+     * building_id 商圈id
+     * address 地址
+     * type_id 办公室类型id
+     * area 面积
+     * price 单平米价格
+     * decoration_id 装修类型id
+     * utilization_rate 使用率 0.7
+     * can_register 是否可注册 true false
+     * rent_free_period 免租期
+     * notes 备注
+     * img_list 图片
+     */
+    @RequestMapping("/editNews")
+    public void editNews(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+
+        RequestHelper helper = new RequestHelper(request);
+        Log.d("edit-editNews", helper);
+
+        Long id = helper.getLong("id");
+        String title = helper.getString("title");
+        String sub_title = helper.getString("sub_title");
+        String content = helper.getString("content");
+
+        News news = newsService.getNews(id);
+        boolean insertModify = false;
+        if (news == null) {
+            insertModify = true;
+            news = new News();
+        }
+
+        news.setTitle(title);
+        news.setSub_title(sub_title);
+        news.setContent(content);
+
+        if (insertModify) {
+            newsService.addNews(news);
+        } else {
+            newsService.updateNews(news);
+        }
+
+        finish(response, ResultCode.SUCCESS);
+    }
+
+    /**
+     * 查询楼
+     * <p>
+     * id 办公室id
+     */
+    @RequestMapping("/news")
+    public void getNews(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+
+        RequestHelper helper = new RequestHelper(request);
+        Log.d("search-news", helper);
+
+        Long id = helper.getLong("id");
+
+        News news = newsService.getNews(id);
+        JsonObject newsObject = new Gson().toJsonTree(news).getAsJsonObject();
+
+        finish(response, ResultCode.SUCCESS, newsObject);
+    }
+
+    /**
+     * 搜索办公室
+     * <p>
+     * keyword 关键词
+     * building_id 商圈id
+     * type_id 办公室类型id
+     * area_range_id 面积区间id
+     * price_range_id 价格区间id
+     * decoration_id 装修类型id
+     * page 页码
+     */
+    @RequestMapping("/newsList")
+    public void getNewsList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+
+        RequestHelper helper = new RequestHelper(request);
+        Log.d("edit-newsList", helper);
+
+        List<News> newsList = newsService.getNewsList();
+
+        JsonArray newsArray = new Gson().toJsonTree(newsList).getAsJsonArray();
+
+        finish(response, ResultCode.SUCCESS, newsArray);
+    }
+
+
 }

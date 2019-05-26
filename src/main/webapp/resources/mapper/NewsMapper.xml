@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--suppress ALL -->
+<mapper namespace="cn.ddzu.shop.dao.NewsMapperDao">
+    <update id="drop">
+        drop table if exists news
+    </update>
+
+    <update id="create">
+        create table news
+        (
+            id             bigint,
+            title          varchar(255),
+            sub_title      varchar(255),
+            create_time    date,
+            last_edit_time date,
+            content        varchar(8192),
+            notes          varchar(8192),
+            valid          boolean default true,
+            primary key (id)
+        ) default charset = utf8
+    </update>
+
+    <insert id="add" parameterType="cn.ddzu.shop.entity.News">
+        insert into news values (
+            #{news.id},
+            #{news.title},
+            #{news.sub_title},
+            #{news.create_time},
+            #{news.last_edit_time},
+            #{news.content},
+            #{news.notes},
+            true
+        )
+    </insert>
+
+    <update id="update" parameterType="cn.ddzu.shop.entity.News">
+        update news
+        set
+            title = #{news.title},
+            sub_title = #{news.sub_title},
+            last_edit_time = #{news.last_edit_time},
+            content = #{news.content},
+            notes = #{news.notes}
+        where id = #{news.id}
+    </update>
+
+    <update id="delete" parameterType="java.lang.Long">
+        update news
+        set valid = false
+        where id = #{id}
+    </update>
+
+    <select id="select" resultType="cn.ddzu.shop.entity.News">
+        select * from news
+        where valid = true
+        order by create_time desc
+    </select>
+
+    <select id="selectById" resultType="cn.ddzu.shop.entity.News" parameterType="Long">
+        select * from news
+        where valid = true and id = #{id}
+    </select>
+</mapper>
