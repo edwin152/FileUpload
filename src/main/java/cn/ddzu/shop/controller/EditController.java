@@ -546,20 +546,11 @@ public class EditController extends BaseController {
     }
 
     /**
-     * 新增办公室
+     * 新增咨询
      * <p>
-     * name 名字
-     * building_id 商圈id
-     * address 地址
-     * type_id 办公室类型id
-     * area 面积
-     * price 单平米价格
-     * decoration_id 装修类型id
-     * utilization_rate 使用率 0.7
-     * can_register 是否可注册 true false
-     * rent_free_period 免租期
-     * notes 备注
-     * img_list 图片
+     * title 标题
+     * sub_title 副标题
+     * content 内容
      */
     @RequestMapping("/addNews")
     public void addNews(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -586,9 +577,9 @@ public class EditController extends BaseController {
     }
 
     /**
-     * 删除办公室
+     * 删除咨询
      * <p>
-     * id 办公室id
+     * id 咨询id
      */
     @RequestMapping("/deleteNews")
     public void deleteNews(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -605,21 +596,12 @@ public class EditController extends BaseController {
     }
 
     /**
-     * 修改办公室
+     * 修改咨询
      * <p>
      * id 办公室id
-     * name 名字
-     * building_id 商圈id
-     * address 地址
-     * type_id 办公室类型id
-     * area 面积
-     * price 单平米价格
-     * decoration_id 装修类型id
-     * utilization_rate 使用率 0.7
-     * can_register 是否可注册 true false
-     * rent_free_period 免租期
-     * notes 备注
-     * img_list 图片
+     * title 标题
+     * sub_title 副标题
+     * content 内容
      */
     @RequestMapping("/editNews")
     public void editNews(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -655,9 +637,9 @@ public class EditController extends BaseController {
     }
 
     /**
-     * 查询楼
+     * 查询咨询
      * <p>
-     * id 办公室id
+     * id 咨询id
      */
     @RequestMapping("/news")
     public void getNews(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -676,14 +658,8 @@ public class EditController extends BaseController {
     }
 
     /**
-     * 搜索办公室
+     * 搜索咨询
      * <p>
-     * keyword 关键词
-     * building_id 商圈id
-     * type_id 办公室类型id
-     * area_range_id 面积区间id
-     * price_range_id 价格区间id
-     * decoration_id 装修类型id
      * page 页码
      */
     @RequestMapping("/newsList")
