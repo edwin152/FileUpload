@@ -104,4 +104,20 @@ public class ManageController extends BaseController {
             return "redirect:/manage";
         }
     }
+
+    @RequestMapping("/editNews")
+    public String editNews(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+
+        RequestHelper helper = new RequestHelper(request);
+        Log.d("manage-editOffice", helper);
+
+        boolean isLogin = SessionUtils.checkSession(request.getSession());
+        if (isLogin) {
+            return "/editNews";
+        } else {
+            return "redirect:/manage";
+        }
+    }
 }
