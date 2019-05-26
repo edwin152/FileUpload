@@ -152,7 +152,7 @@
                 let textView = document.createElement("div");
                 textView.setAttribute("class", "news_text");
                 // TODO 内容
-                textView.innerHTML = newsList[i].content;
+                textView.innerHTML = newsList[i].content.replace(/<\/?.+?\/?>/g, "");
                 infoView.appendChild(textView);
             }
         }
