@@ -24,7 +24,7 @@ import java.util.Random;
 public class FileController extends BaseController {
 
     @RequestMapping("/upload")
-    public void upload(@RequestParam(name = "uploadImage", required = false) MultipartFile pic, HttpServletResponse response) throws IOException {
+    public void upload(@RequestParam(name = "file", required = false) MultipartFile pic, HttpServletResponse response) throws IOException {
         //图片名称生成策略
         DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssSS");
         StringBuilder nameBuilder = new StringBuilder(dateFormat.format(new Date()));

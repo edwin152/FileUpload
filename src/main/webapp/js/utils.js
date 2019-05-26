@@ -25,7 +25,7 @@ let http = {
             success: function (data) {
                 console.log(data);
 
-                if (data.code === 1) {
+                if (data.code === 0) {
                     if (!obj.success) return;
                     obj.success(data.data);
                 } else {
@@ -81,7 +81,7 @@ let http = {
                 data = JSON.parse(data);
                 console.log(data);
 
-                if (data.code === 1) {
+                if (data.code === 0) {
                     if (!obj.success) return;
                     obj.success(data.data);
                 } else {

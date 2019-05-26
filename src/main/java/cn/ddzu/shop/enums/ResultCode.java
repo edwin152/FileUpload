@@ -10,7 +10,7 @@ public enum ResultCode {
     public int getCode() {
         switch (this) {
             case SUCCESS:
-                return 1;
+                return 0;
             case ERROR_NO_USER:
                 return 1001;
             case ERROR_WRONG_PASSWORD:
@@ -20,7 +20,7 @@ public enum ResultCode {
             case ERROE_UPLOAD_FAILED:
                 return 1004;
             default:
-                return 0;
+                return 1;
         }
     }
 
