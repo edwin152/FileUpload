@@ -2,8 +2,10 @@ package cn.ddzu.shop.controller;
 
 import cn.ddzu.shop.helper.RequestHelper;
 import cn.ddzu.shop.manager.LoginManager;
+import cn.ddzu.shop.service.UserService;
 import cn.ddzu.shop.util.Log;
 import cn.ddzu.shop.util.SessionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -16,6 +18,9 @@ import java.io.IOException;
 @RequestMapping("/manage")
 public class ManageController extends BaseController {
 
+    @Autowired
+    private UserService userService;
+
     @RequestMapping("")
     public String manage(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
@@ -27,7 +32,7 @@ public class ManageController extends BaseController {
         String username = helper.getString("username", "");
         String password = helper.getString("password", "");
 
-        String tokenId = LoginManager.getInstance().login(username, password);
+        String tokenId = LoginManager.getInstance().login(userService, username, password);
 
         if (tokenId == null) {
             request.removeAttribute("username");

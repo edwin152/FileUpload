@@ -153,6 +153,9 @@
             for (let i = 0, len = buildingList.length; i < len; i++) {
                 let buildingItemBox = document.createElement("div");
                 buildingItemBox.setAttribute("class", "fine_building_item_box image_big flex_column clickable");
+                buildingItemBox.onclick = function () {
+                    window.open("buildingDetail.html?building_id=" + buildingList[i].id, "_blank");
+                };
                 fineBuildingListBox.appendChild(buildingItemBox);
 
                 let buildingImageBox = document.createElement("div");
@@ -317,8 +320,6 @@
 </div>
 
 <div class="win">
-    <h3 class="item_title">精选专题&nbsp;<span class="item_subtitle">优质写字楼 聚你所需</span></h3>
-
     <h3 class="item_title">核心商圈享&nbsp;<span class="item_subtitle">优质配套 与大咖公司为邻</span></h3>
     <div class="image_box_in_title flex_row" id="core_building">
     </div>
@@ -331,7 +332,7 @@
     <div class="win">
         <div class="flex_row bottom_top">
             <div class="foot_l">
-                <div class="ad_title">办公选址上点点租，点点的 !</div>
+                <div class="ad_title">租办公室，就上橙办 ！</div>
                 <a href="https://www.tuotuozu.com/sh/zxd/id/9.html">关于点点租</a> -
                 <a href="https://www.tuotuozu.com/sh/zxd/id/10.html">服务介绍</a> -
                 <br/> ©2017-2018 京ICP备17066298号-1 地址：北京市朝阳区凯旋城E座1807

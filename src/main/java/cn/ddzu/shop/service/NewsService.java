@@ -1,12 +1,17 @@
 package cn.ddzu.shop.service;
 
 import cn.ddzu.shop.entity.News;
+import cn.ddzu.shop.entity.NewsTag;
 
 import java.util.List;
 
 public interface NewsService {
 
-    void reset();
+    void resetNewsTag();
+
+    List<NewsTag> getNewsTagList();
+
+    void resetNews();
 
     void addNews(News news);
 
@@ -16,7 +21,9 @@ public interface NewsService {
 
     News getNews(Long id);
 
-    List<News> getNewsList(int page, int step);
+    List<News> getNewsList(Long news_tag_id, int page, int step);
 
-    int getNewsSize();
+    int getNewsSize(Long news_tag_id);
+
+    List<News> getHotNews();
 }

@@ -4,6 +4,7 @@ import cn.ddzu.shop.entity.*;
 import cn.ddzu.shop.enums.ResultCode;
 import cn.ddzu.shop.helper.RequestHelper;
 import cn.ddzu.shop.service.BasicService;
+import cn.ddzu.shop.service.NewsService;
 import cn.ddzu.shop.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -23,6 +24,8 @@ public class FilterController extends BaseController {
 
     @Autowired
     private BasicService basicService;
+    @Autowired
+    private NewsService newsService;
 
     /**
      * 查询所有过滤条件
@@ -36,7 +39,7 @@ public class FilterController extends BaseController {
      * * decoration_id 装修id
      */
     @RequestMapping("/all")
-    public void getAllFilter(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void all(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
@@ -96,7 +99,7 @@ public class FilterController extends BaseController {
      * decoration_id 装修id
      */
     @RequestMapping("/office")
-    public void getOfficeFilter(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void office(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
@@ -128,6 +131,30 @@ public class FilterController extends BaseController {
         json.addProperty("checkedAreaRangeId", area_range_id);
         json.addProperty("checkedPriceRangeId", price_range_id);
         json.addProperty("checkedDecorationId", decoration_id);
+
+        finish(response, ResultCode.SUCCESS, json);
+    }
+
+    /**
+     * 查询新闻标签
+     * <p>
+     * news_tag_id 新闻标签
+     */
+    @RequestMapping("/newsTag")
+    public void newsTag(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+
+        RequestHelper helper = new RequestHelper(request);
+        Log.d("filter-newsTag", helper);
+
+        Long news_tag_id = helper.getLong("news_tag_id");
+
+        List<NewsTag> newsTagList = newsService.getNewsTagList();
+
+        JsonObject json = new JsonObject();
+        json.add("newsTagList", new Gson().toJsonTree(newsTagList));
+        json.addProperty("checkedNewsTagId", news_tag_id);
 
         finish(response, ResultCode.SUCCESS, json);
     }

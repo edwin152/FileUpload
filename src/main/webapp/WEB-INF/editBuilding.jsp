@@ -17,8 +17,8 @@
         let metroIdList = [1];
         let detailInfoSize = 0;
         let detailInfoList = [
-            {key: "建筑面积", value: ""},
-            {key: "得房率", value: ""},
+            // {key: "建筑面积", value: ""},
+            // {key: "得房率", value: ""},
             {key: "客梯数", value: ""},
             {key: "开发商", value: ""},
             {key: "物业公司", value: ""},

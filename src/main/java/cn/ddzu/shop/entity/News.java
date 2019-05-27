@@ -10,6 +10,8 @@ public class News {
     private Date create_time;
     private Date last_edit_time;
     private String content;
+    private Long news_tag_id;
+    private Boolean hot;
     private String notes;
 
     public Long getId() {
@@ -58,6 +60,22 @@ public class News {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Long getNews_tag_id() {
+        return news_tag_id;
+    }
+
+    public void setNews_tag_id(Long news_tag_id) {
+        this.news_tag_id = news_tag_id;
+    }
+
+    public Boolean getHot() {
+        return hot;
+    }
+
+    public void setHot(Boolean hot) {
+        this.hot = hot;
     }
 
     public String getNotes() {

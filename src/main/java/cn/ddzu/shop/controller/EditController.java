@@ -35,24 +35,6 @@ public class EditController extends BaseController {
     private NewsService newsService;
 
     /**
-     * 重置
-     */
-    @RequestMapping("/reset")
-    public void reset(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        request.setCharacterEncoding("utf-8");
-        response.setCharacterEncoding("utf-8");
-
-        RequestHelper helper = new RequestHelper(request);
-        Log.d("edit-reset", helper);
-
-        basicService.reset();
-        officeService.reset();
-        newsService.reset();
-
-        finish(response, ResultCode.SUCCESS);
-    }
-
-    /**
      * 新增楼
      * <p>
      * name 名字
@@ -659,6 +641,7 @@ public class EditController extends BaseController {
     /**
      * 搜索咨询
      * <p>
+     * news_tag_id 新闻标签
      * page 页码
      */
     @RequestMapping("/newsList")
@@ -669,11 +652,12 @@ public class EditController extends BaseController {
         RequestHelper helper = new RequestHelper(request);
         Log.d("edit-newsList", helper);
 
+        Long news_tag_id = helper.getLong("news_tag_id", 1L);
         Integer page = helper.getInt("page", 0);
 
-        List<News> newsList = newsService.getNewsList(page, PAGE_SIZE);
+        List<News> newsList = newsService.getNewsList(news_tag_id, page, PAGE_SIZE);
 
-        int size = newsService.getNewsSize();
+        int size = newsService.getNewsSize(news_tag_id);
         int pageNum = size == 0 ? 0 : (size - 1) / PAGE_SIZE + 1;
 
         JsonObject json = new JsonObject();
@@ -682,6 +666,6 @@ public class EditController extends BaseController {
         json.addProperty("pageNum", pageNum);
         json.addProperty("pageIndex", page);
 
-        finish(response, ResultCode.SUCCESS, newsArray);
+        finish(response, ResultCode.SUCCESS, json);
     }
 }

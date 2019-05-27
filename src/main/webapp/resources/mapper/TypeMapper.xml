@@ -29,7 +29,7 @@
     </select>
 
     <select id="selectByBuilding"
-            resultType="cn.ddzu.shop.entity.AreaRange"
+            resultType="cn.ddzu.shop.entity.Type"
             parameterType="java.lang.Long">
         select * from type where id in
         (

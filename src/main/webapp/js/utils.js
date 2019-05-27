@@ -69,7 +69,7 @@ let http = {
 
     upload: function (obj) {
         let formData = new FormData();
-        formData.append('uploadImage', obj.file);
+        formData.append('file', obj.file);
 
         $.ajax({
             type: "post",

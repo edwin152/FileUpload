@@ -16,6 +16,8 @@
             create_time    date,
             last_edit_time date,
             content        varchar(8192),
+            news_tag_id     bigint,
+            hot            boolean default false,
             notes          varchar(8192),
             valid          boolean default true,
             primary key (id)
@@ -30,6 +32,8 @@
             #{news.create_time},
             #{news.last_edit_time},
             #{news.content},
+            #{news.news_tag_id},
+            #{news.hot},
             #{news.notes},
             true
         )
@@ -42,6 +46,8 @@
             sub_title = #{news.sub_title},
             last_edit_time = #{news.last_edit_time},
             content = #{news.content},
+            news_tag_id = #{news.news_tag_id},
+            hot = #{news.hot},
             notes = #{news.notes}
         where id = #{news.id}
     </update>
@@ -55,6 +61,9 @@
     <select id="select" resultType="cn.ddzu.shop.entity.News">
         select * from news
         where valid = true
+        <if test="news_tag_id != 1">
+            and news_tag_id = #{news_tag_id}
+        </if>
         order by create_time desc
     </select>
 
@@ -64,6 +73,17 @@
     </select>
 
     <select id="count" resultType="java.lang.Integer">
-        select count(*) from news where valid = true
+        select count(*) from news
+        where valid = true
+        <if test="news_tag_id != 1">
+            and news_tag_id = #{news_tag_id}
+        </if>
+    </select>
+
+    <select id="selectWhereHot" resultType="cn.ddzu.shop.entity.News">
+        select * from news
+        where valid = true and hot = true
+        order by last_edit_time desc
+        limit 20
     </select>
 </mapper>

@@ -1,5 +1,8 @@
 package cn.ddzu.shop.manager;
 
+import cn.ddzu.shop.entity.User;
+import cn.ddzu.shop.service.UserService;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -18,30 +21,26 @@ public class LoginManager {
     }
 
     private LoginManager() {
-        User[] user_list = {new User("ddzu", "Ddzuqqq7")};
-
         userMap = new HashMap<>();
-        for (User user : user_list) {
-            userMap.put(user.username, user);
-        }
     }
 
     /**
      * @return tokenId 验证登录的id
      */
-    public String login(String username, String password) {
+    public String login(UserService userService, String username, String password) {
         if (username == null || password == null) {
             return null;
         }
 
-        User user = userMap.get(username);
-        if (user != null && password.equals(user.password)) {
-            String tokenId = UUID.randomUUID().toString();
-            user.tokenId = tokenId;
-            return tokenId;
+        User user = userService.getUser(username);
+        if (user == null || !password.equals(user.getPassword())) {
+            return null;
         }
 
-        return null;
+        String tokenId = UUID.randomUUID().toString();
+        user.setTokenId(tokenId);
+        userMap.put(username, user);
+        return tokenId;
     }
 
     /**
@@ -53,17 +52,6 @@ public class LoginManager {
         }
 
         User user = userMap.get(username);
-        return user != null && tokenId.equals(user.tokenId);
-    }
-
-    private static class User {
-        private String username;
-        private String password;
-        private String tokenId;
-
-        private User(String username, String password) {
-            this.username = username;
-            this.password = password;
-        }
+        return user != null && tokenId.equals(user.getTokenId());
     }
 }

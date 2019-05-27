@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--suppress ALL -->
+<mapper namespace="cn.ddzu.shop.dao.NewsTagMapperDao">
+    <update id="drop">
+        drop table if exists news_tag
+    </update>
+
+    <update id="create">
+        create table news_tag
+        (
+            id   bigint auto_increment,
+            name varchar(255),
+            primary key (id)
+        ) default charset = utf8
+    </update>
+
+    <update id="init">
+        insert into news_tag(name)
+        values ('全部'),
+               ('行业新闻'),
+               ('楼盘介绍'),
+               ('找房攻略'),
+               ('橙办新闻'),
+               ('媒体报道')
+    </update>
+
+    <select id="select" resultType="cn.ddzu.shop.entity.NewsTag">
+        select * from news_tag order by id asc
+    </select>
+</mapper>

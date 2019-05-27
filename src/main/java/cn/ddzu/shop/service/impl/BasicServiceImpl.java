@@ -29,8 +29,9 @@ public class BasicServiceImpl implements BasicService {
     private DecorationMapperDao decorationMapperDao;
 
     @Override
-    public void reset() {
-        Log.d("start reset database");
+    public void resetDistrictAndZone() {
+        Log.d("start reset district and zone");
+
         districtMapperDao.drop();
         districtMapperDao.create();
         districtMapperDao.init();
@@ -38,26 +39,6 @@ public class BasicServiceImpl implements BasicService {
         zoneMapperDao.drop();
         zoneMapperDao.create();
         zoneMapperDao.init();
-
-        metroMapperDao.drop();
-        metroMapperDao.create();
-        metroMapperDao.init();
-
-        typeMapperDao.drop();
-        typeMapperDao.create();
-        typeMapperDao.init();
-
-        areaRangeMapperDao.drop();
-        areaRangeMapperDao.create();
-        areaRangeMapperDao.init();
-
-        priceRangeMapperDao.drop();
-        priceRangeMapperDao.create();
-        priceRangeMapperDao.init();
-
-        decorationMapperDao.drop();
-        decorationMapperDao.create();
-        decorationMapperDao.init();
     }
 
     @Override
@@ -85,6 +66,15 @@ public class BasicServiceImpl implements BasicService {
     }
 
     @Override
+    public void resetMetro() {
+        Log.d("start reset metro");
+
+        metroMapperDao.drop();
+        metroMapperDao.create();
+        metroMapperDao.init();
+    }
+
+    @Override
     public List<Metro> getMetroList() {
         Log.d("start get metro list");
         return metroMapperDao.select();
@@ -100,6 +90,15 @@ public class BasicServiceImpl implements BasicService {
     }
 
     @Override
+    public void resetType() {
+        Log.d("start reset district and zone");
+
+        typeMapperDao.drop();
+        typeMapperDao.create();
+        typeMapperDao.init();
+    }
+
+    @Override
     public List<Type> getTypeList() {
         Log.d("start get type list");
         return typeMapperDao.select();
@@ -112,6 +111,15 @@ public class BasicServiceImpl implements BasicService {
         }
         Log.d("start get type list by building_id : " + building_id);
         return typeMapperDao.selectByBuilding(building_id);
+    }
+
+    @Override
+    public void resetAreaRange() {
+        Log.d("start reset area range");
+
+        areaRangeMapperDao.drop();
+        areaRangeMapperDao.create();
+        areaRangeMapperDao.init();
     }
 
     @Override
@@ -148,6 +156,15 @@ public class BasicServiceImpl implements BasicService {
             area_range_id = null;
         }
         return area_range_id;
+    }
+
+    @Override
+    public void resetPriceRange() {
+        Log.d("start reset price range");
+
+        priceRangeMapperDao.drop();
+        priceRangeMapperDao.create();
+        priceRangeMapperDao.init();
     }
 
     @Override
@@ -188,6 +205,15 @@ public class BasicServiceImpl implements BasicService {
             price_range_id = null;
         }
         return price_range_id;
+    }
+
+    @Override
+    public void resetDecoration() {
+        Log.d("start reset decoration");
+
+        decorationMapperDao.drop();
+        decorationMapperDao.create();
+        decorationMapperDao.init();
     }
 
     @Override

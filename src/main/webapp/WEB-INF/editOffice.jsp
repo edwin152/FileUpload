@@ -178,26 +178,26 @@
                 alert("请输入免租期");
                 return;
             }
-            if (isEmpty(rent_payment)) {
-                alert("请输入付款方式");
-                return;
-            }
-            if (isEmpty(visit_time)) {
-                alert("请输入看房时间");
-                return;
-            }
-            if (isEmpty(earliest_rent)) {
-                alert("请输入最早可租");
-                return;
-            }
-            if (isEmpty(shortest_period)) {
-                alert("请输入最短租期");
-                return;
-            }
-            if (isEmpty(floor_info)) {
-                alert("请输入楼层信息");
-                return;
-            }
+            // if (isEmpty(rent_payment)) {
+            //     alert("请输入付款方式");
+            //     return;
+            // }
+            // if (isEmpty(visit_time)) {
+            //     alert("请输入看房时间");
+            //     return;
+            // }
+            // if (isEmpty(earliest_rent)) {
+            //     alert("请输入最早可租");
+            //     return;
+            // }
+            // if (isEmpty(shortest_period)) {
+            //     alert("请输入最短租期");
+            //     return;
+            // }
+            // if (isEmpty(floor_info)) {
+            //     alert("请输入楼层信息");
+            //     return;
+            // }
 
             utilization_rate = parseFloat(utilization_rate) / 100;
 

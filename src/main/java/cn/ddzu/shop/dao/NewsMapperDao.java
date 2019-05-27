@@ -35,17 +35,21 @@ public interface NewsMapperDao {
     void delete(@Param("id") Long id);
 
     /**
-     * 查询地铁列表
+     * 查询咨询
      */
-    List<News> select(@Param("start") int start, @Param("step") int step);
+    List<News> select(@Param("news_tag_id") Long news_tag_id
+            , @Param("start") int start
+            , @Param("step") int step);
 
     /**
-     * 查询地铁
+     * 查询咨询
      */
     News selectById(@Param("id") Long id);
 
     /**
-     * 按条件筛选咨询数量
+     * 查询咨询数量
      */
-    Integer count();
+    Integer count(@Param("news_tag_id") Long news_tag_id);
+
+    List<News> selectWhereHot();
 }
