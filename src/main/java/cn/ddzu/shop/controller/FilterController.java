@@ -148,7 +148,7 @@ public class FilterController extends BaseController {
         RequestHelper helper = new RequestHelper(request);
         Log.d("filter-newsTag", helper);
 
-        Long news_tag_id = helper.getLong("news_tag_id");
+        Long news_tag_id = helper.getLong("news_tag_id", 1L);
 
         List<NewsTag> newsTagList = newsService.getNewsTagList();
 

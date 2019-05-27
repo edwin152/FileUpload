@@ -67,6 +67,7 @@
                        autocomplete="off" class="layui-input">
             </div>
         </div>
+         <%-- TODO 下拉框 --%>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">资讯内容</label>
             <div class="layui-input-block">

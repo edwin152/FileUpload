@@ -31,6 +31,7 @@ body {
 
 .top_bg_search {
     position: relative;
+    height: 700px;
 }
 
 .index_top_box {
@@ -93,13 +94,13 @@ body {
     margin-top: 70px;
 }
 
-.win_center{
+.win_center {
     margin: auto;
     display: flex;
     flex-direction: row;
 }
 
-.new_search_btn_box a{
+.new_search_btn_box a {
     width: 336px;
     height: 48px;
     line-height: 48px;
@@ -113,11 +114,11 @@ body {
     border: 0;
 }
 
-.new_search_btn_box a:hover{
+.new_search_btn_box a:hover {
     background: #FFDD33;
 }
 
-.top_search_box{
+.top_search_box {
     background: #f2f2f2;
     border-radius: 0 0 4px 4px;
     flex-grow: 1;
@@ -187,7 +188,7 @@ body {
     color: #999;
 }
 
-.screen_type_box{
+.screen_type_box {
     padding: 5px 30px 30px 30px;
 }
 
@@ -206,7 +207,6 @@ body {
     padding-bottom: 10px;
     border-bottom: 1px solid #EEE;
 }
-
 
 .screen_item_box div {
     min-width: 14%;
@@ -246,7 +246,7 @@ body {
     display: inline-block;
 }
 
-.option_select_box{
+.option_select_box {
     width: 100%;
 }
 
@@ -287,66 +287,63 @@ body {
     line-height: 30px;
 }
 
+/* 核心商圈 */
 .image_box_in_title {
     justify-content: space-between;
 }
 
-.image_item_in_title {
-    width: 280px;
-    height: 350px;
-    overflow: hidden;
+.core_left_big_box {
+    width: 360px;
+    height: 500px;
     position: relative;
+    flex-grow: 0;
+    flex-shrink: 0;
+    overflow: hidden;
 }
 
-.image_item_in_title img {
-    width: 280px;
-    height: 350px;
+.core_img {
+    width: 100%;
+    height: 100%;
     transition: all 0.6s;
 }
 
-.image_big:hover img {
-    transform: scale(1.2);
-    -webkit-transform: scale(1.2);
-    -moz-transform: scale(1.2);
-    -o-transform: scale(1.2);
-    -ms-transform: scale(1.2);
-}
-
-.image_item_in_title:hover .text_in_image {
-    height: 140px;
-}
-
-.image_item_in_title .text_in_image {
+.core_text {
+    height: 40px;
     position: absolute;
     bottom: 0;
-    height: 60px;
-    overflow: hidden;
-    margin-top: -350px;
+    left: 0;
+    font-size: 16px;
+    font-weight: normal;
+    color: #fff;
     width: 100%;
-    transition: all 0.6s;
-    color: #FFFFFF;
-}
-
-.image_item_in_title .text_in_image .title_in_image {
-    padding: 20px 20px 10px 20px;
-    font-size: 18px;
-    line-height: 30px;
+    padding: 10px;
     background: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.78), rgba(0, 0, 0, .1)); /* Safari 5.1 - 6.0 */
     background: -o-linear-gradient(top, rgba(0, 0, 0, 0.78), rgba(0, 0, 0, .1)); /* Opera 11.1 - 12.0 */
     background: -moz-linear-gradient(top, rgba(0, 0, 0, 0.78), rgba(0, 0, 0, .1)); /* Firefox 3.6 - 15 */
     background: linear-gradient(to top, rgba(0, 0, 0, 0.78), rgba(0, 0, 0, .1)); /* 标准的语法 */
 }
 
-.image_item_in_title .text_in_image .subtitle_in_image {
-    background: rgba(0, 0, 0, 0.78);
-    font-size: 14px;
-    color: #fff;
-    line-height: 22px;
-    padding: 10px 20px 10px 20px;
-    height: 60px;
+.core_min_box {
+    width: 800px;
+    height: 500px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+.core_right_box {
+    width: 390px;
+    height: 240px;
+    align-content: space-around;
+    position: relative;
+    flex-grow: 0;
+    flex-shrink: 0;
     overflow: hidden;
 }
 
+/* 竞选写字楼 */
 .fine_building {
     flex-wrap: wrap;
     overflow: hidden;
@@ -354,7 +351,7 @@ body {
 }
 
 .fine_building_item_box {
-    width: 278px;
+    width: 290px;
     overflow: hidden;
     transition: all 0.6s;
     margin-bottom: 20px;
@@ -371,6 +368,14 @@ body {
     width: 100%;
     height: 200px;
     transition: all 0.6s;
+}
+
+.image_big:hover img {
+    transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    -ms-transform: scale(1.2);
 }
 
 .fine_building_item_box:hover {
@@ -421,7 +426,60 @@ body {
     font-size: 24px;
     line-height: 30px;
     font-weight: normal;
-    color: #f90;
+    color: #FFBB33;
+}
+
+/* 委托找房 */
+.entrust_img{
+    width: 500px;
+    height: 260px;
+    margin-right: 50px;
+}
+
+.entrust_info_box{
+    align-items: start;
+    color: #333;
+}
+
+.entrust_title{
+    font-size: 22px;
+    line-height: 30px;
+    font-weight: bold;
+}
+
+.entrust_subtitle{
+    margin: 20px 0;
+}
+
+.entrust_btn{
+    width: 180px;
+}
+
+/* 资讯 */
+.news_heat{
+    width: 580px;
+}
+
+.news_title{
+    justify-content: space-between;
+}
+
+.news_list li{
+    list-style:disc;
+    position: relative;
+    margin-top: 10px;
+    color: #333333;
+}
+
+.news_heat a:hover{
+    color: #FFBB33;
+}
+
+.news_list li div{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    color: #666666;
 }
 
 

@@ -119,28 +119,21 @@
 
         /**
          * 设置核心圈
-         * @param buildingList 长度不超过4个
+         * @param coreList 长度不超过4个
          */
-        function setCoreBuilding(buildingList) {
-            let coreBuildingListBox = document.getElementById("core_building");
-            for (let i = 0, len = buildingList.length; i < len && i < 4; i++) {
-                let buildingItemBox = document.createElement("div");
-                buildingItemBox.setAttribute("class", "image_item_in_title image_big clickable");
-                coreBuildingListBox.appendChild(buildingItemBox);
-                let buildingItemImage = document.createElement("img");
-                buildingItemImage.setAttribute("src", buildingList[i].imageUrl);
-                buildingItemBox.appendChild(buildingItemImage);
-                let buildingItemText = document.createElement("div");
-                buildingItemText.setAttribute("class", "text_in_image");
-                buildingItemBox.appendChild(buildingItemText);
-                let buildingItemTitle = document.createElement("div");
-                buildingItemTitle.setAttribute("class", "title_in_image");
-                buildingItemTitle.innerHTML = buildingList[i].title;
-                buildingItemText.appendChild(buildingItemTitle);
-                let buildingItemSubtitle = document.createElement("div");
-                buildingItemSubtitle.setAttribute("class", "subtitle_in_image");
-                buildingItemSubtitle.innerHTML = buildingList[i].subtitle;
-                buildingItemText.appendChild(buildingItemSubtitle);
+        function setCoreBuilding(coreList) {
+            if (coreList && coreList.length > 0) {
+                document.getElementById("core_building").setAttribute("style", "display: flex;")
+            } else {
+                return;
+            }
+
+            for (let i = 0, len = coreList.length; i < len && i < 5; i++) {
+                let coreItemImg = document.getElementById("core_item_img_" + i);
+                coreItemImg.setAttribute("src", coreList[i].img_list[0]);
+
+                let coreItemText = document.getElementById("core_item_text_" + i);
+                coreItemText.innerHTML = coreList[i].name;
             }
         }
 
@@ -149,10 +142,16 @@
          * @param buildingList 长度为4的倍数
          */
         function setFineBuildingList(buildingList) {
+            if (!buildingList) {
+                return;
+            }
             let fineBuildingListBox = document.getElementById("fine_building");
             for (let i = 0, len = buildingList.length; i < len; i++) {
                 let buildingItemBox = document.createElement("div");
                 buildingItemBox.setAttribute("class", "fine_building_item_box image_big flex_column clickable");
+                if (i % 3 === 2) {
+                    buildingItemBox.setAttribute("style", "margin-right: 50px; margin-left: 50px;");
+                }
                 buildingItemBox.onclick = function () {
                     window.open("buildingDetail.html?building_id=" + buildingList[i].id, "_blank");
                 };
@@ -211,8 +210,31 @@
             }
         }
 
+        /**
+         * 设置资讯
+         */
+        function setLeftNewsList(newsList) {
+            if (!newsList) {
+                return;
+            }
+
+            let newsListBox = document.getElementById("news_list_left");
+            for (let i = 0, len = newsList.length; i < len; i++) {
+                let newsItem = document.createElement("li");
+                let newsTitle = document.createElement("a");
+                newsTitle.innerHTML = newsList[i].title;
+                newsTitle.setAttribute("href", "newsDetail.html?newsId=" + newsList[i].id);
+                newsItem.appendChild(newsTitle);
+                let newsTime = document.createElement("div");
+                newsTime.innerHTML = newsList[i].last_edit_time;
+                newsItem.appendChild(newsTime);
+                newsListBox.appendChild(newsItem);
+            }
+        }
+
         window.onload = function () {
             getFilterList();
+            getNewsList();
         };
 
         function getFilterList() {
@@ -229,6 +251,17 @@
                     setFineBuildingList(data.fineList);
 
                     openSwiper(data.bannerList.length !== 1);
+                }
+            });
+        }
+
+        function getNewsList() {
+            http.post({
+                url: "news/hot",
+                success: function (data) {
+                    filter = data;
+                    console.log("news：-----", filter);
+                    setLeftNewsList(filter);
                 }
             });
         }
@@ -321,11 +354,54 @@
 
 <div class="win">
     <h3 class="item_title">核心商圈享&nbsp;<span class="item_subtitle">优质配套 与大咖公司为邻</span></h3>
-    <div class="image_box_in_title flex_row" id="core_building">
+    <div class="image_box_in_title flex_row" id="core_building" style="display: none;">
+        <div class="core_left_big_box image_big">
+            <img class="core_img" src="img/test.jpg" id="core_item_img_0"/>
+            <div class="core_text" id="core_item_text_0">地铁周边出行最便捷</div>
+        </div>
+        <div class="core_min_box">
+            <div class="core_right_box image_big">
+                <img class="core_img" src="img/test.jpg" id="core_item_img_1"/>
+                <div class="core_text" id="core_item_text_1">地铁周边出行最便捷</div>
+            </div>
+            <div class="core_right_box image_big">
+                <img class="core_img" src="img/test.jpg" id="core_item_img_2"/>
+                <div class="core_text" id="core_item_text_2">地铁周边出行最便捷</div>
+            </div>
+            <div class="core_right_box image_big matop">
+                <img class="core_img" src="img/test.jpg" id="core_item_img_3"/>
+                <div class="core_text" id="core_item_text_3">地铁周边出行最便捷</div>
+            </div>
+            <div class="core_right_box image_big matop">
+                <img class="core_img" src="img/test.jpg" id="core_item_img_4"/>
+                <div class="core_text" id="core_item_text_4">地铁周边出行最便捷</div>
+            </div>
+        </div>
     </div>
     <h3 class="item_title">精选写字楼&nbsp;<span class="item_subtitle">高性价 高格调 超精致</span></h3>
     <div class="fine_building flex_row" id="fine_building">
     </div>
+</div>
+
+<div class="win matop bg_white flex_row">
+    <img src="img/test.jpg" class="entrust_img"/>
+    <div class="entrust_info_box flex_column">
+        <div class="entrust_title">委托橙办租房网，省心找办公室</div>
+        <div class="entrust_subtitle">10分钟内响应，全程免租，专业看房顾问带看</div>
+        <a class="entrust_btn layui-btn layui-btn-warm" href="search.html">委托找房</a>
+    </div>
+</div>
+
+<div class="win matop bg_white flex_row">
+    <div class="news_heat">
+        <div class="news_title flex_row">
+            写字楼新闻
+            <a href="news.html">更多>></a>
+        </div>
+        <div class="news_list" id="news_list_left">
+        </div>
+    </div>
+    <div class="news_heat"></div>
 </div>
 
 <div class="bottom_box flex_column">
