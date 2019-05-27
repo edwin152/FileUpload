@@ -10,40 +10,44 @@
     <update id="create">
         create table metro
         (
-            id   bigint auto_increment,
+            id   bigint,
             name varchar(255),
+            valid boolean default true,
             primary key (id)
         ) default charset = utf8
     </update>
 
     <update id="init">
-        insert into metro(name)
-        values ('全部'),
-               ('1号线'),
-               ('2号线'),
-               ('3号线'),
-               ('4号线'),
-               ('5号线'),
-               ('6号线'),
-               ('7号线'),
-               ('8号线'),
-               ('9号线'),
-               ('13号线'),
-               ('16号线'),
-               ('10号线主线'),
-               ('10号线支线'),
-               ('11号线主线'),
-               ('11号线支线'),
-               ('12号线'),
-               ('磁悬浮'),
-               ('17号线')
+        insert into metro
+        values (1, '全部', true),
+               (2, '1号线', true),
+               (3, '2号线', true),
+               (4, '3号线', true),
+               (5, '4号线', true),
+               (6, '5号线', true),
+               (7, '6号线', true),
+               (8, '7号线', true),
+               (9, '8号线', true),
+               (10, '9号线', true),
+               (11, '13号线', true),
+               (12, '16号线', false),
+               (13, '10号线', true),
+               (14, '10号线支线', false),
+               (15, '11号线', true),
+               (16, '11号线支线', false),
+               (17, '12号线', true),
+               (18, '磁悬浮', false),
+               (19, '17号线', true)
     </update>
 
     <select id="select" resultType="cn.ddzu.shop.entity.Metro">
-        select * from metro order by id asc
+        select * from metro
+        where valid = true
+        order by id asc
     </select>
 
     <select id="selectById" resultType="cn.ddzu.shop.entity.Metro" parameterType="Long">
-        select * from metro where id = #{id}
+        select * from metro
+        where id = #{id}
     </select>
 </mapper>

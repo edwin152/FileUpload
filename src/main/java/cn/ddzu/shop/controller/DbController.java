@@ -2,7 +2,9 @@ package cn.ddzu.shop.controller;
 
 import cn.ddzu.shop.enums.ResultCode;
 import cn.ddzu.shop.helper.RequestHelper;
+import cn.ddzu.shop.service.BasicService;
 import cn.ddzu.shop.service.NewsService;
+import cn.ddzu.shop.service.OfficeService;
 import cn.ddzu.shop.service.UserService;
 import cn.ddzu.shop.util.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,10 @@ import java.io.IOException;
 @RequestMapping("/db")
 public class DbController extends BaseController {
 
+    @Autowired
+    private BasicService basicService;
+    @Autowired
+    private OfficeService officeService;
     @Autowired
     private UserService userService;
     @Autowired
@@ -46,6 +52,19 @@ public class DbController extends BaseController {
 
         newsService.resetNewsTag();
         newsService.resetNews();
+
+        finish(response, ResultCode.SUCCESS);
+    }
+
+    @RequestMapping("/resetMetro")
+    public void resetMetro(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+
+        RequestHelper helper = new RequestHelper(request);
+        Log.d("db-resetMetro", helper);
+
+        basicService.resetMetro();
 
         finish(response, ResultCode.SUCCESS);
     }

@@ -10,23 +10,26 @@
     <update id="create">
         create table news_tag
         (
-            id   bigint auto_increment,
+            id   bigint,
             name varchar(255),
+            valid boolean default true,
             primary key (id)
         ) default charset = utf8
     </update>
 
     <update id="init">
-        insert into news_tag(name)
-        values ('全部'),
-               ('行业新闻'),
-               ('楼盘介绍'),
-               ('找房攻略'),
-               ('橙办新闻'),
-               ('媒体报道')
+        insert into news_tag
+        values (1, '全部', true),
+               (2, '行业新闻', true),
+               (3, '楼盘介绍', true),
+               (4, '找房攻略', true),
+               (5, '橙办新闻', true),
+               (6, '媒体报道', true)
     </update>
 
     <select id="select" resultType="cn.ddzu.shop.entity.NewsTag">
-        select * from news_tag order by id asc
+        select * from news_tag
+        where valid = true
+        order by id asc
     </select>
 </mapper>
