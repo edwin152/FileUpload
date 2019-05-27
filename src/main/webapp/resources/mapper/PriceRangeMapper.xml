@@ -10,35 +10,40 @@
     <update id="create">
         create table price_range
         (
-            id   bigint auto_increment,
+            id   bigint,
             name varchar(255),
+            valid boolean default true,
             primary key (id)
         ) default charset = utf8
     </update>
 
     <update id="init">
-        insert into price_range(name)
-        values ('全部'),
-               ('0-3元/m²/天'),
-               ('3-4元/m²/天'),
-               ('4-5元/m²/天'),
-               ('5-7元/m²/天'),
-               ('7-9元/m²/天'),
-               ('9-12元/m²/天'),
-               ('12元/m²/天以上')
+        insert into price_range
+        values (1, '全部', true),
+               (2, '0-3元/m²/天', true),
+               (3, '3-4元/m²/天', true),
+               (4, '4-5元/m²/天', true),
+               (5, '5-7元/m²/天', true),
+               (6, '7-9元/m²/天', true),
+               (7, '9-12元/m²/天', true),
+               (8, '12元/m²/天以上', true)
     </update>
 
     <select id="select" resultType="cn.ddzu.shop.entity.PriceRange">
-        select * from price_range order by id asc
+        select * from price_range
+        where valid = true
+        order by id asc
     </select>
 
     <select id="selectByBuilding"
             resultType="cn.ddzu.shop.entity.AreaRange"
             parameterType="java.lang.Long">
-        select * from price_range where id in
+        select * from price_range
+        where valid = true
+        and id in
         (
-            select price_range_id as id
-            from office where building_id = #{building_id}
+            select price_range_id as id from office
+            where valid = true and building_id = #{building_id}
             group by price_range_id
         ) or id = 1 order by id asc
     </select>

@@ -40,7 +40,7 @@ public class IndexController extends BaseController {
         Log.d("index-all", helper);
 
         JsonObject json = new JsonObject();
-        json.add("bannerList", new Gson().toJsonTree(Collections.singletonList("img/test.jpg")));
+        json.add("bannerList", new Gson().toJsonTree(Collections.singletonList("http://47.96.165.78/images/banner.jpg")));
 
         List<District> districtList = basicService.getDistrictList();
         json.add("districtList", new Gson().toJsonTree(districtList));

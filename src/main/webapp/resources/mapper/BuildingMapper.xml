@@ -203,7 +203,8 @@
     </select>
 
     <select id="countWithOffice" resultType="java.lang.Integer">
-        select count(*) from building
+        select count(*) from (
+        select count(*) as count from building
         left join office on building.id = office.building_id
         where building.valid = true and office.valid = true
         and office.id in (select min(id) from office
@@ -241,6 +242,7 @@
             and building.zone_id = #{zone_id}
         </if>
         group by building.id
+        ) as a group by count;
     </select>
 </mapper>
 

@@ -29,7 +29,7 @@ public class DbController extends BaseController {
     @Autowired
     private NewsService newsService;
 
-    @RequestMapping("/resetUser")
+    @RequestMapping("/update")
     public void resetUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
@@ -37,34 +37,15 @@ public class DbController extends BaseController {
         RequestHelper helper = new RequestHelper(request);
         Log.d("db-resetUser", helper);
 
+        basicService.resetMetro();
+        basicService.resetDecoration();
+        basicService.resetPriceRange();
+        basicService.resetAreaRange();
+        basicService.resetType();
+        basicService.resetDistrictAndZone();
+        newsService.resetNewsTag();
 //        userService.reset();
 
-        finish(response, ResultCode.SUCCESS);
-    }
-
-    @RequestMapping("/resetNewsTag")
-    public void resetNewsTag(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        request.setCharacterEncoding("utf-8");
-        response.setCharacterEncoding("utf-8");
-
-        RequestHelper helper = new RequestHelper(request);
-        Log.d("db-resetNewsTag", helper);
-
-        newsService.resetNewsTag();
-        newsService.resetNews();
-
-        finish(response, ResultCode.SUCCESS);
-    }
-
-    @RequestMapping("/resetMetro")
-    public void resetMetro(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        request.setCharacterEncoding("utf-8");
-        response.setCharacterEncoding("utf-8");
-
-        RequestHelper helper = new RequestHelper(request);
-        Log.d("db-resetMetro", helper);
-
-        basicService.resetMetro();
 
         finish(response, ResultCode.SUCCESS);
     }

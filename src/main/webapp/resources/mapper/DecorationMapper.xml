@@ -10,33 +10,38 @@
     <update id="create">
         create table decoration
         (
-            id   bigint auto_increment,
+            id   bigint,
             name varchar(255),
+            valid boolean default true,
             primary key (id)
         ) default charset = utf8
     </update>
 
     <update id="init">
-        insert into decoration(name)
-        values ('全部'),
-               ('豪华装修'),
-               ('精装修'),
-               ('中等装修'),
-               ('简装修'),
-               ('毛坯')
+        insert into decoration
+        values (1, '全部', true),
+               (2, '豪华装修', true),
+               (3, '精装修', true),
+               (4, '中等装修', true),
+               (5, '简装修', true),
+               (6, '毛坯', true)
     </update>
 
     <select id="select" resultType="cn.ddzu.shop.entity.Decoration">
-        select * from decoration order by id asc
+        select * from decoration
+        where valid = true
+        order by id asc
     </select>
 
     <select id="selectByBuilding"
             resultType="cn.ddzu.shop.entity.AreaRange"
             parameterType="java.lang.Long">
-        select * from decoration where id in
+        select * from decoration
+        where valid = true
+        and id in
         (
-            select decoration_id as id
-            from office where building_id = #{building_id}
+            select decoration_id as id from office
+            where valid = true and building_id = #{building_id}
             group by decoration_id
         ) or id = 1 order by id asc
     </select>

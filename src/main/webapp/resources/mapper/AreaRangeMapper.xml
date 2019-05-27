@@ -10,33 +10,38 @@
     <update id="create">
         create table area_range
         (
-            id   bigint auto_increment,
+            id   bigint,
             name varchar(255),
+            valid boolean default true,
             primary key (id)
         ) default charset = utf8
     </update>
 
     <update id="init">
-        insert into area_range(name)
-        values ('全部'),
-               ('0-100m²'),
-               ('100-300m²'),
-               ('300-500m²'),
-               ('500-1000m²'),
-               ('1000m²以上')
+        insert into area_range
+        values (1, '全部', true),
+               (2, '0-100m²', true),
+               (3, '100-300m²', true),
+               (4, '300-500m²', true),
+               (5, '500-1000m²', true),
+               (6, '1000m²以上', true)
     </update>
 
     <select id="select" resultType="cn.ddzu.shop.entity.AreaRange">
-        select * from area_range order by id asc
+        select * from area_range
+        where valid = true
+        order by id asc
     </select>
 
     <select id="selectByBuilding"
             resultType="cn.ddzu.shop.entity.AreaRange"
             parameterType="java.lang.Long">
-        select * from area_range where id in
+        select * from area_range
+        where valid = true
+        and id in
         (
-            select area_range_id as id
-            from office where office.building_id = #{building_id}
+            select area_range_id as id from office
+            where valid = true and office.building_id = #{building_id}
             group by area_range_id
         ) or id = 1 order by id asc
     </select>

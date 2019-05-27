@@ -5,6 +5,8 @@ public class Zone implements Comparable<Zone> {
     private long id;
     private long district_id;
     private String name;
+    private Boolean center;
+    private String img_list;
 
     public long getId() {
         return id;
@@ -28,6 +30,22 @@ public class Zone implements Comparable<Zone> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Boolean getCenter() {
+        return center;
+    }
+
+    public void setCenter(Boolean center) {
+        this.center = center;
+    }
+
+    public String getImg_list() {
+        return img_list;
+    }
+
+    public void setImg_list(String img_list) {
+        this.img_list = img_list;
     }
 
     @Override

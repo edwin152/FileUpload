@@ -10,36 +10,39 @@
     <update id="create">
         create table district
         (
-            id   bigint auto_increment,
+            id   bigint,
             name varchar(255),
+            valid boolean default true,
             primary key (id)
         ) default charset = utf8
     </update>
 
     <update id="init">
-        insert into district(name)
-        values ('全部'),
-               ('浦东'),
-               ('黄浦'),
-               ('卢湾'),
-               ('徐汇'),
-               ('长宁'),
-               ('静安'),
-               ('普陀'),
-               ('闸北'),
-               ('虹口'),
-               ('杨浦'),
-               ('闵行'),
-               ('宝山'),
-               ('嘉定'),
-               ('松江'),
-               ('青浦'),
-               ('奉贤'),
-               ('上海周边'),
-               ('南汇')
+        insert into district
+        values (1, '全部', true),
+               (2, '浦东', true),
+               (3, '黄浦', true),
+               (4, '卢湾', true),
+               (5, '徐汇', true),
+               (6, '长宁', true),
+               (7, '静安', true),
+               (8, '普陀', true),
+               (9, '闸北', true),
+               (10, '虹口', true),
+               (11, '杨浦', true),
+               (12, '闵行', true),
+               (13, '宝山', true),
+               (14, '嘉定', true),
+               (15, '松江', true),
+               (16, '青浦', true),
+               (17, '奉贤', true),
+               (18, '上海周边', true),
+               (19, '南汇', true)
     </update>
 
     <select id="select" resultType="cn.ddzu.shop.entity.District">
-        select * from district order by id asc
+        select * from district
+        where valid = true
+        order by id asc
     </select>
 </mapper>

@@ -10,31 +10,36 @@
     <update id="create">
         create table type
         (
-            id   bigint auto_increment,
+            id   bigint,
             name varchar(255),
+            valid boolean default true,
             primary key (id)
         ) default charset = utf8
     </update>
 
     <update id="init">
-        insert into type(name)
-        values ('全部'),
-               ('普通办公'),
-               ('联合办公'),
-               ('创意园区')
+        insert into type
+        values (1, '全部', true),
+               (2, '普通办公', true),
+               (3, '联合办公', true),
+               (4, '创意园区', true)
     </update>
 
     <select id="select" resultType="cn.ddzu.shop.entity.Type">
-        select * from type order by id asc
+        select * from type
+        where valid = true
+        order by id asc
     </select>
 
     <select id="selectByBuilding"
             resultType="cn.ddzu.shop.entity.Type"
             parameterType="java.lang.Long">
-        select * from type where id in
+        select * from type
+        where valid = true
+        and id in
         (
-            select type_id as id
-            from office where building_id = #{building_id}
+            select type_id as id from office
+            where valid = true and building_id = #{building_id}
             group by type_id
         ) or id = 1 order by id asc
     </select>
