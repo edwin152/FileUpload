@@ -8,19 +8,8 @@
     <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
-<script type="text/javascript">
-    window.onload = function () {
-        let request = window.location.search;
-        let warning = http.getParameter(request, "warning");
-        if (warning) {
-            $("#warning").show();
-            $("#warning").innerHTML = warning;
-        }
-    };
-</script>
-
 <body>
-<form action="">
+<form action="" method="post">
     <h3>登录</h3>
     <label for="user_name">用户名：</label>
     <input type="text" id="user_name" value="" name="username"/>
@@ -28,6 +17,5 @@
     <input type="password" id="user_password" name="password"/>
     <input type="submit" value="登录"/>
 </form>
-<span id="warning"></span>
 </body>
 </html>

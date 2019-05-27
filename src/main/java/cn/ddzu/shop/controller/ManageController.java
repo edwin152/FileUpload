@@ -37,7 +37,24 @@ public class ManageController extends BaseController {
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
             session.setAttribute("token_id", tokenId);
-            return "redirect:/manage/buildings";
+//            return "redirect:/manage/buildings";
+            return "/manage";
+        }
+    }
+
+    @RequestMapping("/edit")
+    public String edit(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+
+        RequestHelper helper = new RequestHelper(request);
+        Log.d("manage-edit", helper);
+
+        boolean isLogin = SessionUtils.checkSession(request.getSession());
+        if (isLogin) {
+            return "/edit";
+        } else {
+            return "redirect:/manage";
         }
     }
 

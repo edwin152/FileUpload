@@ -18,7 +18,7 @@ public class LoginManager {
     }
 
     private LoginManager() {
-        User[] user_list = {new User("ddzu", "Ddzu748521")};
+        User[] user_list = {new User("ddzu", "Ddzuqqq7")};
 
         userMap = new HashMap<>();
         for (User user : user_list) {
