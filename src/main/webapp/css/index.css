@@ -347,7 +347,6 @@ body {
 .fine_building {
     flex-wrap: wrap;
     overflow: hidden;
-    justify-content: space-between;
 }
 
 .fine_building_item_box {
