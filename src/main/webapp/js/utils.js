@@ -123,3 +123,18 @@ let utils = {
         img.setAttribute("src", src);
     },
 };
+
+
+function getScrollOffset(){
+    if (window.pageXOffset !== undefined) {
+        return {
+            x : window.pageXOffset,
+            y : window.pageYOffset
+        }
+    }else{
+        return {
+            x : document.body.scrollLeft + document.documentElement.srollLeft,
+            y : document.body.scrollTop + document.documentElement.srollTop
+        }
+    }
+}

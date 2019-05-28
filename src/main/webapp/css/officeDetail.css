@@ -141,7 +141,7 @@
 .page_info_service_phone {
 	font-size: 23px;
 	font-weight: bold;
-	color: #f3bc86;
+	color: #FFA200;
 	margin-left: 15px;
 }
 
@@ -222,7 +222,7 @@
 }
 
 .condition_line a:hover {
-	color: #FF9933;
+	color: #FFA200;
 }
 
 .condition_title {
@@ -321,7 +321,7 @@
 }
 
 .introduction_estate_name:hover {
-	color: #FFBB33;
+	color: #FFA200;
 }
 
 .introduction_estate_info {

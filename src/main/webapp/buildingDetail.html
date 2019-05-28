@@ -6,8 +6,14 @@
     <link rel="stylesheet" type="text/css" href="css/all.css"/>
     <link rel="stylesheet" type="text/css" href="css/search.css"/>
     <link rel="stylesheet" type="text/css" href="css/buildingDetail.css"/>
+    <link rel="stylesheet" type="text/css" href="layUI/css/layui.css">
+    <!--引用百度地图API-->
+    <script type="text/javascript"
+            src="http://api.map.baidu.com/api?v=2.0&ak=GE9frXl5g9FxrMuggC5iN3Ay4ZKHW5Hk"></script>
+    <script src="js/map.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/swiper.jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="layUI/layui.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
@@ -16,6 +22,29 @@
     let filter = {};
     let pageIndex = 0;
     let pageNum = 0;
+
+    function openFixed() {
+        let subscribeTop = $("#subscribe_box").offset().top;
+        // 滚动监听
+        $(window).scroll(function () {
+            let scroll = getScrollOffset().y;
+            let topSearchBox = $('#top_search_box');
+            let topSearchBoxNone = $('#top_search_box_none');
+            if (scroll < 40) {
+                topSearchBox.removeClass('headerPosition');
+                topSearchBoxNone.hide();
+            } else {
+                topSearchBox.addClass('headerPosition');
+                topSearchBoxNone.show();
+            }
+            let subscribe = $("#subscribe_box");
+            if (subscribeTop - scroll < 80) {
+                subscribe.addClass('subscribePosition');
+            } else {
+                subscribe.removeClass('subscribePosition');
+            }
+        });
+    }
 
     window.onload = function () {
         let request = window.location.search;
@@ -26,6 +55,11 @@
         filter.checkedDecorationId = http.getParameter(request, "decoration_id");
         getFilterList();
         getBuilding();
+
+        initMap();
+        // setMarkers(dataList);
+
+        openFixed();
     };
 
     function getFilterList() {
@@ -148,6 +182,9 @@
             itemImg.setAttribute("src", img);
             itemBox.appendChild(itemImg);
         }
+        if (img_list && img_list.length > 1) {
+            openSwiper();
+        }
         // 价格范围
         document.getElementById("detail_info_price").innerHTML = building.price_range;
         // 联系客服顶部价格
@@ -164,14 +201,6 @@
             window.open("search.html?district_id=" + building.district_id
                 + "&zone_id=" + building.zone_id, "_blank");
         };
-        document.getElementById("address_info_name").innerHTML = building.address;
-        // TODO 距离地铁距离
-        document.getElementById("metro_name_list").innerHTML = building.metro_name_list;
-        // 在租房源
-        document.getElementById("office_num").innerHTML = building.office_num + "个";
-        // 可租面积
-        document.getElementById("area_range").innerHTML = building.area_range + "m²";
-        openSwiper();
     }
 
     /**
@@ -247,7 +276,7 @@
             let totalPrice = document.createElement("td");
             let totalPriceName = document.createElement("span");
             totalPriceName.innerHTML = office.total_price;
-            totalPriceName.setAttribute("class", "big_text");
+            totalPriceName.setAttribute("class", "big_text  price_color");
             let totalPriceEnd = document.createElement("span");
             totalPriceEnd.innerHTML = "元/月";
             totalPrice.appendChild(totalPriceName);
@@ -333,9 +362,9 @@
     </div>
 </div>
 
-<div class="bg_white">
+<div class="bg_white top_box top_title" id="top_search_box">
     <div class="win top_box flex_row">
-        <img src="img/nav_logo_black.png" class="top_logo" alt=""/>
+        <img src="img/logo_light.png" class="top_logo" alt=""/>
         <a href="" class="black_a logo_right">上海写字楼出租</a>
         <div class="top_search_box flex_row">
             <input type="text" class="top_search" name="search" id="top_search" value=""
@@ -344,62 +373,31 @@
         </div>
     </div>
 </div>
+<div class="top_box" id="top_search_box_none" style="display: none;"></div>
 
 <div class="top_info_box">
-    <div class="top_info flex_row">
-        <div class="swiper-container swiper_top_info" id="swiper_top_info">
-            <div class="swiper-wrapper" id="top_image_list">
+    <div class="top_info">
+        <div class="flex_column_left top_info_title_box">
+            <div class="flex_row_left">
+                <div class="detail_info_name" id="building_name"></div>
+                <div class="detail_info_price_box">
+                    <span class="detail_info_price price_color" id="detail_info_price">0</span>元/m²/天
+                </div>
             </div>
-            <div class="swiper_position swiper_top"></div>
+            <div class="flex_row_left" style="font-size: 12px;color: #666;">
+                <i class="layui-icon layui-icon-location" style="font-size: 16px;"></i>
+                <span id="district_name" class="clickable address_clickable"></span> -
+                <span id="zone_name" class="clickable address_clickable"></span>
+            </div>
         </div>
-        <div class="detail_info_box flex_column">
-            <div class="detail_info_name" id="building_name">
-            </div>
-            <div class="detail_info_price_box">
-                <span class="detail_info_price" id="detail_info_price">0</span>元/m²/天
-            </div>
-            <div class="infodown_box flex_row">
-                <div class="infodown">
-                    <div class="infodown_top" id="office_num">
-                    </div>
-                    <div class="infodown_bottom">
-                        在租房源
-                    </div>
+        <div class="img_map_box">
+            <div class="swiper-container swiper_top_info" id="swiper_top_info">
+                <div class="swiper-wrapper" id="top_image_list">
                 </div>
-                <div class="infodown">
-                    <div class="infodown_top" id="area_range">
-                    </div>
-                    <div class="infodown_bottom">
-                        可租面积
-                    </div>
-                </div>
+                <div class="swiper_position swiper_top"></div>
             </div>
-            <div class="page_info_more" id="area_detail">
-                地址： [
-                <span id="district_name" class="clickable address_clickable"></span>
-                ] - [ <span id="zone_name" class="clickable address_clickable"></span>
-                ] <span id="address_info_name"></span>
-            </div>
-            <div class="page_info_more mini_line_height flex_row">
-                地铁：
-                <div id="metro_name_list">
-                </div>
-            </div>
-            <div class="page_info_service flex_row">
-                <img src="img/phone.png" class="page_info_service_imgage" alt=""/>
-                <div class="page_info_service_right flex_column">
-                    <div class="page_info_service_name">
-                        <span>同普大厦写字楼出租</span> 专属顾问
-                    </div>
-                    <div class="page_info_service_btn_box flex_row">
-                        <div class="page_info_service_btn">
-                            免费咨询
-                        </div>
-                        <div class="page_info_service_phone">
-                            400-865-9520
-                        </div>
-                    </div>
-                </div>
+            <div class="map_box">
+                <div style="width:100%;height:100%;margin: 0 auto;font-size:12px" id="map"></div>
             </div>
         </div>
     </div>
@@ -478,10 +476,10 @@
         </div>
     </div>
 
-    <div class="content_right bg_white">
-        <div class="contact_way">
+    <div class="content_right">
+        <div class="contact_way bg_white" id="subscribe_box">
             <div class="service_info_price_box">
-                <span class="service_info_price" id="service_info_price"></span>元/m²/天
+                <span class="service_info_price price_color" id="service_info_price"></span>元/m²/天
             </div>
             <div class="contact_info">
                 <img src="" class="contact_img" alt=""/>
@@ -550,4 +548,5 @@
     </div>
 </div>
 </body>
+
 </html>

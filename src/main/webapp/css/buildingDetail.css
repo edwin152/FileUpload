@@ -1,5 +1,5 @@
 .top_info_box {
-    background: rgba(0, 0, 0, 0.8);
+    background: #FFFFFF;
     padding: 20px 0;
 }
 
@@ -8,9 +8,28 @@
     margin: 0 auto;
 }
 
+.top_title{
+    z-index: 10;
+    width: 100%;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.headerPosition{
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.subscribePosition{
+    position: fixed;
+    top: 80px;
+}
+
+.top_info_title_box{
+    margin-bottom: 26px;
+}
+
 .swiper_top_info {
-    width: 660px;
-    height: 440px;
     overflow: hidden;
     position: relative;
     margin: 0;
@@ -26,7 +45,7 @@
 }
 
 .top_info_image {
-    width: 660px;
+    width: 790px;
     height: 440px;
 }
 
@@ -46,28 +65,40 @@
     flex-grow: 1;
 }
 
-.detail_info_box .detail_info_name {
-    font-size: 24px;
+.detail_info_name {
+    font-size: 28px;
     line-height: 36px;
     font-weight: normal;
-    color: #fff;
+    color: #000000;
     margin-bottom: 20px;
 }
 
 .detail_info_price_box {
-    padding: 5px 0 20px;
-    color: #fff;
-    font-size: 16px;
-    width: 100%;
-    border-bottom: 1px rgba(255, 255, 255, .1) solid;
+    color: #000000;
+    font-weight: 400;
+    flex-grow: 1;
+    font-size: 12px;
+    text-align: right;
 }
 
 .detail_info_price {
-    font-size: 36px;
+    font-size: 28px;
     line-height: 40px;
-    color: #f90;
+    color: #FF0000;
     font-weight: bold;
     padding-right: 3px;
+}
+
+.img_map_box{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.map_box{
+    width: 360px;
+    height: 440px;
+    background: #FFFFFF;
 }
 
 .infodown_box {
@@ -139,7 +170,7 @@
 .page_info_service_btn {
     padding: 0 20px;
     font-size: 14px;
-    background: #f7a647;
+    background: #FFA200;
     color: #fff;
     border-radius: 10px;
     height: 30px;
@@ -150,7 +181,7 @@
 .page_info_service_phone {
     font-size: 23px;
     font-weight: bold;
-    color: #f3bc86;
+    color: #FFA200;
     margin-left: 15px;
 }
 
@@ -197,13 +228,14 @@
     flex-shrink: 0;
     flex-grow: 0;
     width: 282px;
-    padding-bottom: 15px;
+    z-index: 8;
 }
 
 .contact_way {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-bottom: 15px;
 }
 
 .contact_info {
@@ -236,7 +268,7 @@
 }
 
 .condition_line a:hover {
-    color: #FF9933;
+    color: #FFA200;
 }
 
 .condition_title {
@@ -282,8 +314,8 @@
     font-size: 20px;
 }
 
-.table_box tr td .price_color {
-    color: #ff9931;
+.price_color {
+    color: #ff0000;
 }
 
 .bottom_info_box {
@@ -323,7 +355,7 @@
 
 
 .source_info_td div:hover {
-    color: #FFBB33;
+    color: #FFA200;
 }
 
 .gm_num_box {

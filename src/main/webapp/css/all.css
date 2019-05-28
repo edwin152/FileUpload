@@ -19,12 +19,23 @@
 .flex_row {
     display: flex;
     align-items: center;
+    flex-direction: row;
 }
 
 .flex_column {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.flex_row_left {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex_column_left {
+    display: flex;
+    flex-direction: column;
 }
 
 .title_box {
@@ -170,7 +181,7 @@ input {
 }
 
 .bottom_box .foot_l a:hover {
-    color: #FFBB33;
+    color: #FFA200;
 }
 
 .ad_title {
@@ -196,7 +207,7 @@ input {
 }
 
 .bottom_box .footlink a:hover {
-    color: #FFBB33;
+    color: #FFA200;
 }
 
 .max_width {
@@ -226,7 +237,7 @@ input {
 }
 
 .paging_item:hover {
-    color: #FFBB33;
+    color: #FFA200;
     cursor: pointer;
 }
 
@@ -254,7 +265,6 @@ input {
 }
 
 .contact_way .service_info_price_box .service_info_price {
-    color: #333;
     font-size: 20px;
     padding-right: 3px;
 }
@@ -311,7 +321,7 @@ input {
 .service_phone_text {
     font-size: 24px;
     line-height: 30px;
-    color: #666;
+    color: #FFA200;
     border-bottom: 1px solid #f3f3f3;
 }
 
@@ -328,7 +338,7 @@ input {
     height: 40px;
     line-height: 40px;
     text-align: center;
-    background: #fff;
+    background: #FFA200;
 }
 
 .btn {
@@ -340,7 +350,8 @@ input {
     font-size: 16px;
     color: #FFFFFF;
     border-radius: 5px;
-    background: #ffbb33;
+    background: #FFA200;
+    cursor: pointer;
 }
 
 .content_right_title {

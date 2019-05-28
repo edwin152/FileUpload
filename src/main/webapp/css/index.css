@@ -106,7 +106,7 @@ body {
     line-height: 48px;
     text-align: center;
     color: #FFFFFF;
-    background: #FFBB33;
+    background: #FFA200;
     border-radius: 5px;
     display: block;
     cursor: pointer;
@@ -159,7 +159,7 @@ body {
 
 .search_btn:hover {
     cursor: pointer;
-    color: #FFBB33;
+    color: #FFA200;
     /*background: #999999;*/
 }
 
@@ -225,7 +225,7 @@ body {
 }
 
 .screen_item a:hover {
-    color: #FFBB33;
+    color: #FFA200;
     font-size: 14px;
 }
 
@@ -259,7 +259,7 @@ body {
 }
 
 .screen_option_box div a:hover {
-    background: #FFBB33;
+    background: #FFA200;
 }
 
 .screen_item .screen_option_text {
@@ -391,7 +391,7 @@ body {
 }
 
 .fine_building_item_box .fine_building_title:hover {
-    color: #FFBB33;
+    color: #FFA200;
 }
 
 .fine_building_item_box .fine_building_info {
@@ -425,7 +425,7 @@ body {
     font-size: 24px;
     line-height: 30px;
     font-weight: normal;
-    color: #FFBB33;
+    color: #FFA200;
 }
 
 /* 委托找房 */
@@ -471,7 +471,7 @@ body {
 }
 
 .news_heat a:hover{
-    color: #FFBB33;
+    color: #FFA200;
 }
 
 .news_list li div{

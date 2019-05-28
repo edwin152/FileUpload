@@ -16,7 +16,7 @@
 }
 
 .condition_line a:hover {
-    color: #FF9933;
+    color: #FFA200;
 }
 
 .condition_title {
@@ -41,20 +41,20 @@
 }
 
 .condition_option:hover {
-    color: #FF9933;
+    color: #FFA200;
     font-size: 12px;
     margin-right: 30px;
     cursor: pointer;
 }
 
 .condition_option_select {
-    color: #FF9933;
+    color: #FFA200;
     font-size: 12px;
     margin-right: 30px;
 }
 
 .condition_option_select:hover {
-    color: #FF9933;
+    color: #FFA200;
     font-size: 12px;
     margin-right: 30px;
     cursor: pointer;
@@ -117,7 +117,7 @@
 
 .data_item_box .data_info_box .item_name:hover {
     cursor: pointer;
-    color: #fb3;
+    color: #FFA200;
 }
 
 .data_item_box .data_info_box .item_margin {

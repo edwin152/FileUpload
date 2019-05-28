@@ -12,7 +12,7 @@ body {
 }
 
 .top_box .link:hover {
-    color: #FFBB33;
+    color: #FFA200;
 }
 
 .content_box {
@@ -61,7 +61,7 @@ body {
 }
 /* 热门资讯 */
 .heat_news div:hover {
-    color: #FFBB33;
+    color: #FFA200;
 }
 
 /* 新闻列表父布局 */
@@ -122,7 +122,7 @@ body {
 }
 
 .news_title:hover {
-    color: #FFBB33;
+    color: #FFA200;
 }
 
 /* 新闻时间 */
