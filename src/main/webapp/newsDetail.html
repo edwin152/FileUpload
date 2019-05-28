@@ -8,53 +8,33 @@
     <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
+        let filter = {};
         window.onload = function () {
-            let typeList = [
-                {
-                    name: "全部",
-                },
-                {
-                    name: "行业新闻",
-                },
-                {
-                    name: "楼盘介绍",
-                },
-                {
-                    name: "找房攻略",
-                },
-                {
-                    name: "妥妥新闻",
-                },
-                {
-                    name: "媒体报道",
-                }
-            ];
-            setNewsType(typeList);
 
-            let heatNewsList = [
-                {
-                    name: "办公场地租赁平台挑选技巧大放送",
-                },
-                {
-                    name: "有关泗泾办公室出租需要了解的知识",
-                },
-                {
-                    name: "2点关于上海共享办公最新报道",
-                },
-                {
-                    name: "火车站办公室出租注意事项，不得不了解的内容！",
-                },
-            ];
-            setHeatNews(heatNewsList);
+            getFilterList();
+            getHotList();
             let request = window.location.search;
             let newsId = http.getParameter(request, "newsId");
             getNewsDetail(newsId);
         };
 
+        function getFilterList() {
+            http.post({
+                url: "filter/newsTag",
+                params: {
+                    news_tag_id: filter.checkedNewsTagId
+                },
+                success: function (data) {
+                    filter = data;
+                    setNewsType(data.newsTagList);
+                }
+            })
+        }
+
         function getNewsDetail(id) {
 
             http.post({
-                url: "edit/news",
+                url: "news/news",
                 params: {
                     id: id,
                 },
@@ -74,10 +54,21 @@
             for (let i = 0, len = typeList.length; i < len; i++) {
                 let typeItem = document.createElement("div");
                 typeItem.setAttribute("class", "link");
-                // TODO
+                typeItem.onclick = function(){
+                    window.location.href= "news.html?news_tag_id=" + typeList[i].id;
+                };
                 typeItem.innerHTML = typeList[i].name;
                 newTypeBox.appendChild(typeItem);
             }
+        }
+
+        function getHotList() {
+            http.post({
+                url: "news/hot",
+                success: function (data) {
+                    setHeatNews(data);
+                }
+            })
         }
 
         /**
@@ -90,7 +81,7 @@
             for (let i = 0, len = heatNewsList.length; i < len; i++) {
                 let itemView = document.createElement("div");
                 // TODO
-                itemView.innerHTML = heatNewsList[i].name;
+                itemView.innerHTML = heatNewsList[i].title;
                 ListBox.appendChild(itemView);
             }
         }

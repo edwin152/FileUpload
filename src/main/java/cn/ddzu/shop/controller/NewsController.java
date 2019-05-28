@@ -80,7 +80,7 @@ public class NewsController extends BaseController {
         Integer page = helper.getInt("page", 0);
 
         List<News> newsList = newsService.getNewsList(news_tag_id, page, PAGE_SIZE);
-        JsonArray newsArray = new Gson().toJsonTree(newsList).getAsJsonArray();
+        JsonArray newsArray = new JsonArray();
         for (News news : newsList) {
             String content = news.getContent();
             if (content != null) {

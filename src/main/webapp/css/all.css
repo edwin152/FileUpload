@@ -338,7 +338,7 @@ input {
     height: 40px;
     line-height: 40px;
     text-align: center;
-    background: #FFA200;
+    background: #fff;
 }
 
 .btn {
@@ -394,4 +394,9 @@ input {
 
 img{
     object-fit: cover;
+}
+
+.image_100_100{
+    width: 100px;
+    height: 100px;
 }

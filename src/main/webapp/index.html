@@ -234,7 +234,6 @@
 
         window.onload = function () {
             getFilterList();
-            getNewsList();
         };
 
         function getFilterList() {
@@ -249,19 +248,10 @@
                     setPriceRangeScreen(data.priceRangeList);
                     setCoreBuilding(data.coreList);
                     setFineBuildingList(data.fineList);
+                    setLeftNewsList(data.newsList);
                     utils.setImageSrc(document.getElementById("entrust_img"));
 
                     openSwiper(data.bannerList.length !== 1);
-                }
-            });
-        }
-
-        function getNewsList() {
-            http.post({
-                url: "news/hot",
-                success: function (data) {
-                    filter = data;
-                    setLeftNewsList(filter);
                 }
             });
         }

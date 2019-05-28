@@ -9,7 +9,7 @@
     <script src="../js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="../js/utils.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
-        window.onload = function () {
+        function initLayUI() {
             let layedit;
             let textAreaId;
             layui.use('layedit', function () {
@@ -51,6 +51,32 @@
                     return false;
                 });
             });
+            layui.use('upload', function () {
+                let upload = layui.upload;
+
+                //执行实例
+                let uploadInst = upload.render({
+                    elem: '#upload_img' //绑定元素
+                    , url: '../file/upload' //上传接口
+                    , acceptMime: 'image/*'
+                    , done: function (res) {
+                        //上传完毕回调
+                        console.log(res);
+                        let coverImg = document.getElementById("cover_img");
+                        coverImg.setAttribute("src", data.src);
+                        coverImg.setAttribute("style", "");
+                    }
+                    , error: function () {
+                        //请求异常回调
+                        console.log("失败");
+                    }
+                });
+            });
+        }
+
+        window.onload = function () {
+            initLayUI();
+
             getNewsTag();
         };
 
@@ -70,6 +96,21 @@
                 }
             });
         }
+
+        function upload(e) {
+            console.log(e);
+            http.upload({
+                url: "../file/upload",
+                file: e[0],
+                success: function (data) {
+                    imgList.push(data.src);
+                    let coverImg = document.getElementById("cover_img");
+                    coverImg.setAttribute("src", data.src)
+                }
+            });
+
+            $("#add_image").val("");
+        }
     </script>
 </head>
 <body>
@@ -83,14 +124,26 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label" for="sub_title">资讯类型</label>
+            <label class="layui-form-label" for="sub_title">封面图</label>
+            <div class="layui-input-block">
+                <%--<button onclick="$('#add_image').click()">添加图片</button>--%>
+                <%--<input type="file" name="image" value="添加图片" id="add_image" onchange="upload(this.files)"--%>
+                <%--style="display: none;" accept="image/jpeg,image/png,image/jpg,image/gif">--%>
+                <button type="button" class="layui-btn" id="upload_img">
+                    <i class="layui-icon">&#xe67c;</i>上传图片
+                </button>
+                <img id="cover_img" class="image_100_100" style="display: none;"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="sub_title">副标题</label>
             <div class="layui-input-block">
                 <input type="text" id="sub_title" name="sub_title" required lay-verify="required" placeholder="请输入资讯类型"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">选择分类</label>
+            <label class="layui-form-label">资讯类型</label>
             <div class="layui-input-block">
                 <select id="type_box" title="" name="type" lay-verify="" class="layui-form-select">
                 </select>
