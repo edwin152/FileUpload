@@ -4,6 +4,7 @@ import cn.ddzu.shop.entity.News;
 import cn.ddzu.shop.enums.ResultCode;
 import cn.ddzu.shop.helper.RequestHelper;
 import cn.ddzu.shop.service.NewsService;
+import cn.ddzu.shop.util.JsonUtils;
 import cn.ddzu.shop.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -79,15 +80,19 @@ public class NewsController extends BaseController {
         Integer page = helper.getInt("page", 0);
 
         List<News> newsList = newsService.getNewsList(news_tag_id, page, PAGE_SIZE);
+        JsonArray newsArray = new Gson().toJsonTree(newsList).getAsJsonArray();
         for (News news : newsList) {
-            news.setContent(null);
+            String content = news.getContent().substring(0, 200);
+            news.setContent(content);
+            JsonObject newsObject = new Gson().toJsonTree(news).getAsJsonObject();
+            newsObject.add("img_list", JsonUtils.strToStringArray(news.getImg_list()));
+            newsArray.add(newsObject);
         }
 
         int size = newsService.getNewsSize(news_tag_id);
         int pageNum = size == 0 ? 0 : (size - 1) / PAGE_SIZE + 1;
 
         JsonObject json = new JsonObject();
-        JsonArray newsArray = new Gson().toJsonTree(newsList).getAsJsonArray();
         json.add("newsList", newsArray);
         json.addProperty("pageNum", pageNum);
         json.addProperty("pageIndex", page);

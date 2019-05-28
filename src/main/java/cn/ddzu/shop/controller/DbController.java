@@ -37,6 +37,8 @@ public class DbController extends BaseController {
         RequestHelper helper = new RequestHelper(request);
         Log.d("db-resetUser", helper);
 
+        newsService.resetNews();
+
         finish(response, ResultCode.SUCCESS);
     }
 }
