@@ -622,7 +622,7 @@ public class EditController extends BaseController {
         String title = helper.getString("title");
         String sub_title = helper.getString("sub_title");
         String content = helper.getString("content");
-        Long news_tag_id = helper.getLong("news_tag_id");
+        Long news_tag_id = helper.getLong("news_tag_id", 1L);
         Boolean hot = helper.getBoolean("hot", false);
 
         News news = new News();
