@@ -15,8 +15,8 @@
 <form action="manage/editZone">
     <input type="submit" value="商圈管理"/>
 </form>
-<%--<form action="manage/editNews">--%>
-<%--    <input type="submit" value="咨询管理"/>--%>
-<%--</form>--%>
+<form action="manage/newsList">
+    <input type="submit" value="咨询管理"/>
+</form>
 </body>
 </html>

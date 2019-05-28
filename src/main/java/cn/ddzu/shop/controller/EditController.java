@@ -205,7 +205,7 @@ public class EditController extends BaseController {
      * id 楼id
      */
     @RequestMapping("/building")
-    public void getBuilding(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void building(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
@@ -241,7 +241,7 @@ public class EditController extends BaseController {
      * page 页码
      */
     @RequestMapping("/buildings")
-    public void getBuildingList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void buildings(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
@@ -494,7 +494,7 @@ public class EditController extends BaseController {
      * id 办公室id
      */
     @RequestMapping("/office")
-    public void getOffice(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void office(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
@@ -528,7 +528,7 @@ public class EditController extends BaseController {
      * page 页码
      */
     @RequestMapping("/offices")
-    public void getOfficeList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void offices(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
@@ -711,7 +711,7 @@ public class EditController extends BaseController {
      * id 咨询id
      */
     @RequestMapping("/news")
-    public void getNews(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void news(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
@@ -739,7 +739,7 @@ public class EditController extends BaseController {
      * page 页码
      */
     @RequestMapping("/newsList")
-    public void getNewsList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void newsList(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
@@ -756,13 +756,17 @@ public class EditController extends BaseController {
         Integer page = helper.getInt("page", 0);
 
         List<News> newsList = newsService.getNewsList(news_tag_id, page, PAGE_SIZE);
+        for (News news : newsList) {
+            news.setContent(null);
+        }
 
         int size = newsService.getNewsSize(news_tag_id);
         int pageNum = size == 0 ? 0 : (size - 1) / PAGE_SIZE + 1;
 
         JsonObject json = new JsonObject();
         JsonArray newsArray = new Gson().toJsonTree(newsList).getAsJsonArray();
-        json.add("news_list", newsArray);
+        json.add("newsList", newsArray);
+        json.addProperty("checkedNewsTagId", news_tag_id);
         json.addProperty("pageNum", pageNum);
         json.addProperty("pageIndex", page);
 
