@@ -82,8 +82,14 @@ public class NewsController extends BaseController {
         List<News> newsList = newsService.getNewsList(news_tag_id, page, PAGE_SIZE);
         JsonArray newsArray = new Gson().toJsonTree(newsList).getAsJsonArray();
         for (News news : newsList) {
-            String content = news.getContent().substring(0, 200);
-            news.setContent(content);
+            String content = news.getContent();
+            if (content != null) {
+                content = content.replaceAll("</?.+?/?>", "");
+                if (content.length() > 200) {
+                    content = content.substring(0, 200);
+                }
+                news.setContent(content);
+            }
             JsonObject newsObject = new Gson().toJsonTree(news).getAsJsonObject();
             newsObject.add("img_list", JsonUtils.strToStringArray(news.getImg_list()));
             newsArray.add(newsObject);
