@@ -24,28 +24,12 @@
             keyword = decodeURI(keyword);
             document.getElementById("keyword_input").setAttribute("value", keyword);
         }
-        filter.checkedDistrictId = http.getParameter(request, "district_id");
-        filter.checkedZoneId = http.getParameter(request, "zone_id");
-        filter.checkedMetroId = http.getParameter(request, "metro_id");
-        filter.checkedTypeId = http.getParameter(request, "type_id");
-        filter.checkedAreaRangeId = http.getParameter(request, "area_range_id");
-        filter.checkedPriceRangeId = http.getParameter(request, "price_range_id");
-        filter.checkedDecorationId = http.getParameter(request, "decoration_id");
         getFilterList();
     };
 
     function getFilterList() {
         http.post({
             url: "../filter/all",
-            params: {
-                district_id: filter.checkedDistrictId,
-                zone_id: filter.checkedZoneId,
-                metro_id: filter.checkedMetroId,
-                type_id: filter.checkedTypeId,
-                area_range_id: filter.checkedAreaRangeId,
-                price_range_id: filter.checkedPriceRangeId,
-                decoration_id: filter.checkedDecorationId,
-            },
             success: function (data) {
                 filter = data;
                 getBuildingList();
@@ -61,20 +45,12 @@
                 district_id: filter.checkedDistrictId,
                 zone_id: filter.checkedZoneId,
                 metro_id: filter.checkedMetroId,
-                type_id: filter.checkedTypeId,
-                area_range_id: filter.checkedAreaRangeId,
-                price_range_id: filter.checkedPriceRangeId,
-                decoration_id: filter.checkedDecorationId,
                 page: page,
             },
             success: function (data) {
                 filter.checkedDistrictId = data.checkedDistrictId;
                 filter.checkedZoneId = data.checkedZoneId;
                 filter.checkedMetroId = data.checkedMetroId;
-                filter.checkedTypeId = data.checkedTypeId;
-                filter.checkedAreaRangeId = data.checkedAreaRangeId;
-                filter.checkedPriceRangeId = data.checkedPriceRangeId;
-                filter.checkedDecorationId = data.checkedDecorationId;
                 setFilterList();
                 pageIndex = data.pageIndex;
                 pageNum = data.pageNum;
@@ -119,18 +95,6 @@
                         break;
                     case "metroList":
                         filter.checkedMetroId = list[i].id;
-                        break;
-                    case "typeList":
-                        filter.checkedTypeId = list[i].id;
-                        break;
-                    case "areaRangeList":
-                        filter.checkedAreaRangeId = list[i].id;
-                        break;
-                    case "priceRangeList":
-                        filter.checkedPriceRangeId = list[i].id;
-                        break;
-                    case "decorationList":
-                        filter.checkedDecorationId = list[i].id;
                         break;
                 }
                 getBuildingList();

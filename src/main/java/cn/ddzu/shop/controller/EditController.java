@@ -23,6 +23,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -204,7 +205,7 @@ public class EditController extends BaseController {
      * id 楼id
      */
     @RequestMapping("/building")
-    public void getBuilding(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void building(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
@@ -240,7 +241,7 @@ public class EditController extends BaseController {
      * page 页码
      */
     @RequestMapping("/buildings")
-    public void getBuildingList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void buildings(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
@@ -493,7 +494,7 @@ public class EditController extends BaseController {
      * id 办公室id
      */
     @RequestMapping("/office")
-    public void getOffice(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void office(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
@@ -527,7 +528,7 @@ public class EditController extends BaseController {
      * page 页码
      */
     @RequestMapping("/offices")
-    public void getOfficeList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void offices(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
@@ -601,6 +602,8 @@ public class EditController extends BaseController {
      * title 标题
      * sub_title 副标题
      * content 内容
+     * news_tag_id 新闻标签id
+     * hot 是否热门
      */
     @RequestMapping("/addNews")
     public void addNews(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -619,11 +622,15 @@ public class EditController extends BaseController {
         String title = helper.getString("title");
         String sub_title = helper.getString("sub_title");
         String content = helper.getString("content");
+        Long news_tag_id = helper.getLong("news_tag_id", 1L);
+        Boolean hot = helper.getBoolean("hot", false);
 
         News news = new News();
         news.setTitle(title);
         news.setSub_title(sub_title);
         news.setContent(content);
+        news.setNews_tag_id(news_tag_id);
+        news.setHot(hot);
 
         newsService.addNews(news);
 
@@ -710,7 +717,7 @@ public class EditController extends BaseController {
      * id 咨询id
      */
     @RequestMapping("/news")
-    public void getNews(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void news(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
@@ -738,7 +745,7 @@ public class EditController extends BaseController {
      * page 页码
      */
     @RequestMapping("/newsList")
-    public void getNewsList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void newsList(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 
@@ -755,13 +762,17 @@ public class EditController extends BaseController {
         Integer page = helper.getInt("page", 0);
 
         List<News> newsList = newsService.getNewsList(news_tag_id, page, PAGE_SIZE);
+        for (News news : newsList) {
+            news.setContent(null);
+        }
 
         int size = newsService.getNewsSize(news_tag_id);
         int pageNum = size == 0 ? 0 : (size - 1) / PAGE_SIZE + 1;
 
         JsonObject json = new JsonObject();
         JsonArray newsArray = new Gson().toJsonTree(newsList).getAsJsonArray();
-        json.add("news_list", newsArray);
+        json.add("newsList", newsArray);
+        json.addProperty("checkedNewsTagId", news_tag_id);
         json.addProperty("pageNum", pageNum);
         json.addProperty("pageIndex", page);
 
@@ -882,7 +893,7 @@ public class EditController extends BaseController {
         URL syncAll = new URL("http://47.96.165.78:8080/ddzu/edit/syncAll?username=edwin&password=edwin");
         URLConnection syncAllConn = syncAll.openConnection();
         InputStream is = syncAllConn.getInputStream();
-        Reader r = new InputStreamReader(is);
+        Reader r = new InputStreamReader(is, StandardCharsets.UTF_8);
         int c;
         while ((c = r.read()) > 0) {
             s.append((char) c);

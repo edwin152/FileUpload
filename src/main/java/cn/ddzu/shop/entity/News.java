@@ -15,6 +15,8 @@ public class News {
     private String notes;
     private Boolean valid;
 
+    private String news_tag_name;
+
     public Long getId() {
         return id;
     }
@@ -93,5 +95,13 @@ public class News {
 
     public void setValid(Boolean valid) {
         this.valid = valid;
+    }
+
+    public String getNews_tag_name() {
+        return news_tag_name;
+    }
+
+    public void setNews_tag_name(String news_tag_name) {
+        this.news_tag_name = news_tag_name;
     }
 }

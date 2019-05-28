@@ -79,13 +79,16 @@ public class NewsController extends BaseController {
         Integer page = helper.getInt("page", 0);
 
         List<News> newsList = newsService.getNewsList(news_tag_id, page, PAGE_SIZE);
+        for (News news : newsList) {
+            news.setContent(null);
+        }
 
         int size = newsService.getNewsSize(news_tag_id);
         int pageNum = size == 0 ? 0 : (size - 1) / PAGE_SIZE + 1;
 
         JsonObject json = new JsonObject();
         JsonArray newsArray = new Gson().toJsonTree(newsList).getAsJsonArray();
-        json.add("news_list", newsArray);
+        json.add("newsList", newsArray);
         json.addProperty("pageNum", pageNum);
         json.addProperty("pageIndex", page);
 
