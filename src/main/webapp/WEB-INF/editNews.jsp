@@ -138,7 +138,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label" for="sub_title">副标题</label>
             <div class="layui-input-block">
-                <input type="text" id="sub_title" name="sub_title" required lay-verify="required" placeholder="请输入资讯类型"
+                <input type="text" id="sub_title" name="sub_title" required lay-verify="" placeholder="请输入资讯类型"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
