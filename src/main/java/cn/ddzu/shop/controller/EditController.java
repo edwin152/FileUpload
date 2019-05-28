@@ -869,7 +869,7 @@ public class EditController extends BaseController {
     /**
      * 同步所有数据
      */
-    @RequestMapping("/sync")
+//    @RequestMapping("/sync")
     public void sync(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
