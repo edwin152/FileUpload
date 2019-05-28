@@ -178,9 +178,7 @@
 
                         //首次不执行
                         if (!first) {
-                            // TODO 请求下一页数据
-                            let pageNumber = obj.curr + 1;
-                            getNewsList(pageNumber);
+                            getNewsList(obj.curr - 1);
                         }
                     }
                 });

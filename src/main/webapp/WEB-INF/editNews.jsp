@@ -28,15 +28,19 @@
 
                 //监听提交
                 form.on('submit(formDemo)', function (data) {
-                    let titleStr = data.form[0].value;
-                    let subTitle = data.form[1].value;
+                    let titleStr = data.field.title;
+                    let subTitle = data.field.sub_title;
+                    let type = data.field.type;
+                    let hot = data.field.hot === '1';
                     // console.log(layedit.getContent(textAreaId));
                     http.post({
                         url: "../edit/addNews",
                         params: {
                             title: titleStr,
                             sub_title: subTitle,
-                            content: layedit.getContent(textAreaId)
+                            content: layedit.getContent(textAreaId),
+                            news_tag_id: type,
+                            hot: hot
                         },
                         success: function (data) {
                             console.log(data);
@@ -47,12 +51,30 @@
                     return false;
                 });
             });
+            getNewsTag();
+        };
+
+        function getNewsTag() {
+            http.post({
+                url: "../filter/newsTag",
+                success: function (data) {
+                    filter = data;
+                    if (!filter.newsTagList) return;
+                    let typeBox = document.getElementById("type_box");
+                    for (let i = 0, len = filter.newsTagList.length; i < len; i++) {
+                        let typeItem = document.createElement("option");
+                        typeItem.innerHTML = filter.newsTagList[i].name;
+                        typeItem.setAttribute("value", filter.newsTagList[i].id);
+                        typeBox.appendChild(typeItem);
+                    }
+                }
+            });
         }
     </script>
 </head>
 <body>
 <div class="win matop">
-    <form action="" method="post">
+    <form action="" method="post" class="layui-form">
         <div class="layui-form-item">
             <label class="layui-form-label" for="title">资讯标题</label>
             <div class="layui-input-block">
@@ -67,7 +89,21 @@
                        autocomplete="off" class="layui-input">
             </div>
         </div>
-        <%-- TODO 下拉框 --%>
+        <div class="layui-form-item">
+            <label class="layui-form-label">选择分类</label>
+            <div class="layui-input-block">
+                <select id="type_box" title="" name="type" lay-verify="" class="layui-form-select">
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否热门</label>
+            <div class="layui-input-block">
+                <input type="radio" name="hot" value="1" title="是">
+                <input type="radio" name="hot" value="0" title="否" checked>
+            </div>
+        </div>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label" for="news_edit">资讯内容</label>
             <div class="layui-input-block">
