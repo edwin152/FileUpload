@@ -150,6 +150,20 @@ public class OfficeServiceImpl implements OfficeService {
     }
 
     @Override
+    public List<Building> getIndexBuilding() {
+        return buildingMapperDao.selectWithOffice(null
+                , null
+                , null
+                , null
+                , null
+                , null
+                , null
+                , null
+                , 0
+                , 12);
+    }
+
+    @Override
     public int getBuildingSize(SearchBean searchBean) {
         Log.d("start get building size");
         Integer size = buildingMapperDao.count(searchBean.getKeyword()

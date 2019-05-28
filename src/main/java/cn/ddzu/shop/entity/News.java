@@ -12,6 +12,7 @@ public class News {
     private String content;
     private Long news_tag_id;
     private Boolean hot;
+    private String img_list;
     private String notes;
     private Boolean valid;
 
@@ -79,6 +80,14 @@ public class News {
 
     public void setHot(Boolean hot) {
         this.hot = hot;
+    }
+
+    public String getImg_list() {
+        return img_list;
+    }
+
+    public void setImg_list(String img_list) {
+        this.img_list = img_list;
     }
 
     public String getNotes() {

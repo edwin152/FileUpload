@@ -16,8 +16,9 @@
             create_time    date,
             last_edit_time date,
             content        varchar(8192),
-            news_tag_id     bigint,
+            news_tag_id    bigint,
             hot            boolean default false,
+            img_list       varchar(8192),
             notes          varchar(8192),
             valid          boolean default true,
             primary key (id)
@@ -38,6 +39,7 @@
             #{data.content},
             #{data.news_tag_id},
             #{data.hot},
+            #{data.img_list},
             #{data.notes},
             true
         )
@@ -52,6 +54,7 @@
             content = #{data.content},
             news_tag_id = #{data.news_tag_id},
             hot = #{data.hot},
+            img_list = #{img_list},
             notes = #{data.notes}
         where id = #{data.id}
     </update>
@@ -64,16 +67,17 @@
 
     <select id="select" resultType="cn.ddzu.shop.entity.News">
         select
-            news.id as id,
-            news.title as title,
-            news.sub_title as sub_title,
-            news.create_time as create_time,
-            news.last_edit_time as last_edit_time,
-            news.content as content,
-            news.news_tag_id as news_tag_id,
-            news.hot as hot,
-            news.notes as notes,
-            news_tag.name as news_tag_name
+        news.id as id,
+        news.title as title,
+        news.sub_title as sub_title,
+        news.create_time as create_time,
+        news.last_edit_time as last_edit_time,
+        news.content as content,
+        news.news_tag_id as news_tag_id,
+        news.hot as hot,
+        news.img_list as img_list,
+        news.notes as notes,
+        news_tag.name as news_tag_name
         from news
         left join news_tag on news.news_tag_id = news_tag.id
         where news.valid = true
@@ -84,7 +88,18 @@
     </select>
 
     <select id="selectById" resultType="cn.ddzu.shop.entity.News" parameterType="Long">
-        select id, title, sub_title, create_time, last_edit_time, content, news_tag_id, hot, notes from news
+        select
+        id,
+        title,
+        sub_title,
+        create_time,
+        last_edit_time,
+        content,
+        news_tag_id,
+        hot,
+        img_list,
+        notes
+        from news
         where valid = true and id = #{id}
     </select>
 
@@ -97,9 +112,38 @@
     </select>
 
     <select id="selectWhereHot" resultType="cn.ddzu.shop.entity.News">
-        select id, title, sub_title, create_time, last_edit_time, content, news_tag_id, hot, notes from news
+        select
+        id,
+        title,
+        sub_title,
+        create_time,
+        last_edit_time,
+        content,
+        news_tag_id,
+        hot,
+        img_list,
+        notes
+        from news
         where valid = true and hot = true
         order by last_edit_time desc
         limit 20
+    </select>
+
+    <select id="selectWhereNew" resultType="cn.ddzu.shop.entity.News">
+        select
+        id,
+        title,
+        sub_title,
+        create_time,
+        last_edit_time,
+        content,
+        news_tag_id,
+        hot,
+        img_list,
+        notes
+        from news
+        where valid = true
+        order by last_edit_time desc
+        limit 12
     </select>
 </mapper>

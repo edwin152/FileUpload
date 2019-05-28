@@ -604,6 +604,7 @@ public class EditController extends BaseController {
      * content 内容
      * news_tag_id 新闻标签id
      * hot 是否热门
+     * img_list 图片
      */
     @RequestMapping("/addNews")
     public void addNews(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -624,6 +625,7 @@ public class EditController extends BaseController {
         String content = helper.getString("content");
         Long news_tag_id = helper.getLong("news_tag_id", 1L);
         Boolean hot = helper.getBoolean("hot", false);
+        List<String> img_list = helper.getList("img_list", new ArrayList<>());
 
         News news = new News();
         news.setTitle(title);
@@ -631,6 +633,7 @@ public class EditController extends BaseController {
         news.setContent(content);
         news.setNews_tag_id(news_tag_id);
         news.setHot(hot);
+        news.setImg_list(new Gson().toJson(img_list));
 
         newsService.addNews(news);
 
@@ -671,6 +674,9 @@ public class EditController extends BaseController {
      * title 标题
      * sub_title 副标题
      * content 内容
+     * news_tag_id 新闻标签id
+     * hot 是否热门
+     * img_list 图片
      */
     @RequestMapping("/editNews")
     public void editNews(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -690,6 +696,9 @@ public class EditController extends BaseController {
         String title = helper.getString("title");
         String sub_title = helper.getString("sub_title");
         String content = helper.getString("content");
+        Long news_tag_id = helper.getLong("news_tag_id", 1L);
+        Boolean hot = helper.getBoolean("hot", false);
+        List<String> img_list = helper.getList("img_list", new ArrayList<>());
 
         News news = newsService.getNews(id);
         boolean insertModify = false;
@@ -701,6 +710,9 @@ public class EditController extends BaseController {
         news.setTitle(title);
         news.setSub_title(sub_title);
         news.setContent(content);
+        news.setNews_tag_id(news_tag_id);
+        news.setHot(hot);
+        news.setImg_list(new Gson().toJson(img_list));
 
         if (insertModify) {
             newsService.addNews(news);

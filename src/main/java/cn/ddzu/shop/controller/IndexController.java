@@ -4,6 +4,7 @@ import cn.ddzu.shop.entity.*;
 import cn.ddzu.shop.enums.ResultCode;
 import cn.ddzu.shop.helper.RequestHelper;
 import cn.ddzu.shop.service.BasicService;
+import cn.ddzu.shop.service.NewsService;
 import cn.ddzu.shop.service.OfficeService;
 import cn.ddzu.shop.util.JsonUtils;
 import cn.ddzu.shop.util.Log;
@@ -14,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.json.Json;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -28,6 +28,8 @@ public class IndexController extends BaseController {
     private OfficeService officeService;
     @Autowired
     private BasicService basicService;
+    @Autowired
+    private NewsService newsService;
 
     @RequestMapping("/all")
     public void reset(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -52,7 +54,7 @@ public class IndexController extends BaseController {
         List<PriceRange> priceRangeList = basicService.getPriceRangeList();
         json.add("priceRangeList", new Gson().toJsonTree(priceRangeList));
 
-        List<Building> buildingList = officeService.getBuildingListWithOffice(null, 0, 12);
+        List<Building> buildingList = officeService.getIndexBuilding();
         JsonArray buildingArray = new JsonArray();
         for (Building building : buildingList) {
             JsonObject buildingObject = new Gson().toJsonTree(building).getAsJsonObject();
@@ -121,10 +123,10 @@ public class IndexController extends BaseController {
             }
             zoneArray.add(zoneObject);
         }
-
         json.add("coreList", zoneArray);
+
+        List<News> newsList = newsService.getHotNews();
 
         finish(response, ResultCode.SUCCESS, json);
     }
-
 }

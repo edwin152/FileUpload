@@ -78,6 +78,11 @@ public interface OfficeService {
     List<Building> getBuildingListWithOffice(SearchBean searchBean, int page, int step);
 
     /**
+     * 获取热门楼
+     */
+    List<Building> getIndexBuilding();
+
+    /**
      * 按条件筛选楼数量
      */
     int getBuildingSize(SearchBean searchBean);

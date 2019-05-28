@@ -6,7 +6,6 @@ import cn.ddzu.shop.entity.News;
 import cn.ddzu.shop.entity.NewsTag;
 import cn.ddzu.shop.service.NewsService;
 import cn.ddzu.shop.util.DataUtils;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -82,5 +81,10 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public List<News> getHotNews() {
         return newsMapperDao.selectWhereHot();
+    }
+
+    @Override
+    public List<News> getIndexNews() {
+        return null;
     }
 }
