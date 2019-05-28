@@ -125,7 +125,12 @@ public class IndexController extends BaseController {
         }
         json.add("coreList", zoneArray);
 
-        List<News> newsList = newsService.getHotNews();
+        List<News> newsList = newsService.getIndexNews();
+        for (News news : newsList) {
+            news.setContent(null);
+            news.setImg_list(null);
+        }
+        json.add("newsList", new Gson().toJsonTree(newsList));
 
         finish(response, ResultCode.SUCCESS, json);
     }

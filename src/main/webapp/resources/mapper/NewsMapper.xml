@@ -19,7 +19,7 @@
             news_tag_id    bigint,
             hot            boolean default false,
             img_list       varchar(8192),
-            notes          varchar(8192),
+            notes          varchar(4096),
             valid          boolean default true,
             primary key (id)
         ) default charset = utf8
