@@ -4,6 +4,7 @@ public class AreaRange implements Comparable<AreaRange> {
 
     private long id;
     private String name;
+    private Boolean valid;
 
     public long getId() {
         return id;
@@ -19,6 +20,14 @@ public class AreaRange implements Comparable<AreaRange> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(Boolean valid) {
+        this.valid = valid;
     }
 
     @Override

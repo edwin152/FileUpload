@@ -45,7 +45,7 @@ public class NewsServiceImpl implements NewsService {
         news.setId(DataUtils.generateId());
         news.setCreate_time(date);
         news.setLast_edit_time(date);
-        newsMapperDao.add(news);
+        newsMapperDao.insert(news);
     }
 
     @Override

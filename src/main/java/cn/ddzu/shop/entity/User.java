@@ -4,6 +4,7 @@ public class User {
 
     private String username;
     private String password;
+    private Boolean valid;
     private String tokenId;
 
     public String getUsername() {
@@ -20,6 +21,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(Boolean valid) {
+        this.valid = valid;
     }
 
     public String getTokenId() {

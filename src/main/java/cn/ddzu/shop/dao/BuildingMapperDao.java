@@ -7,34 +7,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BuildingMapperDao {
-
-    /**
-     * 删除表
-     */
-    void drop();
-
-    /**
-     * 创建表
-     */
-    void create();
-
-    /**
-     * 插入办公室
-     *
-     * @param building 办公室信息
-     */
-    void add(@Param("building") Building building);
+public interface BuildingMapperDao extends Dao<Building> {
 
     /**
      * 删除楼
      */
     void delete(@Param("id") Long id);
-
-    /**
-     * 删除楼
-     */
-    void update(@Param("building") Building building);
 
     /**
      * 按id查找楼

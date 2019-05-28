@@ -7,6 +7,7 @@ public class Zone implements Comparable<Zone> {
     private String name;
     private Boolean center;
     private String img_list;
+    private Boolean valid;
 
     private String district_name;
 
@@ -48,6 +49,14 @@ public class Zone implements Comparable<Zone> {
 
     public void setImg_list(String img_list) {
         this.img_list = img_list;
+    }
+
+    public Boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(Boolean valid) {
+        this.valid = valid;
     }
 
     public String getDistrict_name() {

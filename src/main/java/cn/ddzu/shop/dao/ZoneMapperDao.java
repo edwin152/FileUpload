@@ -7,22 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ZoneMapperDao {
-
-    /**
-     * 删除表
-     */
-    void drop();
-
-    /**
-     * 创建表
-     */
-    void create();
-
-    /**
-     * 初始化表
-     */
-    void init();
+public interface ZoneMapperDao extends Dao<Zone> {
 
     /**
      * 通过区id查区域列表
@@ -40,9 +25,4 @@ public interface ZoneMapperDao {
      * 通过id查区域
      */
     Zone selectById(@Param("id") long id);
-
-    /**
-     * 更新区域
-     */
-    void update(@Param("zone") Zone zone);
 }

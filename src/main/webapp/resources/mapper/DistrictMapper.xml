@@ -40,8 +40,20 @@
                (19, '南汇', true)
     </update>
 
-    <select id="select" resultType="cn.ddzu.shop.entity.District">
+    <select id="selectAll" resultType="cn.ddzu.shop.entity.District">
         select * from district
+    </select>
+
+    <insert id="insert" parameterType="cn.ddzu.shop.entity.District">
+        insert into district values (
+            #{data.id},
+            #{data.name},
+            #{data.valid}
+        )
+    </insert>
+
+    <select id="select" resultType="cn.ddzu.shop.entity.District">
+        select id, name from district
         where valid = true
         order by id asc
     </select>

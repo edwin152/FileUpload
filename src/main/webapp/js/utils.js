@@ -97,3 +97,11 @@ let http = {
         });
     }
 };
+
+let utils = {
+    setImage: function (img, img_list) {
+        if (img_list && img_list.length > 0) {
+            img.setAttribute("src", img_list[0]);
+        }
+    }
+};

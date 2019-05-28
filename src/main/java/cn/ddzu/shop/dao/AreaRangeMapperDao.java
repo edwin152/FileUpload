@@ -7,22 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AreaRangeMapperDao {
-
-    /**
-     * 删除表
-     */
-    void drop();
-
-    /**
-     * 创建表
-     */
-    void create();
-
-    /**
-     * 初始化表
-     */
-    void init();
+public interface AreaRangeMapperDao extends Dao<AreaRange> {
 
     /**
      * 查询面积区间列表
@@ -33,6 +18,4 @@ public interface AreaRangeMapperDao {
      * 查询面积区间列表
      */
     List<AreaRange> selectByBuilding(@Param("building_id") Long building_id);
-
-
 }

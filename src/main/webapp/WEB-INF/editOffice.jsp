@@ -34,6 +34,9 @@
                     },
                     success(data) {
                         imgList = data.img_list;
+                        if(!imgList) {
+                            imgList = [];
+                        }
                         let notes = JSON.parse(data.notes);
                         type_id = data.type_id;
                         decoration_id = data.decoration_id;
@@ -154,10 +157,10 @@
             let shortest_period = document.getElementById("shortest_period").value;
             let floor_info = document.getElementById("floor_info").value;
 
-            if (isEmpty(imgList)) {
-                alert("请上传图片");
-                return;
-            }
+            // if (isEmpty(imgList)) {
+            //     alert("请上传图片");
+            //     return;
+            // }
             if (isEmpty(area)) {
                 alert("请输入地址");
                 return;

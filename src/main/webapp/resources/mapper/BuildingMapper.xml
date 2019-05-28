@@ -23,37 +23,41 @@
         ) default charset = utf8
     </update>
 
-    <insert id="add" parameterType="cn.ddzu.shop.entity.Building">
+    <select id="selectAll" resultType="cn.ddzu.shop.entity.Building">
+        select * from building
+    </select>
+
+    <insert id="insert" parameterType="cn.ddzu.shop.entity.Building">
         insert into building values (
-            #{building.id},
-            #{building.name},
-            #{building.zone_id},
-            #{building.address},
-            #{building.metro_name_list},
-            #{building.introduce},
-            #{building.notes},
-            #{building.img_list},
+            #{data.id},
+            #{data.name},
+            #{data.zone_id},
+            #{data.address},
+            #{data.metro_name_list},
+            #{data.introduce},
+            #{data.notes},
+            #{data.img_list},
             true
         )
     </insert>
+
+    <update id="update" parameterType="cn.ddzu.shop.entity.Building">
+        update building
+        set
+            name = #{data.name},
+            zone_id = #{data.zone_id},
+            address = #{data.address},
+            metro_name_list = #{data.metro_name_list},
+            introduce = #{data.introduce},
+            notes = #{data.notes},
+            img_list = #{data.img_list}
+        where id = #{data.id}
+    </update>
 
     <update id="delete" parameterType="java.lang.Long">
         update building
         set valid = false
         where id = #{id}
-    </update>
-
-    <update id="update" parameterType="cn.ddzu.shop.entity.Building">
-        update building
-        set
-            name = #{building.name},
-            zone_id = #{building.zone_id},
-            address = #{building.address},
-            metro_name_list = #{building.metro_name_list},
-            introduce = #{building.introduce},
-            notes = #{building.notes},
-            img_list = #{building.img_list}
-        where id = #{building.id}
     </update>
 
     <select id="selectById" parameterType="java.lang.Long" resultType="cn.ddzu.shop.entity.Building">
@@ -72,7 +76,7 @@
         from building
         left join zone on building.zone_id = zone.id
         left join district on zone.district_id = district.id
-        where valid = true and building.id = #{id}
+        where building.valid = true and building.id = #{id}
     </select>
 
     <select id="select" resultType="cn.ddzu.shop.entity.Building">

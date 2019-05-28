@@ -40,14 +40,26 @@
                (19, '17号线', true)
     </update>
 
-    <select id="select" resultType="cn.ddzu.shop.entity.Metro">
+    <select id="selectAll" resultType="cn.ddzu.shop.entity.Metro">
         select * from metro
+    </select>
+
+    <insert id="insert" parameterType="cn.ddzu.shop.entity.Metro">
+        insert into metro values (
+            #{data.id},
+            #{data.name},
+            #{data.valid}
+        )
+    </insert>
+
+    <select id="select" resultType="cn.ddzu.shop.entity.Metro">
+        select id, name from metro
         where valid = true
         order by id asc
     </select>
 
     <select id="selectById" resultType="cn.ddzu.shop.entity.Metro" parameterType="Long">
-        select * from metro
+        select id, name from metro
         where id = #{id}
     </select>
 </mapper>

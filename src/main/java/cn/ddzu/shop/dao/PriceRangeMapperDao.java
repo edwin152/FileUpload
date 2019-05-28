@@ -7,22 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PriceRangeMapperDao {
-
-    /**
-     * 删除表
-     */
-    void drop();
-
-    /**
-     * 创建表
-     */
-    void create();
-
-    /**
-     * 初始化表
-     */
-    void init();
+public interface PriceRangeMapperDao extends Dao<PriceRange> {
 
     /**
      * 查询价格区间列表

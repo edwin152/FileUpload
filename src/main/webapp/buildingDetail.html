@@ -139,14 +139,16 @@
         document.getElementById("building_name").innerHTML = building.name;
         // 图片
         let imgBox = document.getElementById("top_image_list");
-        for (let img of building.img_list) {
-            let itemBox = document.createElement("div");
-            itemBox.setAttribute("class", "swiper-slide");
-            imgBox.appendChild(itemBox);
-            let itemImg = document.createElement("img");
-            itemImg.setAttribute("class", "top_info_image");
-            itemImg.setAttribute("src", img);
-            itemBox.appendChild(itemImg);
+        if (building.img_list) {
+            for (let img of building.img_list) {
+                let itemBox = document.createElement("div");
+                itemBox.setAttribute("class", "swiper-slide");
+                imgBox.appendChild(itemBox);
+                let itemImg = document.createElement("img");
+                itemImg.setAttribute("class", "top_info_image");
+                itemImg.setAttribute("src", img);
+                itemBox.appendChild(itemImg);
+            }
         }
         // 价格范围
         document.getElementById("detail_info_price").innerHTML = building.price_range;

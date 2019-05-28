@@ -27,16 +27,28 @@
                (6, '毛坯', true)
     </update>
 
-    <select id="select" resultType="cn.ddzu.shop.entity.Decoration">
+    <select id="selectAll" resultType="cn.ddzu.shop.entity.Decoration">
         select * from decoration
+    </select>
+
+    <insert id="insert" parameterType="cn.ddzu.shop.entity.Decoration">
+        insert into decoration values (
+            #{data.id},
+            #{data.name},
+            #{data.valid}
+        )
+    </insert>
+
+    <select id="select" resultType="cn.ddzu.shop.entity.Decoration">
+        select id, name from decoration
         where valid = true
         order by id asc
     </select>
 
     <select id="selectByBuilding"
-            resultType="cn.ddzu.shop.entity.AreaRange"
+            resultType="cn.ddzu.shop.entity.Decoration"
             parameterType="java.lang.Long">
-        select * from decoration
+        select id, name from decoration
         where valid = true
         and id in
         (

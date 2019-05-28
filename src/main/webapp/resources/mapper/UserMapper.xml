@@ -12,11 +12,24 @@
         (
             username varchar(255),
             password varchar(255),
+            valid    boolean default true,
             primary key (username)
         ) default charset = utf8
     </update>
 
+    <select id="selectAll" resultType="cn.ddzu.shop.entity.User">
+        select * from user
+    </select>
+
+    <insert id="insert" parameterType="cn.ddzu.shop.entity.User">
+        insert into user values (
+            #{data.username},
+            #{data.password},
+            #{data.valid}
+        )
+    </insert>
+
     <select id="select" resultType="cn.ddzu.shop.entity.User" parameterType="java.lang.String">
-        select * from user where username = #{username}
+        select username, password from user where username = #{username}
     </select>
 </mapper>

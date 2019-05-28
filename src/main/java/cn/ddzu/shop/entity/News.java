@@ -13,6 +13,7 @@ public class News {
     private Long news_tag_id;
     private Boolean hot;
     private String notes;
+    private Boolean valid;
 
     public Long getId() {
         return id;
@@ -84,5 +85,13 @@ public class News {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public Boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(Boolean valid) {
+        this.valid = valid;
     }
 }

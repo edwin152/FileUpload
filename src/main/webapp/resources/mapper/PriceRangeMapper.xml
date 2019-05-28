@@ -29,16 +29,28 @@
                (8, '12元/m²/天以上', true)
     </update>
 
-    <select id="select" resultType="cn.ddzu.shop.entity.PriceRange">
+    <select id="selectAll" resultType="cn.ddzu.shop.entity.PriceRange">
         select * from price_range
+    </select>
+
+    <insert id="insert" parameterType="cn.ddzu.shop.entity.PriceRange">
+        insert into price_range values (
+            #{data.id},
+            #{data.name},
+            #{data.valid}
+        )
+    </insert>
+
+    <select id="select" resultType="cn.ddzu.shop.entity.PriceRange">
+        select id, name from price_range
         where valid = true
         order by id asc
     </select>
 
     <select id="selectByBuilding"
-            resultType="cn.ddzu.shop.entity.AreaRange"
+            resultType="cn.ddzu.shop.entity.PriceRange"
             parameterType="java.lang.Long">
-        select * from price_range
+        select id, name from price_range
         where valid = true
         and id in
         (

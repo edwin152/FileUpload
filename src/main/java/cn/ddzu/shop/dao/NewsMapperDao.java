@@ -7,27 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface NewsMapperDao {
-
-    /**
-     * 删除表
-     */
-    void drop();
-
-    /**
-     * 创建表
-     */
-    void create();
-
-    /**
-     * 添加咨询
-     */
-    void add(@Param("news") News news);
-
-    /**
-     * 更新咨询
-     */
-    void update(@Param("news") News news);
+public interface NewsMapperDao extends Dao<News> {
 
     /**
      * 删除咨询

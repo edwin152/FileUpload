@@ -17,6 +17,7 @@ public class Office {
     private String rent_free_period;
     private String notes;
     private String img_list;
+    private Boolean valid;
 
     private String building_name;
     private Long zone_id;
@@ -162,6 +163,14 @@ public class Office {
 
     public void setImg_list(String img_list) {
         this.img_list = img_list;
+    }
+
+    public Boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(Boolean valid) {
+        this.valid = valid;
     }
 
     public String getBuilding_name() {

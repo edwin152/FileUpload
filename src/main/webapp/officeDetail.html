@@ -111,8 +111,7 @@
         document.getElementById("bus_intro").innerHTML
             = buildingNotes.bus_intro;
 
-        document.getElementById("building_img")
-            .setAttribute("src", building.img_list[0]);
+        utils.setImage(document.getElementById("building_img"), building.img_list);
 
         document.getElementById("bottom_building_name").innerHTML
             = building.name;
@@ -121,14 +120,16 @@
             = building.introduce;
 
         let imageListBox = document.getElementById("top_image_list");
-        for (let img of office.img_list) {
-            let itemBox = document.createElement("div");
-            itemBox.setAttribute("class", "swiper-slide");
-            imageListBox.appendChild(itemBox);
-            let itemImg = document.createElement("img");
-            itemImg.setAttribute("class", "top_info_image");
-            itemImg.setAttribute("src", img);
-            itemBox.appendChild(itemImg);
+        if(office.img_list) {
+            for (let img of office.img_list) {
+                let itemBox = document.createElement("div");
+                itemBox.setAttribute("class", "swiper-slide");
+                imageListBox.appendChild(itemBox);
+                let itemImg = document.createElement("img");
+                itemImg.setAttribute("class", "top_info_image");
+                itemImg.setAttribute("src", img);
+                itemBox.appendChild(itemImg);
+            }
         }
         startSwiper();
     }

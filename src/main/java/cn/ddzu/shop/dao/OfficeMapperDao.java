@@ -7,24 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface OfficeMapperDao {
-
-    /**
-     * 删除表
-     */
-    void drop();
-
-    /**
-     * 创建表
-     */
-    void create();
-
-    /**
-     * 插入办公室
-     *
-     * @param office 办公室信息
-     */
-    void add(@Param("office") Office office);
+public interface OfficeMapperDao extends Dao<Office> {
 
     /**
      * 删除办公室
@@ -35,11 +18,6 @@ public interface OfficeMapperDao {
      * 删除办公室
      */
     void deleteByBuilding(@Param("building_id") Long building_id);
-
-    /**
-     * 更新办公室
-     */
-    void update(@Param("office") Office office);
 
     /**
      * 按id查询办公室

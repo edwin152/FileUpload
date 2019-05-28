@@ -76,8 +76,31 @@
                (119, 19, '周浦', true),(120, 19, '康桥', true),(121, 19, '航头', true)
     </update>
 
-    <select id="selectByDistrict" resultType="cn.ddzu.shop.entity.Zone" parameterType="long">
+    <select id="selectAll" resultType="cn.ddzu.shop.entity.Zone">
         select * from zone
+    </select>
+
+    <insert id="insert" parameterType="cn.ddzu.shop.entity.Zone">
+        insert into zone values (
+            #{data.id},
+            #{data.district_id},
+            #{data.name},
+            #{data.center},
+            #{data.img_list},
+            #{data.valid}
+        )
+    </insert>
+
+    <update id="update" parameterType="cn.ddzu.shop.entity.Zone">
+        update zone
+        set
+            center = #{data.center},
+            img_list = #{data.img_list}
+        where id = #{data.id}
+    </update>
+
+    <select id="selectByDistrict" resultType="cn.ddzu.shop.entity.Zone" parameterType="long">
+        select id, district_id, name, center, img_list from zone
         where valid = true and district_id = #{district_id}
         order by id asc
     </select>
@@ -96,15 +119,7 @@
     </select>
 
     <select id="selectById" resultType="cn.ddzu.shop.entity.Zone" parameterType="long">
-        select * from zone
+        select id, district_id, name, center, img_list from zone
         where valid = true and id = #{id}
     </select>
-
-    <update id="update" parameterType="cn.ddzu.shop.entity.Zone">
-        update zone
-        set
-            center = #{zone.center},
-            img_list = #{zone.img_list}
-        where id = #{zone.id}
-    </update>
 </mapper>

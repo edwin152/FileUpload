@@ -4,18 +4,10 @@ import cn.ddzu.shop.entity.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
-public interface UserMapperDao {
-
-    /**
-     * 删除表
-     */
-    void drop();
-
-    /**
-     * 创建表
-     */
-    void create();
+public interface UserMapperDao extends Dao<User> {
 
     /**
      * 查询办公类型列表

@@ -27,8 +27,20 @@
                (6, '媒体报道', true)
     </update>
 
-    <select id="select" resultType="cn.ddzu.shop.entity.NewsTag">
+    <select id="selectAll" resultType="cn.ddzu.shop.entity.NewsTag">
         select * from news_tag
+    </select>
+
+    <insert id="insert" parameterType="cn.ddzu.shop.entity.NewsTag">
+        insert into news_tag values (
+            #{data.id},
+            #{data.name},
+            #{data.valid}
+        )
+    </insert>
+
+    <select id="select" resultType="cn.ddzu.shop.entity.NewsTag">
+        select id, name from news_tag
         where valid = true
         order by id asc
     </select>

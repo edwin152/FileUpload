@@ -16,6 +16,7 @@ public class Building {
     private String notes;
     // 图片列表
     private String img_list;
+    private Boolean valid;
 
     private Long district_id;
     private String district_name;
@@ -83,6 +84,14 @@ public class Building {
 
     public void setImg_list(String img_list) {
         this.img_list = img_list;
+    }
+
+    public Boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(Boolean valid) {
+        this.valid = valid;
     }
 
     public Long getDistrict_id() {

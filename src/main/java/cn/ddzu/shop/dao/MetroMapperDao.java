@@ -7,22 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MetroMapperDao {
-
-    /**
-     * 删除表
-     */
-    void drop();
-
-    /**
-     * 创建表
-     */
-    void create();
-
-    /**
-     * 初始化表
-     */
-    void init();
+public interface MetroMapperDao extends Dao<Metro> {
 
     /**
      * 查询地铁列表

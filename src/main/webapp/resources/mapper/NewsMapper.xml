@@ -24,17 +24,21 @@
         ) default charset = utf8
     </update>
 
-    <insert id="add" parameterType="cn.ddzu.shop.entity.News">
+    <select id="selectAll" resultType="cn.ddzu.shop.entity.News">
+        select * from news
+    </select>
+
+    <insert id="insert" parameterType="cn.ddzu.shop.entity.News">
         insert into news values (
-            #{news.id},
-            #{news.title},
-            #{news.sub_title},
-            #{news.create_time},
-            #{news.last_edit_time},
-            #{news.content},
-            #{news.news_tag_id},
-            #{news.hot},
-            #{news.notes},
+            #{data.id},
+            #{data.title},
+            #{data.sub_title},
+            #{data.create_time},
+            #{data.last_edit_time},
+            #{data.content},
+            #{data.news_tag_id},
+            #{data.hot},
+            #{data.notes},
             true
         )
     </insert>
@@ -42,14 +46,14 @@
     <update id="update" parameterType="cn.ddzu.shop.entity.News">
         update news
         set
-            title = #{news.title},
-            sub_title = #{news.sub_title},
-            last_edit_time = #{news.last_edit_time},
-            content = #{news.content},
-            news_tag_id = #{news.news_tag_id},
-            hot = #{news.hot},
-            notes = #{news.notes}
-        where id = #{news.id}
+            title = #{data.title},
+            sub_title = #{data.sub_title},
+            last_edit_time = #{data.last_edit_time},
+            content = #{data.content},
+            news_tag_id = #{data.news_tag_id},
+            hot = #{data.hot},
+            notes = #{data.notes}
+        where id = #{data.id}
     </update>
 
     <update id="delete" parameterType="java.lang.Long">
@@ -59,7 +63,7 @@
     </update>
 
     <select id="select" resultType="cn.ddzu.shop.entity.News">
-        select * from news
+        select id, title, sub_title, create_time, last_edit_time, content, news_tag_id, hot, notes from news
         where valid = true
         <if test="news_tag_id != 1">
             and news_tag_id = #{news_tag_id}
@@ -68,7 +72,7 @@
     </select>
 
     <select id="selectById" resultType="cn.ddzu.shop.entity.News" parameterType="Long">
-        select * from news
+        select id, title, sub_title, create_time, last_edit_time, content, news_tag_id, hot, notes from news
         where valid = true and id = #{id}
     </select>
 
@@ -81,7 +85,7 @@
     </select>
 
     <select id="selectWhereHot" resultType="cn.ddzu.shop.entity.News">
-        select * from news
+        select id, title, sub_title, create_time, last_edit_time, content, news_tag_id, hot, notes from news
         where valid = true and hot = true
         order by last_edit_time desc
         limit 20

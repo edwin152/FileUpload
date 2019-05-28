@@ -32,7 +32,7 @@ public class OfficeServiceImpl implements OfficeService {
     public void addOffice(Office office) {
         Log.d("start insert office");
         office.setId(DataUtils.generateId());
-        officeMapperDao.add(office);
+        officeMapperDao.insert(office);
     }
 
     @Override
@@ -93,7 +93,7 @@ public class OfficeServiceImpl implements OfficeService {
     public void addBuilding(Building building) {
         Log.d("start insert building");
         building.setId(DataUtils.generateId());
-        buildingMapperDao.add(building);
+        buildingMapperDao.insert(building);
     }
 
     @Override

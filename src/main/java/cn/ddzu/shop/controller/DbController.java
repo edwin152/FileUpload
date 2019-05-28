@@ -37,17 +37,6 @@ public class DbController extends BaseController {
         RequestHelper helper = new RequestHelper(request);
         Log.d("db-resetUser", helper);
 
-        basicService.resetMetro();
-        basicService.resetDecoration();
-        basicService.resetPriceRange();
-        basicService.resetAreaRange();
-        basicService.resetType();
-        basicService.resetDistrictAndZone();
-        newsService.resetNews();
-        newsService.resetNewsTag();
-//        userService.reset();
-
-
         finish(response, ResultCode.SUCCESS);
     }
 }

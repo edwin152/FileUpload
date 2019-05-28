@@ -155,7 +155,9 @@
             conditionBox.className = "box row";
 
             let imgLeft = document.createElement("img");
-            imgLeft.setAttribute("src", building.img_list[0]);
+            if (building.img_list && building.img_list.length > 0) {
+                utils.setImage(imgLeft, building.img_list);
+            }
             imgLeft.onclick = function () {
                 openDetail(building.id);
             };

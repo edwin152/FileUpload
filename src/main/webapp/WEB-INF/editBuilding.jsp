@@ -40,6 +40,9 @@
                     },
                     success(data) {
                         imgList = data.img_list;
+                        if(!imgList) {
+                            imgList = [];
+                        }
                         let notes = JSON.parse(data.notes);
                         district_id = data.district_id;
                         zone_id = data.zone_id;
@@ -282,10 +285,10 @@
                 });
             }
 
-            if (isEmpty(imgList)) {
-                alert("请上传图片");
-                return;
-            }
+            // if (isEmpty(imgList)) {
+            //     alert("请上传图片");
+            //     return;
+            // }
             if (isEmpty(name)) {
                 alert("请输入名字");
                 return;

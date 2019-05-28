@@ -62,7 +62,7 @@ public class FileController extends BaseController {
             json.addProperty("src", Config.HOST + Config.IMAGE_PATH + "/" + name);
         } catch (IOException|InterruptedException e) {
             e.printStackTrace();
-            resultCode = ResultCode.ERROE_UPLOAD_FAILED;
+            resultCode = ResultCode.ERROR_UPLOAD_FAILED;
             json = null;
         } finally {
             if (oStream != null) {

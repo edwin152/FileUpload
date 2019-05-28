@@ -30,26 +30,50 @@
         ) default charset = utf8
     </update>
 
-    <insert id="add" parameterType="cn.ddzu.shop.entity.Office">
+    <select id="selectAll" resultType="cn.ddzu.shop.entity.Office">
+        select * from office
+    </select>
+
+    <insert id="insert" parameterType="cn.ddzu.shop.entity.Office">
         insert into office values (
-            #{office.id},
-            #{office.name},
-            #{office.building_id},
-            #{office.address},
-            #{office.type_id},
-            #{office.area},
-            #{office.area_range_id},
-            #{office.price},
-            #{office.price_range_id},
-            #{office.decoration_id},
-            #{office.utilization_rate},
-            #{office.can_register},
-            #{office.rent_free_period},
-            #{office.notes},
-            #{office.img_list},
+            #{data.id},
+            #{data.name},
+            #{data.building_id},
+            #{data.address},
+            #{data.type_id},
+            #{data.area},
+            #{data.area_range_id},
+            #{data.price},
+            #{data.price_range_id},
+            #{data.decoration_id},
+            #{data.utilization_rate},
+            #{data.can_register},
+            #{data.rent_free_period},
+            #{data.notes},
+            #{data.img_list},
             true
         )
     </insert>
+
+    <update id="update" parameterType="cn.ddzu.shop.entity.Office">
+        update office
+        set
+            name = #{data.name},
+            building_id = #{data.building_id},
+            address = #{data.address},
+            type_id = #{data.type_id},
+            area = #{data.area},
+            area_range_id = #{data.area_range_id},
+            price = #{data.price},
+            price_range_id = #{data.price_range_id},
+            decoration_id = #{data.decoration_id},
+            utilization_rate = #{data.utilization_rate},
+            can_register = #{data.can_register},
+            rent_free_period = #{data.rent_free_period},
+            notes = #{data.notes},
+            img_list = #{data.img_list}
+        where id = #{data.id}
+    </update>
 
     <update id="delete" parameterType="java.lang.Long">
         update office
@@ -61,26 +85,6 @@
         update office
         set valid = false
         where building_id = #{building_id}
-    </update>
-
-    <update id="update" parameterType="cn.ddzu.shop.entity.Office">
-        update office
-        set
-            name = #{office.name},
-            building_id = #{office.building_id},
-            address = #{office.address},
-            type_id = #{office.type_id},
-            area = #{office.area},
-            area_range_id = #{office.area_range_id},
-            price = #{office.price},
-            price_range_id = #{office.price_range_id},
-            decoration_id = #{office.decoration_id},
-            utilization_rate = #{office.utilization_rate},
-            can_register = #{office.can_register},
-            rent_free_period = #{office.rent_free_period},
-            notes = #{office.notes},
-            img_list = #{office.img_list}
-        where id = #{office.id}
     </update>
 
     <select id="selectById" parameterType="java.lang.Long" resultType="cn.ddzu.shop.entity.Office">
@@ -109,7 +113,7 @@
         left join area_range on office.area_range_id = area_range.id
         left join price_range on office.price_range_id = price_range.id
         left join decoration on office.decoration_id = decoration.id
-        where valid = true and office.id = #{id};
+        where office.valid = true and office.id = #{id};
     </select>
 
     <select id="select" resultType="cn.ddzu.shop.entity.Office">

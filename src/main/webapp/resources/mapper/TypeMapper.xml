@@ -25,8 +25,20 @@
                (4, '创意园区', true)
     </update>
 
-    <select id="select" resultType="cn.ddzu.shop.entity.Type">
+    <select id="selectAll" resultType="cn.ddzu.shop.entity.Type">
         select * from type
+    </select>
+
+    <insert id="insert" parameterType="cn.ddzu.shop.entity.Type">
+        insert into type values (
+            #{data.id},
+            #{data.name},
+            #{data.valid}
+        )
+    </insert>
+
+    <select id="select" resultType="cn.ddzu.shop.entity.Type">
+        select id, name from type
         where valid = true
         order by id asc
     </select>
@@ -34,7 +46,7 @@
     <select id="selectByBuilding"
             resultType="cn.ddzu.shop.entity.Type"
             parameterType="java.lang.Long">
-        select * from type
+        select id, name from type
         where valid = true
         and id in
         (

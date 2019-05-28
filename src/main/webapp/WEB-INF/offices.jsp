@@ -130,7 +130,7 @@
             let image = document.createElement("img");
             image.className = "choose_value";
             if (office.img_list && office.img_list.length > 0) {
-                image.setAttribute("src", office.img_list[0]);
+                utils.setImage(image, office.img_list);
             }
             image.onclick = function () {
                 openRoomDetail(office.id);

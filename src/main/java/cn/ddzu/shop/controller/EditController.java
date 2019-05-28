@@ -3,15 +3,14 @@ package cn.ddzu.shop.controller;
 import cn.ddzu.shop.entity.*;
 import cn.ddzu.shop.enums.ResultCode;
 import cn.ddzu.shop.helper.RequestHelper;
-import cn.ddzu.shop.service.BasicService;
-import cn.ddzu.shop.service.NewsService;
-import cn.ddzu.shop.service.OfficeService;
+import cn.ddzu.shop.manager.LoginManager;
+import cn.ddzu.shop.service.*;
 import cn.ddzu.shop.util.JsonUtils;
 import cn.ddzu.shop.util.Log;
+import cn.ddzu.shop.util.SessionUtils;
 import cn.ddzu.shop.util.StringUtils;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/edit")
@@ -33,6 +38,10 @@ public class EditController extends BaseController {
     private OfficeService officeService;
     @Autowired
     private NewsService newsService;
+    @Autowired
+    private UserService userSerivce;
+    @Autowired
+    private SyncService syncService;
 
     /**
      * 新增楼
@@ -53,6 +62,12 @@ public class EditController extends BaseController {
 
         RequestHelper helper = new RequestHelper(request);
         Log.d("edit-addBuilding", helper);
+
+        boolean isLogin = SessionUtils.checkSession(request.getSession());
+        if (!isLogin) {
+            finish(response, ResultCode.ERROR_NO_LOGIN);
+            return;
+        }
 
         String name = helper.getString("name");
         Long zone_id = helper.getLong("zone_id");
@@ -102,6 +117,12 @@ public class EditController extends BaseController {
         RequestHelper helper = new RequestHelper(request);
         Log.d("edit-deleteBuilding", helper);
 
+        boolean isLogin = SessionUtils.checkSession(request.getSession());
+        if (!isLogin) {
+            finish(response, ResultCode.ERROR_NO_LOGIN);
+            return;
+        }
+
         Long id = helper.getLong("id");
         officeService.deleteBuilding(id);
 
@@ -128,6 +149,12 @@ public class EditController extends BaseController {
 
         RequestHelper helper = new RequestHelper(request);
         Log.d("edit-editBuilding", helper);
+
+        boolean isLogin = SessionUtils.checkSession(request.getSession());
+        if (!isLogin) {
+            finish(response, ResultCode.ERROR_NO_LOGIN);
+            return;
+        }
 
         Long id = helper.getLong("id");
         String name = helper.getString("name");
@@ -184,6 +211,12 @@ public class EditController extends BaseController {
         RequestHelper helper = new RequestHelper(request);
         Log.d("search-building", helper);
 
+        boolean isLogin = SessionUtils.checkSession(request.getSession());
+        if (!isLogin) {
+            finish(response, ResultCode.ERROR_NO_LOGIN);
+            return;
+        }
+
         Long id = helper.getLong("id");
 
         Building building = officeService.getBuilding(id);
@@ -213,6 +246,12 @@ public class EditController extends BaseController {
 
         RequestHelper helper = new RequestHelper(request);
         Log.d("search-buildings", helper);
+
+        boolean isLogin = SessionUtils.checkSession(request.getSession());
+        if (!isLogin) {
+            finish(response, ResultCode.ERROR_NO_LOGIN);
+            return;
+        }
 
         String keyword = helper.getString("keyword");
         Long district_id = helper.getLong("district_id", 1L);
@@ -298,6 +337,12 @@ public class EditController extends BaseController {
         RequestHelper helper = new RequestHelper(request);
         Log.d("edit-addOffice", helper);
 
+        boolean isLogin = SessionUtils.checkSession(request.getSession());
+        if (!isLogin) {
+            finish(response, ResultCode.ERROR_NO_LOGIN);
+            return;
+        }
+
         String name = helper.getString("name");
         Long building_id = helper.getLong("building_id");
         String address = helper.getString("address");
@@ -351,6 +396,12 @@ public class EditController extends BaseController {
         RequestHelper helper = new RequestHelper(request);
         Log.d("edit-deleteOffice", helper);
 
+        boolean isLogin = SessionUtils.checkSession(request.getSession());
+        if (!isLogin) {
+            finish(response, ResultCode.ERROR_NO_LOGIN);
+            return;
+        }
+
         Long id = helper.getLong("id");
         officeService.deleteOffice(id);
 
@@ -381,6 +432,12 @@ public class EditController extends BaseController {
 
         RequestHelper helper = new RequestHelper(request);
         Log.d("edit-editOffice", helper);
+
+        boolean isLogin = SessionUtils.checkSession(request.getSession());
+        if (!isLogin) {
+            finish(response, ResultCode.ERROR_NO_LOGIN);
+            return;
+        }
 
         Long id = helper.getLong("id");
         String name = helper.getString("name");
@@ -443,6 +500,12 @@ public class EditController extends BaseController {
         RequestHelper helper = new RequestHelper(request);
         Log.d("search-building", helper);
 
+        boolean isLogin = SessionUtils.checkSession(request.getSession());
+        if (!isLogin) {
+            finish(response, ResultCode.ERROR_NO_LOGIN);
+            return;
+        }
+
         Long id = helper.getLong("id");
 
         Office office = officeService.getOffice(id);
@@ -470,6 +533,12 @@ public class EditController extends BaseController {
 
         RequestHelper helper = new RequestHelper(request);
         Log.d("edit-offices", helper);
+
+        boolean isLogin = SessionUtils.checkSession(request.getSession());
+        if (!isLogin) {
+            finish(response, ResultCode.ERROR_NO_LOGIN);
+            return;
+        }
 
         Long building_id = helper.getLong("building_id");
         Long type_id = helper.getLong("type_id", 1L);
@@ -541,6 +610,12 @@ public class EditController extends BaseController {
         RequestHelper helper = new RequestHelper(request);
         Log.d("edit-addNews", helper);
 
+        boolean isLogin = SessionUtils.checkSession(request.getSession());
+        if (!isLogin) {
+            finish(response, ResultCode.ERROR_NO_LOGIN);
+            return;
+        }
+
         String title = helper.getString("title");
         String sub_title = helper.getString("sub_title");
         String content = helper.getString("content");
@@ -570,6 +645,12 @@ public class EditController extends BaseController {
         RequestHelper helper = new RequestHelper(request);
         Log.d("edit-deleteNews", helper);
 
+        boolean isLogin = SessionUtils.checkSession(request.getSession());
+        if (!isLogin) {
+            finish(response, ResultCode.ERROR_NO_LOGIN);
+            return;
+        }
+
         Long id = helper.getLong("id");
         newsService.deleteNews(id);
 
@@ -591,6 +672,12 @@ public class EditController extends BaseController {
 
         RequestHelper helper = new RequestHelper(request);
         Log.d("edit-editNews", helper);
+
+        boolean isLogin = SessionUtils.checkSession(request.getSession());
+        if (!isLogin) {
+            finish(response, ResultCode.ERROR_NO_LOGIN);
+            return;
+        }
 
         Long id = helper.getLong("id");
         String title = helper.getString("title");
@@ -630,6 +717,12 @@ public class EditController extends BaseController {
         RequestHelper helper = new RequestHelper(request);
         Log.d("search-news", helper);
 
+        boolean isLogin = SessionUtils.checkSession(request.getSession());
+        if (!isLogin) {
+            finish(response, ResultCode.ERROR_NO_LOGIN);
+            return;
+        }
+
         Long id = helper.getLong("id");
 
         News news = newsService.getNews(id);
@@ -651,6 +744,12 @@ public class EditController extends BaseController {
 
         RequestHelper helper = new RequestHelper(request);
         Log.d("edit-newsList", helper);
+
+        boolean isLogin = SessionUtils.checkSession(request.getSession());
+        if (!isLogin) {
+            finish(response, ResultCode.ERROR_NO_LOGIN);
+            return;
+        }
 
         Long news_tag_id = helper.getLong("news_tag_id", 1L);
         Integer page = helper.getInt("page", 0);
@@ -679,6 +778,12 @@ public class EditController extends BaseController {
 
         RequestHelper helper = new RequestHelper(request);
         Log.d("edit-zones", helper);
+
+        boolean isLogin = SessionUtils.checkSession(request.getSession());
+        if (!isLogin) {
+            finish(response, ResultCode.ERROR_NO_LOGIN);
+            return;
+        }
 
         List<District> districtList = basicService.getDistrictList();
         JsonArray districtArray = new JsonArray();
@@ -714,6 +819,12 @@ public class EditController extends BaseController {
         RequestHelper helper = new RequestHelper(request);
         Log.d("edit-editZone", helper);
 
+        boolean isLogin = SessionUtils.checkSession(request.getSession());
+        if (!isLogin) {
+            finish(response, ResultCode.ERROR_NO_LOGIN);
+            return;
+        }
+
         Long zone_id = helper.getLong("zone_id");
         Boolean center = helper.getBoolean("center", false);
         List<String> img_list = helper.getList("img_list");
@@ -724,5 +835,101 @@ public class EditController extends BaseController {
         basicService.updateZone(zone);
 
         finish(response, ResultCode.SUCCESS);
+    }
+
+    /**
+     * 获取所有同步数据
+     * <p>
+     * username 用户名
+     * password 密码
+     */
+    @RequestMapping("/syncAll")
+    public void syncAll(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+
+        RequestHelper helper = new RequestHelper(request);
+        Log.d("edit-syncAll", helper);
+
+        String username = helper.getString("username");
+        String password = helper.getString("password");
+
+        String tokenId = LoginManager.getInstance().login(userSerivce, username, password);
+        if (tokenId == null) {
+            finish(response, ResultCode.ERROR_WRONG_PASSWORD);
+            return;
+        }
+
+        Map<String, List> dataMap = syncService.getAll();
+        JsonObject data = new Gson().toJsonTree(dataMap).getAsJsonObject();
+
+        finish(response, ResultCode.SUCCESS, data);
+    }
+
+    /**
+     * 同步所有数据
+     */
+    @RequestMapping("/sync")
+    public void sync(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+
+        RequestHelper helper = new RequestHelper(request);
+        Log.d("edit-sync", helper);
+
+        StringBuilder s = new StringBuilder();
+        URL syncAll = new URL("http://47.96.165.78:8080/ddzu/edit/syncAll?username=edwin&password=edwin");
+        URLConnection syncAllConn = syncAll.openConnection();
+        InputStream is = syncAllConn.getInputStream();
+        Reader r = new InputStreamReader(is);
+        int c;
+        while ((c = r.read()) > 0) {
+            s.append((char) c);
+        }
+
+        JsonObject json = new JsonParser().parse(s.toString()).getAsJsonObject().get("data").getAsJsonObject();
+        List<AreaRange> areaRangeList = get(json, "area_range", new TypeToken<List<AreaRange>>() {
+        });
+        List<Building> buildingList = get(json, "building", new TypeToken<List<Building>>() {
+        });
+        List<Decoration> decorationList = get(json, "decoration", new TypeToken<List<Decoration>>() {
+        });
+        List<District> districtList = get(json, "district", new TypeToken<List<District>>() {
+        });
+        List<Metro> metroList = get(json, "metro", new TypeToken<List<Metro>>() {
+        });
+        List<News> newsList = get(json, "news", new TypeToken<List<News>>() {
+        });
+        List<NewsTag> newsTagList = get(json, "news_tag", new TypeToken<List<NewsTag>>() {
+        });
+        List<Office> officeList = get(json, "office", new TypeToken<List<Office>>() {
+        });
+        List<PriceRange> priceRangeList = get(json, "price_range", new TypeToken<List<PriceRange>>() {
+        });
+        List<Type> typeList = get(json, "type", new TypeToken<List<Type>>() {
+        });
+        List<User> userList = get(json, "user", new TypeToken<List<User>>() {
+        });
+        List<Zone> zoneList = get(json, "zone", new TypeToken<List<Zone>>() {
+        });
+
+        syncService.setAll(areaRangeList
+                , buildingList
+                , decorationList
+                , districtList
+                , metroList
+                , newsList
+                , newsTagList
+                , officeList
+                , priceRangeList
+                , typeList
+                , userList
+                , zoneList);
+
+        finish(response, ResultCode.SUCCESS);
+    }
+
+    private <T> List<T> get(JsonObject json, String key, TypeToken<List<T>> typeToken) {
+        return new Gson().fromJson(json.get(key), typeToken.getType());
     }
 }
