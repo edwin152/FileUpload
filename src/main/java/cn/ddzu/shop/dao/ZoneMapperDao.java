@@ -32,9 +32,17 @@ public interface ZoneMapperDao {
     List<Zone> selectByDistrict(@Param("district_id") long district_id);
 
     /**
+     * 获取核心区域
+     */
+    List<Zone> selectCenterZone();
+
+    /**
      * 通过id查区域
-     *
-     * @param id 区域id
      */
     Zone selectById(@Param("id") long id);
+
+    /**
+     * 更新区域
+     */
+    void update(@Param("zone") Zone zone);
 }

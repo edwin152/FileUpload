@@ -21,6 +21,16 @@ public interface BasicService {
     List<Zone> getZoneList(Long district_id);
 
     /**
+     * 获取核心商圈
+     */
+    List<Zone> getCoreZoneList();
+
+    /**
+     * 更新区域
+     */
+    void updateZone(Zone zone);
+
+    /**
      * 获取区域
      */
     Zone getZone(Long id);

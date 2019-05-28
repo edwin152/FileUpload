@@ -14,13 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.json.Json;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/index")
@@ -91,7 +89,40 @@ public class IndexController extends BaseController {
             buildingArray.add(buildingObject);
         }
         json.add("fineList", buildingArray);
-        json.add("coreList", new JsonArray());
+
+        List<Zone> zoneList = basicService.getCoreZoneList();
+        zoneList.sort(new Comparator<Zone>() {
+            @Override
+            public int compare(Zone o1, Zone o2) {
+                if (o1.getId() == 24) return -1;
+                if (o2.getId() == 24) return 1;
+
+                if (o1.getId() == 40) return -1;
+                if (o2.getId() == 40) return 1;
+
+                if (o1.getId() == 35) return -1;
+                if (o2.getId() == 35) return 1;
+
+                if (o1.getId() == 6) return -1;
+                if (o2.getId() == 6) return 1;
+
+                if (o1.getId() == 73) return -1;
+                if (o2.getId() == 73) return 1;
+
+                return Long.compare(o1.getId(), o2.getId());
+            }
+        });
+        JsonArray zoneArray = new JsonArray();
+        for (Zone zone : zoneList) {
+            JsonObject zoneObject = new Gson().toJsonTree(zone).getAsJsonObject();
+            zoneObject.add("img_list", JsonUtils.strToStringArray(zone.getImg_list()));
+            if (zone.getId() == zone.getDistrict_id()) {
+                zoneObject.addProperty("name", zone.getDistrict_name());
+            }
+            zoneArray.add(zoneObject);
+        }
+
+        json.add("coreList", zoneArray);
 
         finish(response, ResultCode.SUCCESS, json);
     }

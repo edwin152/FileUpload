@@ -142,4 +142,20 @@ public class ManageController extends BaseController {
             return "redirect:/manage";
         }
     }
+
+    @RequestMapping("/editZone")
+    public String editZone(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+
+        RequestHelper helper = new RequestHelper(request);
+        Log.d("manage-editZone", helper);
+
+        boolean isLogin = SessionUtils.checkSession(request.getSession());
+        if (isLogin) {
+            return "/editZone";
+        } else {
+            return "redirect:/manage";
+        }
+    }
 }

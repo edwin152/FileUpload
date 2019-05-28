@@ -57,6 +57,16 @@ public class BasicServiceImpl implements BasicService {
     }
 
     @Override
+    public List<Zone> getCoreZoneList() {
+        return zoneMapperDao.selectCenterZone();
+    }
+
+    @Override
+    public void updateZone(Zone zone) {
+        zoneMapperDao.update(zone);
+    }
+
+    @Override
     public Zone getZone(Long id) {
         if (id == null) {
             return null;

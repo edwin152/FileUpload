@@ -43,6 +43,7 @@ public class DbController extends BaseController {
         basicService.resetAreaRange();
         basicService.resetType();
         basicService.resetDistrictAndZone();
+        newsService.resetNews();
         newsService.resetNewsTag();
 //        userService.reset();
 

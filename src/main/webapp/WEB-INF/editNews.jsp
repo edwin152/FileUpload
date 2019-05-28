@@ -54,22 +54,22 @@
 <div class="win matop">
     <form action="" method="post">
         <div class="layui-form-item">
-            <label class="layui-form-label">资讯标题</label>
+            <label class="layui-form-label" for="title">资讯标题</label>
             <div class="layui-input-block">
                 <input type="text" id="title" name="title" required lay-verify="required" placeholder="请输入标题"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">资讯类型</label>
+            <label class="layui-form-label" for="sub_title">资讯类型</label>
             <div class="layui-input-block">
                 <input type="text" id="sub_title" name="sub_title" required lay-verify="required" placeholder="请输入资讯类型"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
-         <%-- TODO 下拉框 --%>
+        <%-- TODO 下拉框 --%>
         <div class="layui-form-item layui-form-text">
-            <label class="layui-form-label">资讯内容</label>
+            <label class="layui-form-label" for="news_edit">资讯内容</label>
             <div class="layui-input-block">
             <textarea id="news_edit" class="layui-textarea" rows="0" cols="0" title=""
                       style="display: none;"></textarea>

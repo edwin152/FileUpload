@@ -668,4 +668,61 @@ public class EditController extends BaseController {
 
         finish(response, ResultCode.SUCCESS, json);
     }
+
+    /**
+     * 查询区域
+     */
+    @RequestMapping("/zones")
+    public void zones(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+
+        RequestHelper helper = new RequestHelper(request);
+        Log.d("edit-zones", helper);
+
+        List<District> districtList = basicService.getDistrictList();
+        JsonArray districtArray = new JsonArray();
+        for (District district : districtList) {
+            JsonObject districtObject = new Gson().toJsonTree(district).getAsJsonObject();
+            long districtId = district.getId();
+            List<Zone> zoneList = basicService.getZoneList(districtId);
+            JsonArray zoneArray = new JsonArray();
+            for (Zone zone : zoneList) {
+                JsonObject zoneObject = new Gson().toJsonTree(zone).getAsJsonObject();
+                zoneObject.add("img_list", JsonUtils.strToStringArray(zone.getImg_list()));
+                zoneArray.add(zoneObject);
+            }
+            districtObject.add("zoneList", zoneArray);
+            districtArray.add(districtObject);
+        }
+
+        finish(response, ResultCode.SUCCESS, districtArray);
+    }
+
+    /**
+     * 修改区域
+     * <p>
+     * zone_id 商圈id
+     * center 是否为中心
+     * img_list 图片
+     */
+    @RequestMapping("/editZone")
+    public void editZone(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+
+        RequestHelper helper = new RequestHelper(request);
+        Log.d("edit-editZone", helper);
+
+        Long zone_id = helper.getLong("zone_id");
+        Boolean center = helper.getBoolean("center", false);
+        List<String> img_list = helper.getList("img_list");
+
+        Zone zone = basicService.getZone(zone_id);
+        zone.setCenter(center);
+        zone.setImg_list(new Gson().toJson(img_list));
+        basicService.updateZone(zone);
+
+        finish(response, ResultCode.SUCCESS);
+    }
 }

@@ -82,8 +82,29 @@
         order by id asc
     </select>
 
+    <select id="selectCenterZone" resultType="cn.ddzu.shop.entity.Zone">
+        select
+            zone.id as id,
+            zone.district_id as district_id,
+            zone.name as name,
+            zone.center as center,
+            zone.img_list as img_list,
+            district.name as district_name
+        from zone
+        left join district on zone.district_id = district.id
+        where zone.valid = true and district.valid = true and center = true
+    </select>
+
     <select id="selectById" resultType="cn.ddzu.shop.entity.Zone" parameterType="long">
         select * from zone
         where valid = true and id = #{id}
     </select>
+
+    <update id="update" parameterType="cn.ddzu.shop.entity.Zone">
+        update zone
+        set
+            center = #{zone.center},
+            img_list = #{zone.img_list}
+        where id = #{zone.id}
+    </update>
 </mapper>

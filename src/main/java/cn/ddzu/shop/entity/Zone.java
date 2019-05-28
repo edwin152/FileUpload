@@ -8,6 +8,8 @@ public class Zone implements Comparable<Zone> {
     private Boolean center;
     private String img_list;
 
+    private String district_name;
+
     public long getId() {
         return id;
     }
@@ -46,6 +48,14 @@ public class Zone implements Comparable<Zone> {
 
     public void setImg_list(String img_list) {
         this.img_list = img_list;
+    }
+
+    public String getDistrict_name() {
+        return district_name;
+    }
+
+    public void setDistrict_name(String district_name) {
+        this.district_name = district_name;
     }
 
     @Override

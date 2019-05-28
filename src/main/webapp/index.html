@@ -129,8 +129,11 @@
             }
 
             for (let i = 0, len = coreList.length; i < len && i < 5; i++) {
+                let img_list = coreList[i].img_list;
                 let coreItemImg = document.getElementById("core_item_img_" + i);
-                coreItemImg.setAttribute("src", coreList[i].img_list[0]);
+                if (img_list && img_list.length > 0) {
+                    coreItemImg.setAttribute("src", img_list[0]);
+                }
 
                 let coreItemText = document.getElementById("core_item_text_" + i);
                 coreItemText.innerHTML = coreList[i].name;
