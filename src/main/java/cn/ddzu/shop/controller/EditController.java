@@ -602,6 +602,8 @@ public class EditController extends BaseController {
      * title 标题
      * sub_title 副标题
      * content 内容
+     * news_tag_id 新闻标签id
+     * hot 是否热门
      */
     @RequestMapping("/addNews")
     public void addNews(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -620,11 +622,15 @@ public class EditController extends BaseController {
         String title = helper.getString("title");
         String sub_title = helper.getString("sub_title");
         String content = helper.getString("content");
+        Long news_tag_id = helper.getLong("news_tag_id");
+        Boolean hot = helper.getBoolean("hot", false);
 
         News news = new News();
         news.setTitle(title);
         news.setSub_title(sub_title);
         news.setContent(content);
+        news.setNews_tag_id(news_tag_id);
+        news.setHot(hot);
 
         newsService.addNews(news);
 
