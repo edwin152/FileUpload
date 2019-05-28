@@ -32,7 +32,7 @@ public class IndexController extends BaseController {
     private NewsService newsService;
 
     @RequestMapping("/all")
-    public void reset(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void all(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
 

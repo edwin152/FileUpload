@@ -32,4 +32,6 @@ public interface NewsMapperDao extends Dao<News> {
     Integer count(@Param("news_tag_id") Long news_tag_id);
 
     List<News> selectWhereHot();
+
+    List<News> selectWhereNew();
 }

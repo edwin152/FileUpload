@@ -85,6 +85,6 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public List<News> getIndexNews() {
-        return null;
+        return newsMapperDao.selectWhereNew();
     }
 }
