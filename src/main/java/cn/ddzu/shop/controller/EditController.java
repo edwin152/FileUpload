@@ -23,6 +23,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -882,7 +883,7 @@ public class EditController extends BaseController {
         URL syncAll = new URL("http://47.96.165.78:8080/ddzu/edit/syncAll?username=edwin&password=edwin");
         URLConnection syncAllConn = syncAll.openConnection();
         InputStream is = syncAllConn.getInputStream();
-        Reader r = new InputStreamReader(is);
+        Reader r = new InputStreamReader(is, StandardCharsets.UTF_8);
         int c;
         while ((c = r.read()) > 0) {
             s.append((char) c);
