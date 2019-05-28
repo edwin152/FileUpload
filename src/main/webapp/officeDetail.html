@@ -120,16 +120,15 @@
             = building.introduce;
 
         let imageListBox = document.getElementById("top_image_list");
-        if(office.img_list) {
-            for (let img of office.img_list) {
-                let itemBox = document.createElement("div");
-                itemBox.setAttribute("class", "swiper-slide");
-                imageListBox.appendChild(itemBox);
-                let itemImg = document.createElement("img");
-                itemImg.setAttribute("class", "top_info_image");
-                itemImg.setAttribute("src", img);
-                itemBox.appendChild(itemImg);
-            }
+        let img_list = utils.getImg_list(office);
+        for (let img of img_list) {
+            let itemBox = document.createElement("div");
+            itemBox.setAttribute("class", "swiper-slide");
+            imageListBox.appendChild(itemBox);
+            let itemImg = document.createElement("img");
+            itemImg.setAttribute("class", "top_info_image");
+            itemImg.setAttribute("src", img);
+            itemBox.appendChild(itemImg);
         }
         startSwiper();
     }

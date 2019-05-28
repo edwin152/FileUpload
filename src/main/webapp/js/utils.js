@@ -95,13 +95,31 @@ let http = {
                 console.log(e);
             }
         });
-    }
+    },
 };
 
 let utils = {
+    default_img: "http://47.96.165.78/images/default.jpg",
+
+    getImg_list: function (obj) {
+        return obj && obj.img_list && obj.img_list.length > 0
+            ? obj.img_list
+            : [this.default_img];
+    },
+
     setImage: function (img, img_list) {
-        if (img_list && img_list.length > 0) {
-            img.setAttribute("src", img_list[0]);
+        let obj = {
+            img_list: img_list,
+        };
+        let imgList = this.getImg_list(obj);
+        img.setAttribute("src", imgList[0]);
+    },
+
+    setImageSrc: function (img, src) {
+        if (!src) {
+            let img_list = this.getImg_list();
+            src = img_list[0];
         }
-    }
+        img.setAttribute("src", src);
+    },
 };

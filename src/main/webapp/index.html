@@ -129,11 +129,8 @@
             }
 
             for (let i = 0, len = coreList.length; i < len && i < 5; i++) {
-                let img_list = coreList[i].img_list;
                 let coreItemImg = document.getElementById("core_item_img_" + i);
-                if (img_list && img_list.length > 0) {
-                    coreItemImg.setAttribute("src", img_list[0]);
-                }
+                utils.setImage(coreItemImg, coreList[i].img_list);
 
                 let coreItemText = document.getElementById("core_item_text_" + i);
                 coreItemText.innerHTML = coreList[i].name;
@@ -238,7 +235,6 @@
         window.onload = function () {
             getFilterList();
             getNewsList();
-            // setFineBuildingList(JSON.parse("[{\"id\":1558939124305,\"name\":\"金光外滩中心\",\"zone_id\":41,\"address\":\"延安东路222号\",\"metro_name_list\":\"[\\\"2号线\\\",\\\"10号线\\\"]\",\"introduce\":\"金光外滩中心办公楼拥有140,000平方米总楼面面积，包括50层的超甲级（含裙房）办公场所。作为外滩最高的建筑之一，并且是外滩的标志性建筑。 2002年，外滩中心被授予上海白玉兰奖优秀工程设计和施工奖项，2004年，大楼获得FIABCI大奖赛优秀奖。在2005年9月，中国商业报命名为“中国十佳办公楼”。项目拥有关键优越的地理位置，著名的上海外滩中心地段。办公大楼还提供额外的设施和服务给我们的租户，包括免费穿梭巴士服务，礼宾服务，收件洗衣，清洁和收集服务。此外，我们的办公楼已制定了严格的安全措施，如安全门，并且有受过检测爆炸材料的24小时巡逻犬。\",\"notes\":\"{\\\"detail_info\\\":[{\\\"key\\\":\\\"客梯数\\\",\\\"value\\\":\\\"客梯21部，货梯2部\\\"},{\\\"key\\\":\\\"物业公司\\\",\\\"value\\\":\\\"上海高力国际物业管理\\\"}],\\\"metro_intro\\\":\\\"\\\",\\\"bus_intro\\\":\\\"\\\"}\",\"img_list\":[\"http://47.96.165.78/images/20190527143710253401.jpg\"],\"district_id\":3,\"district_name\":\"黄浦\",\"zone_name\":\"外滩\",\"office_num\":1,\"price_average\":7,\"area_range\":\"375.0\",\"area_list\":[375]},{\"id\":1558939954392,\"name\":\"来福士广场\",\"zone_id\":40,\"address\":\"黄浦西藏中路268号\",\"metro_name_list\":\"[\\\"1号线\\\",\\\"2号线\\\",\\\"8号线\\\"]\",\"introduce\":\"来福士广场是一座集51层甲级智能化写字楼、8层大型购物中心为一体的现代商业中心。位于上海城市中心，紧邻人民广场和南京路步行街，靠近上海博物馆和上海市政府。楼内租户都是具有世界影响力的500强企业，写字楼大堂具有东方韵味，充满新加坡风格。物业管理周到、严谨，是一个品质上乘的写字楼。 来福士广场地处浦西的交通枢纽位置，是3条地铁线路（1号线,2号线,8号线）的交汇点。黄金的位置，便捷的交通，周围林立的星级酒店和一览无余的城市风光都将使来福士广场成为众多跨国公司的首选之地。\",\"notes\":\"{\\\"detail_info\\\":[{\\\"key\\\":\\\"客梯数\\\",\\\"value\\\":\\\"客梯12部，货梯2部\\\"},{\\\"key\\\":\\\"物业公司\\\",\\\"value\\\":\\\"上海浦江物业有限公司\\\"}],\\\"metro_intro\\\":\\\"\\\",\\\"bus_intro\\\":\\\"\\\"}\",\"img_list\":[\"http://47.96.165.78/images/20190527145032321043.jpg\"],\"district_id\":3,\"district_name\":\"黄浦\",\"zone_name\":\"人民广场\",\"office_num\":1,\"price_average\":12,\"area_range\":\"476.0\",\"area_list\":[476]},{\"id\":1558940647700,\"name\":\"吉汇大厦（原虹口SOHO）\",\"zone_id\":73,\"address\":\"上海市虹口区乍浦路600号\",\"metro_name_list\":\"[\\\"4号线\\\"]\",\"introduce\":\"虹口SOHO位于上海市四川北路商圈，紧邻地铁10号线四川北路站以及地铁4号线海伦路站，快速直达外滩、陆家嘴，交通极其便利。项目周边商业氛围成熟，五星级酒店、商场、办公楼等商业配套完善，环境优美的四川北路公园近在咫尺。项目集办公、商业于一体，占地面积1.6万平方米，总建筑面积9.5万平方米，地上29层，地下3层。\",\"notes\":\"{\\\"detail_info\\\":[{\\\"key\\\":\\\"客梯数\\\",\\\"value\\\":\\\"客梯12部\\\"},{\\\"key\\\":\\\"物业公司\\\",\\\"value\\\":\\\"北京锦融物业管理有限公司上海分公司\\\"}],\\\"metro_intro\\\":\\\"\\\",\\\"bus_intro\\\":\\\"\\\"}\",\"img_list\":[\"http://47.96.165.78/images/20190527150308919340.jpg\"],\"district_id\":10,\"district_name\":\"虹口\",\"zone_name\":\"北外滩\",\"office_num\":1,\"price_average\":7.5,\"area_range\":\"719.0\",\"area_list\":[719]},{\"id\":1558941362936,\"name\":\"港泰广场\",\"zone_id\":38,\"address\":\"上海黄浦区延安东路700号\",\"metro_name_list\":\"[\\\"8号线\\\"]\",\"introduce\":\"港泰广场位于上海市人民广场中央商务区内，矗立于延安东路。她东临外滩，处于连接浦江两岸的延安路隧道双线出口处；南延浦西交通动脉延安东路高架，直通虹桥国际机场；西靠人民广场及地铁一号、二号、三号线枢纽中心站；南北与繁华的商业街南京淮海路为邻。是各界人士投资置业的理想境地。\",\"notes\":\"{\\\"detail_info\\\":[{\\\"key\\\":\\\"客梯数\\\",\\\"value\\\":\\\"客梯7部，货梯1部，OTIS\\\"},{\\\"key\\\":\\\"物业公司\\\",\\\"value\\\":\\\"上海中企物业管理有限公司\\\"}],\\\"metro_intro\\\":\\\"\\\",\\\"bus_intro\\\":\\\"\\\"}\",\"img_list\":[\"http://47.96.165.78/images/20190527151550244033.jpg\"],\"district_id\":3,\"district_name\":\"黄浦\",\"zone_name\":\"老西门\",\"office_num\":1,\"price_average\":7,\"area_range\":\"906.0\",\"area_list\":[906]},{\"id\":1558942189899,\"name\":\"东方环球企业中心\",\"zone_id\":68,\"address\":\"永和路118弄\",\"metro_name_list\":\"[\\\"1号线\\\"]\",\"introduce\":\"东方环球企业中心位于上海南北高架、中环线的交汇处，地铁一号线直达。东方环球企业中心一期位于永和路以北，中环线以南，平陆路两侧。东方环球企业中心将以打造“国际企业总部基地”为目标， 面向抢滩大上海的国内外大中型企业总部及大集团分部，满足研发设计、展示营销、商 务会议、企业培训、总部集聚等头脑经济的需求，并辅之以一应俱全的餐饮娱乐休闲等设施。\",\"notes\":\"{\\\"detail_info\\\":[{\\\"key\\\":\\\"客梯数\\\",\\\"value\\\":\\\"客梯6部，货梯2部\\\"},{\\\"key\\\":\\\"物业公司\\\",\\\"value\\\":\\\"上海中一物业管理有限公司\\\"}],\\\"metro_intro\\\":\\\"\\\",\\\"bus_intro\\\":\\\"\\\"}\",\"img_list\":[\"http://47.96.165.78/images/20190527152937403088.jpg\"],\"district_id\":9,\"district_name\":\"闸北\",\"zone_name\":\"大宁/延长路\",\"office_num\":1,\"price_average\":2.3,\"area_range\":\"283.0\",\"area_list\":[283]},{\"id\":1558944029498,\"name\":\"中港汇\",\"zone_id\":32,\"address\":\"崮山路538号\",\"metro_name_list\":\"[\\\"6号线\\\"]\",\"introduce\":\"中港汇原名创屹商务大厦位于浦东新区东北部，与黄浦江和杨浦区相望，地理位置优越。项目紧邻轨道交通6号线洋泾北站，10分钟即可达陆家嘴和八佰伴商圈及外滩滨江。多条公交线四通八达，杨浦大桥和内环高架近在咫尺，交通十分便捷。项目外立面由石材和玻璃幕墙组成，彰显大气时尚。\",\"notes\":\"{\\\"detail_info\\\":[{\\\"key\\\":\\\"客梯数\\\",\\\"value\\\":\\\"客梯6部\\\"},{\\\"key\\\":\\\"物业公司\\\",\\\"value\\\":\\\"仲量联行测量师事务所（上海）有限公司\\\"}],\\\"metro_intro\\\":\\\"\\\",\\\"bus_intro\\\":\\\"\\\"}\",\"img_list\":[\"http://47.96.165.78/images/20190527160007423027.jpg\"],\"district_id\":2,\"district_name\":\"浦东\",\"zone_name\":\"洋泾\",\"office_num\":1,\"price_average\":7,\"area_range\":\"906.0\",\"area_list\":[906]},{\"id\":1558945254428,\"name\":\"浦东嘉里城\",\"zone_id\":30,\"address\":\"上海市浦东新区芳甸路1155号\",\"metro_name_list\":\"[\\\"7号线\\\"]\",\"introduce\":\"总高43层的浦东嘉里城写字楼造型简约，与绿色氧吧——世纪公园的恬然景致相得益彰。这里，人性化的服务体现在各个方面，从办公楼定期专享的活动体验和消费优惠，到每一层洗手间内的落地梳妆镜，细节处的贴心设计提升着每一位员工的办公体验。优越的地理位置同样是我们的一大优势，高架内环近在咫尺、地铁直达，完美的交通网络让工作在这里的人轻松穿梭城市各地。\",\"notes\":\"{\\\"detail_info\\\":[{\\\"key\\\":\\\"客梯数\\\",\\\"value\\\":\\\"客梯18部，货梯2部\\\"},{\\\"key\\\":\\\"物业公司\\\",\\\"value\\\":\\\"上海浦东嘉里城房地产有限公司\\\"}],\\\"metro_intro\\\":\\\"\\\",\\\"bus_intro\\\":\\\"\\\"}\",\"img_list\":[\"http://47.96.165.78/images/20190527162041931833.jpg\"],\"district_id\":2,\"district_name\":\"浦东\",\"zone_name\":\"世纪公园\",\"office_num\":1,\"price_average\":10,\"area_range\":\"600.0\",\"area_list\":[600]},{\"id\":1558938297245,\"name\":\"香港广场\",\"zone_id\":38,\"address\":\"上海黄浦区淮海中路282号\",\"metro_name_list\":\"[\\\"1号线\\\",\\\"8号线\\\"]\",\"introduce\":\"香港广场坐落于上海最繁盛的黄金地段淮海中路，项目汇集办公楼、酒店服务式公寓连高级会所及购物商场于一身，提供衣、食、住、行的多元化选择，为上海这个文化荟萃的国际大都会带来崭新的工作、住宿、购物及消闲新模式。\",\"notes\":\"{\\\"detail_info\\\":[{\\\"key\\\":\\\"客梯数\\\",\\\"value\\\":\\\"客梯8部，货梯1部\\\"},{\\\"key\\\":\\\"开发商\\\",\\\"value\\\":\\\"香港广场物业管理有限公司\\\"},{\\\"key\\\":\\\"物业公司\\\",\\\"value\\\":\\\"香港广场物业管理有限公司\\\"}],\\\"metro_intro\\\":\\\"\\\",\\\"bus_intro\\\":\\\"\\\"}\",\"img_list\":[\"http://47.96.165.78/images/20190527142143234383.jpg\"],\"district_id\":3,\"district_name\":\"黄浦\",\"zone_name\":\"老西门\",\"office_num\":1,\"price_average\":10,\"area_range\":\"199.0\",\"area_list\":[199]}]"));
         };
 
         function getFilterList() {
@@ -253,6 +249,7 @@
                     setPriceRangeScreen(data.priceRangeList);
                     setCoreBuilding(data.coreList);
                     setFineBuildingList(data.fineList);
+                    utils.setImageSrc(document.getElementById("entrust_img"));
 
                     openSwiper(data.bannerList.length !== 1);
                 }
@@ -359,24 +356,24 @@
     <h3 class="item_title">核心商圈享&nbsp;<span class="item_subtitle">优质配套 与大咖公司为邻</span></h3>
     <div class="image_box_in_title flex_row" id="core_building" style="display: none;">
         <div class="core_left_big_box image_big">
-            <img class="core_img" src="img/test.jpg" id="core_item_img_0"/>
+            <img class="core_img" id="core_item_img_0"/>
             <div class="core_text" id="core_item_text_0">地铁周边出行最便捷</div>
         </div>
         <div class="core_min_box">
             <div class="core_right_box image_big">
-                <img class="core_img" src="img/test.jpg" id="core_item_img_1"/>
+                <img class="core_img" id="core_item_img_1"/>
                 <div class="core_text" id="core_item_text_1">地铁周边出行最便捷</div>
             </div>
             <div class="core_right_box image_big">
-                <img class="core_img" src="img/test.jpg" id="core_item_img_2"/>
+                <img class="core_img" id="core_item_img_2"/>
                 <div class="core_text" id="core_item_text_2">地铁周边出行最便捷</div>
             </div>
             <div class="core_right_box image_big matop">
-                <img class="core_img" src="img/test.jpg" id="core_item_img_3"/>
+                <img class="core_img" id="core_item_img_3"/>
                 <div class="core_text" id="core_item_text_3">地铁周边出行最便捷</div>
             </div>
             <div class="core_right_box image_big matop">
-                <img class="core_img" src="img/test.jpg" id="core_item_img_4"/>
+                <img class="core_img" id="core_item_img_4"/>
                 <div class="core_text" id="core_item_text_4">地铁周边出行最便捷</div>
             </div>
         </div>
@@ -387,7 +384,7 @@
 </div>
 
 <div class="win matop bg_white flex_row">
-    <img src="img/test.jpg" class="entrust_img"/>
+    <img id="entrust_img" class="entrust_img"/>
     <div class="entrust_info_box flex_column">
         <div class="entrust_title">委托橙办租房网，省心找办公室</div>
         <div class="entrust_subtitle">10分钟内响应，全程免租，专业看房顾问带看</div>

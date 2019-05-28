@@ -257,10 +257,11 @@
     width: 100%;
     table-layout: fixed;
 }
+
 .table_box tr td {
     border-bottom: 1px solid #f3f3f3;
     color: #666;
-    font: 12px Microsoft YaHei,SimHei,SimSun;
+    font: 12px Microsoft YaHei, SimHei, SimSun;
     line-height: 16px;
 }
 
@@ -277,11 +278,11 @@
     height: 33px;
 }
 
-.table_box tr td .big_text{
+.table_box tr td .big_text {
     font-size: 20px;
 }
 
-.table_box tr td .price_color{
+.table_box tr td .price_color {
     color: #ff9931;
 }
 
@@ -324,3 +325,22 @@
 .source_info_td div:hover {
     color: #FFBB33;
 }
+
+.gm_num_box {
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+
+.gm_num_box img {
+    width: 16px;
+    height: 16px;
+}
+
+.gm_num_box span {
+    color: #FFF;
+    font-size: 15px;
+}
+

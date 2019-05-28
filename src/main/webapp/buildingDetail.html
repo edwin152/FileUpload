@@ -1,5 +1,4 @@
 <html>
-
 <head>
     <meta charset="UTF-8">
     <title>点点租</title>
@@ -139,16 +138,15 @@
         document.getElementById("building_name").innerHTML = building.name;
         // 图片
         let imgBox = document.getElementById("top_image_list");
-        if (building.img_list) {
-            for (let img of building.img_list) {
-                let itemBox = document.createElement("div");
-                itemBox.setAttribute("class", "swiper-slide");
-                imgBox.appendChild(itemBox);
-                let itemImg = document.createElement("img");
-                itemImg.setAttribute("class", "top_info_image");
-                itemImg.setAttribute("src", img);
-                itemBox.appendChild(itemImg);
-            }
+        let img_list = utils.getImg_list(building);
+        for (let img of img_list) {
+            let itemBox = document.createElement("div");
+            itemBox.setAttribute("class", "swiper-slide");
+            imgBox.appendChild(itemBox);
+            let itemImg = document.createElement("img");
+            itemImg.setAttribute("class", "top_info_image");
+            itemImg.setAttribute("src", img);
+            itemBox.appendChild(itemImg);
         }
         // 价格范围
         document.getElementById("detail_info_price").innerHTML = building.price_range;
@@ -208,9 +206,7 @@
             // 图片
             let imageView = document.createElement("img");
             imageView.className = "table_item_image clickable";
-            if (office.img_list) {
-                imageView.setAttribute("src", office.img_list[0]);
-            }
+            utils.setImage(imageView, office.img_list);
             tdImage.onclick = function () {
                 openRoomDetail(office.id);
             };
@@ -328,19 +324,15 @@
             |
         </div>
         <div class="title_text title_text_right">
-            <a href="">首页</a>
+            <a href="index.html">首页</a>
         </div>
-        <div class="title_text title_text_right title_obvious">
-            <a href="">写字楼出租</a>
-        </div>
-        <div class="title_text title_text_right">
-            <a href="">共享办公</a>
-        </div>
-        <div class="title_text title_text_right">
-            <a href="">资讯中心</a>
+        <div class="gm_num_box">
+            <span>4000-623-678</span>
+            <img src="img/phone.png" alt="phone"/>
         </div>
     </div>
 </div>
+
 <div class="bg_white">
     <div class="win top_box flex_row">
         <img src="img/nav_logo_black.png" class="top_logo" alt=""/>
@@ -352,6 +344,7 @@
         </div>
     </div>
 </div>
+
 <div class="top_info_box">
     <div class="top_info flex_row">
         <div class="swiper-container swiper_top_info" id="swiper_top_info">
@@ -517,6 +510,7 @@
         </div>
     </div>
 </div>
+
 <div class="bottom_box matop flex_column">
     <div class="win">
         <div class="flex_row bottom_top">
@@ -556,5 +550,4 @@
     </div>
 </div>
 </body>
-
 </html>
