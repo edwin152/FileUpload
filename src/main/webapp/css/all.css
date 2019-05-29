@@ -400,3 +400,71 @@ img{
     width: 100px;
     height: 100px;
 }
+
+.logo_right {
+    margin-left: 30px;
+    font-size: 14px;
+}
+
+.top_box .link {
+    color: #333;
+    margin-left: 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+
+.content_box {
+    align-items: start;
+}
+
+/* 热门资讯父布局*/
+.content_left_box {
+    width: 300px;
+    margin-right: 30px;
+    background: #FFFFFF;
+    flex-shrink: 0;
+}
+
+/* 热门资讯标题 */
+.left_title {
+    background: #e7e7e9;
+    color: #262313;
+    font-size: 16px;
+    height: 42px;
+    line-height: 42px;
+    padding: 0 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+/* 热门资讯标题图片 */
+.left_title_img {
+    width: 17px;
+    height: 17px;
+    margin-right: 10px;
+}
+
+/* 热门资讯列表 */
+.heat_news {
+    padding: 15px;
+}
+
+/* 热门资讯 */
+.heat_news div {
+    line-height: 28px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+}
+/* 热门资讯 */
+.heat_news div:hover {
+    color: #FFA200;
+}
+
+/* 新闻列表父布局 */
+.content_right_box {
+    flex-grow: 1;
+}
