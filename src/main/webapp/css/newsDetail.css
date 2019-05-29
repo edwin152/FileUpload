@@ -1,4 +1,9 @@
 
+body {
+    background: #f3f3f3;
+    min-height: 100%;
+}
+
 .content_box .content_right_box{
     padding: 20px;
     background: #FFFFFF;
