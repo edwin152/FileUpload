@@ -63,7 +63,7 @@
                         //上传完毕回调
                         console.log(res);
                         let coverImg = document.getElementById("cover_img");
-                        coverImg.setAttribute("src", data.src);
+                        coverImg.setAttribute("src", res.data.src);
                         coverImg.setAttribute("style", "");
                     }
                     , error: function () {
