@@ -87,6 +87,7 @@ public class NewsController extends BaseController {
                 content = content.replaceAll("</?.+?/?>", "");
                 if (content.length() > 200) {
                     content = content.substring(0, 200);
+                    content = content + "...";
                 }
                 news.setContent(content);
             }
