@@ -9,9 +9,46 @@
     <script src="../js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="../js/utils.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
+
+        window.onload = function () {
+
+            initLayUI();
+
+            getNewsTag();
+        };
+
+        function getNewsById(newsId) {
+            http.post({
+                url: "../edit/news",
+                success: function (data) {
+                    document.getElementById("title").innerHTML = data.title;
+                    let img = JSON.stringify(data.img_list);
+                    if (img && img.length > 0){
+                        document.getElementById("cover_img").innerHTML = data.title;
+                    }
+                    document.getElementById("sub_title").innerHTML = data.sub_title;
+                    let typeList = document.getElementById("type_box").children;
+                    for (let i = 0, len = typeList.length; i < len; i++){
+                        if (typeList[i].getAttribute("value") === data.news_tag_id){
+                            typeList[i].setAttribute("selected", "")
+                        }
+                    }
+                    let hotList = document.getElementById("is_hot").children;
+                    let isHot = data.hot ? '1' : '0';
+                    for (let i = 0, len = hotList.length; i < len; i++){
+                        if (typeList[i].getAttribute("value") === isHot){
+                            typeList[i].setAttribute("selected", "")
+                        }
+                    }
+                    document.getElementById("news_edit").innerHTML = data.content;
+                }
+            });
+        }
+
         function initLayUI() {
             let layedit;
             let textAreaId;
+            let imageUrl;
             layui.use('layedit', function () {
                 layedit = layui.layedit;
                 layedit.set({
@@ -40,7 +77,8 @@
                             sub_title: subTitle,
                             content: layedit.getContent(textAreaId),
                             news_tag_id: type,
-                            hot: hot
+                            hot: hot,
+                            img_list: [imageUrl]
                         },
                         success: function (data) {
                             console.log(data);
@@ -64,6 +102,7 @@
                         console.log(res);
                         let coverImg = document.getElementById("cover_img");
                         coverImg.setAttribute("src", res.data.src);
+                        imageUrl = res.data.src;
                         coverImg.setAttribute("style", "");
                     }
                     , error: function () {
@@ -73,12 +112,6 @@
                 });
             });
         }
-
-        window.onload = function () {
-            initLayUI();
-
-            getNewsTag();
-        };
 
         function getNewsTag() {
             http.post({
@@ -93,6 +126,10 @@
                         typeItem.setAttribute("value", filter.newsTagList[i].id);
                         typeBox.appendChild(typeItem);
                     }
+
+                    let request = window.location.search;
+                    let newsId = http.getParameter(request, "news_id");
+                    getNewsById(newsId);
                 }
             });
         }
@@ -132,8 +169,10 @@
                 <button type="button" class="layui-btn" id="upload_img">
                     <i class="layui-icon">&#xe67c;</i>上传图片
                 </button>
-                <img id="cover_img" class="image_100_100" style="display: none;"/>
             </div>
+        </div>
+        <div class="layui-input-block">
+            <img id="cover_img" class="image_100_100" style="display: none;"/>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label" for="sub_title">副标题</label>
@@ -152,7 +191,7 @@
 
         <div class="layui-form-item">
             <label class="layui-form-label">是否热门</label>
-            <div class="layui-input-block">
+            <div class="layui-input-block" id="is_hot">
                 <input type="radio" name="hot" value="1" title="是">
                 <input type="radio" name="hot" value="0" title="否" checked>
             </div>
