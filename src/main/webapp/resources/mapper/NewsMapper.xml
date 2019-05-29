@@ -54,7 +54,7 @@
             content = #{data.content},
             news_tag_id = #{data.news_tag_id},
             hot = #{data.hot},
-            img_list = #{img_list},
+            img_list = #{data.img_list},
             notes = #{data.notes}
         where id = #{data.id}
     </update>

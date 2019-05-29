@@ -745,7 +745,11 @@ public class EditController extends BaseController {
         Long id = helper.getLong("id");
 
         News news = newsService.getNews(id);
-        JsonObject newsObject = new Gson().toJsonTree(news).getAsJsonObject();
+        JsonObject newsObject = null;
+        if (news != null) {
+            newsObject = new Gson().toJsonTree(news).getAsJsonObject();
+            newsObject.add("img_list", JsonUtils.strToStringArray(news.getImg_list()));
+        }
 
         finish(response, ResultCode.SUCCESS, newsObject);
     }

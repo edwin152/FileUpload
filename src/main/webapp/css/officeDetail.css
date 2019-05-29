@@ -91,6 +91,10 @@
 	align-items: flex-start;
 }
 
+.page_info_more span{
+	font-weight: bold;
+}
+
 .mini_line_height {
 	line-height: 24px;
 }

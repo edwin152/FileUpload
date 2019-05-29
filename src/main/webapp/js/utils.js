@@ -113,6 +113,8 @@ let utils = {
         };
         let imgList = this.getImg_list(obj);
         img.setAttribute("src", imgList[0]);
+        let id = img.id;
+        $("#" + id).show();
     },
 
     setImageSrc: function (img, src) {
@@ -125,16 +127,16 @@ let utils = {
 };
 
 
-function getScrollOffset(){
+function getScrollOffset() {
     if (window.pageXOffset !== undefined) {
         return {
-            x : window.pageXOffset,
-            y : window.pageYOffset
+            x: window.pageXOffset,
+            y: window.pageYOffset
         }
-    }else{
+    } else {
         return {
-            x : document.body.scrollLeft + document.documentElement.srollLeft,
-            y : document.body.scrollTop + document.documentElement.srollTop
+            x: document.body.scrollLeft + document.documentElement.srollLeft,
+            y: document.body.scrollTop + document.documentElement.srollTop
         }
     }
 }

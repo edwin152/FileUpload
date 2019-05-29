@@ -9,35 +9,43 @@
     <script src="../js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="../js/utils.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
+        let newsId;
 
         window.onload = function () {
+            let request = window.location.search;
+            newsId = http.getParameter(request, "news_id");
 
             initLayUI();
-
             getNewsTag();
         };
 
         function getNewsById(newsId) {
             http.post({
                 url: "../edit/news",
+                params: {
+                    id: newsId,
+                },
                 success: function (data) {
-                    document.getElementById("title").innerHTML = data.title;
-                    let img = JSON.stringify(data.img_list);
-                    if (img && img.length > 0){
-                        document.getElementById("cover_img").innerHTML = data.title;
+                    if (!data) return;
+
+                    if (data.title) {
+                        document.getElementById("title").setAttribute("value", data.title);
                     }
-                    document.getElementById("sub_title").innerHTML = data.sub_title;
-                    let typeList = document.getElementById("type_box").children;
-                    for (let i = 0, len = typeList.length; i < len; i++){
-                        if (typeList[i].getAttribute("value") === data.news_tag_id){
-                            typeList[i].setAttribute("selected", "")
-                        }
+                    if (data.img_list) {
+                        utils.setImage(document.getElementById("cover_img"), data.img_list);
                     }
+                    if (data.sub_title) {
+                        document.getElementById("sub_title").setAttribute("value", data.sub_title);
+                    }
+
+                    filter.checkedNewsTagId = data.news_tag_id;
+                    freshNewsTag();
+
                     let hotList = document.getElementById("is_hot").children;
                     let isHot = data.hot ? '1' : '0';
-                    for (let i = 0, len = hotList.length; i < len; i++){
-                        if (typeList[i].getAttribute("value") === isHot){
-                            typeList[i].setAttribute("selected", "")
+                    for (let i = 0, len = hotList.length; i < len; i++) {
+                        if (hotList[i].getAttribute("value") === isHot) {
+                            hotList[i].setAttribute("checked", "");
                         }
                     }
                     document.getElementById("news_edit").innerHTML = data.content;
@@ -71,19 +79,19 @@
                     let hot = data.field.hot === '1';
                     // console.log(layedit.getContent(textAreaId));
                     http.post({
-                        url: "../edit/addNews",
+                        url: "../edit/editNews",
                         params: {
+                            id: newsId,
                             title: titleStr,
                             sub_title: subTitle,
                             content: layedit.getContent(textAreaId),
                             news_tag_id: type,
                             hot: hot,
-                            img_list: [imageUrl]
+                            img_list: [imageUrl],
                         },
                         success: function (data) {
                             console.log(data);
-                            // let newsList = data;
-                            layer.msg('编辑成功');
+                            window.close();
                         }
                     });
                     return false;
@@ -93,7 +101,7 @@
                 let upload = layui.upload;
 
                 //执行实例
-                let uploadInst = upload.render({
+                upload.render({
                     elem: '#upload_img' //绑定元素
                     , url: '../file/upload' //上传接口
                     , acceptMime: 'image/*'
@@ -119,34 +127,29 @@
                 success: function (data) {
                     filter = data;
                     if (!filter.newsTagList) return;
-                    let typeBox = document.getElementById("type_box");
-                    for (let i = 0, len = filter.newsTagList.length; i < len; i++) {
-                        let typeItem = document.createElement("option");
-                        typeItem.innerHTML = filter.newsTagList[i].name;
-                        typeItem.setAttribute("value", filter.newsTagList[i].id);
-                        typeBox.appendChild(typeItem);
-                    }
 
-                    let request = window.location.search;
-                    let newsId = http.getParameter(request, "news_id");
+                    freshNewsTag();
                     getNewsById(newsId);
                 }
             });
         }
 
-        function upload(e) {
-            console.log(e);
-            http.upload({
-                url: "../file/upload",
-                file: e[0],
-                success: function (data) {
-                    imgList.push(data.src);
-                    let coverImg = document.getElementById("cover_img");
-                    coverImg.setAttribute("src", data.src)
-                }
-            });
+        function freshNewsTag() {
+            let typeBox = document.getElementById("type_box");
+            typeBox.innerHTML = "";
+            for (let i in filter.newsTagList) {
+                if (!filter.newsTagList.hasOwnProperty(i)) continue;
 
-            $("#add_image").val("");
+                let newsTag = filter.newsTagList[i];
+
+                let typeItem = document.createElement("option");
+                typeItem.innerHTML = newsTag.name;
+                typeItem.setAttribute("value", newsTag.id);
+                if (newsTag.id === filter.checkedNewsTagId) {
+                    typeItem.setAttribute("selected", "selected");
+                }
+                typeBox.appendChild(typeItem);
+            }
         }
     </script>
 </head>
@@ -177,7 +180,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label" for="sub_title">副标题</label>
             <div class="layui-input-block">
-                <input type="text" id="sub_title" name="sub_title" required lay-verify="" placeholder="请输入资讯类型"
+                <input type="text" id="sub_title" name="sub_title" required lay-verify="" placeholder="请输入副标题"
                        autocomplete="off" class="layui-input">
             </div>
         </div>

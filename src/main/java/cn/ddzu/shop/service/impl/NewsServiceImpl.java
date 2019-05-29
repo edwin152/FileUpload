@@ -62,6 +62,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public News getNews(Long id) {
+        if (id == null) return null;
         return newsMapperDao.selectById(id);
     }
 
