@@ -1,4 +1,4 @@
-<html>
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title>资讯详情</title>
@@ -7,96 +7,98 @@
     <link rel="stylesheet" type="text/css" href="css/newsDetail.css"/>
     <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
-    <script type="text/javascript">
-        let filter = {};
-        window.onload = function () {
-
-            getFilterList();
-            getHotList();
-            let request = window.location.search;
-            let newsId = http.getParameter(request, "newsId");
-            getNewsDetail(newsId);
-        };
-
-        function getFilterList() {
-            http.post({
-                url: "filter/newsTag",
-                params: {
-                    news_tag_id: filter.checkedNewsTagId
-                },
-                success: function (data) {
-                    filter = data;
-                    setNewsType(data.newsTagList);
-                }
-            })
-        }
-
-        function getNewsDetail(id) {
-
-            http.post({
-                url: "news/news",
-                params: {
-                    id: id,
-                },
-                success: function (data) {
-                    setNewsContent(data);
-                }
-            });
-        }
-
-        /**
-         * 设置类型
-         * @param typeList
-         */
-        function setNewsType(typeList) {
-            if (typeList == null) return;
-            let newTypeBox = document.getElementById("news_type");
-            for (let i = 0, len = typeList.length; i < len; i++) {
-                let typeItem = document.createElement("div");
-                typeItem.setAttribute("class", "link");
-                typeItem.onclick = function(){
-                    window.location.href= "news.html?news_tag_id=" + typeList[i].id;
-                };
-                typeItem.innerHTML = typeList[i].name;
-                newTypeBox.appendChild(typeItem);
-            }
-        }
-
-        function getHotList() {
-            http.post({
-                url: "news/hot",
-                success: function (data) {
-                    setHeatNews(data);
-                }
-            })
-        }
-
-        /**
-         * 设置热门资讯
-         * @param heatNewsList
-         */
-        function setHeatNews(heatNewsList) {
-            if (heatNewsList == null) return;
-            let ListBox = document.getElementById("heat_news");
-            for (let i = 0, len = heatNewsList.length; i < len; i++) {
-                let itemView = document.createElement("div");
-                // TODO
-                itemView.innerHTML = heatNewsList[i].title;
-                ListBox.appendChild(itemView);
-            }
-        }
-
-        function setNewsContent(newsBean) {
-            let newsTitle = document.getElementById("news_detail_title");
-            newsTitle.innerHTML = newsBean.title;
-            let newsTime = document.getElementById("news_time");
-            newsTime.innerHTML = newsBean.last_edit_time;
-            let newsContent = document.getElementById("news_content");
-            newsContent.innerHTML = newsBean.content;
-        }
-
-    </script>
 </head>
+
+<script type="text/javascript">
+    let filter = {};
+    window.onload = function () {
+
+        getFilterList();
+        getHotList();
+        let request = window.location.search;
+        let newsId = http.getParameter(request, "newsId");
+        getNewsDetail(newsId);
+    };
+
+    function getFilterList() {
+        http.post({
+            url: "filter/newsTag",
+            params: {
+                news_tag_id: filter.checkedNewsTagId
+            },
+            success: function (data) {
+                filter = data;
+                setNewsType(data.newsTagList);
+            }
+        })
+    }
+
+    function getNewsDetail(id) {
+
+        http.post({
+            url: "news/news",
+            params: {
+                id: id,
+            },
+            success: function (data) {
+                setNewsContent(data);
+            }
+        });
+    }
+
+    /**
+     * 设置类型
+     * @param typeList
+     */
+    function setNewsType(typeList) {
+        if (typeList == null) return;
+        let newTypeBox = document.getElementById("news_type");
+        for (let i = 0, len = typeList.length; i < len; i++) {
+            let typeItem = document.createElement("div");
+            typeItem.setAttribute("class", "link");
+            typeItem.onclick = function () {
+                window.location.href = "news.html?news_tag_id=" + typeList[i].id;
+            };
+            typeItem.innerHTML = typeList[i].name;
+            newTypeBox.appendChild(typeItem);
+        }
+    }
+
+    function getHotList() {
+        http.post({
+            url: "news/hot",
+            success: function (data) {
+                setHeatNews(data);
+            }
+        })
+    }
+
+    /**
+     * 设置热门资讯
+     * @param heatNewsList
+     */
+    function setHeatNews(heatNewsList) {
+        if (heatNewsList == null) return;
+        let ListBox = document.getElementById("heat_news");
+        for (let i = 0, len = heatNewsList.length; i < len; i++) {
+            let itemView = document.createElement("div");
+            // TODO
+            itemView.innerHTML = heatNewsList[i].title;
+            ListBox.appendChild(itemView);
+        }
+    }
+
+    function setNewsContent(newsBean) {
+        let newsTitle = document.getElementById("news_detail_title");
+        newsTitle.innerHTML = newsBean.title;
+        let newsTime = document.getElementById("news_time");
+        newsTime.innerHTML = newsBean.last_edit_time;
+        let newsContent = document.getElementById("news_content");
+        newsContent.innerHTML = newsBean.content;
+    }
+
+</script>
+
 <body>
 <div class="title_box">
     <div class="win flex_row">
@@ -112,17 +114,13 @@
         <div class="title_text title_text_right">
             <a href="index.html">首页</a>
         </div>
-        <div class="title_text title_text_right title_obvious">
-            <a href="">写字楼出租</a>
-        </div>
-        <div class="title_text title_text_right">
-            <a href="">共享办公</a>
-        </div>
-        <div class="title_text title_text_right">
-            <a href="">资讯中心</a>
+        <div class="gm_num_box">
+            <span>021 - 5090 6123</span>
+            <img src="img/phone.png" alt="phone"/>
         </div>
     </div>
 </div>
+
 <div class="bg_white">
     <div class="win top_box flex_row">
         <img src="img/logo_light.png" class="top_logo" alt=""/>
@@ -130,7 +128,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="flex_row matop win content_box">
     <div class="content_left_box">
@@ -155,37 +152,16 @@
     <div class="win">
         <div class="flex_row bottom_top">
             <div class="foot_l">
-                <div class="ad_title">办公选址上妥妥租，妥妥的 !</div>
-                <a href="https://www.tuotuozu.com/sh/zxd/id/9.html">关于妥妥租</a> -
-                <a href="https://www.tuotuozu.com/sh/zxd/id/10.html">服务介绍</a> -
-                <br/> ©2017-2018 京ICP备17066298号-1 地址：北京市朝阳区凯旋城E座1807
+                <div class="ad_title">租办公室，就上橙办 ！</div>
             </div>
             <div class="foot_m">
                 客服服务：（早9:00-晚21:00）<br/>
-                <span>400-865-9520</span>
-                <div class="flex_row">
-                    <div>SOCIAL MEDIA</div>
-                    <div>
-                        <a href="#">facebook</a>
-                    </div>
-                    <div>
-                        <a href="#">twitter</a>
-                    </div>
-                    <div>
-                        <a href="#">linkIn</a>
-                    </div>
-                </div>
+                <span>021 - 5090 6123</span>
             </div>
         </div>
         <div class="foot_link">
             友情链接：
-            <a href="https://www.haozu.com/sh/zuxiezilou/" target="_blank">上海写字楼出租</a>
-            <script type="text/javascript">
-                let cnzz_protocol = (("https:" === document.location.protocol) ? " https://" : " http://");
-                document.write(unescape("%3Cspan id='cnzz_stat_icon_4383806'%3E%3C/span%3E%3Cscript src='" +
-                    cnzz_protocol +
-                    "s4.cnzz.com/stat.php%3Fid%3D4383806%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
-            </script>
+            <a href="https://sh.diandianzu.com/" target="_blank">上海写字楼出租</a>
         </div>
     </div>
 </div>

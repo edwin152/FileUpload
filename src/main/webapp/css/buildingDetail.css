@@ -357,22 +357,3 @@
 .source_info_td div:hover {
     color: #FFA200;
 }
-
-.gm_num_box {
-    height: 100%;
-    flex: 1;
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-}
-
-.gm_num_box img {
-    width: 16px;
-    height: 16px;
-}
-
-.gm_num_box span {
-    color: #FFF;
-    font-size: 15px;
-}
-

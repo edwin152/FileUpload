@@ -1,4 +1,4 @@
-<html>
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <title>点点租</title>
@@ -88,9 +88,11 @@
                 setTopInfo(data);
                 setBottomInfo(data);
                 let notes = JSON.parse(data.notes);
-                setMarkers(notes.map);
+                if (notes && notes.map) {
+                    setMarkers(notes.map);
+                }
             }
-        })
+        });
     }
 
     function getOfficeList(page) {
@@ -316,8 +318,6 @@
             bottom_info.appendChild(box);
         }
 
-        // TODO 楼盘介绍 补进UI
-        // let introduce = building.introduce;
         document.getElementById("introduce_info").innerHTML = building.introduce;
     }
 
@@ -357,7 +357,7 @@
             <a href="index.html">首页</a>
         </div>
         <div class="gm_num_box">
-            <span>4000-623-678</span>
+            <span>021 - 5090 6123</span>
             <img src="img/phone.png" alt="phone"/>
         </div>
     </div>
@@ -374,6 +374,7 @@
         </div>
     </div>
 </div>
+
 <div class="top_box" id="top_search_box_none" style="display: none;"></div>
 
 <div class="top_info_box">
@@ -482,16 +483,11 @@
             <div class="service_info_price_box">
                 <span class="service_info_price price_color" id="service_info_price"></span>元/m²/天
             </div>
-            <div class="contact_info">
-                <img src="" class="contact_img" alt=""/>
-                <div class="service_box">
-                    <span class="service_name">妥妥租</span>上海写字楼专属顾问
-                </div>
-            </div>
             <div class="service_phone flex_row">
                 <div class="icon_phone"></div>
+                &nbsp;
                 <div class="service_phone_text">
-                    400-865-9520
+                    021 - 5090 6123
                 </div>
             </div>
             <div class="ready_see">
@@ -510,44 +506,22 @@
     </div>
 </div>
 
-<div class="bottom_box matop flex_column">
+<div class="bottom_box flex_column">
     <div class="win">
         <div class="flex_row bottom_top">
             <div class="foot_l">
-                <div class="ad_title">办公选址上妥妥租，妥妥的 !</div>
-                <a href="https://www.tuotuozu.com/sh/zxd/id/9.html">关于妥妥租</a> -
-                <a href="https://www.tuotuozu.com/sh/zxd/id/10.html">服务介绍</a> -
-                <br/> ©2017-2018 京ICP备17066298号-1 地址：北京市朝阳区凯旋城E座1807
+                <div class="ad_title">租办公室，就上橙办 ！</div>
             </div>
             <div class="foot_m">
                 客服服务：（早9:00-晚21:00）<br/>
-                <span>400-865-9520</span>
-                <div class="flex_row">
-                    <div>SOCIAL MEDIA</div>
-                    <div>
-                        <a href="#">facebook</a>
-                    </div>
-                    <div>
-                        <a href="#">twitter</a>
-                    </div>
-                    <div>
-                        <a href="#">linkIn</a>
-                    </div>
-                </div>
+                <span>021 - 5090 6123</span>
             </div>
         </div>
         <div class="foot_link">
             友情链接：
-            <a href="https://www.haozu.com/sh/zuxiezilou/" target="_blank">上海写字楼出租</a>
-            <script type="text/javascript">
-                let cnzz_protocol = (("https:" === document.location.protocol) ? " https://" : " http://");
-                document.write(unescape("%3Cspan id='cnzz_stat_icon_4383806'%3E%3C/span%3E%3Cscript src='" +
-                    cnzz_protocol +
-                    "s4.cnzz.com/stat.php%3Fid%3D4383806%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
-            </script>
+            <a href="https://sh.diandianzu.com/" target="_blank">上海写字楼出租</a>
         </div>
     </div>
 </div>
 </body>
-
 </html>

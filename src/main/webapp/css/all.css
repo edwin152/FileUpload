@@ -78,7 +78,7 @@ a {
     color: #333333;
 }
 
-.title_text a:visited {
+.title_text a {
     color: #999999;
 }
 
@@ -160,6 +160,7 @@ input {
 .bottom_box .foot_m span {
     font-size: 30px;
     line-height: 34px;
+    color: #ffa200;
 }
 
 .bottom_box .foot_m .flex_row {
@@ -321,8 +322,8 @@ input {
 .service_phone_text {
     font-size: 24px;
     line-height: 30px;
-    color: #FFA200;
-    border-bottom: 1px solid #f3f3f3;
+    color: #ffa200;
+    /*border-bottom: 1px solid #f3f3f3;*/
 }
 
 .ready_see {
@@ -399,4 +400,23 @@ img{
 .image_100_100{
     width: 100px;
     height: 100px;
+}
+
+.gm_num_box {
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+
+.gm_num_box img {
+    width: 16px;
+    height: 16px;
+}
+
+.gm_num_box span {
+    color: #ffa200;
+    font-size: 24px;
+    margin-left: 5px;
 }
