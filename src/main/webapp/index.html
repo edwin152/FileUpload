@@ -1,7 +1,7 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta name="keywords" content="租房 上海房屋 出租 整租 办公室出租 出租" />
+    <meta name="keywords" content="租房 上海房屋 出租 整租 办公室出租 出租"/>
     <meta name="description" content="橙办租房网提供海量办公室出租房源，实时更新，租房信息真实有效。">
     <title>橙办</title>
     <link rel="stylesheet" href="layUI/css/layui.css">
@@ -173,7 +173,7 @@
             let buildingItemBox = document.createElement("div");
             buildingItemBox.setAttribute("class", "fine_building_item_box image_big flex_column clickable");
             if ((i + 1) % 3 === 2) {
-                buildingItemBox.setAttribute("style", "margin-right: 155px; margin-left: 155px;");
+                buildingItemBox.setAttribute("style", "margin-right: 90px; margin-left: 90px;");
             }
             buildingItemBox.onclick = function () {
                 window.open("buildingDetail.html?building_id=" + buildingList[i].id, "_blank");
@@ -234,6 +234,18 @@
     }
 
     /**
+     * 设置委托房源
+     */
+    function setTrust(trust) {
+        document.getElementById("entrust_img").setAttribute("src", trust.img_intro_1);
+        document.getElementById("trust_img").setAttribute("src", trust.img_intro_2);
+        document.getElementById("entrust_title").innerHTML = trust.title;
+        document.getElementById("entrust_subtitle").innerHTML = trust.sub_title;
+        document.getElementById("entrust_content").innerHTML = trust.content;
+
+    }
+
+    /**
      * 设置资讯
      */
     function setLeftNewsList(newsList) {
@@ -272,6 +284,7 @@
                 setCoreBuilding(data.coreList);
                 setFineBuildingList(data.fineList);
                 setLeftNewsList(data.newsList);
+                setTrust(data.today_intro);
                 utils.setImageSrc(document.getElementById("entrust_img"));
 
                 openSwiper(data.bannerList.length !== 1);
@@ -292,76 +305,69 @@
 </script>
 
 <body>
-<div class="top_bg_search">
-    <div class="top_bg_box swiper-container" id="top_bg">
-        <div class="swiper-wrapper" id="top_bg_item_box">
-        </div>
-        <div class="swiper_position swiper_top" id="top_bg_position"></div>
-    </div>
-    <div class="index_top_box">
-        <div class="title_box">
-            <div class="win flex_row position_relative">
-                <div class="position_right">
-                    <div class="title_text_right">
-                        <a href="index.html" class="clickable">首页</a>
-                    </div>
-                    <div class="title_text_right title_obvious">
-                        <a href="search.html" class="clickable">写字楼出租</a>
-                    </div>
-                    <div class="title_text_right">
-                        <a href="search.html?type_id=3" class="clickable">共享办公</a>
-                    </div>
-                    <div class="title_text_right">
-                        <a href="news.html" class="clickable">资讯中心</a>
-                    </div>
-                </div>
+<div class="title_box">
+    <div class="win flex_row position_relative">
+        <img src="img/logo_light.png" class="top_logo" alt=""/>
+        <div class="position_right">
+            <div class="title_text_right">
+                <a href="index.html" class="clickable">首页</a>
             </div>
-        </div>
-
-        <div class="win win_center">
-            <div class="top_screen_box">
-                <div class="screen_type_box">
-                    <div class="screen_item">
-                        <div class="screen_title">
-                            区域
-                        </div>
-                        <div class="screen_item_box" id="screen_condition_box">
-
-                        </div>
-                    </div>
-                    <div class="screen_item">
-                        <div class="screen_title">
-                            面积<span class="screen_subtitle">（单位：m²）</span>
-                        </div>
-                        <div class="screen_option_box flex_column">
-                            <div class="flex_row option_select_box" id="screen_area_box">
-                            </div>
-                            <div class="flex_row option_text">
-                                <div class="screen_option_text">0</div>
-                                <div class="screen_option_text">100</div>
-                                <div class="screen_option_text">300</div>
-                                <div class="screen_option_text">500</div>
-                                <div class="screen_option_text">1000</div>
-                                <div class="screen_option_text">∞</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="new_search_btn_box">
-                    <a href="search.html">马上找房</a>
-                </div>
-                <div class="top_search_box">
-                    <form action="search.html">
-                        <input type="text" class="top_search" name="keyword" placeholder="楼盘名称或区域商圈名称"/>
-                        <input class="search_btn" type="submit" value="搜索"/>
-                    </form>
-                </div>
+            <div class="title_text_right title_obvious">
+                <a href="search.html" class="clickable">写字楼出租</a>
+            </div>
+            <div class="title_text_right">
+                <a href="search.html?type_id=3" class="clickable">共享办公</a>
+            </div>
+            <div class="title_text_right">
+                <a href="news.html" class="clickable">资讯中心</a>
             </div>
         </div>
     </div>
 </div>
+<div class="top_bg_box swiper-container" id="top_bg">
+    <div class="swiper-wrapper" id="top_bg_item_box">
+    </div>
+    <div class="swiper_position swiper_top" id="top_bg_position"></div>
+    <form action="search.html">
+        <div class="search_box_width">
+            <div class="top_search_box">
+                <input type="text" class="top_search" name="keyword" placeholder="输入你想找的办公室"/>
+                <input class="search_btn" type="submit" value="SEARCH"/>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="win padding_top">
 
-<div class="win">
+    <div class="win_explain">
+        <div class="explain_item">
+            <img src="img/zhongjie.png" class="explain_img"/>
+            <div class="explain_title">全程中介免费</div>
+            <div class="explain_text">不收取任何费用</div>
+        </div>
+        <div class="explain_item">
+            <img src="img/fuwu.png" class="explain_img"/>
+            <div class="explain_title">全程服务到底</div>
+            <div class="explain_text">带看，签约，交房全程服务一个不落</div>
+        </div>
+        <div class="explain_item">
+            <img src="img/fangyuan.png" class="explain_img"/>
+            <div class="explain_title">3分钟匹配进准房源</div>
+            <div class="explain_text">最短时间内匹配最精准房源</div>
+        </div>
+        <div class="explain_item">
+            <img src="img/yiduiyi.png" class="explain_img"/>
+            <div class="explain_title">一对一贴心服务</div>
+            <div class="explain_text">专业服务顾问</div>
+        </div>
+        <div class="explain_item">
+            <img src="img/xuanze.png" class="explain_img"/>
+            <div class="explain_title">10W+人员选择</div>
+            <div class="explain_text">世界500强等中小型企业的办公选址供应商</div>
+        </div>
+    </div>
+
+
     <h3 class="item_title">核心商圈享&nbsp;<span class="item_subtitle">优质配套 与大咖公司为邻</span></h3>
     <div class="image_box_in_title flex_row" id="core_building" style="display: none;">
         <div class="core_left_big_box image_big">
@@ -387,17 +393,43 @@
             </div>
         </div>
     </div>
-    <h3 class="item_title">精选写字楼&nbsp;<span class="item_subtitle">高性价 高格调 超精致</span></h3>
+    <h3 class="max_title">精选写字楼</h3>
+    <div class="max_subtitle">核心CBD / 超高性价比 / 地铁上盖 / 高品质保证</div>
     <div class="fine_building flex_row" id="fine_building">
     </div>
 </div>
 
-<div class="win matop bg_white flex_row">
-    <img id="entrust_img" class="entrust_img"/>
-    <div class="entrust_info_box flex_column">
-        <div class="entrust_title">委托橙办租房网，省心找办公室</div>
-        <div class="entrust_subtitle">10分钟内响应，全程免租，专业看房顾问带看</div>
-        <a class="entrust_btn layui-btn layui-btn-warm" href="search.html">委托找房</a>
+<div class="matop number_info">
+    <div class="number_box">
+        <div>
+            <div class="number_title">300+</div>
+            <div class="number_text">房源数量</div>
+        </div>
+        <div>
+            <div class="number_title">500000+</div>
+            <div class="number_text">覆盖总面积</div>
+        </div>
+        <div>
+            <div class="number_title">100000+</div>
+            <div class="number_text">服务客户数</div>
+        </div>
+        <div>
+            <div class="number_title">10+</div>
+            <div class="number_text">城市覆盖</div>
+        </div>
+    </div>
+</div>
+
+<div class="trust_box">
+    <img id="entrust_img" class="entrust_img" src=""/>
+    <div class="trust_front">
+        <img class="trust_img" id="trust_img" src=""/>
+        <div class="trust_info">
+            <div class="entrust_title" id="entrust_title"></div>
+            <div class="entrust_subtitle" id="entrust_subtitle"></div>
+            <div class="entrust_content" id="entrust_content"></div>
+            <a class="entrust_btn" href="search.html">MORE ></a>
+        </div>
     </div>
 </div>
 
