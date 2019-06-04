@@ -237,8 +237,8 @@
      * 设置委托房源
      */
     function setTrust(trust) {
-        document.getElementById("entrust_img").setAttribute("src", trust.img_intro_1);
-        document.getElementById("trust_img").setAttribute("src", trust.img_intro_2);
+        utils.setImageSrc(document.getElementById("entrust_img"), trust.img_intro_1);
+        utils.setImageSrc(document.getElementById("trust_img"), trust.img_intro_2);
         document.getElementById("entrust_title").innerHTML = trust.title;
         document.getElementById("entrust_subtitle").innerHTML = trust.sub_title;
         document.getElementById("entrust_content").innerHTML = trust.content;
@@ -285,7 +285,6 @@
                 setFineBuildingList(data.fineList);
                 setLeftNewsList(data.newsList);
                 setTrust(data.today_intro);
-                utils.setImageSrc(document.getElementById("entrust_img"));
 
                 openSwiper(data.bannerList.length !== 1);
             }
