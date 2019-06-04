@@ -132,6 +132,14 @@ public class IndexController extends BaseController {
         }
         json.add("newsList", new Gson().toJsonTree(newsList));
 
+        JsonObject todayIntro = new JsonObject();
+        todayIntro.addProperty("title", "今日房源推荐");
+        todayIntro.addProperty("sub_title", "用心打造完美个性家居环境");
+        todayIntro.addProperty("content", "");
+        todayIntro.addProperty("img_intro_1", "http://47.96.165.78/images/intro_1.jpg");
+        todayIntro.addProperty("img_intro_2", "http://47.96.165.78/images/intro_2.jpg");
+        json.add("today_intro", todayIntro);
+
         finish(response, ResultCode.SUCCESS, json);
     }
 }
