@@ -245,28 +245,6 @@
 
     }
 
-    /**
-     * 设置资讯
-     */
-    function setLeftNewsList(newsList) {
-        if (!newsList) {
-            return;
-        }
-
-        let newsListBox = document.getElementById("news_list_left");
-        for (let i = 0, len = newsList.length; i < len; i++) {
-            let newsItem = document.createElement("li");
-            let newsTitle = document.createElement("a");
-            newsTitle.innerHTML = newsList[i].title;
-            newsTitle.setAttribute("href", "newsDetail.html?news_id=" + newsList[i].id);
-            newsItem.appendChild(newsTitle);
-            let newsTime = document.createElement("div");
-            newsTime.innerHTML = newsList[i].last_edit_time;
-            newsItem.appendChild(newsTime);
-            newsListBox.appendChild(newsItem);
-        }
-    }
-
     function setNewsList(newsList) {
         if (!newsList) {
             return;
@@ -323,7 +301,6 @@
                 setPriceRangeScreen(data.priceRangeList);
                 setCoreBuilding(data.coreList);
                 setFineBuildingList(data.fineList);
-                // setLeftNewsList(data.newsList);
                 setNewsList(data.newsList);
                 setTrust(data.today_intro);
 
@@ -364,6 +341,7 @@
         </div>
     </div>
 </div>
+
 <div class="top_bg_box swiper-container" id="top_bg">
     <div class="swiper-wrapper" id="top_bg_item_box">
     </div>
@@ -377,6 +355,7 @@
         </div>
     </form>
 </div>
+
 <div class="win padding_top">
 
     <div class="win_explain">
@@ -482,7 +461,9 @@
 <div class="win news_sign">
     <h3 class="item_title">新闻资讯&nbsp;<span class="item_subtitle">NEWS</span></h3>
 </div>
+
 <div class="news_line"></div>
+
 <div class="win flex_row" id="news_list">
 </div>
 
