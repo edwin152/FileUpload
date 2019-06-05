@@ -531,7 +531,7 @@ body {
 /* 委托找房 */
 .trust_box {
     background: #EFEFEF;
-    height: 650px;
+    height: 33.5vw;
     display: flex;
     flex-direction: row;
     justify-content: start;
@@ -539,8 +539,8 @@ body {
 }
 
 .entrust_img {
-    width: 960px;
-    height: 650px;
+    width: 50vw;
+    height: 33.5vw;
 }
 
 .trust_front {
@@ -548,15 +548,14 @@ body {
     flex-direction: row;
     justify-content: start;
     background: #FFFFFF;
-    width: 850px;
-    height: 350px;
-    margin-left: -330px;
+    width: 46.5vw;
+    height: 18.1vw;
+    margin-left: -17.2vw;
 }
 
 .trust_img {
-    width: 330px;
-    height: 350px;
-
+    width: 17.2vw;
+    height: 18.1vw;
 }
 
 .trust_info {
