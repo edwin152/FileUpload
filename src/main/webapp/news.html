@@ -166,7 +166,10 @@
             let textView = document.createElement("div");
             textView.setAttribute("class", "news_text");
             // TODO 内容
-            textView.innerHTML = newsList[i].content.replace(/<\/?.+?\/?>/g, "");
+            let contentStr = newsList[i].content;
+            if (contentStr){
+                textView.innerHTML = contentStr.replace(/<\/?.+?\/?>/g, "");
+            }
             infoView.appendChild(textView);
         }
     }
@@ -184,7 +187,7 @@
                 elem: 'page_box',
                 //数据总数，从服务端得到
                 count: dataSize,
-                limit: 20,
+                limit: 10,
                 jump: function (obj, first) {
                     //obj包含了当前分页的所有参数，比如：
                     console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。

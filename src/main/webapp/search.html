@@ -4,8 +4,10 @@
     <title>点点租</title>
     <link rel="stylesheet" type="text/css" href="css/all.css"/>
     <link rel="stylesheet" type="text/css" href="css/search.css"/>
+    <link rel="stylesheet" type="text/css" href="layUI/css/layui.css"/>
     <script src="js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
+    <script src="layUI/layui.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
 <!-- 美洽客服 -->
@@ -45,6 +47,21 @@
         filter.checkedPriceRangeId = http.getParameter(request, "price_range_id");
         filter.checkedDecorationId = http.getParameter(request, "decoration_id");
         getFilterList();
+        getHotList();
+
+
+        let list = [
+            {
+                name: "11111111111111111111"
+            },
+            {
+                name: "11111111111111111111"
+            },
+            {
+                name: "11111111111111111111"
+            }
+        ];
+        setHeatBuilding(list);
     };
 
     function getFilterList() {
@@ -117,6 +134,9 @@
             $("#" + name.substr(0, name.length - 4)).show();
         }
         let conditionBox = document.getElementById(name);
+        if (conditionBox == null) {
+            return
+        }
         conditionBox.innerHTML = "";
         for (let i = 0; list && i < list.length; i++) {
             let optionItem = document.createElement("span");
@@ -177,7 +197,7 @@
 
             let conditionBox = document.createElement("div");
 
-            conditionBox.className = "data_item_box flex_row";
+            conditionBox.className = "data_item_box flex_column_left";
             let imgLeft = document.createElement("img");
             imgLeft.className = 'item_image clickable';
             imgLeft.setAttribute("src", building.img_list[0]);
@@ -201,7 +221,6 @@
             let itemAddress = document.createElement("div");
             itemAddress.className = 'item_address item_margin';
             let item_title = document.createElement("span");
-            item_title.className = "item_title";
             item_title.innerHTML = "地址：";
             let district_name = document.createElement("a");
             district_name.className = "hover_de clickable";
@@ -224,17 +243,22 @@
             itemAddress.appendChild(zone_name);
             itemAddress.append("] |  " + building.address);
             dataInfoBox.appendChild(itemAddress);
+            //
+            // let itemSize = document.createElement("div");
+            // itemSize.className = 'item_size item_margin';
+            // dataInfoBox.appendChild(itemSize);
+            //
+            // itemSize.innerHTML = "<span class=\"item_title\">面积：</span>" + building.area_range + "m²";
+            //
+            // let itemPosition = document.createElement("div");
+            // itemPosition.className = 'item_position item_margin';
+            // itemPosition.innerHTML = "共有" + building.office_num + "个房源";
+            // dataInfoBox.appendChild(itemPosition);
 
-            let itemSize = document.createElement("div");
-            itemSize.className = 'item_size item_margin';
-            dataInfoBox.appendChild(itemSize);
-
-            itemSize.innerHTML = "<span class=\"item_title\">面积：</span>" + building.area_range + "m²";
-
-            let itemPosition = document.createElement("div");
-            itemPosition.className = 'item_position item_margin';
-            itemPosition.innerHTML = "共有" + building.office_num + "个房源";
-            dataInfoBox.appendChild(itemPosition);
+            let buildingInfoBox = document.createElement("div");
+            buildingInfoBox.className = "building_info_box";
+            buildingInfoBox.innerHTML = "<span class='building_info_title'>大厦简介：</span>" + building.introduce;
+            dataInfoBox.appendChild(buildingInfoBox);
 
             let itemSizeBtnBox = document.createElement("div");
             itemSizeBtnBox.className = 'item_size_btn_box flex_row';
@@ -255,9 +279,16 @@
             itemPrice.innerHTML = "<span class=\"item_price_num\">" +
                 building.price_average + // -----------------------
                 "</span>元/m²/天";
-            conditionBox.appendChild(itemPrice);
+            dataInfoBox.appendChild(itemPrice);
+
+            let btn = document.createElement("div");
+            btn.className = 'item_btn';
+            btn.innerHTML = "了解更多";
+            dataInfoBox.appendChild(btn);
+
             dataListBox.appendChild(conditionBox);
         }
+        loadPageUtil(buildingList.length);
     }
 
     function nextPage() {
@@ -273,151 +304,255 @@
     function openDetail(building_id) {
         window.open("buildingDetail.html?building_id=" + building_id, "_blank");
     }
+
+    function getHotList() {
+        http.post({
+            url: "news/hot",
+            success: function (data) {
+                setHeatNews(data);
+            }
+        })
+    }
+
+    /**
+     * 设置资讯
+     * @param heatNewsList
+     */
+    function setHeatNews(heatNewsList) {
+        if (heatNewsList == null) return;
+        let ListBox = document.getElementById("right_heat_news");
+        for (let i = 0, len = heatNewsList.length; i < len; i++) {
+            let itemBox = document.createElement("div");
+            itemBox.className = "right_heat_news_item";
+
+            let imgListStr = heatNewsList[i].img_list;
+            let imgList = JSON.parse(imgListStr);
+            let itemImg = document.createElement("img");
+            itemImg.className = "right_heat_news_img";
+            if (imgList && imgList.length > 0){
+                utils.setImageSrc(itemImg, imgList[0]);
+            }else{
+                utils.setImageSrc(itemImg, null);
+            }
+            itemBox.appendChild(itemImg);
+
+            let itemInfo = document.createElement("div");
+            itemInfo.className = "flex_column_left";
+
+            let itemTitle = document.createElement("div");
+            itemTitle.className = "right_heat_news_title";
+            itemTitle.innerHTML = heatNewsList[i].title;
+            itemInfo.appendChild(itemTitle);
+
+            let itemTime = document.createElement("div");
+            itemTime.className = "right_heat_news_time";
+            itemTime.innerHTML = heatNewsList[i].last_edit_time;
+            itemInfo.appendChild(itemTime);
+
+            if (i === len - 1){
+                itemBox.setAttribute("style", "border: none;");
+            }
+
+            itemBox.appendChild(itemInfo);
+            ListBox.appendChild(itemBox);
+        }
+    }
+
+    /**
+     * 设置资讯
+     * @param heatBuildingList
+     */
+    function setHeatBuilding(heatBuildingList) {
+        if (heatBuildingList == null) return;
+        let ListBox = document.getElementById("right_heat_building");
+        for (let i = 0, len = heatBuildingList.length; i < len; i++) {
+            let itemBox = document.createElement("div");
+            itemBox.className = "right_heat_building_item";
+            itemBox.innerHTML = "<span class='right_heat_mark'>&gt;</span>&nbsp;&nbsp;" + heatBuildingList[i].name;
+            ListBox.appendChild(itemBox);
+        }
+    }
+
+    /**
+     * 加载分页工具
+     * @param dataSize 数据总数
+     */
+    function loadPageUtil(dataSize) {
+        layui.use('laypage', function () {
+            var laypage = layui.laypage;
+            //执行一个laypage实例
+            laypage.render({
+                //注意，这里的 test1 是 ID，不用加 # 号
+                elem: 'page_box',
+                //数据总数，从服务端得到
+                count: dataSize,
+                limit: 10,
+                jump: function (obj, first) {
+                    //obj包含了当前分页的所有参数，比如：
+                    // console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                    // console.log(obj.limit); //得到每页显示的条数
+
+                    //首次不执行
+                    if (!first) {
+                        getBuildingList(obj.curr - 1);
+                    }
+                }
+            });
+        });
+    }
 </script>
 
-<body class="bg_gray">
+<body>
 <div class="title_box">
-    <div class="win flex_row">
-        <div class="title_text">
-            上海
-        </div>
-        <div class="title_text">
-            [切换城市]
-        </div>
-        <div class="title_text">
-            |
-        </div>
-        <div class="title_text title_text_right">
-            <a href="index.html">首页</a>
-        </div>
-        <div class="gm_num_box">
-            <span>021 - 5090 6123</span>
-            <img src="img/phone.png" alt="phone"/>
-        </div>
-    </div>
-</div>
-
-<div class="bg_white">
-    <div class="win top_box flex_row">
+    <div class="win flex_row position_relative">
         <img src="img/logo_light.png" class="top_logo" alt=""/>
-        <a href="" class="black_a logo_right">上海写字楼出租</a>
-        <div class="top_search_box flex_row">
-            <form action="">
-                <input type="text" class="top_search" name="keyword" id="keyword_input"
-                       placeholder="输入您要查找的楼盘或者区域商圈名称"/>
-                <input type="submit" class="top_search_btn clickable" value="搜索"/>
-            </form>
+        <div class="position_right">
+            <div class="title_text_right">
+                <a href="index.html" class="clickable">首页</a>
+            </div>
+            <div class="title_text_right title_obvious">
+                <a href="search.html" class="clickable">写字楼出租</a>
+            </div>
+            <div class="title_text_right">
+                <a href="search.html?type_id=3" class="clickable">共享办公</a>
+            </div>
+            <div class="title_text_right">
+                <a href="news.html" class="clickable">资讯中心</a>
+            </div>
         </div>
     </div>
 </div>
 
 <div class="matop bg_white">
-    <div class="win condition_box" id="condition_box">
-        <div class="condition_line flex_row">
+    <div class="condition_box" id="condition_box">
+        <div class="condition_line flex_row gradient_line_50">
             <div class="condition_title" id="district">
                 区：
             </div>
             <div class="option_box flex_row" id="districtList">
             </div>
         </div>
-        <div class="condition_line flex_row" id="zone">
+        <div class="condition_line flex_row gradient_line_55" id="zone" style="display: none;">
             <div class="condition_title">
                 区域：
             </div>
             <div class="option_box flex_row" id="zoneList">
             </div>
         </div>
-        <div class="condition_line flex_row" id="metro">
+        <div class="condition_line flex_row gradient_line_60" id="metro">
             <div class="condition_title">
                 地铁：
             </div>
             <div class="option_box flex_row" id="metroList">
             </div>
         </div>
-        <div class="condition_line flex_row" id="type">
-            <div class="condition_title">
-                类型：
-            </div>
-            <div class="option_box flex_row" id="typeList">
-            </div>
-        </div>
-        <div class="condition_line flex_row" id="areaRange">
-            <div class="condition_title">
-                面积：
-            </div>
-            <div class="option_box flex_row" id="areaRangeList">
-            </div>
-        </div>
-        <div class="condition_line flex_row" id="priceRange">
+        <!--<div class="condition_line flex_row" id="type">-->
+        <!--<div class="condition_title">-->
+        <!--类型：-->
+        <!--</div>-->
+        <!--<div class="option_box flex_row" id="typeList">-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="condition_line flex_row" id="areaRange">-->
+        <!--<div class="condition_title">-->
+        <!--面积：-->
+        <!--</div>-->
+        <!--<div class="option_box flex_row" id="areaRangeList">-->
+        <!--</div>-->
+        <!--</div>-->
+        <div class="condition_line flex_row gradient_line_65" id="priceRange">
             <div class="condition_title">
                 价格：
             </div>
             <div class="option_box flex_row" id="priceRangeList">
             </div>
         </div>
-        <div class="condition_line flex_row" id="decoration">
-            <div class="condition_title">
-                装修：
-            </div>
-            <div class="option_box flex_row" id="decorationList">
-            </div>
-        </div>
+        <!--<div class="condition_line flex_row" id="decoration">-->
+        <!--<div class="condition_title">-->
+        <!--装修：-->
+        <!--</div>-->
+        <!--<div class="option_box flex_row" id="decorationList">-->
+        <!--</div>-->
+        <!--</div>-->
+        <div class="gradient_line_70 condition_line_bottom"></div>
     </div>
 </div>
 
 <div class="content_box matop win flex_row">
     <div class="content_left bg_white">
-        <h3 class="sec_title">默认排序</h3>
         <div class="error_not_text" id="error_not_text">
             抱歉，暂无数据！
         </div>
-        <div class="data_list flex_column" id="data_list_box">
+        <div class="data_list flex_column_left" id="data_list_box">
             <div class="data_item_box flex_row" id="dataList">
             </div>
         </div>
 
-        <div class="paging" id="next_page">
-            <span class="paging_item" onclick="nextPage()">
-                下一页
-            </span>
+        <div class="page_box" id="page_box">
         </div>
     </div>
     <div class="content_right bg_white">
-        <div class="contact_way">
-            <div class="service_phone flex_row">
-                <div class="icon_phone"></div>
-                <div class="service_phone_text">
-                    021 - 5090 6123
-                </div>
+
+        <form action="search.html">
+            <div class="right_search_box">
+                <input type="text" class="right_search" name="keyword" placeholder="在这里搜索你租凭的写字楼"/>
+                <input class="right_search_btn" type="submit" value=" "/>
             </div>
-            <div class="ready_see">
-                预约看房
-            </div>
-            <input class="ready_phone" type="text" name="ready_phone" id="ready_phone" value="" placeholder="请输入手机号"/>
-            <div class="contact_info">
-                <div class="ready_see btn">
-                    预约看房
-                </div>
+        </form>
+
+        <div class="right_item_box">
+            <div class="right_item_title_red">热门写字楼</div>
+            <div class="flex_column_left" id="right_heat_building">
+
             </div>
         </div>
+
+        <div class="right_item_box">
+            <div class="right_item_title_green">近期资讯</div>
+            <div class="flex_column_left" id="right_heat_news">
+
+            </div>
+        </div>
+
+        <!--<div class="contact_way">-->
+            <!--<div class="service_phone flex_row">-->
+                <!--<div class="icon_phone"></div>-->
+                <!--<div class="service_phone_text">-->
+                    <!--021 - 5090 6123-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="ready_see">-->
+                <!--预约看房-->
+            <!--</div>-->
+            <!--<input class="ready_phone" type="text" name="ready_phone" id="ready_phone" value="" placeholder="请输入手机号"/>-->
+            <!--<div class="contact_info">-->
+                <!--<div class="ready_see btn">-->
+                    <!--预约看房-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
 </div>
 
-<div class="bottom_box flex_column">
-    <div class="win">
-        <div class="flex_row bottom_top">
-            <div class="foot_l">
-                <div class="ad_title">租办公室，就上橙办 ！</div>
-            </div>
-            <div class="foot_m">
-                客服服务：（早9:00-晚21:00）<br/>
-                <span>021 - 5090 6123</span>
-            </div>
+<div class="bottom_box flex_column_left">
+    <div class="win flex_column_left">
+        <span class="friendly_href_sign">&nbsp;|&nbsp;&nbsp;&nbsp;友情链接</span>
+        <div class="friendly_href">
+            <a href="https://sh.diandianzu.com/" target="_blank">上海办公室出租</a>
+            <a href="https://sh.diandianzu.com/" target="_blank">上海办公室出租</a>
+            <a href="https://sh.diandianzu.com/" target="_blank">上海办公室出租</a>
         </div>
-        <div class="foot_link">
-            友情链接：
-            <a href="https://sh.diandianzu.com/" target="_blank">上海写字楼出租</a>
-        </div>
+    </div>
+
+    <div class="foot_logo flex_row">
+        <img src="img/logo_dark.png" alt="橙办"/>
+        <span>&nbsp;&nbsp;&nbsp;找办公室 就上橙办！</span>
+    </div>
+
+    <div class="foot_contact_info flex_column_left">
+        <span>电话：021 - 5090 6123</span>
+        <span>邮箱：000000@qq.com</span>
+        <span>邮编：000000</span>
     </div>
 </div>
 </body>
