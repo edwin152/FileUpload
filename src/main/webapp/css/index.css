@@ -706,3 +706,16 @@ body {
     -webkit-box-orient: vertical;
 }
 
+.more_news {
+    width: 154px;
+    height: 39px;
+    line-height: 20px;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 60px;
+    cursor: pointer;
+    background: #2C2C2C;
+    color: #FFF;
+    font-size: 28px;
+    font-weight: bold;
+}
