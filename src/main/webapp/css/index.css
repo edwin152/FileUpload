@@ -3,8 +3,8 @@ body {
 }
 
 .top_bg_box {
-    width: 100%;
-    height: 800px;
+    width: 100vw;
+    height: 41.7vw;
     overflow: hidden;
     position: relative;
     margin: 0;
@@ -163,7 +163,7 @@ body {
 .search_box_width {
     width: 100%;
     position: absolute;
-    top: 375px;
+    top: 23vw;
     z-index: 20;
 }
 
@@ -344,6 +344,10 @@ body {
 }
 
 /* 核心商圈 */
+.core_sign {
+    margin-top: 80px;
+}
+
 .image_box_in_title {
     justify-content: space-between;
 }
@@ -486,6 +490,21 @@ body {
     color: #FFA200;
 }
 
+.more_buildings {
+    margin: 30px auto 57px auto;
+    border-radius: 5px;
+    border-width: 0;
+    width: 251px;
+    height: 63px;
+    color: #FFF;
+    cursor: pointer;
+    font-size: 19px;
+    background: -webkit-linear-gradient(left, #ec7d40 20%, #fb4562); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(right, #ec7d40 20%, #fb4562); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(right, #ec7d40 20%, #fb4562); /* Firefox 3.6 - 15 */
+    background: linear-gradient(to right, #ec7d40 20%, #fb4562); /* 标准的语法 */
+}
+
 /* 精选title */
 .max_title {
     font-size: 40px;
@@ -568,7 +587,8 @@ body {
 
 .entrust_title {
     color: #666666;
-    font-size: 26px;
+    font-size: 22px;
+    margin-top: 50px;
 }
 
 .entrust_subtitle {
@@ -578,7 +598,8 @@ body {
 }
 
 .entrust_content {
-    font-size: 16px;
+    font-size: 12px;
+    flex: 1;
     color: #888888;
 }
 
@@ -590,6 +611,7 @@ body {
     height: 30px;
     line-height: 30px;
     margin-top: 40px;
+    margin-bottom: 50px;
     text-align: center;
 }
 
@@ -620,9 +642,14 @@ body {
     color: #666666;
 }
 
+.news_sign {
+    margin-top: 100px;
+}
+
 .news_line {
     width: 100%;
     height: 1px;
+    margin-top: 70px;
     background: #e0e0e0;
 }
 

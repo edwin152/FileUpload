@@ -144,9 +144,8 @@ input {
 
 .bottom_box {
     overflow: hidden;
-    /*background: #2c2c2c;*/
-    padding: 54px 0 50px 0;
     margin-top: 10px;
+    height: 440px;
     background-image: url(../img/bottom.jpg);
 }
 
@@ -485,4 +484,52 @@ img {
 
 .top_box .link:hover {
     color: #FFA200;
+}
+
+.friendly_href_sign {
+    font-weight: bold;
+    color: #FFF;
+    margin-top: 42px;
+    font-size: 20px;
+}
+
+.friendly_href {
+    margin-top: 30px;
+}
+
+.friendly_href a {
+    font-size: 10px;
+    color: #fff;
+    margin-right: 10px;
+}
+
+.friendly_href a:hover {
+    cursor: pointer;
+    color: #FFA200;
+}
+
+.foot_logo {
+    margin-top: 46px;
+    padding-left: 100px;
+}
+
+.foot_logo img {
+    width: 80px;
+    height: 96px;
+}
+
+.foot_logo span {
+    font-size: 24px;
+    color: #FFF;
+}
+
+.foot_contact_info {
+    margin-top: 50px;
+    padding-left: 100px;
+}
+
+.foot_contact_info span{
+    font-size: 12px;
+    color: #FFF;
+    margin-bottom: 25px;
 }

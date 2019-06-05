@@ -123,6 +123,7 @@ let utils = {
             src = img_list[0];
         }
         img.setAttribute("src", src);
+        img.setAttribute("alt", "橙办");
     },
 };
 
