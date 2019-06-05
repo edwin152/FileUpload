@@ -14,8 +14,8 @@
         m[i] = m[i] || function () {
             (m[i].a = m[i].a || []).push(arguments)
         };
-        j = ei.createElement(q),
-            s = ei.getElementsByTagName(q)[0];
+        j = ei.createElement(q);
+        s = ei.getElementsByTagName(q)[0];
         j.async = true;
         j.charset = 'UTF-8';
         j.src = 'https://static.meiqia.com/dist/meiqia.js?=_t';
@@ -31,7 +31,7 @@
         getFilterList();
         getHotList();
         let request = window.location.search;
-        let newsId = http.getParameter(request, "newsId");
+        let newsId = http.getParameter(request, "news_id");
         getNewsDetail(newsId);
     };
 

@@ -20,8 +20,8 @@
         m[i] = m[i] || function () {
             (m[i].a = m[i].a || []).push(arguments)
         };
-        j = ei.createElement(q),
-            s = ei.getElementsByTagName(q)[0];
+        j = ei.createElement(q);
+        s = ei.getElementsByTagName(q)[0];
         j.async = true;
         j.charset = 'UTF-8';
         j.src = 'https://static.meiqia.com/dist/meiqia.js?=_t';
@@ -258,12 +258,52 @@
             let newsItem = document.createElement("li");
             let newsTitle = document.createElement("a");
             newsTitle.innerHTML = newsList[i].title;
-            newsTitle.setAttribute("href", "newsDetail.html?newsId=" + newsList[i].id);
+            newsTitle.setAttribute("href", "newsDetail.html?news_id=" + newsList[i].id);
             newsItem.appendChild(newsTitle);
             let newsTime = document.createElement("div");
             newsTime.innerHTML = newsList[i].last_edit_time;
             newsItem.appendChild(newsTime);
             newsListBox.appendChild(newsItem);
+        }
+    }
+
+    function setNewsList(newsList) {
+        if (!newsList) {
+            return;
+        }
+
+        let news_list = document.getElementById("news_list");
+        for (let i = 0, len = newsList.length; i < len || i < 3; i++) {
+            let news;
+            if (newsList.hasOwnProperty(i)) {
+                news = newsList[i];
+            }
+            let news_item = document.createElement("div");
+            news_item.className = "news_item";
+            news_list.appendChild(news_item);
+            if (i % 3 !== 2) {
+                let news_item_line = document.createElement("div");
+                news_item_line.className = "news_item_line";
+                news_list.appendChild(news_item_line);
+            }
+
+            if (news) {
+                let news_title = document.createElement("span");
+                news_title.className = "news_title";
+                news_title.onclick = function () {
+                    window.open("newsDetail.html?new_id=" + news.id);
+                };
+                news_title.innerHTML = news.title;
+                news_item.appendChild(news_title);
+                let news_date = document.createElement("span");
+                news_date.className = "news_date";
+                news_date.innerHTML = news.last_edit_time;
+                news_item.appendChild(news_date);
+                let news_content = document.createElement("span");
+                news_content.className = "news_content";
+                news_content.innerHTML = news.content;
+                news_item.appendChild(news_content);
+            }
         }
     }
 
@@ -283,7 +323,8 @@
                 setPriceRangeScreen(data.priceRangeList);
                 setCoreBuilding(data.coreList);
                 setFineBuildingList(data.fineList);
-                setLeftNewsList(data.newsList);
+                // setLeftNewsList(data.newsList);
+                setNewsList(data.newsList);
                 setTrust(data.today_intro);
 
                 openSwiper(data.bannerList.length !== 1);
@@ -367,7 +408,7 @@
     </div>
 
 
-    <h3 class="item_title">核心商圈享&nbsp;<span class="item_subtitle">优质配套 与大咖公司为邻</span></h3>
+    <h3 class="item_title">热门商圈&nbsp;<span class="item_subtitle">核心CBD房源一手掌握</span></h3>
     <div class="image_box_in_title flex_row" id="core_building" style="display: none;">
         <div class="core_left_big_box image_big">
             <img class="core_img clickable" id="core_item_img_0"/>
@@ -432,6 +473,14 @@
     </div>
 </div>
 
+<div class="win">
+    <h3 class="item_title">新闻资讯&nbsp;<span class="item_subtitle">NEWS</span></h3>
+</div>
+<div class="news_line"></div>
+<div class="win flex_row" id="news_list">
+</div>
+
+<!--
 <div class="win matop bg_white flex_row">
     <div class="news_heat">
         <div class="news_title flex_row">
@@ -443,12 +492,12 @@
     </div>
     <div class="news_heat"></div>
 </div>
-
+-->
 <div class="bottom_box flex_column">
     <div class="win">
         <div class="flex_row bottom_top">
             <div class="foot_l">
-                <div class="ad_title">租办公室，就上橙办 ！</div>
+                <div class="ad_title">找办公室 就上橙办 ！</div>
             </div>
             <div class="foot_m">
                 客服服务：（早9:00-晚21:00）<br/>

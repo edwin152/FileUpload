@@ -16,8 +16,8 @@
         m[i] = m[i] || function () {
             (m[i].a = m[i].a || []).push(arguments)
         };
-        j = ei.createElement(q),
-            s = ei.getElementsByTagName(q)[0];
+        j = ei.createElement(q);
+        s = ei.getElementsByTagName(q)[0];
         j.async = true;
         j.charset = 'UTF-8';
         j.src = 'https://static.meiqia.com/dist/meiqia.js?=_t';
@@ -109,7 +109,7 @@
         for (let i = 0, len = heatNewsList.length; i < len; i++) {
             let itemView = document.createElement("div");
             itemView.onclick = function () {
-                window.open("newsDetail.html?newsId=" + heatNewsList[i].id);
+                window.open("newsDetail.html?news_id=" + heatNewsList[i].id);
             };
             itemView.innerHTML = heatNewsList[i].title;
             ListBox.appendChild(itemView);
@@ -153,7 +153,7 @@
             // TODO 标题
             titleView.innerHTML = newsList[i].title;
             titleView.onclick = function () {
-                window.open("newsDetail.html?newsId=" + newsList[i].id);
+                window.open("newsDetail.html?news_id=" + newsList[i].id);
             };
             titleViewBox.appendChild(titleView);
 

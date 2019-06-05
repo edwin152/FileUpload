@@ -126,11 +126,22 @@ public class IndexController extends BaseController {
         json.add("coreList", zoneArray);
 
         List<News> newsList = newsService.getIndexNews();
+        JsonArray newsArray = new JsonArray();
         for (News news : newsList) {
-            news.setContent(null);
-            news.setImg_list(null);
+            String content = news.getContent();
+            if (content != null) {
+                content = content.replaceAll("</?.+?/?>", "");
+                if (content.length() > 200) {
+                    content = content.substring(0, 200);
+                    content = content + "...";
+                }
+                news.setContent(content);
+            }
+            JsonObject newsObject = new Gson().toJsonTree(news).getAsJsonObject();
+            newsObject.add("img_list", JsonUtils.strToStringArray(news.getImg_list()));
+            newsArray.add(newsObject);
         }
-        json.add("newsList", new Gson().toJsonTree(newsList));
+        json.add("newsList", newsArray);
 
         JsonObject todayIntro = new JsonObject();
         todayIntro.addProperty("title", "今日房源推荐");
