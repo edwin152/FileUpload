@@ -48,20 +48,6 @@
         filter.checkedDecorationId = http.getParameter(request, "decoration_id");
         getFilterList();
         getHotList();
-
-
-        let list = [
-            {
-                name: "11111111111111111111"
-            },
-            {
-                name: "11111111111111111111"
-            },
-            {
-                name: "11111111111111111111"
-            }
-        ];
-        setHeatBuilding(list);
     };
 
     function getFilterList() {
@@ -195,16 +181,21 @@
         for (let i = 0; i < buildingList.length; i++) {
             let building = buildingList[i];
 
-            let conditionBox = document.createElement("div");
+            let row = document.createElement("div");
+            row.className = 'building_item';
+            dataListBox.appendChild(row);
 
-            conditionBox.className = "data_item_box flex_column_left";
             let imgLeft = document.createElement("img");
             imgLeft.className = 'item_image clickable';
             imgLeft.setAttribute("src", building.img_list[0]);
             imgLeft.onclick = function () {
                 openDetail(building.id);
             };
-            conditionBox.appendChild(imgLeft);
+            row.appendChild(imgLeft);
+
+            let conditionBox = document.createElement("div");
+            conditionBox.className = "data_item_box flex_column_left";
+            row.appendChild(conditionBox);
 
             let dataInfoBox = document.createElement("div");
             dataInfoBox.className = 'data_info_box flex_column';
@@ -219,7 +210,7 @@
             dataInfoBox.appendChild(itemName);
 
             let itemAddress = document.createElement("div");
-            itemAddress.className = 'item_address item_margin';
+            itemAddress.className = 'item_address';
             let item_title = document.createElement("span");
             item_title.innerHTML = "地址：";
             let district_name = document.createElement("a");
@@ -241,7 +232,7 @@
             itemAddress.appendChild(district_name);
             itemAddress.append(" ] - [ ");
             itemAddress.appendChild(zone_name);
-            itemAddress.append("] |  " + building.address);
+            itemAddress.append(" ]     |      " + building.address);
             dataInfoBox.appendChild(itemAddress);
             //
             // let itemSize = document.createElement("div");
@@ -285,8 +276,6 @@
             btn.className = 'item_btn';
             btn.innerHTML = "了解更多";
             dataInfoBox.appendChild(btn);
-
-            dataListBox.appendChild(conditionBox);
         }
         loadPageUtil(buildingList.length);
     }
@@ -329,19 +318,22 @@
             let imgList = JSON.parse(imgListStr);
             let itemImg = document.createElement("img");
             itemImg.className = "right_heat_news_img";
-            if (imgList && imgList.length > 0){
+            if (imgList && imgList.length > 0) {
                 utils.setImageSrc(itemImg, imgList[0]);
-            }else{
+            } else {
                 utils.setImageSrc(itemImg, null);
             }
             itemBox.appendChild(itemImg);
 
             let itemInfo = document.createElement("div");
-            itemInfo.className = "flex_column_left";
+            itemInfo.className = "right_heat_news flex_column_left";
 
             let itemTitle = document.createElement("div");
             itemTitle.className = "right_heat_news_title";
             itemTitle.innerHTML = heatNewsList[i].title;
+            itemTitle.onclick = function () {
+                window.open("newsDetail.html?news_id=" + heatNewsList[i].id);
+            };
             itemInfo.appendChild(itemTitle);
 
             let itemTime = document.createElement("div");
@@ -349,7 +341,7 @@
             itemTime.innerHTML = heatNewsList[i].last_edit_time;
             itemInfo.appendChild(itemTime);
 
-            if (i === len - 1){
+            if (i === len - 1) {
                 itemBox.setAttribute("style", "border: none;");
             }
 
@@ -358,20 +350,21 @@
         }
     }
 
-    /**
-     * 设置资讯
-     * @param heatBuildingList
-     */
-    function setHeatBuilding(heatBuildingList) {
-        if (heatBuildingList == null) return;
-        let ListBox = document.getElementById("right_heat_building");
-        for (let i = 0, len = heatBuildingList.length; i < len; i++) {
-            let itemBox = document.createElement("div");
-            itemBox.className = "right_heat_building_item";
-            itemBox.innerHTML = "<span class='right_heat_mark'>&gt;</span>&nbsp;&nbsp;" + heatBuildingList[i].name;
-            ListBox.appendChild(itemBox);
-        }
-    }
+    //
+    // /**
+    //  * 设置资讯
+    //  * @param heatBuildingList
+    //  */
+    // function setHeatBuilding(heatBuildingList) {
+    //     if (heatBuildingList == null) return;
+    //     let ListBox = document.getElementById("right_heat_building");
+    //     for (let i = 0, len = heatBuildingList.length; i < len; i++) {
+    //         let itemBox = document.createElement("div");
+    //         itemBox.className = "right_heat_building_item";
+    //         itemBox.innerHTML = "<span class='right_heat_mark'>&gt;</span>&nbsp;&nbsp;" + heatBuildingList[i].name;
+    //         ListBox.appendChild(itemBox);
+    //     }
+    // }
 
     /**
      * 加载分页工具
@@ -446,35 +439,34 @@
             <div class="option_box flex_row" id="metroList">
             </div>
         </div>
-        <!--<div class="condition_line flex_row" id="type">-->
-        <!--<div class="condition_title">-->
-        <!--类型：-->
-        <!--</div>-->
-        <!--<div class="option_box flex_row" id="typeList">-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div class="condition_line flex_row" id="areaRange">-->
-        <!--<div class="condition_title">-->
-        <!--面积：-->
-        <!--</div>-->
-        <!--<div class="option_box flex_row" id="areaRangeList">-->
-        <!--</div>-->
-        <!--</div>-->
-        <div class="condition_line flex_row gradient_line_65" id="priceRange">
+        <div class="condition_line flex_row gradient_line_65" id="type">
+            <div class="condition_title">
+                类型：
+            </div>
+            <div class="option_box flex_row" id="typeList">
+            </div>
+        </div>
+        <div class="condition_line flex_row gradient_line_70" id="areaRange">
+            <div class="condition_title">
+                面积：
+            </div>
+            <div class="option_box flex_row" id="areaRangeList">
+            </div>
+        </div>
+        <div class="condition_line flex_row gradient_line_75" id="priceRange">
             <div class="condition_title">
                 价格：
             </div>
             <div class="option_box flex_row" id="priceRangeList">
             </div>
         </div>
-        <!--<div class="condition_line flex_row" id="decoration">-->
-        <!--<div class="condition_title">-->
-        <!--装修：-->
-        <!--</div>-->
-        <!--<div class="option_box flex_row" id="decorationList">-->
-        <!--</div>-->
-        <!--</div>-->
-        <div class="gradient_line_70 condition_line_bottom"></div>
+        <div class="condition_line flex_row gradient_line_80" id="decoration">
+            <div class="condition_title">
+                装修：
+            </div>
+            <div class="option_box flex_row" id="decorationList">
+            </div>
+        </div>
     </div>
 </div>
 
@@ -483,6 +475,7 @@
         <div class="error_not_text" id="error_not_text">
             抱歉，暂无数据！
         </div>
+
         <div class="data_list flex_column_left" id="data_list_box">
             <div class="data_item_box flex_row" id="dataList">
             </div>
@@ -492,45 +485,24 @@
         </div>
     </div>
     <div class="content_right bg_white">
-
         <form action="search.html">
             <div class="right_search_box">
-                <input type="text" class="right_search" name="keyword" placeholder="在这里搜索你租凭的写字楼"/>
+                <input type="text" id="keyword_input" class="right_search" name="keyword" placeholder="在这里搜索你租凭的写字楼"/>
                 <input class="right_search_btn" type="submit" value=" "/>
             </div>
         </form>
 
-        <div class="right_item_box">
-            <div class="right_item_title_red">热门写字楼</div>
-            <div class="flex_column_left" id="right_heat_building">
-
-            </div>
-        </div>
+        <!--        <div class="right_item_box">-->
+        <!--            <div class="right_item_title_red">热门写字楼</div>-->
+        <!--            <div class="flex_column_left" id="right_heat_building">-->
+        <!--            </div>-->
+        <!--        </div>-->
 
         <div class="right_item_box">
             <div class="right_item_title_green">近期资讯</div>
             <div class="flex_column_left" id="right_heat_news">
-
             </div>
         </div>
-
-        <!--<div class="contact_way">-->
-            <!--<div class="service_phone flex_row">-->
-                <!--<div class="icon_phone"></div>-->
-                <!--<div class="service_phone_text">-->
-                    <!--021 - 5090 6123-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="ready_see">-->
-                <!--预约看房-->
-            <!--</div>-->
-            <!--<input class="ready_phone" type="text" name="ready_phone" id="ready_phone" value="" placeholder="请输入手机号"/>-->
-            <!--<div class="contact_info">-->
-                <!--<div class="ready_see btn">-->
-                    <!--预约看房-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
     </div>
 </div>
 
