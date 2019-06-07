@@ -47,22 +47,6 @@ public class ManageController extends BaseController {
         }
     }
 
-    @RequestMapping("/edit")
-    public String edit(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        request.setCharacterEncoding("utf-8");
-        response.setCharacterEncoding("utf-8");
-
-        RequestHelper helper = new RequestHelper(request);
-        Log.d("manage-edit", helper);
-
-        boolean isLogin = SessionUtils.checkSession(request.getSession());
-        if (isLogin) {
-            return "/edit";
-        } else {
-            return "redirect:/manage";
-        }
-    }
-
     @RequestMapping("/buildings")
     public String buildings(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
