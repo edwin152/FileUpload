@@ -34,7 +34,7 @@
         let request = window.location.search;
         filter.checkedNewsTagId = http.getParameter(request, "news_tag_id");
         getFilterList();
-        getHotList();
+        // getHotList();
     };
 
     function getFilterList() {
@@ -73,8 +73,9 @@
                     document.getElementById("news_list_box").innerHTML = "";
                 }
                 setNewsList(data.newsList);
-                if (isFirst && data.length > 0) {
-                    loadPageUtil(data.length);
+                // TODO 数据总数
+                if (isFirst && data.dataSize > 0) {
+                    loadPageUtil(data.dataSize);
                     isFirst = false;
                 }
             }
@@ -90,7 +91,11 @@
         let newTypeBox = document.getElementById("news_type");
         for (let i = 0, len = typeList.length; i < len; i++) {
             let typeItem = document.createElement("div");
-            typeItem.setAttribute("class", "link");
+            if (typeList[i].isSelect){
+                typeItem.setAttribute("class", "news_type_item_select");
+            }else{
+                typeItem.setAttribute("class", "news_type_item");
+            }
             typeItem.onclick = function () {
                 getNewsList(0, typeList[i].id);
             };
@@ -144,13 +149,13 @@
 
             let typeView = document.createElement("span");
             typeView.setAttribute("class", "item_type");
-            // TODO 类型
+            // 类型
             typeView.innerHTML = newsList[i].news_tag_name;
             titleViewBox.appendChild(typeView);
 
             let titleView = document.createElement("div");
             titleView.setAttribute("class", "news_title");
-            // TODO 标题
+            // 标题
             titleView.innerHTML = newsList[i].title;
             titleView.onclick = function () {
                 window.open("newsDetail.html?news_id=" + newsList[i].id);
@@ -159,18 +164,26 @@
 
             let timeView = document.createElement("div");
             timeView.setAttribute("class", "news_time");
-            // TODO 时间
+            // 时间
             timeView.innerHTML = newsList[i].last_edit_time;
             infoView.appendChild(timeView);
 
             let textView = document.createElement("div");
             textView.setAttribute("class", "news_text");
-            // TODO 内容
+            // 内容
             let contentStr = newsList[i].content;
-            if (contentStr){
+            if (contentStr) {
                 textView.innerHTML = contentStr.replace(/<\/?.+?\/?>/g, "");
             }
             infoView.appendChild(textView);
+
+            let intoBtn = document.createElement("div");
+            intoBtn.setAttribute("class", "into_btn clickable");
+            intoBtn.innerHTML = "查看详情";
+            intoBtn.onclick = function () {
+                window.open("newsDetail.html?news_id=" + newsList[i].id);
+            };
+            infoView.appendChild(intoBtn);
         }
     }
 
@@ -224,29 +237,31 @@
     </div>
 </div>
 
-<div class="bg_white">
-    <div class="win top_box flex_row">
-        <div class="flex_row" id="news_type">
+
+<div class="bg_white type_background" id="type_background" style="background: url('http://47.96.165.78/images/banner.jpg')">
+    <div class="win top_box flex_row bg_white">
+        <div class="news_type" id="news_type">
         </div>
     </div>
 </div>
 
-<div class="flex_row matop win content_box">
-    <div class="content_left_box">
-        <div class="left_title">
-            <img src="img/phone.png" alt="" class="left_title_img"/>
-            热门资讯
-        </div>
-        <div class="heat_news" id="heat_news">
+<div class="flex_row win content_box">
+    <!--<div class="content_left_box">-->
+    <!--<div class="left_title">-->
+    <!--<img src="img/phone.png" alt="" class="left_title_img"/>-->
+    <!--热门资讯-->
+    <!--</div>-->
+    <!--<div class="heat_news" id="heat_news">-->
 
-        </div>
-    </div>
+    <!--</div>-->
+    <!--</div>-->
     <div class="content_right_box" id="news_list_box">
         <!--<div class="news_item_box">-->
         <!--</div>-->
         <div id="page_box"></div>
     </div>
 </div>
+
 
 <div class="bottom_box flex_column_left">
     <div class="win flex_column_left">
