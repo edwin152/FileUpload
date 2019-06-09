@@ -1,12 +1,62 @@
 
 body {
-    background: #f3f3f3;
     min-height: 100%;
+}
+
+.type_background{
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.news_type{
+    justify-content: center;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #F06351;
+    height: 100%;
+    align-items: center;
+    margin-bottom: 1px;
+}
+
+.news_type_item{
+    border: 1px solid #F06351;
+    height: 40px;
+    width: 120px;
+    color: #F06351;
+    margin: 0 16px;
+    text-align: center;
+    line-height: 40px;
+}
+
+.news_type_item:hover{
+    border: 1px solid #F06351;
+    background: #F06351;
+    height: 40px;
+    width: 120px;
+    color: #FFFFFF;
+    margin: 0 16px;
+    text-align: center;
+    line-height: 40px;
+}
+
+.news_type_item_select{
+    border: 1px solid #F06351;
+    background: #F06351;
+    height: 40px;
+    width: 120px;
+    color: #FFFFFF;
+    margin: 0 16px;
+    text-align: center;
+    line-height: 40px;
 }
 
 /* 新闻列表父布局 */
 .content_right_box {
     flex-grow: 1;
+    box-shadow: 0 5px 4px 4px rgba(150, 150, 150, .1);
 }
 
 /* 单条新闻父布局 */
@@ -15,7 +65,7 @@ body {
     flex-direction: row;
     background: #FFFFFF;
     padding: 20px;
-    margin-bottom: 20px;
+    border-bottom: 1px solid #f3f3f3;
     max-width: 1000px;
 }
 
@@ -31,8 +81,7 @@ body {
 .news_info_box {
     display: flex;
     flex-direction: column;
-    flex-shrink: 0;
-    flex-grow: 1;
+    flex: 1;
 }
 
 /* 新闻标题父布局 */
@@ -78,16 +127,27 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 4;
-    line-clamp: 4;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     font-size: 14px;
-    line-height: 22px;
     color: #666;
-    margin: 14px 0 0 0;
-    width: 590px;
-    height: 90px;
+    line-height: 20px;
+    margin: 10px 0 0 0;
     word-break:break-all;
+    flex: 1;
+}
+
+.into_btn{
+    width: 100px;
+    height: 30px;
+    border: 1px solid #f3f3f3;
+    text-align: center;
+    line-height: 30px;
+}
+
+.into_btn:hover{
+    color: #FFA200;
 }
 
 #page_box .layui-laypage{
