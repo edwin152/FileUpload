@@ -101,6 +101,7 @@ public class NewsController extends BaseController {
 
         JsonObject json = new JsonObject();
         json.add("newsList", newsArray);
+        json.addProperty("checkedNewsTagId", news_tag_id);
         json.addProperty("pageNum", pageNum);
         json.addProperty("pageIndex", page);
 
