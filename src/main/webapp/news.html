@@ -45,7 +45,7 @@
             },
             success: function (data) {
                 filter = data;
-                setNewsType(filter.newsTagList);
+                setNewsType(filter.newsTagList, filter.checkedNewsTagId);
                 getNewsList(0, filter.checkedNewsTagId);
             }
         })
@@ -73,9 +73,10 @@
                     document.getElementById("news_list_box").innerHTML = "";
                 }
                 setNewsList(data.newsList);
+                setNewsTypeChecked();
                 // TODO 数据总数
-                if (isFirst && data.dataSize > 0) {
-                    loadPageUtil(data.dataSize);
+                if (isFirst && data.pageNum > 0) {
+                    loadPageUtil(data.pageNum * 10);
                     isFirst = false;
                 }
             }
@@ -86,21 +87,40 @@
      * 设置类型
      * @param typeList
      */
-    function setNewsType(typeList) {
+    function setNewsType(typeList, checkedNewsTagId) {
         if (typeList == null) return;
         let newTypeBox = document.getElementById("news_type");
         for (let i = 0, len = typeList.length; i < len; i++) {
             let typeItem = document.createElement("div");
-            if (typeList[i].isSelect){
+            if (checkedNewsTagId && typeList[i].id === checkedNewsTagId){
                 typeItem.setAttribute("class", "news_type_item_select");
             }else{
                 typeItem.setAttribute("class", "news_type_item");
             }
+            typeItem.setAttribute("type_id", typeList[i].id);
             typeItem.onclick = function () {
                 getNewsList(0, typeList[i].id);
             };
             typeItem.innerHTML = typeList[i].name;
             newTypeBox.appendChild(typeItem);
+        }
+    }
+
+    /**
+     * 设置选中类型
+     * @param typeList
+     */
+    function setNewsTypeChecked() {
+        let checkedNewsTagId = filter.checkedNewsTagId;
+        let newTypeBox = document.getElementById("news_type");
+        let typeList = newTypeBox.children;
+        for (let i = 0, len = typeList.length; i < len; i++) {
+            let typeId = typeList[i].getAttribute("type_id");
+            if (typeId == checkedNewsTagId){
+                typeList[i].setAttribute("class", "news_type_item_select");
+            }else{
+                typeList[i].setAttribute("class", "news_type_item");
+            }
         }
     }
 
@@ -131,8 +151,9 @@
         for (let i = 0, len = newsList.length; i < len; i++) {
             let itemView = document.createElement("div");
             itemView.setAttribute("class", "news_item_box");
+            ListBox.appendChild(itemView);
             // 在分页前添加
-            ListBox.insertBefore(itemView, document.getElementById("page_box"));
+            // ListBox.insertBefore(itemView, document.getElementById("page_box"));
 
             let itemImg = document.createElement("img");
             itemImg.setAttribute("class", "news_img");
@@ -255,10 +276,10 @@
 
     <!--</div>-->
     <!--</div>-->
-    <div class="content_right_box" id="news_list_box">
-        <!--<div class="news_item_box">-->
-        <!--</div>-->
-        <div id="page_box"></div>
+    <div class="content_right_box">
+        <div class="news_list_box"  id="news_list_box">
+        </div>
+        <div class="flex_row" id="page_box"></div>
     </div>
 </div>
 

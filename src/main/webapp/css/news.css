@@ -59,6 +59,10 @@ body {
     box-shadow: 0 5px 4px 4px rgba(150, 150, 150, .1);
 }
 
+.news_list_box{
+    flex-grow: 1;
+}
+
 /* 单条新闻父布局 */
 .news_item_box {
     display: flex;
@@ -151,8 +155,6 @@ body {
 }
 
 #page_box .layui-laypage{
-    min-width: 700px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
 }
