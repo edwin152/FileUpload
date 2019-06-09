@@ -40,6 +40,7 @@ body {
     margin: 0 16px;
     text-align: center;
     line-height: 40px;
+    cursor: pointer;
 }
 
 .news_type_item_select{
@@ -51,6 +52,7 @@ body {
     margin: 0 16px;
     text-align: center;
     line-height: 40px;
+    cursor: pointer;
 }
 
 /* 新闻列表父布局 */
@@ -137,7 +139,7 @@ body {
     font-size: 14px;
     color: #666;
     line-height: 20px;
-    margin: 10px 0 0 0;
+    margin: 5px 0 5px 0;
     word-break:break-all;
     flex: 1;
 }
