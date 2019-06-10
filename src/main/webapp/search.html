@@ -1,7 +1,7 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8"/>
-    <title>点点租</title>
+    <title>橙办</title>
     <link rel="stylesheet" type="text/css" href="css/all.css"/>
     <link rel="stylesheet" type="text/css" href="css/search.css"/>
     <link rel="stylesheet" type="text/css" href="layUI/css/layui.css"/>
@@ -269,10 +269,13 @@
             itemPrice.className = 'item_price';
             itemPrice.innerHTML = "<span class=\"item_price_num\">" +
                 building.price_average + // -----------------------
-                "</span>元/m²/天";
+                "</span>元/m²/天 起";
             dataInfoBox.appendChild(itemPrice);
 
             let btn = document.createElement("div");
+            btn.onclick = function () {
+                openDetail(building.id);
+            };
             btn.className = 'item_btn';
             btn.innerHTML = "了解更多";
             dataInfoBox.appendChild(btn);
@@ -417,54 +420,68 @@
 </div>
 
 <div class="matop bg_white">
-    <div class="condition_box" id="condition_box">
-        <div class="condition_line flex_row gradient_line_50">
-            <div class="condition_title" id="district">
-                区：
-            </div>
-            <div class="option_box flex_row" id="districtList">
-            </div>
-        </div>
-        <div class="condition_line flex_row gradient_line_55" id="zone" style="display: none;">
-            <div class="condition_title">
-                区域：
-            </div>
-            <div class="option_box flex_row" id="zoneList">
+    <div class="condition_box flex_column" id="condition_box">
+        <div class="win condition_line gradient_line_50">
+            <div class="win flex_row">
+                <div class="condition_title" id="district">
+                    区：
+                </div>
+                <div class="option_box flex_row" id="districtList">
+                </div>
             </div>
         </div>
-        <div class="condition_line flex_row gradient_line_60" id="metro">
-            <div class="condition_title">
-                地铁：
-            </div>
-            <div class="option_box flex_row" id="metroList">
-            </div>
-        </div>
-        <div class="condition_line flex_row gradient_line_65" id="type">
-            <div class="condition_title">
-                类型：
-            </div>
-            <div class="option_box flex_row" id="typeList">
+        <div class="win condition_line gradient_line_55" id="zone" style="display: none;">
+            <div class="win flex_row">
+                <div class="condition_title">
+                    区域：
+                </div>
+                <div class="option_box flex_row" id="zoneList">
+                </div>
             </div>
         </div>
-        <div class="condition_line flex_row gradient_line_70" id="areaRange">
-            <div class="condition_title">
-                面积：
-            </div>
-            <div class="option_box flex_row" id="areaRangeList">
-            </div>
-        </div>
-        <div class="condition_line flex_row gradient_line_75" id="priceRange">
-            <div class="condition_title">
-                价格：
-            </div>
-            <div class="option_box flex_row" id="priceRangeList">
+        <div class="win condition_line gradient_line_60" id="metro">
+            <div class="win flex_row">
+                <div class="condition_title">
+                    地铁：
+                </div>
+                <div class="option_box flex_row" id="metroList">
+                </div>
             </div>
         </div>
-        <div class="condition_line flex_row gradient_line_80" id="decoration">
-            <div class="condition_title">
-                装修：
+        <div class="win condition_line gradient_line_65" id="type">
+            <div class="win flex_row">
+                <div class="condition_title">
+                    类型：
+                </div>
+                <div class="option_box flex_row" id="typeList">
+                </div>
             </div>
-            <div class="option_box flex_row" id="decorationList">
+        </div>
+        <div class="win condition_line gradient_line_70" id="areaRange">
+            <div class="win flex_row">
+                <div class="condition_title">
+                    面积：
+                </div>
+                <div class="option_box flex_row" id="areaRangeList">
+                </div>
+            </div>
+        </div>
+        <div class="win condition_line gradient_line_75" id="priceRange">
+            <div class="win flex_row">
+                <div class="condition_title">
+                    价格：
+                </div>
+                <div class="option_box flex_row" id="priceRangeList">
+                </div>
+            </div>
+        </div>
+        <div class="win condition_line gradient_line_80" id="decoration">
+            <div class="win flex_row">
+                <div class="condition_title">
+                    装修：
+                </div>
+                <div class="option_box flex_row" id="decorationList">
+                </div>
             </div>
         </div>
     </div>
@@ -487,7 +504,7 @@
     <div class="content_right bg_white">
         <form action="search.html">
             <div class="right_search_box">
-                <input type="text" id="keyword_input" class="right_search" name="keyword" placeholder="在这里搜索你租凭的写字楼"/>
+                <input type="text" id="keyword_input" class="right_search" name="keyword" placeholder="在这里输入您想了解的写字楼"/>
                 <input class="right_search_btn" type="submit" value=" "/>
             </div>
         </form>

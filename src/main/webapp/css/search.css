@@ -5,7 +5,7 @@
 
 .condition_line {
     align-items: flex-start;
-    margin: 0 50px;
+    margin: 0 auto;
     border-bottom: 2px solid #f3f3f3;
     line-height: 40px;
     height: 40px;
@@ -167,7 +167,7 @@
 }
 
 .item_name {
-    font-size: 22px;
+    font-size: 18px;
     line-height: 22px;
     color: #707176;
 }
@@ -193,7 +193,7 @@
 }
 
 .building_info_box {
-    font-size: 14px;
+    font-size: 12px;
     color: #707176;
     margin-top: 10px;
     text-overflow: -o-ellipsis-lastline;
@@ -235,13 +235,12 @@
     top: 0;
     flex-shrink: 0;
     flex-grow: 0;
-    font-size: 20px;
+    font-size: 18px;
     color: #EE634E;
 }
 
 .item_price .item_price_num {
     font-size: 20px;
-    line-height: 30px;
     font-weight: normal;
 }
 
@@ -255,6 +254,10 @@
     background: -o-linear-gradient(right, #FFAA91 5%, #EB9A63); /* Opera 11.1 - 12.0 */
     background: -moz-linear-gradient(right, #FFAA91 5%, #EB9A63); /* Firefox 3.6 - 15 */
     background: linear-gradient(to right, #FFAA91 5%, #EB9A63); /* 标准的语法 */
+}
+
+.item_btn:hover {
+    cursor: pointer;
 }
 
 /* 右方 */
