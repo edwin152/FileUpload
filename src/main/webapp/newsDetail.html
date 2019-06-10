@@ -86,6 +86,24 @@
         newsTime.innerHTML = newsBean.last_edit_time;
         let newsContent = document.getElementById("news_content");
         newsContent.innerHTML = newsBean.content;
+
+        let notesStr = newsBean.notes;
+        if (notesStr) {
+            let notes = JSON.parse(notesStr);
+            let keywordListStr = notes.keyword_list;
+            if (keywordListStr) {
+                let keywordList = JSON.parse(keywordListStr);
+                if (keywordList) {
+                    let newsKeyword = document.getElementById("news_keyword");
+                    for (let i = 0, len = keywordList.length; i < len; i++) {
+                        let newKey = document.createElement("span");
+                        newKey.className = "keyword_item";
+                        newKey.innerHTML = keywordList[i];
+                        newsKeyword.appendChild(newKey);
+                    }
+                }
+            }
+        }
     }
 
     function getHotList() {
@@ -181,8 +199,6 @@
         <div class="news_time" id="news_time"></div>
         <div class="news_content" id="news_content"></div>
         <div id="news_keyword" class="news_keyword">
-            <span class="keyword_item">写字楼</span>
-            <span class="keyword_item">办公室</span>
         </div>
     </div>
     <div class="content_right bg_white">
