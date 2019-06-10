@@ -56,6 +56,12 @@
     z-index: 10;
 }
 
+.headerPosition{
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
 .position_relative {
     position: relative;
 }
@@ -93,7 +99,7 @@
 }
 
 .top_box {
-    height: 60px;
+    height: 65px;
 }
 
 .top_logo {
@@ -276,7 +282,7 @@ input {
     flex-shrink: 0;
     flex-grow: 0;
     width: 282px;
-    padding-bottom: 15px;
+    padding: 4px 4px 15px 4px;
 }
 
 .contact_way {
@@ -558,4 +564,111 @@ img {
     font-size: 12px;
     color: #FFF;
     margin-bottom: 25px;
+}
+
+
+/* 右方 */
+.right_search_box {
+    width: 100%;
+    height: 50px;
+    border-radius: 4px;
+    background: #F2F3F5;
+    display: flex;
+    font-size: 12px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.right_search {
+    height: 100%;
+    border: none;
+    background: none;
+    flex: 1;
+    padding: 0 0 0 16px;
+}
+
+.right_search_btn {
+    width: 12px;
+    height: 12px;
+    margin-right: 10px;
+    border: none;
+    background: url("../img/search.png");
+    background-size: 12px 12px;
+}
+
+.right_search_btn:hover {
+    cursor: pointer;
+}
+
+.right_item_box {
+    width: calc(100% - 40px);
+    margin-top: 30px;
+    border-radius: 2px;
+    border: 1px solid #DCF0E1;
+    padding: 30px 20px;
+}
+
+.right_item_title_red {
+    font-size: 20px;
+    color: #EF644E;
+    margin-bottom: 20px;
+}
+
+.right_item_title_green {
+    color: #01B22F;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.right_heat_news_item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #E7EBED;
+}
+
+.right_heat_news_img {
+    width: 60px;
+    height: 60px;
+}
+
+.right_heat_news {
+    flex: 1;
+    height: 60px;
+    margin-left: 10px;
+}
+
+.right_heat_news_title {
+    font-size: 12px;
+    flex: 1;
+    color: #000000;
+    text-overflow: -o-ellipsis-lastline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.right_heat_news_title:hover {
+    cursor: pointer;
+    color: #EF644E;
+}
+
+.right_heat_news_time {
+    font-size: 10px;
+    color: #B5B6BC;
+    margin-top: 10px;
+}
+
+.right_heat_mark {
+    color: #01B22F;
+}
+
+.right_heat_building_item {
+    color: #797A7E;
+    font-size: 14px;
+    line-height: 30px;
 }

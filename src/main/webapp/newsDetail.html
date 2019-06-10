@@ -79,6 +79,15 @@
         }
     }
 
+    function setNewsContent(newsBean) {
+        let newsTitle = document.getElementById("news_detail_title");
+        newsTitle.innerHTML = newsBean.title;
+        let newsTime = document.getElementById("news_time");
+        newsTime.innerHTML = newsBean.last_edit_time;
+        let newsContent = document.getElementById("news_content");
+        newsContent.innerHTML = newsBean.content;
+    }
+
     function getHotList() {
         http.post({
             url: "news/hot",
@@ -89,27 +98,50 @@
     }
 
     /**
-     * 设置热门资讯
+     * 设置资讯
      * @param heatNewsList
      */
     function setHeatNews(heatNewsList) {
         if (heatNewsList == null) return;
-        let ListBox = document.getElementById("heat_news");
+        let ListBox = document.getElementById("right_heat_news");
         for (let i = 0, len = heatNewsList.length; i < len; i++) {
-            let itemView = document.createElement("div");
-            // TODO
-            itemView.innerHTML = heatNewsList[i].title;
-            ListBox.appendChild(itemView);
-        }
-    }
+            let itemBox = document.createElement("div");
+            itemBox.className = "right_heat_news_item";
 
-    function setNewsContent(newsBean) {
-        let newsTitle = document.getElementById("news_detail_title");
-        newsTitle.innerHTML = newsBean.title;
-        let newsTime = document.getElementById("news_time");
-        newsTime.innerHTML = newsBean.last_edit_time;
-        let newsContent = document.getElementById("news_content");
-        newsContent.innerHTML = newsBean.content;
+            let imgListStr = heatNewsList[i].img_list;
+            let imgList = JSON.parse(imgListStr);
+            let itemImg = document.createElement("img");
+            itemImg.className = "right_heat_news_img";
+            if (imgList && imgList.length > 0) {
+                utils.setImageSrc(itemImg, imgList[0]);
+            } else {
+                utils.setImageSrc(itemImg, null);
+            }
+            itemBox.appendChild(itemImg);
+
+            let itemInfo = document.createElement("div");
+            itemInfo.className = "right_heat_news flex_column_left";
+
+            let itemTitle = document.createElement("div");
+            itemTitle.className = "right_heat_news_title";
+            itemTitle.innerHTML = heatNewsList[i].title;
+            itemTitle.onclick = function () {
+                window.open("newsDetail.html?news_id=" + heatNewsList[i].id);
+            };
+            itemInfo.appendChild(itemTitle);
+
+            let itemTime = document.createElement("div");
+            itemTime.className = "right_heat_news_time";
+            itemTime.innerHTML = heatNewsList[i].last_edit_time;
+            itemInfo.appendChild(itemTime);
+
+            if (i === len - 1) {
+                itemBox.setAttribute("style", "border: none;");
+            }
+
+            itemBox.appendChild(itemInfo);
+            ListBox.appendChild(itemBox);
+        }
     }
 
 </script>
@@ -143,21 +175,35 @@
 </div>
 
 <div class="flex_row matop win content_box">
-    <div class="content_left_box">
-        <div class="left_title">
-            <img src="img/phone.png" alt="" class="left_title_img"/>
-            热门资讯
-        </div>
-        <div class="heat_news" id="heat_news">
-
-        </div>
-    </div>
     <div class="content_right_box" id="news_detail">
         <h3 class="news_detail_title" id="news_detail_title"></h3>
         <hr/>
         <div class="news_time" id="news_time"></div>
         <div class="news_content" id="news_content"></div>
-        <!-- TODO 是否添加上下篇 -->
+        <div id="news_keyword" class="news_keyword">
+            <span class="keyword_item">写字楼</span>
+            <span class="keyword_item">办公室</span>
+        </div>
+    </div>
+    <div class="content_right bg_white">
+        <form action="search.html">
+            <div class="right_search_box">
+                <input type="text" id="keyword_input" class="right_search" name="keyword" placeholder="在这里输入您想了解的写字楼"/>
+                <input class="right_search_btn" type="submit" value=" "/>
+            </div>
+        </form>
+
+        <!--        <div class="right_item_box">-->
+        <!--            <div class="right_item_title_red">热门写字楼</div>-->
+        <!--            <div class="flex_column_left" id="right_heat_building">-->
+        <!--            </div>-->
+        <!--        </div>-->
+
+        <div class="right_item_box">
+            <div class="right_item_title_green">近期资讯</div>
+            <div class="flex_column_left" id="right_heat_news">
+            </div>
+        </div>
     </div>
 </div>
 

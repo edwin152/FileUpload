@@ -7,6 +7,8 @@ body {
 .content_box .content_right_box{
     padding: 20px;
     background: #FFFFFF;
+    flex: 1;
+    margin-right: 20px;
 }
 .news_detail_title{
     font-size: 22px;
@@ -33,4 +35,20 @@ body {
 }
 .news_content ul li {
     list-style:none;
+}
+
+.news_keyword{
+    margin-top: 50px;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.keyword_item{
+    padding: 4px 10px;
+    background: #CCCCCC;
+    margin-right: 4px;
+    color: #FFFFFF;
+    font-size: 12px;
 }

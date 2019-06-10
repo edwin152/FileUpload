@@ -43,15 +43,6 @@
         // 滚动监听
         $(window).scroll(function () {
             let scroll = getScrollOffset().y;
-            let topSearchBox = $('#top_search_box');
-            let topSearchBoxNone = $('#top_search_box_none');
-            if (scroll < 40) {
-                topSearchBox.removeClass('headerPosition');
-                topSearchBoxNone.hide();
-            } else {
-                topSearchBox.addClass('headerPosition');
-                topSearchBoxNone.show();
-            }
             let subscribe = $("#subscribe_box");
             if (subscribeTop - scroll < 80) {
                 subscribe.addClass('subscribePosition');
@@ -357,7 +348,7 @@
 </script>
 
 <body class="bg_gray">
-<div class="title_box">
+<div class="title_box"  id="top_search_box">
     <div class="win flex_row position_relative">
         <img src="img/logo_light.png" class="top_logo" alt=""/>
         <div class="position_right">
@@ -377,19 +368,7 @@
     </div>
 </div>
 
-<div class="bg_white top_box top_title" id="top_search_box">
-    <div class="win top_box flex_row">
-        <img src="img/logo_light.png" class="top_logo" alt=""/>
-        <a href="" class="black_a logo_right">上海写字楼出租</a>
-        <div class="top_search_box flex_row">
-            <input type="text" class="top_search" name="search" id="top_search" value=""
-                   placeholder="输入您要查找的楼盘或者区域商圈名称"/>
-            <input class="top_search_btn" type="submit" value="搜索"/>
-        </div>
-    </div>
-</div>
-
-<div class="top_box" id="top_search_box_none" style="display: none;"></div>
+<div class="title_box" id="top_search_box_none" style="display: none;"></div>
 
 <div class="top_info_box">
     <div class="top_info">

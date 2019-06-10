@@ -313,7 +313,6 @@
 
 .introduction_estate_info_box {
 	align-items: flex-start;
-	height: 150px;
 }
 
 .introduction_estate_name {
@@ -333,4 +332,5 @@
 	line-height: 24px;
 	color: #666;
 	margin: 15px 0;
+
 }
