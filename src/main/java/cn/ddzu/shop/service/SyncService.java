@@ -20,5 +20,6 @@ public interface SyncService {
                 List<PriceRange> priceRangeList,
                 List<Type> typeList,
                 List<User> userList,
-                List<Zone> zoneList);
+                List<Zone> zoneList,
+                List<Note> noteList);
 }

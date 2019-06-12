@@ -940,6 +940,12 @@ public class EditController extends BaseController {
         });
         List<Zone> zoneList = get(json, "zone", new TypeToken<List<Zone>>() {
         });
+        List<Note> noteList = get(json, "note", new TypeToken<List<Note>>() {
+        });
+
+        if (noteList == null) {
+            noteList = new ArrayList<>();
+        }
 
         syncService.setAll(areaRangeList
                 , buildingList
@@ -952,7 +958,8 @@ public class EditController extends BaseController {
                 , priceRangeList
                 , typeList
                 , userList
-                , zoneList);
+                , zoneList
+                , noteList);
 
         finish(response, ResultCode.SUCCESS);
     }

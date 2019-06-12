@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--suppress ALL -->
+<mapper namespace="cn.ddzu.shop.dao.NoteMapperDao">
+    <update id="drop">
+        drop table if exists note
+    </update>
+
+    <update id="create">
+        create table note
+        (
+            k   varchar(255),
+            v varchar(255),
+            primary key (k)
+        ) default charset = utf8
+    </update>
+
+    <update id="init">
+        insert into note
+        values ('db_version_code', '0')
+    </update>
+
+    <insert id="insert" parameterType="cn.ddzu.shop.entity.Note">
+        insert into note values (
+            #{data.k},
+            #{data.v}
+        )
+    </insert>
+
+    <update id="update" parameterType="cn.ddzu.shop.entity.Note">
+        update note set v = #{data.v} where k = #{data.k}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.String">
+        delete from note where k = #{k}
+    </delete>
+
+    <select id="selectAll" resultType="cn.ddzu.shop.entity.Note">
+        select * from note
+    </select>
+
+    <select id="selectByKey" parameterType="java.lang.String" resultType="cn.ddzu.shop.entity.Note">
+        select k, v from note where k = #{k}
+    </select>
+</mapper>

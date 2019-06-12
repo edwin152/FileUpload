@@ -17,6 +17,11 @@
         ) default charset = utf8
     </update>
 
+    <update id="init">
+        insert into user
+        values ('ddzu', 'ddzu748521', true)
+    </update>
+
     <select id="selectAll" resultType="cn.ddzu.shop.entity.User">
         select * from user
     </select>

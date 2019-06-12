@@ -56,7 +56,7 @@
     z-index: 10;
 }
 
-.headerPosition{
+.headerPosition {
     position: fixed;
     top: 0;
     left: 0;
@@ -103,10 +103,10 @@
 }
 
 .top_logo {
-    width: 108px;
-    height: 40px;
-    display: flex;
-    margin-right: 10px;
+    width: 160px;
+    height: 65px;
+    background-image: url(../img/logo_light.png);
+    background-size: cover;
 }
 
 a {
@@ -560,7 +560,7 @@ img {
     padding-left: 100px;
 }
 
-.foot_contact_info span{
+.foot_contact_info span {
     font-size: 12px;
     color: #FFF;
     margin-bottom: 25px;

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--suppress ALL -->
+<mapper namespace="cn.ddzu.shop.dao.DBMapperDao">
+    <update id="update_0">
+        alter table building add hot boolean default false;
+--         alter table type add edit_time date;
+    </update>
+</mapper>

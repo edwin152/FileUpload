@@ -37,6 +37,8 @@ public class SyncServiceImpl implements SyncService {
     private UserMapperDao userMapperDao;
     @Autowired
     private ZoneMapperDao zoneMapperDao;
+    @Autowired
+    private NoteMapperDao noteMapperDao;
 
     @Override
     public Map<String, List> getAll() {
@@ -53,6 +55,7 @@ public class SyncServiceImpl implements SyncService {
         map.put("type", typeMapperDao.selectAll());
         map.put("user", userMapperDao.selectAll());
         map.put("zone", zoneMapperDao.selectAll());
+        map.put("note", noteMapperDao.selectAll());
         return map;
     }
 
@@ -68,7 +71,8 @@ public class SyncServiceImpl implements SyncService {
             , List<PriceRange> priceRangeList
             , List<Type> typeList
             , List<User> userList
-            , List<Zone> zoneList) {
+            , List<Zone> zoneList
+            , List<Note> noteList) {
 
         areaRangeMapperDao.drop();
         areaRangeMapperDao.create();
@@ -140,6 +144,12 @@ public class SyncServiceImpl implements SyncService {
         zoneMapperDao.create();
         for (Zone zone : zoneList) {
             zoneMapperDao.insert(zone);
+        }
+
+        noteMapperDao.drop();
+        noteMapperDao.create();
+        for (Note note : noteList) {
+            noteMapperDao.insert(note);
         }
     }
 }

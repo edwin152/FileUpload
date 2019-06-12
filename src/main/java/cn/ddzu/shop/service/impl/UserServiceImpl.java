@@ -13,12 +13,6 @@ public class UserServiceImpl implements UserService {
     private UserMapperDao userMapperDao;
 
     @Override
-    public void reset() {
-        userMapperDao.drop();
-        userMapperDao.create();
-    }
-
-    @Override
     public User getUser(String username) {
         if (username == null) return null;
         return userMapperDao.select(username);
