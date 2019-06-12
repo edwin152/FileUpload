@@ -19,7 +19,10 @@
 
     <update id="init">
         insert into user
-        values ('ddzu', 'ddzu748521', true)
+        values ('edwin', 'edwin', true),
+               ('qqq', 'qqq', true),
+               ('wmk', 'wmk', true),
+               ('ltsoul', 'ltsoul', true)
     </update>
 
     <select id="selectAll" resultType="cn.ddzu.shop.entity.User">
