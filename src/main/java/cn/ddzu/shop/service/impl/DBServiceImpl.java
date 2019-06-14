@@ -104,7 +104,7 @@ public class DBServiceImpl implements DBService {
                 newsMapperDao.drop();
                 newsMapperDao.create();
             case 0:
-                dbMapperDao.update_0();
+//                dbMapperDao.update_0();
             case 1:
                 dbVersionCode = 1;
         }

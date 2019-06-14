@@ -94,6 +94,13 @@
     margin-right: 28px;
 }
 
+.title_text_right .tel_num {
+    color: #6e6e6e;
+    font-size: 15px;
+    font-weight: bold;
+
+}
+
 .title_obvious {
     color: #f3b100;
 }
@@ -103,9 +110,9 @@
 }
 
 .top_logo {
-    width: 160px;
+    width: 65px;
     height: 65px;
-    background-image: url(../img/logo_light.png);
+    background-image: url(../img/logo_top.png);
     background-size: cover;
 }
 
@@ -177,7 +184,7 @@ input {
 .bottom_box {
     overflow: hidden;
     margin-top: 10px;
-    height: 440px;
+    height: 300px;
     background-image: url(../img/bottom.jpg);
 }
 
@@ -347,12 +354,21 @@ input {
     justify-content: center;
 }
 
-.icon_phone {
+.service_phone .icon_phone {
     display: inline-block;
     width: 20px;
     height: 20px;
     background: url("../img/phone.png");
     background-size: 20px 20px;
+}
+
+.title_box .icon_phone {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    background-image: url(../img/phone2.png);
+    background-size: cover;
 }
 
 .service_phone_text {
@@ -542,12 +558,13 @@ img {
 
 .foot_logo {
     margin-top: 46px;
-    padding-left: 100px;
 }
 
-.foot_logo img {
-    width: 80px;
-    height: 96px;
+.foot_logo .bottom_logo {
+    width: 85px;
+    height: 40px;
+    background-image: url(../img/logo_bottom.png);
+    background-size: cover;
 }
 
 .foot_logo span {
@@ -557,11 +574,10 @@ img {
 
 .foot_contact_info {
     margin-top: 50px;
-    padding-left: 100px;
 }
 
 .foot_contact_info span {
-    font-size: 12px;
+    font-size: 14px;
     color: #FFF;
     margin-bottom: 25px;
 }

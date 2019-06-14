@@ -634,6 +634,7 @@ body {
 
 .news_item .news_title {
     display: -webkit-box;
+    height: 56px;
     margin-top: 30px;
     font-size: 20px;
     font-weight: bold;
