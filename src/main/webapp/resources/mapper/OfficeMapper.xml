@@ -198,7 +198,7 @@
             and office.building_id = #{building_id}
         </if>
         <if test="metro_name != null">
-            and office.metro_name_list like "%"#{metro_name}"%"
+            and building.metro_name_list like "%"#{metro_name}"%"
         </if>
         <if test="type_id != null">
             and office.type_id = #{type_id}
