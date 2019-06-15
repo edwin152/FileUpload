@@ -30,7 +30,7 @@
     </select>
 
     <insert id="insert" parameterType="cn.ddzu.shop.entity.News">
-        insert into news values (
+        insert into news (id, title, sub_title, create_time, last_edit_time, content, news_tag_id, hot, img_list, notes) values (
             #{data.id},
             #{data.title},
             #{data.sub_title},

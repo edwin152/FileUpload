@@ -18,11 +18,17 @@
     </update>
 
     <update id="init">
-        insert into user
+        insert into user (username, password, valid)
         values ('edwin', 'edwin', true),
                ('qqq', 'qqq', true),
                ('wmk', 'wmk', true),
-               ('ltsoul', 'ltsoul', true)
+               ('ltsoul', 'ltsoul', true),
+               ('ddzu1', 'ddzu123456', true),
+               ('ddzu2', 'ddzu123456', true),
+               ('ddzu3', 'ddzu123456', true),
+               ('ddzu4', 'ddzu123456', true),
+               ('ddzu5', 'ddzu123456', true),
+               ('ddzu6', 'ddzu123456', true)
     </update>
 
     <select id="selectAll" resultType="cn.ddzu.shop.entity.User">
@@ -30,7 +36,7 @@
     </select>
 
     <insert id="insert" parameterType="cn.ddzu.shop.entity.User">
-        insert into user values (
+        insert into user (username, password, valid) values (
             #{data.username},
             #{data.password},
             #{data.valid}

@@ -18,7 +18,7 @@
     </update>
 
     <update id="init">
-        insert into news_tag
+        insert into news_tag (id, name, valid)
         values (1, '全部', true),
                (2, '行业新闻', true),
                (3, '楼盘介绍', true),
@@ -32,7 +32,7 @@
     </select>
 
     <insert id="insert" parameterType="cn.ddzu.shop.entity.NewsTag">
-        insert into news_tag values (
+        insert into news_tag (id, name, valid) values (
             #{data.id},
             #{data.name},
             #{data.valid}

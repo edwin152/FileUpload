@@ -18,7 +18,7 @@
     </update>
 
     <update id="init">
-        insert into area_range
+        insert into area_range (id, name, valid)
         values (1, '全部', true),
                (2, '0-100m²', true),
                (3, '100-300m²', true),
@@ -32,7 +32,7 @@
     </select>
 
     <insert id="insert" parameterType="cn.ddzu.shop.entity.AreaRange">
-        insert into area_range values (
+        insert into area_range (id, name, valid) values (
             #{data.id},
             #{data.name},
             #{data.valid}
