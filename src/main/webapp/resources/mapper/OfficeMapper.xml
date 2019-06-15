@@ -35,7 +35,8 @@
     </select>
 
     <insert id="insert" parameterType="cn.ddzu.shop.entity.Office">
-        insert into office values (
+        insert into office (id, name, building_id, address, type_id, area, area_range_id, price, price_range_id
+        , decoration_id, utilization_rate, can_register, rent_free_period, notes, img_list) values (
             #{data.id},
             #{data.name},
             #{data.building_id},

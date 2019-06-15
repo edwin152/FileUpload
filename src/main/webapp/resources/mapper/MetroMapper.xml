@@ -18,7 +18,7 @@
     </update>
 
     <update id="init">
-        insert into metro
+        insert into metro (id, name, valid)
         values (1, '全部', true),
                (2, '1号线', true),
                (3, '2号线', true),
@@ -45,7 +45,7 @@
     </select>
 
     <insert id="insert" parameterType="cn.ddzu.shop.entity.Metro">
-        insert into metro values (
+        insert into metro (id, name, valid) values (
             #{data.id},
             #{data.name},
             #{data.valid}

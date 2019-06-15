@@ -18,7 +18,7 @@
     </update>
 
     <update id="init">
-        insert into type
+        insert into type (id, name, valid)
         values (1, '全部', true),
                (2, '普通办公', true),
                (3, '联合办公', true),
@@ -30,7 +30,7 @@
     </select>
 
     <insert id="insert" parameterType="cn.ddzu.shop.entity.Type">
-        insert into type values (
+        insert into type (id, name, valid) values (
             #{data.id},
             #{data.name},
             #{data.valid}

@@ -21,7 +21,7 @@
     </update>
 
     <update id="init">
-        insert into zone(id, district_id, name, valid)
+        insert into zone (id, district_id, name, valid)
         values (1, 1, '全部', true),(2, 2, '全部', true),(3, 3, '全部', true),(4, 4, '全部', true),
                (5, 5, '全部', true),(6, 6, '全部', true),(7, 7, '全部', true),(8, 8, '全部', true),
                (9, 9, '全部', true),(10, 10, '全部', true),(11, 11, '全部', true),(12, 12, '全部', true),
@@ -81,7 +81,7 @@
     </select>
 
     <insert id="insert" parameterType="cn.ddzu.shop.entity.Zone">
-        insert into zone values (
+        insert into zone (id, district_id, name, center, img_list, valid) values (
             #{data.id},
             #{data.district_id},
             #{data.name},
