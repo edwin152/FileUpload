@@ -28,7 +28,7 @@
     </select>
 
     <insert id="insert" parameterType="cn.ddzu.shop.entity.Building">
-        insert into building (id, name, zone_id, address, metro_name_list, introduce, notes, img_list) values (
+        insert into building (id, name, zone_id, address, metro_name_list, introduce, notes, img_list, valid) values (
             #{data.id},
             #{data.name},
             #{data.zone_id},
