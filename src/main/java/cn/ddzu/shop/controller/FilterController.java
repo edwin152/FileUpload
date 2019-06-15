@@ -3,7 +3,7 @@ package cn.ddzu.shop.controller;
 import cn.ddzu.shop.entity.*;
 import cn.ddzu.shop.enums.ResultCode;
 import cn.ddzu.shop.helper.RequestHelper;
-import cn.ddzu.shop.service.BasicService;
+import cn.ddzu.shop.service.FilterService;
 import cn.ddzu.shop.service.NewsService;
 import cn.ddzu.shop.util.Log;
 import com.google.gson.Gson;
@@ -23,7 +23,7 @@ import java.util.List;
 public class FilterController extends BaseController {
 
     @Autowired
-    private BasicService basicService;
+    private FilterService filterService;
     @Autowired
     private NewsService newsService;
 
@@ -54,22 +54,22 @@ public class FilterController extends BaseController {
         Long price_range_id = helper.getLong("price_range_id", 1L);
         Long decoration_id = helper.getLong("decoration_id", 1L);
 
-        List<District> districtList = basicService.getDistrictList();
+        List<District> districtList = filterService.getDistrictList();
         JsonArray districtArray = new JsonArray();
         for (District district : districtList) {
             JsonObject districtObject = new Gson().toJsonTree(district).getAsJsonObject();
             long districtId = district.getId();
-            List<Zone> zoneList = basicService.getZoneList(districtId);
+            List<Zone> zoneList = filterService.getZoneList(districtId);
             JsonArray zoneArray = new Gson().toJsonTree(zoneList).getAsJsonArray();
             districtObject.add("zoneList", zoneArray);
             districtArray.add(districtObject);
         }
 
-        List<Metro> metroList = basicService.getMetroList();
-        List<Type> typeList = basicService.getTypeList();
-        List<AreaRange> areaRangeList = basicService.getAreaRangeList();
-        List<PriceRange> priceRangeList = basicService.getPriceRangeList();
-        List<Decoration> decorationList = basicService.getDecorationList();
+        List<Metro> metroList = filterService.getMetroList();
+        List<Type> typeList = filterService.getTypeList();
+        List<AreaRange> areaRangeList = filterService.getAreaRangeList();
+        List<PriceRange> priceRangeList = filterService.getPriceRangeList();
+        List<Decoration> decorationList = filterService.getDecorationList();
 
         JsonObject json = new JsonObject();
         json.add("districtList", districtArray);
@@ -117,10 +117,10 @@ public class FilterController extends BaseController {
             return;
         }
 
-        List<Type> typeList = basicService.getTypeList(building_id);
-        List<AreaRange> areaRangeList = basicService.getAreaRangeList(building_id);
-        List<PriceRange> priceRangeList = basicService.getPriceRangeList(building_id);
-        List<Decoration> decorationList = basicService.getDecorationList(building_id);
+        List<Type> typeList = filterService.getTypeList(building_id);
+        List<AreaRange> areaRangeList = filterService.getAreaRangeList(building_id);
+        List<PriceRange> priceRangeList = filterService.getPriceRangeList(building_id);
+        List<Decoration> decorationList = filterService.getDecorationList(building_id);
 
         JsonObject json = new JsonObject();
         json.add("typeList", new Gson().toJsonTree(typeList));

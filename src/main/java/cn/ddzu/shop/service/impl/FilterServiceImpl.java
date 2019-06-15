@@ -2,7 +2,7 @@ package cn.ddzu.shop.service.impl;
 
 import cn.ddzu.shop.dao.*;
 import cn.ddzu.shop.entity.*;
-import cn.ddzu.shop.service.BasicService;
+import cn.ddzu.shop.service.FilterService;
 import cn.ddzu.shop.util.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class BasicServiceImpl implements BasicService {
+public class FilterServiceImpl implements FilterService {
 
     @Autowired
     private DistrictMapperDao districtMapperDao;
