@@ -3,14 +3,12 @@ package cn.ddzu.shop.controller;
 import cn.ddzu.shop.entity.*;
 import cn.ddzu.shop.enums.ResultCode;
 import cn.ddzu.shop.helper.RequestHelper;
-import cn.ddzu.shop.manager.LoginManager;
 import cn.ddzu.shop.service.*;
 import cn.ddzu.shop.util.JsonUtils;
 import cn.ddzu.shop.util.Log;
 import cn.ddzu.shop.util.SessionUtils;
 import cn.ddzu.shop.util.StringUtils;
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,31 +16,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/edit")
 public class EditController extends BaseController {
 
     @Autowired
-    private BasicService basicService;
+    private FilterService filterService;
     @Autowired
     private OfficeService officeService;
     @Autowired
     private NewsService newsService;
     @Autowired
-    private UserService userSerivce;
+    private UserService userService;
     @Autowired
-    private SyncService syncService;
+    private DBService dbService;
 
     /**
      * 新增楼
@@ -81,7 +72,7 @@ public class EditController extends BaseController {
         Collections.sort(metro_list);
         List<String> metro_name_list = new ArrayList<>();
         for (Long metro_id : metro_list) {
-            Metro metro = basicService.getMetro(metro_id);
+            Metro metro = filterService.getMetro(metro_id);
             if (metro != null) {
                 metro_name_list.add(metro.getName());
             }
@@ -176,7 +167,7 @@ public class EditController extends BaseController {
         Collections.sort(metro_list);
         List<String> metro_name_list = new ArrayList<>();
         for (Long metro_id : metro_list) {
-            Metro metro = basicService.getMetro(metro_id);
+            Metro metro = filterService.getMetro(metro_id);
             if (metro != null) {
                 metro_name_list.add(metro.getName());
             }
@@ -264,8 +255,8 @@ public class EditController extends BaseController {
         Long decoration_id = helper.getLong("decoration_id", 1L);
         Integer page = helper.getInt("page", 0);
 
-        Metro metro = basicService.getMetro(metro_id);
-        Zone zone = basicService.getZone(zone_id);
+        Metro metro = filterService.getMetro(metro_id);
+        Zone zone = filterService.getZone(zone_id);
         if (zone == null || zone.getDistrict_id() != district_id) {
             zone_id = district_id;
         }
@@ -357,8 +348,8 @@ public class EditController extends BaseController {
         String notes = helper.getString("notes", "{}");
         String img_list = helper.getString("img_list");
 
-        Long area_range_id = basicService.getAreaRangeId(area);
-        Long price_range_id = basicService.getPriceRangeId(price);
+        Long area_range_id = filterService.getAreaRangeId(area);
+        Long price_range_id = filterService.getPriceRangeId(price);
 
         Office office = new Office();
         office.setName(name);
@@ -461,8 +452,8 @@ public class EditController extends BaseController {
             office = new Office();
         }
 
-        Long area_range_id = basicService.getAreaRangeId(area);
-        Long price_range_id = basicService.getPriceRangeId(price);
+        Long area_range_id = filterService.getAreaRangeId(area);
+        Long price_range_id = filterService.getPriceRangeId(price);
 
         office.setName(name);
         office.setBuilding_id(building_id);
@@ -812,12 +803,12 @@ public class EditController extends BaseController {
             return;
         }
 
-        List<District> districtList = basicService.getDistrictList();
+        List<District> districtList = filterService.getDistrictList();
         JsonArray districtArray = new JsonArray();
         for (District district : districtList) {
             JsonObject districtObject = new Gson().toJsonTree(district).getAsJsonObject();
             long districtId = district.getId();
-            List<Zone> zoneList = basicService.getZoneList(districtId);
+            List<Zone> zoneList = filterService.getZoneList(districtId);
             JsonArray zoneArray = new JsonArray();
             for (Zone zone : zoneList) {
                 JsonObject zoneObject = new Gson().toJsonTree(zone).getAsJsonObject();
@@ -856,115 +847,11 @@ public class EditController extends BaseController {
         Boolean center = helper.getBoolean("center", false);
         List<String> img_list = helper.getList("img_list");
 
-        Zone zone = basicService.getZone(zone_id);
+        Zone zone = filterService.getZone(zone_id);
         zone.setCenter(center);
         zone.setImg_list(new Gson().toJson(img_list));
-        basicService.updateZone(zone);
+        filterService.updateZone(zone);
 
         finish(response, ResultCode.SUCCESS);
-    }
-
-    /**
-     * 获取所有同步数据
-     * <p>
-     * username 用户名
-     * password 密码
-     */
-    @RequestMapping("/syncAll")
-    public void syncAll(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        request.setCharacterEncoding("utf-8");
-        response.setCharacterEncoding("utf-8");
-
-        RequestHelper helper = new RequestHelper(request);
-        Log.d("edit-syncAll", helper);
-
-        String username = helper.getString("username");
-        String password = helper.getString("password");
-
-        String tokenId = LoginManager.getInstance().login(userSerivce, username, password);
-        if (tokenId == null) {
-            finish(response, ResultCode.ERROR_WRONG_PASSWORD);
-            return;
-        }
-
-        Map<String, List> dataMap = syncService.getAll();
-        JsonObject data = new Gson().toJsonTree(dataMap).getAsJsonObject();
-
-        finish(response, ResultCode.SUCCESS, data);
-    }
-
-    /**
-     * 同步所有数据
-     */
-    @SuppressWarnings("unused")
-//    @RequestMapping("/sync")
-    public void sync(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        request.setCharacterEncoding("utf-8");
-        response.setCharacterEncoding("utf-8");
-
-        RequestHelper helper = new RequestHelper(request);
-        Log.d("edit-sync", helper);
-
-        StringBuilder s = new StringBuilder();
-        URL syncAll = new URL("http://47.96.165.78:8080/ddzu/edit/syncAll?username=edwin&password=edwin");
-        URLConnection syncAllConn = syncAll.openConnection();
-        InputStream is = syncAllConn.getInputStream();
-        Reader r = new InputStreamReader(is, StandardCharsets.UTF_8);
-        int c;
-        while ((c = r.read()) > 0) {
-            s.append((char) c);
-        }
-
-        JsonObject json = new JsonParser().parse(s.toString()).getAsJsonObject().get("data").getAsJsonObject();
-        List<AreaRange> areaRangeList = get(json, "area_range", new TypeToken<List<AreaRange>>() {
-        });
-        List<Building> buildingList = get(json, "building", new TypeToken<List<Building>>() {
-        });
-        List<Decoration> decorationList = get(json, "decoration", new TypeToken<List<Decoration>>() {
-        });
-        List<District> districtList = get(json, "district", new TypeToken<List<District>>() {
-        });
-        List<Metro> metroList = get(json, "metro", new TypeToken<List<Metro>>() {
-        });
-        List<News> newsList = get(json, "news", new TypeToken<List<News>>() {
-        });
-        List<NewsTag> newsTagList = get(json, "news_tag", new TypeToken<List<NewsTag>>() {
-        });
-        List<Office> officeList = get(json, "office", new TypeToken<List<Office>>() {
-        });
-        List<PriceRange> priceRangeList = get(json, "price_range", new TypeToken<List<PriceRange>>() {
-        });
-        List<Type> typeList = get(json, "type", new TypeToken<List<Type>>() {
-        });
-        List<User> userList = get(json, "user", new TypeToken<List<User>>() {
-        });
-        List<Zone> zoneList = get(json, "zone", new TypeToken<List<Zone>>() {
-        });
-        List<Note> noteList = get(json, "note", new TypeToken<List<Note>>() {
-        });
-
-        if (noteList == null) {
-            noteList = new ArrayList<>();
-        }
-
-        syncService.setAll(areaRangeList
-                , buildingList
-                , decorationList
-                , districtList
-                , metroList
-                , newsList
-                , newsTagList
-                , officeList
-                , priceRangeList
-                , typeList
-                , userList
-                , zoneList
-                , noteList);
-
-        finish(response, ResultCode.SUCCESS);
-    }
-
-    private <T> List<T> get(JsonObject json, String key, TypeToken<List<T>> typeToken) {
-        return new Gson().fromJson(json.get(key), typeToken.getType());
     }
 }

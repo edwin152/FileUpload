@@ -4,7 +4,7 @@ import cn.ddzu.shop.entity.*;
 
 import java.util.List;
 
-public interface BasicService {
+public interface FilterService {
 
     /**
      * 获取区列表

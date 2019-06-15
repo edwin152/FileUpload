@@ -6,7 +6,7 @@ import cn.ddzu.shop.entity.Office;
 import cn.ddzu.shop.entity.Zone;
 import cn.ddzu.shop.enums.ResultCode;
 import cn.ddzu.shop.helper.RequestHelper;
-import cn.ddzu.shop.service.BasicService;
+import cn.ddzu.shop.service.FilterService;
 import cn.ddzu.shop.service.OfficeService;
 import cn.ddzu.shop.util.JsonUtils;
 import cn.ddzu.shop.util.Log;
@@ -33,7 +33,7 @@ public class SearchController extends BaseController {
     @Autowired
     private OfficeService officeService;
     @Autowired
-    private BasicService basicService;
+    private FilterService filterService;
 
     /**
      * 查询楼
@@ -125,8 +125,8 @@ public class SearchController extends BaseController {
         Long decoration_id = helper.getLong("decoration_id", 1L);
         Integer page = helper.getInt("page", 0);
 
-        Metro metro = basicService.getMetro(metro_id);
-        Zone zone = basicService.getZone(zone_id);
+        Metro metro = filterService.getMetro(metro_id);
+        Zone zone = filterService.getZone(zone_id);
         if (zone == null || zone.getDistrict_id() != district_id) {
             zone_id = district_id;
         }

@@ -3,7 +3,7 @@ package cn.ddzu.shop.controller;
 import cn.ddzu.shop.entity.*;
 import cn.ddzu.shop.enums.ResultCode;
 import cn.ddzu.shop.helper.RequestHelper;
-import cn.ddzu.shop.service.BasicService;
+import cn.ddzu.shop.service.FilterService;
 import cn.ddzu.shop.service.NewsService;
 import cn.ddzu.shop.service.OfficeService;
 import cn.ddzu.shop.util.JsonUtils;
@@ -27,7 +27,7 @@ public class IndexController extends BaseController {
     @Autowired
     private OfficeService officeService;
     @Autowired
-    private BasicService basicService;
+    private FilterService filterService;
     @Autowired
     private NewsService newsService;
 
@@ -42,16 +42,16 @@ public class IndexController extends BaseController {
         JsonObject json = new JsonObject();
         json.add("bannerList", new Gson().toJsonTree(Collections.singletonList("http://47.96.165.78/images/banner.jpg")));
 
-        List<District> districtList = basicService.getDistrictList();
+        List<District> districtList = filterService.getDistrictList();
         json.add("districtList", new Gson().toJsonTree(districtList));
 
-        List<Type> typeList = basicService.getTypeList();
+        List<Type> typeList = filterService.getTypeList();
         json.add("typeList", new Gson().toJsonTree(typeList));
 
-        List<AreaRange> areaRangeList = basicService.getAreaRangeList();
+        List<AreaRange> areaRangeList = filterService.getAreaRangeList();
         json.add("areaRangeList", new Gson().toJsonTree(areaRangeList));
 
-        List<PriceRange> priceRangeList = basicService.getPriceRangeList();
+        List<PriceRange> priceRangeList = filterService.getPriceRangeList();
         json.add("priceRangeList", new Gson().toJsonTree(priceRangeList));
 
         List<Building> buildingList = officeService.getIndexBuilding();
@@ -92,7 +92,7 @@ public class IndexController extends BaseController {
         }
         json.add("fineList", buildingArray);
 
-        List<Zone> zoneList = basicService.getCoreZoneList();
+        List<Zone> zoneList = filterService.getCoreZoneList();
         zoneList.sort(new Comparator<Zone>() {
             @Override
             public int compare(Zone o1, Zone o2) {
