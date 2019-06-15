@@ -30,10 +30,6 @@ public class EditController extends BaseController {
     private OfficeService officeService;
     @Autowired
     private NewsService newsService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private DBService dbService;
 
     /**
      * 新增楼
