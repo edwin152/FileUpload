@@ -58,7 +58,7 @@
 .detail_info_price {
 	font-size: 36px;
 	line-height: 40px;
-	color: #f90;
+	color: #e99640;
 	font-weight: bold;
 	padding-right: 3px;
 }
@@ -134,7 +134,7 @@
 .page_info_service_btn {
 	padding: 0 20px;
 	font-size: 14px;
-	background: #f7a647;
+	background: #e99640;
 	color: #fff;
 	border-radius: 10px;
 	height: 30px;
@@ -145,7 +145,7 @@
 .page_info_service_phone {
 	font-size: 23px;
 	/*font-weight: bold;*/
-	color: #ffa200;
+	color: #e99640;
 	margin-left: 15px;
 }
 
@@ -226,7 +226,7 @@
 }
 
 .condition_line a:hover {
-	color: #FFA200;
+	color: #e99640;
 }
 
 .condition_title {
@@ -324,7 +324,7 @@
 }
 
 .introduction_estate_name:hover {
-	color: #FFA200;
+	color: #e99640;
 }
 
 .introduction_estate_info {

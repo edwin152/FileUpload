@@ -74,7 +74,7 @@ body {
 
 .hot_zone_value:hover {
     cursor: pointer;
-    color: #FFA200;
+    color: #e99640;
 }
 
 .hot_building_sign {
@@ -97,5 +97,5 @@ body {
 
 .hot_building_value:hover {
     cursor: pointer;
-    color: #FFA200;
+    color: #e99640;
 }
