@@ -3,8 +3,8 @@
 
 <!--suppress ALL -->
 <mapper namespace="cn.ddzu.shop.dao.DBMapperDao">
-    <update id="update_0">
+    <update id="update_1">
         alter table building add hot boolean default false;
---         alter table type add edit_time date;
+        alter table building add edit_time date;
     </update>
 </mapper>

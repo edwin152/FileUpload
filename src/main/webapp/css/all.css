@@ -3,6 +3,10 @@
     padding: 0;
 }
 
+body {
+    padding-top: 65px;
+}
+
 .bg_gray {
     background: #f5f6fb;
 }
@@ -53,13 +57,10 @@
     font: 12px Microsoft YaHei, SimHei, SimSun;
     line-height: 130px;
     color: #000000;
-    z-index: 10;
-}
-
-.headerPosition {
+    z-index: 100;
+    box-shadow: 0 3px 3px rgba(150, 150, 150, .1);
     position: fixed;
     top: 0;
-    left: 0;
 }
 
 .position_relative {
@@ -83,6 +84,10 @@
     font-size: 14px;
 }
 
+.title_text_right a:hover {
+    color: #e99640;
+}
+
 .title_text {
     display: flex;
     color: #999999;
@@ -102,7 +107,7 @@
 }
 
 .title_obvious {
-    color: #f3b100;
+    color: #e99640;
 }
 
 .top_box {
@@ -149,7 +154,7 @@ a {
     border: none;
     border-radius: 0 3px 3px 0;
     -webkit-border-radius: 0 3px 3px 0;
-    background: #ffbe5e;
+    background: #e99640;
     padding: 0 18px 0 20px;
     height: 30px;
     line-height: 30px;
@@ -161,7 +166,7 @@ a {
     border: none;
     border-radius: 0 3px 3px 0;
     -webkit-border-radius: 0 3px 3px 0;
-    background: #ffbe5e;
+    background: #e99640;
     padding: 0 18px 0 20px;
     height: 30px;
     line-height: 30px;
@@ -203,7 +208,7 @@ input {
 .bottom_box .foot_m span {
     font-size: 30px;
     line-height: 34px;
-    color: #ffa200;
+    color: #e99640;
 }
 
 .bottom_box .foot_m .flex_row {
@@ -225,7 +230,7 @@ input {
 }
 
 .bottom_box .foot_l a:hover {
-    color: #FFA200;
+    color: #e99640;
 }
 
 .ad_title {
@@ -251,7 +256,7 @@ input {
 }
 
 .bottom_box .footlink a:hover {
-    color: #FFA200;
+    color: #e99640;
 }
 
 .max_width {
@@ -281,7 +286,7 @@ input {
 }
 
 .paging_item:hover {
-    color: #FFA200;
+    color: #e99640;
     cursor: pointer;
 }
 
@@ -374,7 +379,7 @@ input {
 .service_phone_text {
     font-size: 24px;
     line-height: 30px;
-    color: #ffa200;
+    color: #e99640;
     /*border-bottom: 1px solid #f3f3f3;*/
 }
 
@@ -403,7 +408,7 @@ input {
     font-size: 16px;
     color: #FFFFFF;
     border-radius: 5px;
-    background: #FFA200;
+    background: #e99640;
     cursor: pointer;
 }
 
@@ -468,7 +473,7 @@ img {
 }
 
 .gm_num_box span {
-    color: #ffa200;
+    color: #e99640;
     font-size: 24px;
     margin-left: 5px;
 }
@@ -520,7 +525,7 @@ img {
 
 /* 热门资讯 */
 .heat_news div:hover {
-    color: #FFA200;
+    color: #e99640;
 }
 
 .top_box .link {
@@ -531,7 +536,7 @@ img {
 }
 
 .top_box .link:hover {
-    color: #FFA200;
+    color: #e99640;
 }
 
 .friendly_href_sign {
@@ -553,7 +558,7 @@ img {
 
 .friendly_href a:hover {
     cursor: pointer;
-    color: #FFA200;
+    color: #e99640;
 }
 
 .foot_logo {
@@ -687,4 +692,14 @@ img {
     color: #797A7E;
     font-size: 14px;
     line-height: 30px;
+}
+
+.layui-laypage .layui-laypage-curr .layui-laypage-em {
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    padding: 1px;
+    width: 100%;
+    height: 100%;
+    background-color: #e99640;
 }

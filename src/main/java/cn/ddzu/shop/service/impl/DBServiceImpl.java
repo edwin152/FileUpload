@@ -13,7 +13,8 @@ import java.util.Map;
 @Service
 public class DBServiceImpl implements DBService {
 
-    private static final String KEY_DB_VERSION_CODE = "db_version_code";
+    private static final Integer DB_VERSION_CODE_VALUE = 1;
+    private static final String DB_VERSION_CODE_KEY = "db_version_code";
 
     @Autowired
     private DBMapperDao dbMapperDao;
@@ -47,17 +48,18 @@ public class DBServiceImpl implements DBService {
 
     @Override
     public void updateDB() {
-        int dbVersionCode = -1;
+        int dbVersionCodeValue = -1;
         try {
-            Note db_version_code = noteMapperDao.selectByKey(KEY_DB_VERSION_CODE);
+            Note db_version_code = noteMapperDao.selectByKey(DB_VERSION_CODE_KEY);
             if (db_version_code != null) {
-                dbVersionCode = Integer.parseInt(db_version_code.getV());
+                dbVersionCodeValue = Integer.parseInt(db_version_code.getV());
+                if (dbVersionCodeValue < 0) dbVersionCodeValue = -1;
             }
         } catch (RuntimeException ignore) {
         }
 
-        switch (dbVersionCode) {
-            case -1:
+        switch (dbVersionCodeValue + 1) {
+            case 0:
                 districtMapperDao.drop();
                 districtMapperDao.create();
                 districtMapperDao.init();
@@ -106,16 +108,17 @@ public class DBServiceImpl implements DBService {
 
                 newsMapperDao.drop();
                 newsMapperDao.create();
-            case 0:
-//                dbMapperDao.update_0();
+                break;
             case 1:
-                dbVersionCode = 1;
+                dbMapperDao.update_1();
         }
 
-        Note note = new Note();
-        note.setK(KEY_DB_VERSION_CODE);
-        note.setV(String.valueOf(dbVersionCode));
-        noteMapperDao.update(note);
+        if (dbVersionCodeValue != DB_VERSION_CODE_VALUE) {
+            Note dbVersionCode = new Note();
+            dbVersionCode.setK(DB_VERSION_CODE_KEY);
+            dbVersionCode.setV(DB_VERSION_CODE_VALUE.toString());
+            noteMapperDao.update(dbVersionCode);
+        }
     }
 
     @Override
