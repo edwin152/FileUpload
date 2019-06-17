@@ -48,7 +48,55 @@
         filter.checkedDecorationId = http.getParameter(request, "decoration_id");
         getFilterList();
         getHotList();
+
+        setFixed();
     };
+
+    function setFixed() {
+        let fixedView = document.getElementById("position_fixed");
+        let fixedTop = window.scrollY + fixedView.getBoundingClientRect().y;
+        let fixedLeft = fixedView.getBoundingClientRect().x;
+        fixedView.setAttribute("style", "left: " + fixedLeft + "px;");
+        let bottomBox = document.getElementsByClassName("bottom_box")[0];
+
+        // 解决在页面中部时刷新页面浮动问题
+        if (bottomBox.getBoundingClientRect().top <= 100 + fixedView.getBoundingClientRect().height){
+            fixedView.setAttribute("class", "content_right bg_white position_fixed_bottom");
+            fixedView.style.bottom = (window.innerHeight - bottomBox.getBoundingClientRect().top) + "px";
+        }else{
+            if (window.scrollY > (fixedTop - 100)) {
+                fixedView.setAttribute("class", "content_right bg_white position_fixed");
+            } else {
+                fixedView.setAttribute("class", "content_right bg_white");
+            }
+        }
+        // 修改浏览器大小
+        // window.onresize = function(){
+        //     console.log(bottomBox.getBoundingClientRect().top, "<=", 100 + fixedView.getBoundingClientRect().height);
+        //     if (bottomBox.getBoundingClientRect().top <= 100 + fixedView.getBoundingClientRect().height){
+        //         fixedView.setAttribute("class", "content_right bg_white position_fixed_bottom");
+        //         fixedView.style.bottom = (window.innerHeight - bottomBox.getBoundingClientRect().top) + "px";
+        //     }else{
+        //         if (window.scrollY > (fixedTop - 100)) {
+        //             fixedView.setAttribute("class", "content_right bg_white position_fixed");
+        //         } else {
+        //             fixedView.setAttribute("class", "content_right bg_white");
+        //         }
+        //     }
+        // };
+        window.onscroll = function () {
+            if (bottomBox.getBoundingClientRect().top <= 100 + fixedView.getBoundingClientRect().height){
+                fixedView.setAttribute("class", "content_right bg_white position_fixed_bottom");
+                fixedView.style.bottom = (window.innerHeight - bottomBox.getBoundingClientRect().top) + "px";
+            }else{
+                if (window.scrollY > (fixedTop - 100)) {
+                    fixedView.setAttribute("class", "content_right bg_white position_fixed");
+                } else {
+                    fixedView.setAttribute("class", "content_right bg_white");
+                }
+            }
+        }
+    }
 
     function getFilterList() {
         http.post({
@@ -505,7 +553,7 @@
         <div class="page_box" id="page_box">
         </div>
     </div>
-    <div class="content_right bg_white">
+    <div class="content_right bg_white" id="position_fixed">
         <form action="search.html">
             <div class="right_search_box">
                 <input type="text" id="keyword_input" class="right_search" name="keyword" placeholder="在这里输入您想了解的写字楼"/>
