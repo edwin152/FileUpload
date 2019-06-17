@@ -64,40 +64,22 @@
         let bottomBox = document.getElementsByClassName("bottom_box")[0];
 
         // 解决在页面中部时刷新页面浮动问题
-        if (bottomBox.getBoundingClientRect().top <= 100 + fixedView.getBoundingClientRect().height){
+        setFixedPosition(bottomBox, fixedView, fixedTop);
+        window.onscroll = function () {
+            setFixedPosition(bottomBox, fixedView, fixedTop);
+        }
+    }
+
+    function setFixedPosition(bottomBox, fixedView, fixedTop) {
+        let toBottomHeight = 50;
+        if (bottomBox.getBoundingClientRect().top <= 100 + toBottomHeight + fixedView.getBoundingClientRect().height) {
             fixedView.setAttribute("class", "content_right bg_white position_fixed_bottom");
-            fixedView.style.bottom = (window.innerHeight - bottomBox.getBoundingClientRect().top) + "px";
-        }else{
+            fixedView.style.bottom = (window.innerHeight - bottomBox.getBoundingClientRect().top + toBottomHeight) + "px";
+        } else {
             if (window.scrollY > (fixedTop - 100)) {
                 fixedView.setAttribute("class", "content_right bg_white position_fixed");
             } else {
                 fixedView.setAttribute("class", "content_right bg_white");
-            }
-        }
-        // 修改浏览器大小
-        // window.onresize = function(){
-        //     console.log(bottomBox.getBoundingClientRect().top, "<=", 100 + fixedView.getBoundingClientRect().height);
-        //     if (bottomBox.getBoundingClientRect().top <= 100 + fixedView.getBoundingClientRect().height){
-        //         fixedView.setAttribute("class", "content_right bg_white position_fixed_bottom");
-        //         fixedView.style.bottom = (window.innerHeight - bottomBox.getBoundingClientRect().top) + "px";
-        //     }else{
-        //         if (window.scrollY > (fixedTop - 100)) {
-        //             fixedView.setAttribute("class", "content_right bg_white position_fixed");
-        //         } else {
-        //             fixedView.setAttribute("class", "content_right bg_white");
-        //         }
-        //     }
-        // };
-        window.onscroll = function () {
-            if (bottomBox.getBoundingClientRect().top <= 100 + fixedView.getBoundingClientRect().height){
-                fixedView.setAttribute("class", "content_right bg_white position_fixed_bottom");
-                fixedView.style.bottom = (window.innerHeight - bottomBox.getBoundingClientRect().top) + "px";
-            }else{
-                if (window.scrollY > (fixedTop - 100)) {
-                    fixedView.setAttribute("class", "content_right bg_white position_fixed");
-                } else {
-                    fixedView.setAttribute("class", "content_right bg_white");
-                }
             }
         }
     }
