@@ -1,5 +1,7 @@
 package cn.ddzu.shop.entity;
 
+import java.sql.Date;
+
 public class Building {
 
     private long id;
@@ -16,6 +18,10 @@ public class Building {
     private String notes;
     // 图片列表
     private String img_list;
+    // 编辑时间
+    private Date edit_time;
+    // 是否热门
+    private Boolean hot;
     private Boolean valid;
 
     private Long district_id;

@@ -630,14 +630,8 @@ img {
     padding: 30px 20px;
 }
 
-.right_item_title_red {
-    font-size: 20px;
-    color: #EF644E;
-    margin-bottom: 20px;
-}
-
-.right_item_title_green {
-    color: #01B22F;
+.right_item_title_orange {
+    color: #e99640;
     font-size: 20px;
     margin-bottom: 20px;
 }
@@ -676,7 +670,7 @@ img {
 
 .right_heat_news_title:hover {
     cursor: pointer;
-    color: #EF644E;
+    color: #e99640;
 }
 
 .right_heat_news_time {
@@ -686,7 +680,7 @@ img {
 }
 
 .right_heat_mark {
-    color: #01B22F;
+    color: #e99640;
 }
 
 .right_heat_building_item {

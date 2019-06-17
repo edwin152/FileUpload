@@ -78,7 +78,7 @@
 .detail_info_price {
     font-size: 28px;
     line-height: 40px;
-    color: #FF0000;
+    color: #e99640;
     font-weight: bold;
     padding-right: 3px;
 }
@@ -309,7 +309,7 @@
 }
 
 .price_color {
-    color: #ff0000;
+    color: #e99640;
 }
 
 .bottom_info_box {

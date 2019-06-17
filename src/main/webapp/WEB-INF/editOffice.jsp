@@ -42,7 +42,6 @@
                         let notes = JSON.parse(data.notes);
                         type_id = data.type_id;
                         decoration_id = data.decoration_id;
-                        metroNameList = data.metro_name_list;
                         canRegister = data.can_register;
                         document.getElementById("area").value = data.area;
                         document.getElementById("price").value = data.price;
@@ -68,6 +67,7 @@
                     typeList = data.typeList;
                     freshTypeList(type_id);
                     decorationList = data.decorationList;
+                    freshImgList();
                     freshDecorationList(decoration_id);
                     freshCanRegisterList(canRegister === undefined ? true : canRegister);
                 },
@@ -87,7 +87,7 @@
                     imgList.splice(parseInt(index), 1);
                     freshImgList();
                 };
-                img_list.append(img);
+                img_list.appendChild(img);
             }
         }
 

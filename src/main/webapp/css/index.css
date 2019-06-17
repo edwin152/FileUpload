@@ -465,10 +465,10 @@ body {
     color: #FFF;
     cursor: pointer;
     font-size: 19px;
-    background: -webkit-linear-gradient(left, #ec7d40 20%, #fb4562); /* Safari 5.1 - 6.0 */
-    background: -o-linear-gradient(right, #ec7d40 20%, #fb4562); /* Opera 11.1 - 12.0 */
-    background: -moz-linear-gradient(right, #ec7d40 20%, #fb4562); /* Firefox 3.6 - 15 */
-    background: linear-gradient(to right, #ec7d40 20%, #fb4562); /* 标准的语法 */
+    background: -webkit-linear-gradient(left, #e99640 20%, #fb4562); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(right, #e99640 20%, #fb4562); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(right, #e99640 20%, #fb4562); /* Firefox 3.6 - 15 */
+    background: linear-gradient(to right, #e99640 20%, #fb4562); /* 标准的语法 */
 }
 
 /* 精选title */
@@ -503,7 +503,7 @@ body {
 
 .number_title {
     font-size: 40px;
-    color: #FF7373;
+    color: #e99640;
 }
 
 .number_text {

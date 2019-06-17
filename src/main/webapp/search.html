@@ -71,16 +71,14 @@
     }
 
     function setFixedPosition(bottomBox, fixedView, fixedTop) {
-        let toBottomHeight = 50;
-        if (bottomBox.getBoundingClientRect().top <= 100 + toBottomHeight + fixedView.getBoundingClientRect().height) {
+        let toBottomHeight = 90;
+        if (window.scrollY <= (fixedTop - 100)) {
+            fixedView.setAttribute("class", "content_right bg_white");
+        } else if (bottomBox.getBoundingClientRect().top <= 100 + toBottomHeight + fixedView.getBoundingClientRect().height) {
             fixedView.setAttribute("class", "content_right bg_white position_fixed_bottom");
             fixedView.style.bottom = (window.innerHeight - bottomBox.getBoundingClientRect().top + toBottomHeight) + "px";
         } else {
-            if (window.scrollY > (fixedTop - 100)) {
-                fixedView.setAttribute("class", "content_right bg_white position_fixed");
-            } else {
-                fixedView.setAttribute("class", "content_right bg_white");
-            }
+            fixedView.setAttribute("class", "content_right bg_white position_fixed");
         }
     }
 
@@ -549,7 +547,7 @@
         <!--        </div>-->
 
         <div class="right_item_box">
-            <div class="right_item_title_green">近期资讯</div>
+            <div class="right_item_title_orange">近期资讯</div>
             <div class="flex_column_left" id="right_heat_news">
             </div>
         </div>
