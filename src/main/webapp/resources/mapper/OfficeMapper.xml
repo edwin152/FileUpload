@@ -25,6 +25,8 @@
             rent_free_period varchar(255),
             notes            varchar(8192),
             img_list         varchar(8192),
+            edit_time        date,
+            hot              boolean default false,
             valid            boolean default true,
             primary key (id)
         ) default charset = utf8
@@ -36,7 +38,7 @@
 
     <insert id="insert" parameterType="cn.ddzu.shop.entity.Office">
         insert into office (id, name, building_id, address, type_id, area, area_range_id, price, price_range_id
-        , decoration_id, utilization_rate, can_register, rent_free_period, notes, img_list, valid) values (
+        , decoration_id, utilization_rate, can_register, rent_free_period, notes, img_list, edit_time, hot, valid) values (
             #{data.id},
             #{data.name},
             #{data.building_id},
@@ -52,6 +54,8 @@
             #{data.rent_free_period},
             #{data.notes},
             #{data.img_list},
+            #{data.edit_time},
+            #{data.hot},
             true
         )
     </insert>
@@ -72,7 +76,9 @@
             can_register = #{data.can_register},
             rent_free_period = #{data.rent_free_period},
             notes = #{data.notes},
-            img_list = #{data.img_list}
+            img_list = #{data.img_list},
+            edit_time = #{data.edit_time},
+            hot = #{data.hot}
         where id = #{data.id}
     </update>
 

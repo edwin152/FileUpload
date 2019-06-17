@@ -9,6 +9,24 @@ import java.util.List;
 @Repository
 public interface TypeMapperDao extends Dao<Type> {
 
+    @Override
+    void drop();
+
+    @Override
+    void create();
+
+    @Override
+    void init();
+
+    @Override
+    List<Type> selectAll();
+
+    @Override
+    void insert(Type data);
+
+    @Deprecated
+    void update(Type data);
+
     /**
      * 查询办公类型列表
      */

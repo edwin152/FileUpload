@@ -9,6 +9,24 @@ import java.util.List;
 @Repository
 public interface AreaRangeMapperDao extends Dao<AreaRange> {
 
+    @Override
+    void drop();
+
+    @Override
+    void create();
+
+    @Override
+    void init();
+
+    @Override
+    List<AreaRange> selectAll();
+
+    @Override
+    void insert(AreaRange data);
+
+    @Deprecated
+    void update(AreaRange data);
+
     /**
      * 查询面积区间列表
      */

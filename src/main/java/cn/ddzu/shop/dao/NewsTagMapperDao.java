@@ -8,6 +8,24 @@ import java.util.List;
 @Repository
 public interface NewsTagMapperDao extends Dao<NewsTag> {
 
+    @Override
+    void drop();
+
+    @Override
+    void create();
+
+    @Override
+    void init();
+
+    @Override
+    List<NewsTag> selectAll();
+
+    @Override
+    void insert(NewsTag data);
+
+    @Deprecated
+    void update(NewsTag data);
+
     /**
      * 查询新闻标签列表
      */

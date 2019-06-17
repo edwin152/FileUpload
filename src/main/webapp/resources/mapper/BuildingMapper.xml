@@ -18,6 +18,8 @@
             introduce       varchar(2048),
             notes           varchar(8192),
             img_list        varchar(8192),
+            edit_time       date,
+            hot             boolean default false,
             valid           boolean default true,
             primary key (id)
         ) default charset = utf8
@@ -28,7 +30,7 @@
     </select>
 
     <insert id="insert" parameterType="cn.ddzu.shop.entity.Building">
-        insert into building (id, name, zone_id, address, metro_name_list, introduce, notes, img_list, valid) values (
+        insert into building (id, name, zone_id, address, metro_name_list, introduce, notes, img_list, edit_time, hot, valid) values (
             #{data.id},
             #{data.name},
             #{data.zone_id},
@@ -37,6 +39,8 @@
             #{data.introduce},
             #{data.notes},
             #{data.img_list},
+            #{data.edit_time},
+            #{data.hot},
             true
         )
     </insert>
@@ -50,7 +54,9 @@
             metro_name_list = #{data.metro_name_list},
             introduce = #{data.introduce},
             notes = #{data.notes},
-            img_list = #{data.img_list}
+            img_list = #{data.img_list},
+            edit_time = #{data.edit_time},
+            hot = #{data.hot}
         where id = #{data.id}
     </update>
 

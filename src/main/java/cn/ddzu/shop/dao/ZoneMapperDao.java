@@ -9,6 +9,24 @@ import java.util.List;
 @Repository
 public interface ZoneMapperDao extends Dao<Zone> {
 
+    @Override
+    void drop();
+
+    @Override
+    void create();
+
+    @Override
+    void init();
+
+    @Override
+    List<Zone> selectAll();
+
+    @Override
+    void insert(Zone data);
+
+    @Override
+    void update(Zone data);
+
     /**
      * 通过区id查区域列表
      *

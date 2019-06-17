@@ -9,6 +9,24 @@ import java.util.List;
 @Repository
 public interface DecorationMapperDao extends Dao<Decoration> {
 
+    @Override
+    void drop();
+
+    @Override
+    void create();
+
+    @Override
+    void init();
+
+    @Override
+    List<Decoration> selectAll();
+
+    @Override
+    void insert(Decoration data);
+
+    @Deprecated
+    void update(Decoration data);
+
     /**
      * 查询装修情况列表
      */
