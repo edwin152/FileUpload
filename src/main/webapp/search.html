@@ -219,7 +219,7 @@
 
             let imgLeft = document.createElement("img");
             imgLeft.className = 'item_image clickable';
-            imgLeft.setAttribute("src", building.img_list[0]);
+            utils.setImage(imgLeft, building.img_list);
             imgLeft.onclick = function () {
                 openDetail(building.id);
             };
