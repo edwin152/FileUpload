@@ -35,6 +35,44 @@
 <script type="text/javascript">
     'use strict';
 
+    window.onload = function () {
+        getAll();
+    };
+
+    function getAll() {
+        http.post({
+            url: "index/all",
+            success: function (data) {
+                setTopBackground(data.bannerList);
+                setConditionScreen(data.districtList);
+                setTypeScreen(data.typeList);
+                setAreaRangeScreen(data.areaRangeList);
+                setPriceRangeScreen(data.priceRangeList);
+                setCoreBuilding(data.coreList);
+                setFineBuildingList(data.fineList);
+                setNewsList(data.newsList);
+                // setTrust(data.today_intro);
+                setTodaySupport(data.todaySupport);
+                openSwiper(data.bannerList.length !== 1);
+            }
+        });
+    }
+
+    /**
+     * 设置头部背景图
+     */
+    function setTopBackground(imageUrl) {
+        let topBgBox = document.getElementById("top_bg_item_box");
+        for (let i = 0, len = imageUrl.length; i < len; i++) {
+            let itemBox = document.createElement("div");
+            itemBox.setAttribute("class", "swiper-slide");
+            topBgBox.appendChild(itemBox);
+            let imgView = document.createElement("img");
+            imgView.setAttribute("src", imageUrl[i]);
+            itemBox.appendChild(imgView);
+        }
+    }
+
     /**
      * 区域
      * @param conditionList
@@ -226,32 +264,8 @@
     }
 
     /**
-     * 设置头部背景图
+     * 设置新闻列表
      */
-    function setTopBackground(imageUrl) {
-        let topBgBox = document.getElementById("top_bg_item_box");
-        for (let i = 0, len = imageUrl.length; i < len; i++) {
-            let itemBox = document.createElement("div");
-            itemBox.setAttribute("class", "swiper-slide");
-            topBgBox.appendChild(itemBox);
-            let imgView = document.createElement("img");
-            imgView.setAttribute("src", imageUrl[i]);
-            itemBox.appendChild(imgView);
-        }
-    }
-
-    /**
-     * 设置委托房源
-     */
-    function setTrust(trust) {
-        utils.setImageSrc(document.getElementById("entrust_img"), trust.img_intro_1);
-        utils.setImageSrc(document.getElementById("trust_img"), trust.img_intro_2);
-        document.getElementById("entrust_title").innerHTML = trust.title;
-        document.getElementById("entrust_subtitle").innerHTML = trust.sub_title;
-        document.getElementById("entrust_content").innerHTML = trust.content;
-
-    }
-
     function setNewsList(newsList) {
         if (!newsList) {
             return;
@@ -292,29 +306,42 @@
         }
     }
 
-    window.onload = function () {
-        getAll();
-    };
-
-    function getAll() {
-        http.post({
-            url: "index/all",
-            success: function (data) {
-                setTopBackground(data.bannerList);
-                setConditionScreen(data.districtList);
-                setTypeScreen(data.typeList);
-                setAreaRangeScreen(data.areaRangeList);
-                setPriceRangeScreen(data.priceRangeList);
-                setCoreBuilding(data.coreList);
-                setFineBuildingList(data.fineList);
-                setNewsList(data.newsList);
-                setTrust(data.today_intro);
-
-                openSwiper(data.bannerList.length !== 1);
-            }
-        });
+    /**
+     * 设置委托房源
+     */
+    function setTrust(trust) {
+        utils.setImageSrc(document.getElementById("entrust_img"), trust.img_intro_1);
+        utils.setImageSrc(document.getElementById("trust_img"), trust.img_intro_2);
+        document.getElementById("entrust_title").innerHTML = trust.title;
+        document.getElementById("entrust_subtitle").innerHTML = trust.sub_title;
+        document.getElementById("entrust_content").innerHTML = trust.content;
     }
 
+    function setTodaySupport(todaySupport) {
+        if (todaySupport) {
+            let building = todaySupport.building;
+            let office = todaySupport.office;
+            utils.setImage(document.getElementById("entrust_img"), building.img_list);
+            utils.setImage(document.getElementById("trust_img"), office.img_list);
+            document.getElementById("entrust_title").innerHTML = building.name;
+            document.getElementById("entrust_content").innerHTML = building.introduce;
+            entrust_btn.onclick = function () {
+                window.open("buildingDetail.html?building_id=" + building.id);
+            }
+        } else {
+            utils.setImageSrc(document.getElementById("entrust_img"), "http://www.orangeban.com/images/intro_1.jpg");
+            utils.setImageSrc(document.getElementById("trust_img"), "http://www.orangeban.com/images/intro_2.jpg");
+            document.getElementById("entrust_title").innerHTML = "今日房源推荐";
+            document.getElementById("entrust_content").innerHTML = "用心打造完美个性家居环境";
+            entrust_btn.onclick = function () {
+                window.open("search.html?");
+            }
+        }
+    }
+
+    /**
+     * 开启轮播图
+     */
     function openSwiper(loop) {
         // 启动轮播图
         new Swiper('#top_bg', {
@@ -458,12 +485,11 @@
 <div class="trust_box">
     <img id="entrust_img" class="entrust_img" src="" alt=""/>
     <div class="trust_front">
-        <img class="trust_img" id="trust_img" src=""/>
+        <img class="trust_img" id="trust_img" src="" alt=""/>
         <div class="trust_info">
-            <div class="entrust_title" id="entrust_title"></div>
-            <div class="entrust_subtitle" id="entrust_subtitle"></div>
-            <div class="entrust_content" id="entrust_content"></div>
-            <a class="entrust_btn" href="search.html">MORE ></a>
+            <span class="entrust_title" id="entrust_title"></span>
+            <span class="entrust_content" id="entrust_content"></span>
+            <span class="entrust_btn clickable" id="entrust_btn">MORE ></span>
         </div>
     </div>
 </div>

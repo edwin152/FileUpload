@@ -9,6 +9,9 @@ import java.util.List;
 @Repository
 public interface UserMapperDao extends Dao<User> {
 
+    @Deprecated
+    void update(User data);
+
     /**
      * 查询办公类型列表
      */

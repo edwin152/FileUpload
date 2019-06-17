@@ -21,6 +21,10 @@
         values ('db_version_code', '0')
     </update>
 
+    <select id="selectAll" resultType="cn.ddzu.shop.entity.Note">
+        select * from note
+    </select>
+
     <insert id="insert" parameterType="cn.ddzu.shop.entity.Note">
         insert into note values (
             #{data.k},
@@ -31,14 +35,6 @@
     <update id="update" parameterType="cn.ddzu.shop.entity.Note">
         update note set v = #{data.v} where k = #{data.k}
     </update>
-
-    <delete id="delete" parameterType="java.lang.String">
-        delete from note where k = #{k}
-    </delete>
-
-    <select id="selectAll" resultType="cn.ddzu.shop.entity.Note">
-        select * from note
-    </select>
 
     <select id="selectByKey" parameterType="java.lang.String" resultType="cn.ddzu.shop.entity.Note">
         select k, v from note where k = #{k}

@@ -9,6 +9,9 @@ import java.util.List;
 @Repository
 public interface PriceRangeMapperDao extends Dao<PriceRange> {
 
+    @Deprecated
+    void update(PriceRange data);
+
     /**
      * 查询价格区间列表
      */

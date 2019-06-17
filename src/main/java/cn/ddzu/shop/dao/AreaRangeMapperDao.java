@@ -9,6 +9,9 @@ import java.util.List;
 @Repository
 public interface AreaRangeMapperDao extends Dao<AreaRange> {
 
+    @Deprecated
+    void update(AreaRange data);
+
     /**
      * 查询面积区间列表
      */

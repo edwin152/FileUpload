@@ -67,12 +67,13 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public List<News> getHotNews() {
-        return newsMapperDao.selectWhereHot();
+    public List<News> getHotNews(int num) {
+        if (num <= 0) num = 1;
+        return newsMapperDao.selectWhereHot(num);
     }
 
     @Override
     public List<News> getIndexNews() {
-        return newsMapperDao.selectWhereNew();
+        return newsMapperDao.selectWhereNew(3);
     }
 }

@@ -40,6 +40,16 @@ public interface OfficeService {
     int getOfficeSize(SearchBean searchBean);
 
     /**
+     * 获取热门办公室
+     */
+    List<Office> getHotOffice(int num);
+
+    /**
+     * 获取新增办公室
+     */
+    List<Office> getNewOffice(int num);
+
+    /**
      * 插入楼
      */
     void addBuilding(Building building);
@@ -76,7 +86,7 @@ public interface OfficeService {
     List<Building> getBuildingListWithOffice(SearchBean searchBean, int page, int step);
 
     /**
-     * 获取热门楼
+     * 获取首页展示楼
      */
     List<Building> getIndexBuilding();
 
@@ -89,6 +99,11 @@ public interface OfficeService {
      * 按条件筛选楼数量
      */
     int getBuildingSizeWithOffice(SearchBean searchBean);
+
+    /**
+     * 获取热门楼
+     */
+    List<Building> getHotBuilding(int num);
 
     class SearchBean implements Cloneable {
         // 关键词

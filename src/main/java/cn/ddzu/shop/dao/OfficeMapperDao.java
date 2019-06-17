@@ -9,6 +9,9 @@ import java.util.List;
 @Repository
 public interface OfficeMapperDao extends Dao<Office> {
 
+    @Deprecated
+    void init();
+
     /**
      * 删除办公室
      */
@@ -73,4 +76,14 @@ public interface OfficeMapperDao extends Dao<Office> {
             , @Param("area_range_id") Long area_range_id
             , @Param("price_range_id") Long price_range_id
             , @Param("decoration_id") Long decoration_id);
+
+    /**
+     * 查询热门
+     */
+    List<Office> selectWhereHot(@Param("limit") int limit);
+
+    /**
+     * 查询最新
+     */
+    List<Office> selectWhereNew(@Param("limit") int limit);
 }

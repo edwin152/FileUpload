@@ -101,7 +101,7 @@ let http = {
 };
 
 let utils = {
-    default_img: "http://47.96.165.78/images/default.jpg",
+    default_img: "http://www.orangeban.com/images/default.jpg",
 
     getImg_list: function (obj) {
         return obj && obj.img_list && obj.img_list.length > 0

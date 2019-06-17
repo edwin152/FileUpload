@@ -89,7 +89,7 @@ public class DBController extends BaseController {
         String city = helper.getString("city", "sh");
 
         StringBuilder s = new StringBuilder();
-        String url = "http://47.96.165.78/" + city + "/db/getAll"
+        String url = "http://www.orangeban.com/" + city + "/db/getAll"
                 + "?username=edwin&password=edwin";
         URL syncAll = new URL(url);
         URLConnection syncAllConn = syncAll.openConnection();

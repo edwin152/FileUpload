@@ -9,6 +9,9 @@ import java.util.List;
 @Repository
 public interface DecorationMapperDao extends Dao<Decoration> {
 
+    @Deprecated
+    void update(Decoration data);
+
     /**
      * 查询装修情况列表
      */

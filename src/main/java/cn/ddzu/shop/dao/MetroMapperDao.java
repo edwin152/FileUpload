@@ -9,6 +9,9 @@ import java.util.List;
 @Repository
 public interface MetroMapperDao extends Dao<Metro> {
 
+    @Deprecated
+    void update(Metro data);
+
     /**
      * 查询地铁列表
      */

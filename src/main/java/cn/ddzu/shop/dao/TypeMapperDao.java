@@ -9,6 +9,9 @@ import java.util.List;
 @Repository
 public interface TypeMapperDao extends Dao<Type> {
 
+    @Deprecated
+    void update(Type data);
+
     /**
      * 查询办公类型列表
      */
