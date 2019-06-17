@@ -1,3 +1,5 @@
+'use strict';
+
 let http = {
 
     post: function (obj) {
