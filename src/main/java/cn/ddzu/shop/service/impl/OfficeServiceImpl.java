@@ -21,14 +21,6 @@ public class OfficeServiceImpl implements OfficeService {
     private BuildingMapperDao buildingMapperDao;
 
     @Override
-    public void reset() {
-        officeMapperDao.drop();
-        officeMapperDao.create();
-        buildingMapperDao.drop();
-        buildingMapperDao.create();
-    }
-
-    @Override
     public void addOffice(Office office) {
         Log.d("start insert office");
         office.setId(DataUtils.generateId());

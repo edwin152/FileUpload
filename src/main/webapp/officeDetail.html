@@ -1,8 +1,7 @@
-<html>
-
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>点点租</title>
+    <title>橙办</title>
     <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/all.css"/>
     <link rel="stylesheet" type="text/css" href="css/officeDetail.css"/>
@@ -10,6 +9,22 @@
     <script src="js/swiper.jquery.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
 </head>
+
+<!-- 美洽客服 -->
+<script title="text/javascript">
+    (function (m, ei, q, i, a, j, s) {
+        m[i] = m[i] || function () {
+            (m[i].a = m[i].a || []).push(arguments)
+        };
+        j = ei.createElement(q);
+        s = ei.getElementsByTagName(q)[0];
+        j.async = true;
+        j.charset = 'UTF-8';
+        j.src = 'https://static.meiqia.com/dist/meiqia.js?=_t';
+        s.parentNode.insertBefore(j, s);
+    })(window, document, 'script', '_MEIQIA');
+    _MEIQIA('entId', 51778);
+</script>
 
 <script type="text/javascript">
     let office_id;
@@ -146,34 +161,31 @@
 
 <body class="bg_gray">
 <div class="title_box">
-    <div class="win flex_row">
-        <div class="title_text">
-            上海
-        </div>
-        <div class="title_text">
-            [切换城市]
-        </div>
-        <div class="title_text">
-            |
-        </div>
-        <div class="title_text title_text_right">
-            <a href="index.html">首页</a>
-        </div>
-        <div class="title_text title_text_right title_obvious">
-            <a href="">写字楼出租</a>
-        </div>
-        <div class="title_text title_text_right">
-            <a href="">共享办公</a>
-        </div>
-        <div class="title_text title_text_right">
-            <a href="">资讯中心</a>
+    <div class="win flex_row position_relative">
+        <div class="top_logo"></div>
+        <div class="position_right">
+            <div class="title_text_right">
+                <a href="index.html" class="clickable">首页</a>
+            </div>
+            <div class="title_text_right title_obvious">
+                <a href="search.html" class="clickable">写字楼出租</a>
+            </div>
+            <div class="title_text_right">
+                <a href="search.html?type_id=3" class="clickable">共享办公</a>
+            </div>
+            <div class="title_text_right">
+                <a href="news.html" class="clickable">资讯中心</a>
+            </div>
+            <div class="icon_phone"></div>
+            <div class="title_text_right">
+                <span class="tel_num">4008-700-758</span>
+            </div>
         </div>
     </div>
 </div>
+
 <div class="bg_white">
     <div class="win top_box flex_row">
-        <img src="img/logo_light.png" class="top_logo" alt=""/>
-        <a href="" class="black_a logo_right">上海写字楼出租</a>
         <div class="top_search_box flex_row">
             <input type="text" class="top_search" name="search" id="top_search" value=""
                    placeholder="输入您要查找的楼盘或者区域商圈名称"/>
@@ -181,6 +193,7 @@
         </div>
     </div>
 </div>
+
 <div class="top_info_box matop">
     <div class="detail_info_name" id="detail_info_name">
     </div>
@@ -195,30 +208,14 @@
                 <span class="detail_info_price" id="total_price">0</span>
                 元/月 （单价:<span id="price"></span>元/m²/天）
             </div>
-            <div class="infodown_box flex_row">
-                <div class="infodown">
-                    <div class="infodown_top" id="area">
-                        0m²
-                    </div>
-                    <div class="infodown_bottom">
-                        建筑面积
-                    </div>
-                </div>
-                <div class="infodown">
-                    <div class="infodown_top" id="workplace_accommodation">
-                        0个
-                    </div>
-                    <div class="infodown_bottom">
-                        可容纳工位数
-                    </div>
-                </div>
-                <div class="infodown">
-                    <div class="infodown_top" id="decoration">
-                    </div>
-                    <div class="infodown_bottom">
-                        装修程度
-                    </div>
-                </div>
+            <div class="page_info_more">
+                建筑面积： <span id="area"></span>
+            </div>
+            <div class="page_info_more">
+                可容纳工位数： <span id="workplace_accommodation"></span>
+            </div>
+            <div class="page_info_more">
+                装修程度： <span id="decoration"></span>
             </div>
             <div class="page_info_more">
                 使用率： <span id="utilization_rate"></span>
@@ -236,17 +233,16 @@
                 地铁：<span id="metro_name_list"></span>
             </div>
             <div class="page_info_service flex_row">
-                <img src="img/phone.png" class="page_info_service_imgage" alt=""/>
                 <div class="page_info_service_right flex_column">
                     <div class="page_info_service_name">
                         <span>同普大厦写字楼出租</span> 专属顾问
                     </div>
                     <div class="page_info_service_btn_box flex_row">
                         <div class="page_info_service_btn">
-                            免费咨询
+                            咨询热线
                         </div>
                         <div class="page_info_service_phone">
-                            400-865-9520
+                            021 - 5090 6123
                         </div>
                     </div>
                 </div>
@@ -378,16 +374,10 @@
 
     <div class="content_right bg_white">
         <div class="contact_way">
-            <div class="contact_info">
-                <img src="" class="contact_img" alt=""/>
-                <div class="service_box">
-                    <span class="service_name">妥妥租</span>上海写字楼专属顾问
-                </div>
-            </div>
             <div class="service_phone flex_row">
                 <div class="icon_phone"></div>
                 <div class="service_phone_text">
-                    400-865-9520
+                    021 - 5090 6123
                 </div>
             </div>
             <div class="ready_see">
@@ -405,44 +395,26 @@
         </div>
     </div>
 </div>
-<div class="bottom_box matop flex_column">
-    <div class="win">
-        <div class="flex_row bottom_top">
-            <div class="foot_l">
-                <div class="ad_title">办公选址上妥妥租，妥妥的 !</div>
-                <a href="https://www.tuotuozu.com/sh/zxd/id/9.html">关于妥妥租</a> -
-                <a href="https://www.tuotuozu.com/sh/zxd/id/10.html">服务介绍</a> -
-                <br/> ©2017-2018 京ICP备17066298号-1 地址：北京市朝阳区凯旋城E座1807
-            </div>
-            <div class="foot_m">
-                客服服务：（早9:00-晚21:00）<br/>
-                <span>400-865-9520</span>
-                <div class="flex_row">
-                    <div>SOCIAL MEDIA</div>
-                    <div>
-                        <a href="#">facebook</a>
-                    </div>
-                    <div>
-                        <a href="#">twitter</a>
-                    </div>
-                    <div>
-                        <a href="#">linkIn</a>
-                    </div>
-                </div>
-            </div>
+
+<div class="bottom_box flex_column_left">
+    <div class="win flex_column_left">
+        <span class="friendly_href_sign">&nbsp;|&nbsp;&nbsp;&nbsp;友情链接</span>
+
+        <div class="friendly_href">
+            <a href="https://sh.diandianzu.com/" target="_blank">上海办公室出租</a>
+            <a href="https://sh.diandianzu.com/" target="_blank">上海办公室出租</a>
+            <a href="https://sh.diandianzu.com/" target="_blank">上海办公室出租</a>
         </div>
-        <div class="foot_link">
-            友情链接：
-            <a href="https://www.haozu.com/sh/zuxiezilou/" target="_blank">上海写字楼出租</a>
-            <script type="text/javascript">
-                let cnzz_protocol = (("https:" === document.location.protocol) ? " https://" : " http://");
-                document.write(unescape("%3Cspan id='cnzz_stat_icon_4383806'%3E%3C/span%3E%3Cscript src='" +
-                    cnzz_protocol +
-                    "s4.cnzz.com/stat.php%3Fid%3D4383806%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
-            </script>
+
+        <div class="foot_logo flex_row">
+            <div class="bottom_logo"></div>
+            <span>&nbsp;&nbsp;&nbsp;办公选址 心想事成！</span>
+        </div>
+
+        <div class="foot_contact_info flex_column_left">
+            <span>24h 400电话：400-8700-758</span>
         </div>
     </div>
 </div>
 </body>
-
 </html>

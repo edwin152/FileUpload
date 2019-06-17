@@ -21,21 +21,8 @@ public class NewsServiceImpl implements NewsService {
     private NewsTagMapperDao newsTagMapperDao;
 
     @Override
-    public void resetNewsTag() {
-        newsTagMapperDao.drop();
-        newsTagMapperDao.create();
-        newsTagMapperDao.init();
-    }
-
-    @Override
     public List<NewsTag> getNewsTagList() {
         return newsTagMapperDao.select();
-    }
-
-    @Override
-    public void resetNews() {
-        newsMapperDao.drop();
-        newsMapperDao.create();
     }
 
     @Override
@@ -62,6 +49,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public News getNews(Long id) {
+        if (id == null) return null;
         return newsMapperDao.selectById(id);
     }
 

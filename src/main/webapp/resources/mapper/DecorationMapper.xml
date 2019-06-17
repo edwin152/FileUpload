@@ -18,7 +18,7 @@
     </update>
 
     <update id="init">
-        insert into decoration
+        insert into decoration (id, name, valid)
         values (1, '全部', true),
                (2, '豪华装修', true),
                (3, '精装修', true),
@@ -32,7 +32,7 @@
     </select>
 
     <insert id="insert" parameterType="cn.ddzu.shop.entity.Decoration">
-        insert into decoration values (
+        insert into decoration (id, name, valid) values (
             #{data.id},
             #{data.name},
             #{data.valid}

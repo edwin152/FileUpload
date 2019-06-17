@@ -7,6 +7,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="DDShop" />
+        <module name="ddzu" />
+        <module name="master" />
       </profile>
     </annotationProcessing>
   </component>

@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface OfficeService {
 
-    void reset();
-
     /**
      * 插入办公室
      */

@@ -1,413 +1,517 @@
-<html>
-
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>点点租</title>
+    <meta name="keywords" content="租房 上海房屋 出租 整租 办公室出租 出租"/>
+    <meta name="description" content="橙办租房网提供海量办公室出租房源，实时更新，租房信息真实有效。">
+    <title>橙办</title>
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
     <link rel="stylesheet" href="layUI/css/layui.css">
     <link rel="stylesheet" type="text/css" href="css/all.css"/>
     <link rel="stylesheet" type="text/css" href="css/index.css"/>
-    <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
-    <script src="layUI/layui.js" type="text/javascript" charset="UTF-8"></script>
-    <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/swiper.jquery.min.js" type="text/javascript" charset="utf-8"></script>
-    <script type="text/javascript">
-        /**
-         * 区域
-         * @param conditionList
-         */
-        function setConditionScreen(conditionList) {
-            let conditionBox = document.getElementById("screen_condition_box");
-            if (!conditionBox) {
-                return;
-            }
-            for (let i = 0, len = conditionList.length; i < len && i < 10; i++) {
-                if (conditionList[i].id === 1) {
-                    continue;
-                }
-                let conditionItem = document.createElement("div");
-                conditionBox.appendChild(conditionItem);
-                let conditionText = document.createElement("a");
-                conditionText.setAttribute("href", "search.html?district_id=" + conditionList[i].id);
-                conditionText.innerHTML = conditionList[i].name;
-                conditionItem.appendChild(conditionText);
+    <script src="layUI/layui.js" type="text/javascript" charset="UTF-8"></script>
+    <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<!-- 美洽客服 -->
+<script title="text/javascript">
+    (function (m, ei, q, i, a, j, s) {
+        m[i] = m[i] || function () {
+            (m[i].a = m[i].a || []).push(arguments)
+        };
+        j = ei.createElement(q);
+        s = ei.getElementsByTagName(q)[0];
+        j.async = true;
+        j.charset = 'UTF-8';
+        j.src = 'https://static.meiqia.com/dist/meiqia.js?=_t';
+        s.parentNode.insertBefore(j, s);
+    })(window, document, 'script', '_MEIQIA');
+    _MEIQIA('entId', 51778);
+</script>
+
+<script type="text/javascript">
+    /**
+     * 区域
+     * @param conditionList
+     */
+    function setConditionScreen(conditionList) {
+        let conditionBox = document.getElementById("screen_condition_box");
+        if (!conditionBox) {
+            return;
+        }
+        for (let i = 0, len = conditionList.length; i < len && i < 10; i++) {
+            if (conditionList[i].id === 1) {
+                continue;
             }
             let conditionItem = document.createElement("div");
             conditionBox.appendChild(conditionItem);
             let conditionText = document.createElement("a");
-            conditionText.setAttribute("href", "search.html");
-            conditionText.innerHTML = "更多>>";
+            conditionText.setAttribute("href", "search.html?district_id=" + conditionList[i].id);
+            conditionText.innerHTML = conditionList[i].name;
             conditionItem.appendChild(conditionText);
         }
+        let conditionItem = document.createElement("div");
+        conditionBox.appendChild(conditionItem);
+        let conditionText = document.createElement("a");
+        conditionText.setAttribute("href", "search.html");
+        conditionText.innerHTML = "更多>>";
+        conditionItem.appendChild(conditionText);
+    }
 
-        /**
-         * 类型
-         * @param typeList
-         */
-        function setTypeScreen(typeList) {
-            let typeBox = document.getElementById("screen_type_box");
-            if (!typeBox) {
-                return;
+    /**
+     * 类型
+     * @param typeList
+     */
+    function setTypeScreen(typeList) {
+        let typeBox = document.getElementById("screen_type_box");
+        if (!typeBox) {
+            return;
+        }
+        for (let i = 0, len = typeList.length; i < len; i++) {
+            if (typeList[i].id === 1) {
+                continue;
             }
-            for (let i = 0, len = typeList.length; i < len; i++) {
-                if (typeList[i].id === 1) {
-                    continue;
-                }
-                let typeItem = document.createElement("a");
-                typeItem.setAttribute("href", "search.html?type_id=" + typeList[i].id);
-                typeBox.appendChild(typeItem);
-                let typeImg = document.createElement("img");
-                typeImg.setAttribute("class", "screen_type_icon");
-                switch (typeList[i].id) {
-                    case 2:
-                        typeImg.setAttribute("src", "img/icon_type_1.png");
-                        break;
-                    case 3:
-                        typeImg.setAttribute("src", "img/icon_type_2.png");
-                        break;
-                    case 4:
-                        typeImg.setAttribute("src", "img/icon_type_3.png");
-                        break;
-                }
-                typeItem.appendChild(typeImg);
-                let typeText = document.createElement("div");
-                typeText.setAttribute("class", "screen_type_text");
-                typeText.innerHTML = typeList[i].name;
-                typeItem.appendChild(typeText);
+            let typeItem = document.createElement("a");
+            typeItem.setAttribute("href", "search.html?type_id=" + typeList[i].id);
+            typeBox.appendChild(typeItem);
+            let typeImg = document.createElement("img");
+            typeImg.setAttribute("class", "screen_type_icon");
+            switch (typeList[i].id) {
+                case 2:
+                    typeImg.setAttribute("src", "img/icon_type_1.png");
+                    break;
+                case 3:
+                    typeImg.setAttribute("src", "img/icon_type_2.png");
+                    break;
+                case 4:
+                    typeImg.setAttribute("src", "img/icon_type_3.png");
+                    break;
             }
+            typeItem.appendChild(typeImg);
+            let typeText = document.createElement("div");
+            typeText.setAttribute("class", "screen_type_text");
+            typeText.innerHTML = typeList[i].name;
+            typeItem.appendChild(typeText);
+        }
+    }
+
+    /**
+     * 面积
+     * @param areaRangeList
+     */
+    function setAreaRangeScreen(areaRangeList) {
+        let areaRangeBox = document.getElementById("screen_area_box");
+        if (!areaRangeBox) {
+            return;
+        }
+        for (let i = 0, len = areaRangeList.length; i < len && i < 10; i++) {
+            if (areaRangeList[i].id === 1) {
+                continue;
+            }
+            let areaRangeText = document.createElement("a");
+            areaRangeText.setAttribute("class", "screen_option");
+            areaRangeText.setAttribute("href", "search.html?area_range_id=" + areaRangeList[i].id);
+            areaRangeBox.appendChild(areaRangeText);
+        }
+    }
+
+    /**
+     * 价格
+     * @param priceRangeList
+     */
+    function setPriceRangeScreen(priceRangeList) {
+        let priceRangeBox = document.getElementById("screen_price_box");
+        if (!priceRangeBox) {
+            return;
+        }
+        for (let i = 0, len = priceRangeList.length; i < len && i < 10; i++) {
+            if (priceRangeList[i].id === 1) {
+                continue;
+            }
+            let priceRangeText = document.createElement("a");
+            priceRangeText.setAttribute("class", "screen_option");
+            priceRangeText.setAttribute("href", "search.html?price_range_id=" + priceRangeList[i].id);
+            priceRangeBox.appendChild(priceRangeText);
+        }
+    }
+
+    /**
+     * 设置核心圈
+     * @param coreList 长度不超过4个
+     */
+    function setCoreBuilding(coreList) {
+        if (coreList && coreList.length > 0) {
+            document.getElementById("core_building").setAttribute("style", "display: flex;")
+        } else {
+            return;
         }
 
-        /**
-         * 面积
-         * @param areaRangeList
-         */
-        function setAreaRangeScreen(areaRangeList) {
-            let areaRangeBox = document.getElementById("screen_area_box");
-            if (!areaRangeBox) {
-                return;
+        for (let i = 0, len = coreList.length; i < len && i < 5; i++) {
+            let coreItemImg = document.getElementById("core_item_img_" + i);
+            utils.setImage(coreItemImg, coreList[i].img_list);
+            coreItemImg.onclick = function () {
+                window.open("search.html?district_id=" + coreList[i].district_id
+                    + "&zone_id=" + coreList[i].id, "_blank");
+            };
+
+            let coreItemText = document.getElementById("core_item_text_" + i);
+            coreItemText.innerHTML = coreList[i].name;
+        }
+    }
+
+    /**
+     * 设置精选写字楼
+     * @param buildingList 长度为4的倍数
+     */
+    function setFineBuildingList(buildingList) {
+        if (!buildingList) {
+            return;
+        }
+        let fineBuildingListBox = document.getElementById("fine_building");
+        for (let i = 0, len = buildingList.length; i < len; i++) {
+            let buildingItemBox = document.createElement("div");
+            buildingItemBox.setAttribute("class", "fine_building_item_box image_big flex_column clickable");
+            if ((i + 1) % 3 === 2) {
+                buildingItemBox.setAttribute("style", "margin-right: 90px; margin-left: 90px;");
             }
-            for (let i = 0, len = areaRangeList.length; i < len && i < 10; i++) {
-                if (areaRangeList[i].id === 1) {
-                    continue;
-                }
-                let areaRangeText = document.createElement("a");
-                areaRangeText.setAttribute("class", "screen_option");
-                areaRangeText.setAttribute("href", "search.html?area_range_id=" + areaRangeList[i].id);
-                areaRangeBox.appendChild(areaRangeText);
-            }
+            buildingItemBox.onclick = function () {
+                window.open("buildingDetail.html?building_id=" + buildingList[i].id, "_blank");
+            };
+            fineBuildingListBox.appendChild(buildingItemBox);
+
+            let buildingImageBox = document.createElement("div");
+            buildingImageBox.setAttribute("class", "fine_building_image_box");
+            buildingItemBox.appendChild(buildingImageBox);
+            let buildingImage = document.createElement("img");
+            utils.setImage(buildingImage, buildingList[i].img_list);
+            buildingImageBox.appendChild(buildingImage);
+
+            let buildingTitle = document.createElement("a");
+            buildingTitle.setAttribute("class", "fine_building_title");
+            buildingTitle.innerHTML = buildingList[i].name;
+            buildingItemBox.appendChild(buildingTitle);
+
+            let buildingInfoBox = document.createElement("div");
+            buildingInfoBox.setAttribute("class", "fine_building_info");
+            buildingItemBox.appendChild(buildingInfoBox);
+
+            let buildingAddressBox = document.createElement("div");
+            buildingAddressBox.setAttribute("class", "flex_row");
+            // buildingInfoBox.appendChild(buildingAddressBox);
+            let buildingAddressIcon = document.createElement("div");
+            buildingAddressIcon.setAttribute("class", "icon_address");
+            buildingAddressBox.appendChild(buildingAddressIcon);
+            let buildingAddressText = document.createElement("span");
+            buildingAddressText.setAttribute("class", "address_text");
+            buildingAddressText.innerHTML = buildingList[i].district_name + "-" + buildingList[i].zone_name;
+            buildingAddressBox.appendChild(buildingAddressText);
+
+            let buildingPriceBox = document.createElement("div");
+            buildingPriceBox.setAttribute("class", "fine_building_price");
+            // buildingInfoBox.appendChild(buildingPriceBox);
+            let buildingPriceText = document.createElement("span");
+            buildingPriceText.setAttribute("class", "price_number");
+            buildingPriceText.innerHTML = buildingList[i].price_average;
+            buildingPriceBox.appendChild(buildingPriceText);
+            buildingPriceBox.append("元/m²/天");
+        }
+    }
+
+    /**
+     * 设置头部背景图
+     */
+    function setTopBackground(imageUrl) {
+        let topBgBox = document.getElementById("top_bg_item_box");
+        for (let i = 0, len = imageUrl.length; i < len; i++) {
+            let itemBox = document.createElement("div");
+            itemBox.setAttribute("class", "swiper-slide");
+            topBgBox.appendChild(itemBox);
+            let imgView = document.createElement("img");
+            imgView.setAttribute("src", imageUrl[i]);
+            itemBox.appendChild(imgView);
+        }
+    }
+
+    /**
+     * 设置委托房源
+     */
+    function setTrust(trust) {
+        utils.setImageSrc(document.getElementById("entrust_img"), trust.img_intro_1);
+        utils.setImageSrc(document.getElementById("trust_img"), trust.img_intro_2);
+        document.getElementById("entrust_title").innerHTML = trust.title;
+        document.getElementById("entrust_subtitle").innerHTML = trust.sub_title;
+        document.getElementById("entrust_content").innerHTML = trust.content;
+
+    }
+
+    function setNewsList(newsList) {
+        if (!newsList) {
+            return;
         }
 
-        /**
-         * 价格
-         * @param priceRangeList
-         */
-        function setPriceRangeScreen(priceRangeList) {
-            let priceRangeBox = document.getElementById("screen_price_box");
-            if (!priceRangeBox) {
-                return;
+        let news_list = document.getElementById("news_list");
+        for (let i = 0, len = newsList.length; i < len || i < 3; i++) {
+            let news;
+            if (newsList.hasOwnProperty(i)) {
+                news = newsList[i];
             }
-            for (let i = 0, len = priceRangeList.length; i < len && i < 10; i++) {
-                if (priceRangeList[i].id === 1) {
-                    continue;
-                }
-                let priceRangeText = document.createElement("a");
-                priceRangeText.setAttribute("class", "screen_option");
-                priceRangeText.setAttribute("href", "search.html?price_range_id=" + priceRangeList[i].id);
-                priceRangeBox.appendChild(priceRangeText);
-            }
-        }
-
-        /**
-         * 设置核心圈
-         * @param coreList 长度不超过4个
-         */
-        function setCoreBuilding(coreList) {
-            if (coreList && coreList.length > 0) {
-                document.getElementById("core_building").setAttribute("style", "display: flex;")
-            } else {
-                return;
+            let news_item = document.createElement("div");
+            news_item.className = "news_item";
+            news_list.appendChild(news_item);
+            if (i % 3 !== 2) {
+                let news_item_line = document.createElement("div");
+                news_item_line.className = "news_item_line";
+                news_list.appendChild(news_item_line);
             }
 
-            for (let i = 0, len = coreList.length; i < len && i < 5; i++) {
-                let coreItemImg = document.getElementById("core_item_img_" + i);
-                utils.setImage(coreItemImg, coreList[i].img_list);
-
-                let coreItemText = document.getElementById("core_item_text_" + i);
-                coreItemText.innerHTML = coreList[i].name;
-            }
-        }
-
-        /**
-         * 设置精选写字楼
-         * @param buildingList 长度为4的倍数
-         */
-        function setFineBuildingList(buildingList) {
-            if (!buildingList) {
-                return;
-            }
-            let fineBuildingListBox = document.getElementById("fine_building");
-            for (let i = 0, len = buildingList.length; i < len; i++) {
-                let buildingItemBox = document.createElement("div");
-                buildingItemBox.setAttribute("class", "fine_building_item_box image_big flex_column clickable");
-                if ((i + 1) % 3 === 2) {
-                    buildingItemBox.setAttribute("style", "margin-right: 155px; margin-left: 155px;");
-                }
-                buildingItemBox.onclick = function () {
-                    window.open("buildingDetail.html?building_id=" + buildingList[i].id, "_blank");
+            if (news) {
+                let news_title = document.createElement("span");
+                news_title.className = "news_title";
+                news_title.onclick = function () {
+                    window.open("newsDetail.html?news_id=" + news.id);
                 };
-                fineBuildingListBox.appendChild(buildingItemBox);
-
-                let buildingImageBox = document.createElement("div");
-                buildingImageBox.setAttribute("class", "fine_building_image_box");
-                buildingItemBox.appendChild(buildingImageBox);
-                let buildingImage = document.createElement("img");
-                utils.setImage(buildingImage, buildingList[i].img_list);
-                buildingImageBox.appendChild(buildingImage);
-
-                let buildingTitle = document.createElement("a");
-                buildingTitle.setAttribute("class", "fine_building_title");
-                buildingTitle.innerHTML = buildingList[i].name;
-                buildingItemBox.appendChild(buildingTitle);
-
-                let buildingInfoBox = document.createElement("div");
-                buildingInfoBox.setAttribute("class", "fine_building_info");
-                buildingItemBox.appendChild(buildingInfoBox);
-
-                let buildingAddressBox = document.createElement("div");
-                buildingAddressBox.setAttribute("class", "flex_row");
-                // buildingInfoBox.appendChild(buildingAddressBox);
-                let buildingAddressIcon = document.createElement("div");
-                buildingAddressIcon.setAttribute("class", "icon_address");
-                buildingAddressBox.appendChild(buildingAddressIcon);
-                let buildingAddressText = document.createElement("span");
-                buildingAddressText.setAttribute("class", "address_text");
-                buildingAddressText.innerHTML = buildingList[i].district_name + "-" + buildingList[i].zone_name;
-                buildingAddressBox.appendChild(buildingAddressText);
-
-                let buildingPriceBox = document.createElement("div");
-                buildingPriceBox.setAttribute("class", "fine_building_price");
-                // buildingInfoBox.appendChild(buildingPriceBox);
-                let buildingPriceText = document.createElement("span");
-                buildingPriceText.setAttribute("class", "price_number");
-                buildingPriceText.innerHTML = buildingList[i].price_average;
-                buildingPriceBox.appendChild(buildingPriceText);
-                buildingPriceBox.append("元/m²/天");
+                news_title.innerHTML = news.title;
+                news_item.appendChild(news_title);
+                let news_date = document.createElement("span");
+                news_date.className = "news_date";
+                news_date.innerHTML = news.last_edit_time;
+                news_item.appendChild(news_date);
+                let news_content = document.createElement("span");
+                news_content.className = "news_content";
+                news_content.innerHTML = news.content;
+                news_item.appendChild(news_content);
             }
         }
+    }
 
-        /**
-         * 设置头部背景图
-         */
-        function setTopBackground(imageUrl) {
-            let topBgBox = document.getElementById("top_bg_item_box");
-            for (let i = 0, len = imageUrl.length; i < len; i++) {
-                let itemBox = document.createElement("div");
-                itemBox.setAttribute("class", "swiper-slide");
-                topBgBox.appendChild(itemBox);
-                let imgView = document.createElement("img");
-                imgView.setAttribute("src", imageUrl[i]);
-                itemBox.appendChild(imgView);
+    window.onload = function () {
+        getAll();
+    };
+
+    function getAll() {
+        http.post({
+            url: "index/all",
+            success: function (data) {
+                filter = data;
+                setTopBackground(data.bannerList);
+                setConditionScreen(data.districtList);
+                setTypeScreen(data.typeList);
+                setAreaRangeScreen(data.areaRangeList);
+                setPriceRangeScreen(data.priceRangeList);
+                setCoreBuilding(data.coreList);
+                setFineBuildingList(data.fineList);
+                setNewsList(data.newsList);
+                setTrust(data.today_intro);
+
+                openSwiper(data.bannerList.length !== 1);
             }
-        }
+        });
+    }
 
-        /**
-         * 设置资讯
-         */
-        function setLeftNewsList(newsList) {
-            if (!newsList) {
-                return;
-            }
-
-            let newsListBox = document.getElementById("news_list_left");
-            for (let i = 0, len = newsList.length; i < len; i++) {
-                let newsItem = document.createElement("li");
-                let newsTitle = document.createElement("a");
-                newsTitle.innerHTML = newsList[i].title;
-                newsTitle.setAttribute("href", "newsDetail.html?newsId=" + newsList[i].id);
-                newsItem.appendChild(newsTitle);
-                let newsTime = document.createElement("div");
-                newsTime.innerHTML = newsList[i].last_edit_time;
-                newsItem.appendChild(newsTime);
-                newsListBox.appendChild(newsItem);
-            }
-        }
-
-        window.onload = function () {
-            getFilterList();
-        };
-
-        function getFilterList() {
-            http.post({
-                url: "index/all",
-                success: function (data) {
-                    filter = data;
-                    setTopBackground(data.bannerList);
-                    setConditionScreen(data.districtList);
-                    setTypeScreen(data.typeList);
-                    setAreaRangeScreen(data.areaRangeList);
-                    setPriceRangeScreen(data.priceRangeList);
-                    setCoreBuilding(data.coreList);
-                    setFineBuildingList(data.fineList);
-                    setLeftNewsList(data.newsList);
-                    utils.setImageSrc(document.getElementById("entrust_img"));
-
-                    openSwiper(data.bannerList.length !== 1);
-                }
-            });
-        }
-
-        function openSwiper(loop) {
-            // 启动轮播图
-            new Swiper('#top_bg', {
-                loop: loop,
-                autoplay: 2000,
-                pagination: '#top_bg_position',
-                paginationClickable: true,
-                autoplayDisableOnInteraction: false,
-            });
-        }
-    </script>
-</head>
+    function openSwiper(loop) {
+        // 启动轮播图
+        new Swiper('#top_bg', {
+            loop: loop,
+            autoplay: 2000,
+            pagination: '#top_bg_position',
+            paginationClickable: true,
+            autoplayDisableOnInteraction: false,
+        });
+    }
+</script>
 
 <body>
-<div class="top_bg_search">
-    <div class="top_bg_box swiper-container" id="top_bg">
-        <div class="swiper-wrapper" id="top_bg_item_box">
-        </div>
-        <div class="swiper_position swiper_top" id="top_bg_position"></div>
-    </div>
-    <div class="index_top_box">
-        <div class="title_box">
-            <div class="win flex_row position_relative">
-                <img src="img/logo_dark.png" class="top_logo" alt="">
-                <div class="clickable">
-                    上海
-                </div>
-                <div class="position_right">
-                    <div class="title_text_right">
-                        <a href="index.html" class="clickable">首页</a>
-                    </div>
-                    <div class="title_text_right title_obvious">
-                        <a href="" class="clickable">写字楼出租</a>
-                    </div>
-                    <div class="title_text_right">
-                        <a href="" class="clickable">共享办公</a>
-                    </div>
-                    <div class="title_text_right">
-                        <a href="" class="clickable">资讯中心</a>
-                    </div>
-                </div>
+<div class="title_box">
+    <div class="win flex_row position_relative">
+        <div class="top_logo"></div>
+        <div class="position_right">
+            <div class="title_text_right">
+                <a href="index.html" class="clickable">首页</a>
             </div>
-        </div>
-        <div class="win win_center">
-            <div class="top_screen_box">
-                <div class="screen_type_box">
-                    <div class="screen_item">
-                        <div class="screen_title">
-                            区域
-                        </div>
-                        <div class="screen_item_box" id="screen_condition_box">
-
-                        </div>
-                    </div>
-                    <div class="screen_item">
-                        <div class="screen_title">
-                            面积<span class="screen_subtitle">（单位：m²）</span>
-                        </div>
-                        <div class="screen_option_box flex_column">
-                            <div class="flex_row option_select_box" id="screen_area_box">
-                            </div>
-                            <div class="flex_row option_text">
-                                <div class="screen_option_text">0</div>
-                                <div class="screen_option_text">100</div>
-                                <div class="screen_option_text">300</div>
-                                <div class="screen_option_text">500</div>
-                                <div class="screen_option_text">1000</div>
-                                <div class="screen_option_text">∞</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="new_search_btn_box">
-                    <a href="search.html">马上找房</a>
-                </div>
-                <div class="top_search_box">
-                    <form action="search.html">
-                        <input type="text" class="top_search" name="keyword" placeholder="楼盘名称或区域商圈名称"/>
-                        <input class="search_btn" type="submit" value="搜索"/>
-                    </form>
-                </div>
+            <div class="title_text_right title_obvious">
+                <a href="search.html" class="clickable">写字楼出租</a>
+            </div>
+            <div class="title_text_right">
+                <a href="search.html?type_id=3" class="clickable">共享办公</a>
+            </div>
+            <div class="title_text_right">
+                <a href="news.html" class="clickable">资讯中心</a>
+            </div>
+            <div class="icon_phone"></div>
+            <div class="title_text_right">
+                <span class="tel_num">4008-700-758</span>
             </div>
         </div>
     </div>
 </div>
 
-<div class="win">
-    <h3 class="item_title">核心商圈享&nbsp;<span class="item_subtitle">优质配套 与大咖公司为邻</span></h3>
+<div class="top_bg_box swiper-container" id="top_bg">
+    <div class="swiper-wrapper" id="top_bg_item_box">
+    </div>
+    <div class="swiper_position swiper_top" id="top_bg_position"></div>
+    <form action="search.html">
+        <div class="search_box_width">
+            <div class="top_search_box">
+                <input type="text" class="top_search" name="keyword" placeholder="输入你想找的办公室"/>
+                <input class="search_btn" type="submit" value="SEARCH"/>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="win padding_top">
+
+    <div class="win_explain">
+        <div class="explain_item">
+            <img src="img/zhongjie.png" class="explain_img"/>
+            <div class="explain_title">全程中介免费</div>
+            <div class="explain_text">不收取任何费用</div>
+        </div>
+        <div class="explain_item">
+            <img src="img/fuwu.png" class="explain_img"/>
+            <div class="explain_title">全程服务到底</div>
+            <div class="explain_text">带看，签约，交房全程服务一个不落</div>
+        </div>
+        <div class="explain_item">
+            <img src="img/fangyuan.png" class="explain_img"/>
+            <div class="explain_title">3分钟匹配进准房源</div>
+            <div class="explain_text">最短时间内匹配最精准房源</div>
+        </div>
+        <div class="explain_item">
+            <img src="img/yiduiyi.png" class="explain_img"/>
+            <div class="explain_title">一对一贴心服务</div>
+            <div class="explain_text">专业服务顾问</div>
+        </div>
+        <div class="explain_item">
+            <img src="img/xuanze.png" class="explain_img"/>
+            <div class="explain_title">10W+人员选择</div>
+            <div class="explain_text">世界500强等中小型企业的办公选址供应商</div>
+        </div>
+    </div>
+
+
+    <h3 class="item_title core_sign">热门商圈&nbsp;<span class="item_subtitle">核心CBD房源一手掌握</span></h3>
     <div class="image_box_in_title flex_row" id="core_building" style="display: none;">
         <div class="core_left_big_box image_big">
-            <img class="core_img" id="core_item_img_0"/>
-            <div class="core_text" id="core_item_text_0">地铁周边出行最便捷</div>
+            <img class="core_img clickable" id="core_item_img_0"/>
+            <div class="core_text" id="core_item_text_0"></div>
         </div>
         <div class="core_min_box">
             <div class="core_right_box image_big">
-                <img class="core_img" id="core_item_img_1"/>
-                <div class="core_text" id="core_item_text_1">地铁周边出行最便捷</div>
+                <img class="core_img clickable" id="core_item_img_1"/>
+                <div class="core_text" id="core_item_text_1"></div>
             </div>
             <div class="core_right_box image_big">
-                <img class="core_img" id="core_item_img_2"/>
-                <div class="core_text" id="core_item_text_2">地铁周边出行最便捷</div>
+                <img class="core_img clickable" id="core_item_img_2"/>
+                <div class="core_text" id="core_item_text_2"></div>
             </div>
             <div class="core_right_box image_big matop">
-                <img class="core_img" id="core_item_img_3"/>
-                <div class="core_text" id="core_item_text_3">地铁周边出行最便捷</div>
+                <img class="core_img clickable" id="core_item_img_3"/>
+                <div class="core_text" id="core_item_text_3"></div>
             </div>
             <div class="core_right_box image_big matop">
-                <img class="core_img" id="core_item_img_4"/>
-                <div class="core_text" id="core_item_text_4">地铁周边出行最便捷</div>
+                <img class="core_img clickable" id="core_item_img_4"/>
+                <div class="core_text" id="core_item_text_4"></div>
             </div>
         </div>
     </div>
-    <h3 class="item_title">精选写字楼&nbsp;<span class="item_subtitle">高性价 高格调 超精致</span></h3>
+    <h3 class="max_title">精选写字楼</h3>
+    <div class="max_subtitle">核心CBD / 超高性价比 / 地铁上盖 / 高品质保证</div>
     <div class="fine_building flex_row" id="fine_building">
     </div>
 </div>
 
-<div class="win matop bg_white flex_row">
-    <img id="entrust_img" class="entrust_img"/>
-    <div class="entrust_info_box flex_column">
-        <div class="entrust_title">委托橙办租房网，省心找办公室</div>
-        <div class="entrust_subtitle">10分钟内响应，全程免租，专业看房顾问带看</div>
-        <a class="entrust_btn layui-btn layui-btn-warm" href="search.html">委托找房</a>
+<div class="flex_column">
+    <form action="search.html">
+        <input type="submit" class="more_buildings" value="更多房源">
+    </form>
+</div>
+
+<div class="matop number_info">
+    <div class="number_box">
+        <div>
+            <div class="number_title">300+</div>
+            <div class="number_text">房源数量</div>
+        </div>
+        <div>
+            <div class="number_title">500000+</div>
+            <div class="number_text">覆盖总面积</div>
+        </div>
+        <div>
+            <div class="number_title">100000+</div>
+            <div class="number_text">服务客户数</div>
+        </div>
+        <div>
+            <div class="number_title">10+</div>
+            <div class="number_text">城市覆盖</div>
+        </div>
     </div>
 </div>
 
-<div class="win matop bg_white flex_row">
-    <div class="news_heat">
-        <div class="news_title flex_row">
-            写字楼新闻
-            <a href="news.html">更多>></a>
-        </div>
-        <div class="news_list" id="news_list_left">
+<div class="trust_box">
+    <img id="entrust_img" class="entrust_img" src="" alt=""/>
+    <div class="trust_front">
+        <img class="trust_img" id="trust_img" src=""/>
+        <div class="trust_info">
+            <div class="entrust_title" id="entrust_title"></div>
+            <div class="entrust_subtitle" id="entrust_subtitle"></div>
+            <div class="entrust_content" id="entrust_content"></div>
+            <a class="entrust_btn" href="search.html">MORE ></a>
         </div>
     </div>
-    <div class="news_heat"></div>
 </div>
 
-<div class="bottom_box flex_column">
-    <div class="win">
-        <div class="flex_row bottom_top">
-            <div class="foot_l">
-                <div class="ad_title">租办公室，就上橙办 ！</div>
-            </div>
-            <div class="foot_m">
-                客服服务：（早9:00-晚21:00）<br/>
-                <span>021-5090 6123</span>
-            </div>
+<div class="win news_sign">
+    <h3 class="item_title">新闻资讯&nbsp;<span class="item_subtitle">NEWS</span></h3>
+</div>
+
+<div class="news_line"></div>
+
+<div class="win flex_row" id="news_list">
+</div>
+
+<div class="flex_column">
+    <form action="news.html">
+        <input type="submit" class="more_news" value="+">
+    </form>
+</div>
+
+<div class="win hot_zone_sign flex_column_left">
+    <h3 class="item_title">热门区域</h3>
+    <div class="hot_zone_line"></div>
+    <div class="flex_row_left">
+        <a class="hot_zone_value" href="search.html?district_id=2">浦东办公室</a>
+        <a class="hot_zone_value" href="search.html?district_id=3">黄浦办公室</a>
+    </div>
+</div>
+
+<div class="win hot_building_sign flex_column_left">
+    <h3 class="item_title">热门写字楼</h3>
+    <div class="hot_building_line"></div>
+    <div class="flex_row_left">
+        <a class="hot_building_value" href="search.html?district_id=2">浦东办公室</a>
+        <a class="hot_building_value" href="search.html?district_id=3">黄浦办公室</a>
+    </div>
+</div>
+
+<div class="bottom_box flex_column_left">
+    <div class="win flex_column_left">
+        <span class="friendly_href_sign">&nbsp;|&nbsp;&nbsp;&nbsp;友情链接</span>
+
+        <div class="friendly_href">
+            <a href="https://sh.diandianzu.com/" target="_blank">上海办公室出租</a>
+            <a href="https://sh.diandianzu.com/" target="_blank">上海办公室出租</a>
+            <a href="https://sh.diandianzu.com/" target="_blank">上海办公室出租</a>
         </div>
-        <div class="foot_link">
-            友情链接：
-            <a href="https://sh.diandianzu.com/" target="_blank">上海写字楼出租</a>
+
+        <div class="foot_logo flex_row">
+            <div class="bottom_logo"></div>
+            <span>&nbsp;&nbsp;&nbsp;办公选址 心想事成！</span>
+        </div>
+
+        <div class="foot_contact_info flex_column_left">
+            <span>24h 400电话：400-8700-758</span>
         </div>
     </div>
 </div>

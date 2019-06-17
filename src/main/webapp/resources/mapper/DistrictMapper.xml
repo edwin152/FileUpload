@@ -18,7 +18,7 @@
     </update>
 
     <update id="init">
-        insert into district
+        insert into district (id, name, valid)
         values (1, '全部', true),
                (2, '浦东', true),
                (3, '黄浦', true),
@@ -45,7 +45,7 @@
     </select>
 
     <insert id="insert" parameterType="cn.ddzu.shop.entity.District">
-        insert into district values (
+        insert into district (id, name, valid) values (
             #{data.id},
             #{data.name},
             #{data.valid}

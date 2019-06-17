@@ -4,9 +4,7 @@ import cn.ddzu.shop.entity.*;
 
 import java.util.List;
 
-public interface BasicService {
-
-    void resetDistrictAndZone();
+public interface FilterService {
 
     /**
      * 获取区列表
@@ -35,8 +33,6 @@ public interface BasicService {
      */
     Zone getZone(Long id);
 
-    void resetMetro();
-
     /**
      * 获取地铁列表
      */
@@ -47,8 +43,6 @@ public interface BasicService {
      */
     Metro getMetro(Long id);
 
-    void resetType();
-
     /**
      * 获取办公类型列表
      */
@@ -58,8 +52,6 @@ public interface BasicService {
      * 获取办公类型列表
      */
     List<Type> getTypeList(Long building_id);
-
-    void resetAreaRange();
 
     /**
      * 查询面积区间列表
@@ -76,8 +68,6 @@ public interface BasicService {
      */
     Long getAreaRangeId(Float area);
 
-    void resetPriceRange();
-
     /**
      * 查询价格区间列表
      */
@@ -92,8 +82,6 @@ public interface BasicService {
      * 通过价格获取价格区间id
      */
     Long getPriceRangeId(Float price);
-
-    void resetDecoration();
 
     /**
      * 查询装修情况列表

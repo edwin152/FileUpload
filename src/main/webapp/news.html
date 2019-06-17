@@ -1,272 +1,308 @@
-<html>
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>资讯中心</title>
+    <title>橙办 - 资讯中心</title>
     <link rel="stylesheet" type="text/css" href="layUI/css/layui.css"/>
     <link rel="stylesheet" type="text/css" href="css/all.css"/>
     <link rel="stylesheet" type="text/css" href="css/news.css"/>
+    <script src="js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="layUI/layui.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
-    <script type="text/javascript">
-        let isFirst = true;
-        let filter = {};
-
-        window.onload = function () {
-            let request = window.location.search;
-            filter.checkedNewsTagId = http.getParameter(request, "news_tag_id");
-            getFilterList();
-            getHotList();
-        };
-
-        function getFilterList() {
-            http.post({
-                url: "filter/newsTag",
-                params: {
-                    news_tag_id: filter.checkedNewsTagId
-                },
-                success: function (data) {
-                    filter = data;
-                    setNewsType(filter.newsTagList);
-                    getNewsList(0, filter.checkedNewsTagId);
-                }
-            })
-        }
-
-        function getHotList() {
-            http.post({
-                url: "news/hot",
-                success: function (data) {
-                    setHeatNews(data);
-                }
-            })
-        }
-
-        function getNewsList(page, news_tag_id) {
-            http.post({
-                url: "news/newsList",
-                params: {
-                    page: page,
-                    news_tag_id: news_tag_id,
-                },
-                success: function (data) {
-                    filter.checkedNewsTagId = data.checkedNewsTagId;
-                    if (page === 0) {
-                        document.getElementById("news_list_box").innerHTML = "";
-                    }
-                    setNewsList(data.newsList);
-                    if (isFirst && data.length > 0) {
-                        loadPageUtil(data.length);
-                        isFirst = false;
-                    }
-                }
-            });
-        }
-
-        /**
-         * 设置类型
-         * @param typeList
-         */
-        function setNewsType(typeList) {
-            if (typeList == null) return;
-            let newTypeBox = document.getElementById("news_type");
-            for (let i = 0, len = typeList.length; i < len; i++) {
-                let typeItem = document.createElement("div");
-                typeItem.setAttribute("class", "link");
-                typeItem.onclick = function () {
-                    getNewsList(0, typeList[i].id);
-                };
-                typeItem.innerHTML = typeList[i].name;
-                newTypeBox.appendChild(typeItem);
-            }
-        }
-
-        /**
-         * 设置热门资讯
-         * @param heatNewsList
-         */
-        function setHeatNews(heatNewsList) {
-            if (heatNewsList == null) return;
-            let ListBox = document.getElementById("heat_news");
-            for (let i = 0, len = heatNewsList.length; i < len; i++) {
-                let itemView = document.createElement("div");
-                itemView.onclick = function () {
-                    window.open("newsDetail.html?newsId=" + heatNewsList[i].id);
-                };
-                itemView.innerHTML = heatNewsList[i].title;
-                ListBox.appendChild(itemView);
-            }
-        }
-
-        /**
-         * 设置资讯列表
-         * @param newsList
-         */
-        function setNewsList(newsList) {
-            if (newsList == null) return;
-            let ListBox = document.getElementById("news_list_box");
-            for (let i = 0, len = newsList.length; i < len; i++) {
-                let itemView = document.createElement("div");
-                itemView.setAttribute("class", "news_item_box");
-                // 在分页前添加
-                ListBox.insertBefore(itemView, document.getElementById("page_box"));
-
-                let itemImg = document.createElement("img");
-                itemImg.setAttribute("class", "news_img");
-                utils.setImage(itemImg, newsList[i].img_list);
-                itemView.appendChild(itemImg);
-
-                let infoView = document.createElement("div");
-                infoView.setAttribute("class", "news_info_box");
-                itemView.appendChild(infoView);
-
-                let titleViewBox = document.createElement("div");
-                titleViewBox.setAttribute("class", "news_title_box");
-                infoView.appendChild(titleViewBox);
-
-                let typeView = document.createElement("span");
-                typeView.setAttribute("class", "item_type");
-                // TODO 类型
-                typeView.innerHTML = newsList[i].news_tag_name;
-                titleViewBox.appendChild(typeView);
-
-                let titleView = document.createElement("div");
-                titleView.setAttribute("class", "news_title");
-                // TODO 标题
-                titleView.innerHTML = newsList[i].title;
-                titleView.onclick = function () {
-                    window.open("newsDetail.html?newsId=" + newsList[i].id);
-                };
-                titleViewBox.appendChild(titleView);
-
-                let timeView = document.createElement("div");
-                timeView.setAttribute("class", "news_time");
-                // TODO 时间
-                timeView.innerHTML = newsList[i].last_edit_time;
-                infoView.appendChild(timeView);
-
-                let textView = document.createElement("div");
-                textView.setAttribute("class", "news_text");
-                // TODO 内容
-                textView.innerHTML = newsList[i].content.replace(/<\/?.+?\/?>/g, "");
-                infoView.appendChild(textView);
-            }
-        }
-
-        /**
-         * 加载分页工具
-         * @param dataSize 数据总数
-         */
-        function loadPageUtil(dataSize) {
-            layui.use('laypage', function () {
-                var laypage = layui.laypage;
-                //执行一个laypage实例
-                laypage.render({
-                    //注意，这里的 test1 是 ID，不用加 # 号
-                    elem: 'page_box',
-                    //数据总数，从服务端得到
-                    count: dataSize,
-                    limit: 20,
-                    jump: function (obj, first) {
-                        //obj包含了当前分页的所有参数，比如：
-                        console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-                        console.log(obj.limit); //得到每页显示的条数
-
-                        //首次不执行
-                        if (!first) {
-                            getNewsList(obj.curr - 1);
-                        }
-                    }
-                });
-            });
-        }
-    </script>
 </head>
+
+<!-- 美洽客服 -->
+<script title="text/javascript">
+    (function (m, ei, q, i, a, j, s) {
+        m[i] = m[i] || function () {
+            (m[i].a = m[i].a || []).push(arguments)
+        };
+        j = ei.createElement(q);
+        s = ei.getElementsByTagName(q)[0];
+        j.async = true;
+        j.charset = 'UTF-8';
+        j.src = 'https://static.meiqia.com/dist/meiqia.js?=_t';
+        s.parentNode.insertBefore(j, s);
+    })(window, document, 'script', '_MEIQIA');
+    _MEIQIA('entId', 51778);
+</script>
+
+<script type="text/javascript">
+    let isFirst = true;
+    let filter = {};
+
+    window.onload = function () {
+        let request = window.location.search;
+        filter.checkedNewsTagId = http.getParameter(request, "news_tag_id");
+        getFilterList();
+        // getHotList();
+    };
+
+    function getFilterList() {
+        http.post({
+            url: "filter/newsTag",
+            params: {
+                news_tag_id: filter.checkedNewsTagId
+            },
+            success: function (data) {
+                filter = data;
+                setNewsType(filter.newsTagList, filter.checkedNewsTagId);
+                getNewsList(0, filter.checkedNewsTagId);
+            }
+        })
+    }
+
+    function getHotList() {
+        http.post({
+            url: "news/hot",
+            success: function (data) {
+                setHeatNews(data);
+            }
+        })
+    }
+
+    function getNewsList(page, news_tag_id) {
+        http.post({
+            url: "news/newsList",
+            params: {
+                page: page,
+                news_tag_id: news_tag_id,
+            },
+            success: function (data) {
+                filter.checkedNewsTagId = data.checkedNewsTagId;
+                if (page === 0) {
+                    document.getElementById("news_list_box").innerHTML = "";
+                }
+                setNewsList(data.newsList);
+                setNewsTypeChecked();
+                // TODO 数据总数
+                if (isFirst && data.pageNum > 0) {
+                    loadPageUtil(data.pageNum * 10);
+                    isFirst = false;
+                }
+            }
+        });
+    }
+
+    /**
+     * 设置类型
+     * @param typeList
+     */
+    function setNewsType(typeList, checkedNewsTagId) {
+        if (typeList == null) return;
+        let newTypeBox = document.getElementById("news_type");
+        for (let i = 0, len = typeList.length; i < len; i++) {
+            let typeItem = document.createElement("div");
+            if (checkedNewsTagId && typeList[i].id === checkedNewsTagId){
+                typeItem.setAttribute("class", "news_type_item_select");
+            }else{
+                typeItem.setAttribute("class", "news_type_item");
+            }
+            typeItem.setAttribute("type_id", typeList[i].id);
+            typeItem.onclick = function () {
+                getNewsList(0, typeList[i].id);
+            };
+            typeItem.innerHTML = typeList[i].name;
+            newTypeBox.appendChild(typeItem);
+        }
+    }
+
+    /**
+     * 设置选中类型
+     * @param typeList
+     */
+    function setNewsTypeChecked() {
+        let checkedNewsTagId = filter.checkedNewsTagId;
+        let newTypeBox = document.getElementById("news_type");
+        let typeList = newTypeBox.children;
+        for (let i = 0, len = typeList.length; i < len; i++) {
+            let typeId = typeList[i].getAttribute("type_id");
+            if (typeId == checkedNewsTagId){
+                typeList[i].setAttribute("class", "news_type_item_select");
+            }else{
+                typeList[i].setAttribute("class", "news_type_item");
+            }
+        }
+    }
+
+    /**
+     * 设置热门资讯
+     * @param heatNewsList
+     */
+    function setHeatNews(heatNewsList) {
+        if (heatNewsList == null) return;
+        let ListBox = document.getElementById("heat_news");
+        for (let i = 0, len = heatNewsList.length; i < len; i++) {
+            let itemView = document.createElement("div");
+            itemView.onclick = function () {
+                window.open("newsDetail.html?news_id=" + heatNewsList[i].id);
+            };
+            itemView.innerHTML = heatNewsList[i].title;
+            ListBox.appendChild(itemView);
+        }
+    }
+
+    /**
+     * 设置资讯列表
+     * @param newsList
+     */
+    function setNewsList(newsList) {
+        if (newsList == null) return;
+        let ListBox = document.getElementById("news_list_box");
+        for (let i = 0, len = newsList.length; i < len; i++) {
+            let itemView = document.createElement("div");
+            itemView.setAttribute("class", "news_item_box");
+            ListBox.appendChild(itemView);
+            // 在分页前添加
+            // ListBox.insertBefore(itemView, document.getElementById("page_box"));
+
+            let itemImg = document.createElement("img");
+            itemImg.setAttribute("class", "news_img");
+            utils.setImage(itemImg, newsList[i].img_list);
+            itemView.appendChild(itemImg);
+
+            let infoView = document.createElement("div");
+            infoView.setAttribute("class", "news_info_box");
+            itemView.appendChild(infoView);
+
+            let titleViewBox = document.createElement("div");
+            titleViewBox.setAttribute("class", "news_title_box");
+            infoView.appendChild(titleViewBox);
+
+            let typeView = document.createElement("span");
+            typeView.setAttribute("class", "item_type");
+            // 类型
+            typeView.innerHTML = newsList[i].news_tag_name;
+            titleViewBox.appendChild(typeView);
+
+            let titleView = document.createElement("div");
+            titleView.setAttribute("class", "news_title");
+            // 标题
+            titleView.innerHTML = newsList[i].title;
+            titleView.onclick = function () {
+                window.open("newsDetail.html?news_id=" + newsList[i].id);
+            };
+            titleViewBox.appendChild(titleView);
+
+            let timeView = document.createElement("div");
+            timeView.setAttribute("class", "news_time");
+            // 时间
+            timeView.innerHTML = newsList[i].last_edit_time;
+            infoView.appendChild(timeView);
+
+            let textView = document.createElement("div");
+            textView.setAttribute("class", "news_text");
+            // 内容
+            let contentStr = newsList[i].content;
+            if (contentStr) {
+                textView.innerHTML = contentStr.replace(/<\/?.+?\/?>/g, "");
+            }
+            infoView.appendChild(textView);
+
+            let intoBtn = document.createElement("div");
+            intoBtn.setAttribute("class", "into_btn clickable");
+            intoBtn.innerHTML = "查看详情";
+            intoBtn.onclick = function () {
+                window.open("newsDetail.html?news_id=" + newsList[i].id);
+            };
+            infoView.appendChild(intoBtn);
+        }
+    }
+
+    /**
+     * 加载分页工具
+     * @param dataSize 数据总数
+     */
+    function loadPageUtil(dataSize) {
+        layui.use('laypage', function () {
+            var laypage = layui.laypage;
+            //执行一个laypage实例
+            laypage.render({
+                //注意，这里的 test1 是 ID，不用加 # 号
+                elem: 'page_box',
+                //数据总数，从服务端得到
+                count: dataSize,
+                limit: 10,
+                jump: function (obj, first) {
+                    //obj包含了当前分页的所有参数，比如：
+                    console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                    console.log(obj.limit); //得到每页显示的条数
+
+                    //首次不执行
+                    if (!first) {
+                        getNewsList(obj.curr - 1);
+                    }
+                }
+            });
+        });
+    }
+</script>
+
 <body>
 <div class="title_box">
-    <div class="win flex_row">
-        <div class="title_text">
-            上海
-        </div>
-        <div class="title_text">
-            [切换城市]
-        </div>
-        <div class="title_text">
-            |
-        </div>
-        <div class="title_text title_text_right">
-            <a href="index.html">首页</a>
-        </div>
-        <div class="title_text title_text_right title_obvious">
-            <a href="">写字楼出租</a>
-        </div>
-        <div class="title_text title_text_right">
-            <a href="">共享办公</a>
-        </div>
-        <div class="title_text title_text_right">
-            <a href="">资讯中心</a>
-        </div>
-    </div>
-</div>
-<div class="bg_white">
-    <div class="win top_box flex_row">
-        <img src="img/logo_light.png" class="top_logo" alt=""/>
-        <div class="flex_row" id="news_type">
+    <div class="win flex_row position_relative">
+        <div class="top_logo"></div>
+        <div class="position_right">
+            <div class="title_text_right">
+                <a href="index.html" class="clickable">首页</a>
+            </div>
+            <div class="title_text_right title_obvious">
+                <a href="search.html" class="clickable">写字楼出租</a>
+            </div>
+            <div class="title_text_right">
+                <a href="search.html?type_id=3" class="clickable">共享办公</a>
+            </div>
+            <div class="title_text_right">
+                <a href="news.html" class="clickable">资讯中心</a>
+            </div>
+            <div class="icon_phone"></div>
+            <div class="title_text_right">
+                <span class="tel_num">4008-700-758</span>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="flex_row matop win content_box">
-    <div class="content_left_box">
-        <div class="left_title">
-            <img src="img/phone.png" alt="" class="left_title_img"/>
-            热门资讯
+<div class="bg_white type_background" id="type_background" style="background: url('http://47.96.165.78/images/banner_news.jpg')">
+    <div class="win top_box flex_row bg_white">
+        <div class="news_type" id="news_type">
         </div>
-        <div class="heat_news" id="heat_news">
-
-        </div>
-    </div>
-    <div class="content_right_box" id="news_list_box">
-        <!--<div class="news_item_box">-->
-        <!--</div>-->
-        <div id="page_box"></div>
     </div>
 </div>
-<div class="bottom_box flex_column">
-    <div class="win">
-        <div class="flex_row bottom_top">
-            <div class="foot_l">
-                <div class="ad_title">办公选址上妥妥租，妥妥的 !</div>
-                <a href="https://www.tuotuozu.com/sh/zxd/id/9.html">关于妥妥租</a> -
-                <a href="https://www.tuotuozu.com/sh/zxd/id/10.html">服务介绍</a> -
-                <br/> ©2017-2018 京ICP备17066298号-1 地址：北京市朝阳区凯旋城E座1807
-            </div>
-            <div class="foot_m">
-                客服服务：（早9:00-晚21:00）<br/>
-                <span>400-865-9520</span>
-                <div class="flex_row">
-                    <div>SOCIAL MEDIA</div>
-                    <div>
-                        <a href="#">facebook</a>
-                    </div>
-                    <div>
-                        <a href="#">twitter</a>
-                    </div>
-                    <div>
-                        <a href="#">linkIn</a>
-                    </div>
-                </div>
-            </div>
+
+<div class="flex_row win content_box">
+    <!--<div class="content_left_box">-->
+    <!--<div class="left_title">-->
+    <!--<img src="img/phone2.png" alt="" class="left_title_img"/>-->
+    <!--热门资讯-->
+    <!--</div>-->
+    <!--<div class="heat_news" id="heat_news">-->
+
+    <!--</div>-->
+    <!--</div>-->
+    <div class="content_right_box">
+        <div class="news_list_box"  id="news_list_box">
         </div>
-        <div class="foot_link">
-            友情链接：
-            <a href="https://www.haozu.com/sh/zuxiezilou/" target="_blank">上海写字楼出租</a>
-            <script type="text/javascript">
-                let cnzz_protocol = (("https:" === document.location.protocol) ? " https://" : " http://");
-                document.write(unescape("%3Cspan id='cnzz_stat_icon_4383806'%3E%3C/span%3E%3Cscript src='" +
-                    cnzz_protocol +
-                    "s4.cnzz.com/stat.php%3Fid%3D4383806%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
-            </script>
+        <div class="flex_row" id="page_box"></div>
+    </div>
+</div>
+
+<div class="bottom_box flex_column_left">
+    <div class="win flex_column_left">
+        <span class="friendly_href_sign">&nbsp;|&nbsp;&nbsp;&nbsp;友情链接</span>
+
+        <div class="friendly_href">
+            <a href="https://sh.diandianzu.com/" target="_blank">上海办公室出租</a>
+            <a href="https://sh.diandianzu.com/" target="_blank">上海办公室出租</a>
+            <a href="https://sh.diandianzu.com/" target="_blank">上海办公室出租</a>
+        </div>
+
+        <div class="foot_logo flex_row">
+            <div class="bottom_logo"></div>
+            <span>&nbsp;&nbsp;&nbsp;办公选址 心想事成！</span>
+        </div>
+
+        <div class="foot_contact_info flex_column_left">
+            <span>24h 400电话：400-8700-758</span>
         </div>
     </div>
 </div>

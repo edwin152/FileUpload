@@ -18,7 +18,7 @@
     </update>
 
     <update id="init">
-        insert into price_range
+        insert into price_range (id, name, valid)
         values (1, '全部', true),
                (2, '0-3元/m²/天', true),
                (3, '3-4元/m²/天', true),
@@ -34,7 +34,7 @@
     </select>
 
     <insert id="insert" parameterType="cn.ddzu.shop.entity.PriceRange">
-        insert into price_range values (
+        insert into price_range (id, name, valid) values (
             #{data.id},
             #{data.name},
             #{data.valid}

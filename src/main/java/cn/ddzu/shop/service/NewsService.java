@@ -7,11 +7,7 @@ import java.util.List;
 
 public interface NewsService {
 
-    void resetNewsTag();
-
     List<NewsTag> getNewsTagList();
-
-    void resetNews();
 
     void addNews(News news);
 
