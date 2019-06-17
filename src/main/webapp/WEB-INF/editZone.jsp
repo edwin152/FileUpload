@@ -13,6 +13,8 @@
 </head>
 
 <script type="text/javascript">
+    'use strict';
+
     let filter = {};
     let checkedDistrictId = 1;
     let checkedZoneId = 1;

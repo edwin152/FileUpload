@@ -12,6 +12,8 @@
 
 <!-- 美洽客服 -->
 <script title="text/javascript">
+    'use strict';
+
     (function (m, ei, q, i, a, j, s) {
         m[i] = m[i] || function () {
             (m[i].a = m[i].a || []).push(arguments)
@@ -27,6 +29,8 @@
 </script>
 
 <script type="text/javascript">
+    'use strict';
+
     let keyword;
     let filter = {};
     let pageIndex = 0;
@@ -275,12 +279,7 @@
                     + "&zone_id=" + building.zone_id
                 );
             };
-            itemAddress.appendChild(item_title);
-            itemAddress.append("[ ");
-            itemAddress.appendChild(district_name);
-            itemAddress.append(" ] - [ ");
-            itemAddress.appendChild(zone_name);
-            itemAddress.append(" ]     |      " + building.address);
+            $(itemAddress).append(item_title, "[ ", district_name, " ] - [ ", zone_name, " ] | ", building.addres);
             dataInfoBox.appendChild(itemAddress);
             //
             // let itemSize = document.createElement("div");

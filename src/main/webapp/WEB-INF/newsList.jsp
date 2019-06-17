@@ -12,6 +12,8 @@
 </head>
 
 <script type="text/javascript">
+    'use strict';
+
     let keyword;
     let filter = {};
     let pageIndex = 0;

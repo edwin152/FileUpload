@@ -9,6 +9,8 @@
     <script src="../js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="../js/utils.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
+        'use strict';
+
         let newsId;
 
         window.onload = function () {
