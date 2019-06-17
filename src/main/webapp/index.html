@@ -286,10 +286,10 @@
     }
 
     window.onload = function () {
-        getFilterList();
+        getAll();
     };
 
-    function getFilterList() {
+    function getAll() {
         http.post({
             url: "index/all",
             success: function (data) {
