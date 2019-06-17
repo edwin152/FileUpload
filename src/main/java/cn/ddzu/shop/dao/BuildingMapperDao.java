@@ -9,6 +9,24 @@ import java.util.List;
 @Repository
 public interface BuildingMapperDao extends Dao<Building> {
 
+    @Override
+    void drop();
+
+    @Override
+    void create();
+
+    @Deprecated
+    void init();
+
+    @Override
+    List<Building> selectAll();
+
+    @Override
+    void insert(Building data);
+
+    @Override
+    void update(Building data);
+
     /**
      * 删除楼
      */
@@ -22,12 +40,12 @@ public interface BuildingMapperDao extends Dao<Building> {
     /**
      * 按条件筛选办公室
      *
-     * @param keyword        关键词
-     * @param district_id    区id
-     * @param zone_id        区域id
-     * @param metro_name     地铁名字
-     * @param start          开始位置
-     * @param step           请求总量
+     * @param keyword     关键词
+     * @param district_id 区id
+     * @param zone_id     区域id
+     * @param metro_name  地铁名字
+     * @param start       开始位置
+     * @param step        请求总量
      */
     List<Building> select(@Param("keyword") String keyword
             , @Param("district_id") Long district_id
@@ -64,10 +82,10 @@ public interface BuildingMapperDao extends Dao<Building> {
     /**
      * 按条件筛选办公室数量
      *
-     * @param keyword        关键词
-     * @param district_id    区id
-     * @param zone_id        区域id
-     * @param metro_name     地铁名字
+     * @param keyword     关键词
+     * @param district_id 区id
+     * @param zone_id     区域id
+     * @param metro_name  地铁名字
      */
     Integer count(@Param("keyword") String keyword
             , @Param("district_id") Long district_id

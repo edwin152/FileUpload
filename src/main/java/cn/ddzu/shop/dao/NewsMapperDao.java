@@ -9,6 +9,24 @@ import java.util.List;
 @Repository
 public interface NewsMapperDao extends Dao<News> {
 
+    @Override
+    void drop();
+
+    @Override
+    void create();
+
+    @Deprecated
+    void init();
+
+    @Override
+    List<News> selectAll();
+
+    @Override
+    void insert(News data);
+
+    @Override
+    void update(News data);
+
     /**
      * 删除咨询
      */
@@ -31,7 +49,13 @@ public interface NewsMapperDao extends Dao<News> {
      */
     Integer count(@Param("news_tag_id") Long news_tag_id);
 
-    List<News> selectWhereHot();
+    /**
+     * 查询热门
+     */
+    List<News> selectWhereHot(@Param("limit") int limit);
 
-    List<News> selectWhereNew();
+    /**
+     * 查询最新添加
+     */
+    List<News> selectWhereNew(@Param("limit") int limit);
 }

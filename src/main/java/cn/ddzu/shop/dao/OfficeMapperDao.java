@@ -9,6 +9,24 @@ import java.util.List;
 @Repository
 public interface OfficeMapperDao extends Dao<Office> {
 
+    @Override
+    void drop();
+
+    @Override
+    void create();
+
+    @Deprecated
+    void init();
+
+    @Override
+    List<Office> selectAll();
+
+    @Override
+    void insert(Office data);
+
+    @Override
+    void update(Office data);
+
     /**
      * 删除办公室
      */

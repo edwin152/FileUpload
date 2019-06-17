@@ -21,7 +21,7 @@ public interface NewsService {
 
     int getNewsSize(Long news_tag_id);
 
-    List<News> getHotNews();
+    List<News> getHotNews(int num);
 
     List<News> getIndexNews();
 }

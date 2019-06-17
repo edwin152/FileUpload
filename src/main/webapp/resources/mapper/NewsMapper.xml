@@ -111,7 +111,7 @@
         </if>
     </select>
 
-    <select id="selectWhereHot" resultType="cn.ddzu.shop.entity.News">
+    <select id="selectWhereHot" resultType="cn.ddzu.shop.entity.News" parameterType="java.lang.Integer">
         select
         id,
         title,
@@ -126,10 +126,10 @@
         from news
         where valid = true and hot = true
         order by last_edit_time desc
-        limit 20
+        limit #{limit}
     </select>
 
-    <select id="selectWhereNew" resultType="cn.ddzu.shop.entity.News">
+    <select id="selectWhereNew" resultType="cn.ddzu.shop.entity.News" parameterType="java.lang.Integer">
         select
         id,
         title,
@@ -144,6 +144,6 @@
         from news
         where valid = true
         order by last_edit_time desc
-        limit 12
+        limit #{limit}
     </select>
 </mapper>

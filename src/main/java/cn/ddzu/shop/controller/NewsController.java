@@ -36,7 +36,7 @@ public class NewsController extends BaseController {
         RequestHelper helper = new RequestHelper(request);
         Log.d("filter-newsTag", helper);
 
-        List<News> newsList = newsService.getHotNews();
+        List<News> newsList = newsService.getHotNews(4);
 
         finish(response, ResultCode.SUCCESS, new Gson().toJsonTree(newsList));
     }
