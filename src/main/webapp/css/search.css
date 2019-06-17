@@ -230,7 +230,7 @@
     flex-shrink: 0;
     flex-grow: 0;
     font-size: 18px;
-    color: #EE634E;
+    color: #e99640;
 }
 
 .item_price .item_price_num {
@@ -244,10 +244,10 @@
     font-size: 16px;
     padding: 10px 30px;
     border-radius: 4px;
-    background: -webkit-linear-gradient(left, #FFAA91 5%, #EB9A63); /* Safari 5.1 - 6.0 */
-    background: -o-linear-gradient(right, #FFAA91 5%, #EB9A63); /* Opera 11.1 - 12.0 */
-    background: -moz-linear-gradient(right, #FFAA91 5%, #EB9A63); /* Firefox 3.6 - 15 */
-    background: linear-gradient(to right, #FFAA91 5%, #EB9A63); /* 标准的语法 */
+    background: -webkit-linear-gradient(left, #FFAA91 5%, #e99640); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(right, #FFAA91 5%, #e99640); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(right, #FFAA91 5%, #e99640); /* Firefox 3.6 - 15 */
+    background: linear-gradient(to right, #FFAA91 5%, #e99640); /* 标准的语法 */
 }
 
 .item_btn:hover {

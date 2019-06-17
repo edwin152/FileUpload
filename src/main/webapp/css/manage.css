@@ -101,15 +101,15 @@ label {
 
 .choose_value:hover {
     cursor: pointer;
-    color: #f3b100;
+    color: #e99640;
 }
 
 .choose_value_positive {
     margin: 0 5px;
-    color: #f3b100;
+    color: #e99640;
 }
 
 .choose_value_positive:hover {
     cursor: pointer;
-    color: #f3b100;
+    color: #e99640;
 }
