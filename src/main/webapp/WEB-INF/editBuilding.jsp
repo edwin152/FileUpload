@@ -7,6 +7,8 @@
     <script src="../js/utils.js" type="text/javascript" charset="utf-8"></script>
 
     <script type="text/javascript">
+        'use strict';
+
         let building_id;
         let district_id;
         let zone_id;

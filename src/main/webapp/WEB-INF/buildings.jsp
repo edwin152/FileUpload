@@ -12,6 +12,8 @@
 </head>
 
 <script type="text/javascript">
+    'use strict';
+
     let keyword;
     let filter = {};
     let pageIndex = 0;
@@ -152,11 +154,7 @@
                     + "&zone_id=" + building.zone_id
                 );
             };
-            itemAddress.append("[ ");
-            itemAddress.appendChild(district_name);
-            itemAddress.append(" ] - [ ");
-            itemAddress.appendChild(zone_name);
-            itemAddress.append(" ] |  " + building.address);
+            $(itemAddress).append("[ ", district_name, " ] - [ ", zone_name, " ] |  ", building.address);
 
             let itemPosition = document.createElement("span");
             itemPosition.className = "row";

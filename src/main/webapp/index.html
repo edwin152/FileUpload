@@ -16,6 +16,8 @@
 
 <!-- 美洽客服 -->
 <script title="text/javascript">
+    'use strict';
+
     (function (m, ei, q, i, a, j, s) {
         m[i] = m[i] || function () {
             (m[i].a = m[i].a || []).push(arguments)
@@ -31,6 +33,8 @@
 </script>
 
 <script type="text/javascript">
+    'use strict';
+
     /**
      * 区域
      * @param conditionList
@@ -214,7 +218,10 @@
             buildingPriceText.setAttribute("class", "price_number");
             buildingPriceText.innerHTML = buildingList[i].price_average;
             buildingPriceBox.appendChild(buildingPriceText);
-            buildingPriceBox.append("元/m²/天");
+            // let buildingPriceUnit = document.createElement("span");
+            // buildingPriceUnit.innerHTML = "元/m²/天";
+            // buildingPriceBox.appendChild(buildingPriceUnit);
+            $(buildingPriceBox).append("元/m²/天");
         }
     }
 
@@ -293,7 +300,6 @@
         http.post({
             url: "index/all",
             success: function (data) {
-                filter = data;
                 setTopBackground(data.bannerList);
                 setConditionScreen(data.districtList);
                 setTypeScreen(data.typeList);

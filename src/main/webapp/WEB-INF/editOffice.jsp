@@ -9,6 +9,8 @@
     <script src="../js/utils.js" type="text/javascript" charset="utf-8"></script>
 
     <script type="text/javascript">
+        'use strict';
+
         let office_id;
         let building_id;
         let type_id;
