@@ -10,6 +10,7 @@ import cn.ddzu.shop.util.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -82,6 +83,20 @@ public class OfficeServiceImpl implements OfficeService {
     }
 
     @Override
+    public List<Office> getHotOffice(int num) {
+        return officeMapperDao.selectWhereHot(num);
+    }
+
+    @Override
+    public List<Office> getNewOffice(int num) {
+        List<Office> officeList = officeMapperDao.selectWhereNew(num);
+        if (officeList == null) {
+            officeList = new ArrayList<>();
+        }
+        return officeList;
+    }
+
+    @Override
     public void addBuilding(Building building) {
         Log.d("start insert building");
         building.setId(DataUtils.generateId());
@@ -143,16 +158,7 @@ public class OfficeServiceImpl implements OfficeService {
 
     @Override
     public List<Building> getIndexBuilding() {
-        return buildingMapperDao.selectWithOffice(null
-                , null
-                , null
-                , null
-                , null
-                , null
-                , null
-                , null
-                , 0
-                , 12);
+        return buildingMapperDao.selectWhereNew(12);
     }
 
     @Override
@@ -177,5 +183,10 @@ public class OfficeServiceImpl implements OfficeService {
                 , searchBean.getPrice_range_id()
                 , searchBean.getDecoration_id());
         return size == null ? 0 : size;
+    }
+
+    @Override
+    public List<Building> getHotBuilding(int num) {
+        return buildingMapperDao.selectWhereHot(num);
     }
 }

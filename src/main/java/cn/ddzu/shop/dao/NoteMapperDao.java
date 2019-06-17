@@ -9,23 +9,5 @@ import java.util.List;
 @Repository
 public interface NoteMapperDao extends Dao<Note> {
 
-    @Override
-    void drop();
-
-    @Override
-    void create();
-
-    @Override
-    void init();
-
-    @Override
-    List<Note> selectAll();
-
-    @Override
-    void insert(Note data);
-
-    @Override
-    void update(Note data);
-
     Note selectByKey(@Param("k") String k);
 }

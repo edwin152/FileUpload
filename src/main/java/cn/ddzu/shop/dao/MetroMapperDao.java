@@ -9,21 +9,6 @@ import java.util.List;
 @Repository
 public interface MetroMapperDao extends Dao<Metro> {
 
-    @Override
-    void drop();
-
-    @Override
-    void create();
-
-    @Override
-    void init();
-
-    @Override
-    List<Metro> selectAll();
-
-    @Override
-    void insert(Metro data);
-
     @Deprecated
     void update(Metro data);
 

@@ -4,9 +4,9 @@
 <!--suppress ALL -->
 <mapper namespace="cn.ddzu.shop.dao.DBMapperDao">
     <update id="update_1">
-        alter table building add edit_time date after img_list;
-        alter table building add hot boolean default false after edit_time;
-        alter table office add edit_time date after img_list;
-        alter table office add hot boolean default false after edit_time;
+        alter table building add column edit_time date after img_list;
+        alter table building add column hot boolean default false after edit_time;
+        alter table office add column edit_time date after img_list;
+        alter table office add column hot boolean default false after edit_time;
     </update>
 </mapper>

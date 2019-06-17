@@ -9,23 +9,8 @@ import java.util.List;
 @Repository
 public interface BuildingMapperDao extends Dao<Building> {
 
-    @Override
-    void drop();
-
-    @Override
-    void create();
-
     @Deprecated
     void init();
-
-    @Override
-    List<Building> selectAll();
-
-    @Override
-    void insert(Building data);
-
-    @Override
-    void update(Building data);
 
     /**
      * 删除楼
@@ -112,4 +97,14 @@ public interface BuildingMapperDao extends Dao<Building> {
             , @Param("area_range_id") Long area_range_id
             , @Param("price_range_id") Long price_range_id
             , @Param("decoration_id") Long decoration_id);
+
+    /**
+     * 查询热门
+     */
+    List<Building> selectWhereHot(@Param("limit") int limit);
+
+    /**
+     * 查询最新
+     */
+    List<Building> selectWhereNew(@Param("limit") int limit);
 }

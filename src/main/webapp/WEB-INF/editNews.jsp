@@ -65,7 +65,6 @@
                     uploadImage: {
                         //图片服务器接口url
                         url: '../file/upload',
-                        // url: '47.96.165.78:8080/ddzu/file/upload',
                     }
                 });
                 textAreaId = layedit.build('news_edit'); //建立编辑器

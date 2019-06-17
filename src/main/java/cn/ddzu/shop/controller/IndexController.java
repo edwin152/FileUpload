@@ -40,7 +40,7 @@ public class IndexController extends BaseController {
         Log.d("index-all", helper);
 
         JsonObject json = new JsonObject();
-        json.add("bannerList", new Gson().toJsonTree(Collections.singletonList("http://47.96.165.78/images/banner.jpg")));
+        json.add("bannerList", new Gson().toJsonTree(Collections.singletonList("http://www.orangeban.com/images/banner.jpg")));
 
         List<District> districtList = filterService.getDistrictList();
         json.add("districtList", new Gson().toJsonTree(districtList));
@@ -125,6 +125,23 @@ public class IndexController extends BaseController {
         }
         json.add("coreList", zoneArray);
 
+        List<Office> newOfficeList = officeService.getNewOffice(1);
+        if (!newOfficeList.isEmpty()) {
+            JsonObject todaySupport = new JsonObject();
+            json.add("todaySupport", todaySupport);
+
+            Office office = newOfficeList.get(0);
+            JsonObject officeObject = new Gson().toJsonTree(office).getAsJsonObject();
+            officeObject.add("img_list", JsonUtils.strToStringArray(office.getImg_list()));
+            todaySupport.add("office", officeObject);
+
+            Long building_id = office.getBuilding_id();
+            Building building = officeService.getBuilding(building_id);
+            JsonObject buildingObject = new Gson().toJsonTree(building).getAsJsonObject();
+            buildingObject.add("img_list", JsonUtils.strToStringArray(building.getImg_list()));
+            todaySupport.add("building", buildingObject);
+        }
+
         List<News> newsList = newsService.getIndexNews();
         JsonArray newsArray = new JsonArray();
         for (News news : newsList) {
@@ -142,14 +159,6 @@ public class IndexController extends BaseController {
             newsArray.add(newsObject);
         }
         json.add("newsList", newsArray);
-
-        JsonObject todayIntro = new JsonObject();
-        todayIntro.addProperty("title", "今日房源推荐");
-        todayIntro.addProperty("sub_title", "用心打造完美个性家居环境");
-        todayIntro.addProperty("content", "");
-        todayIntro.addProperty("img_intro_1", "http://47.96.165.78/images/intro_1.jpg");
-        todayIntro.addProperty("img_intro_2", "http://47.96.165.78/images/intro_2.jpg");
-        json.add("today_intro", todayIntro);
 
         finish(response, ResultCode.SUCCESS, json);
     }

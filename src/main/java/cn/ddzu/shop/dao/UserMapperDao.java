@@ -9,21 +9,6 @@ import java.util.List;
 @Repository
 public interface UserMapperDao extends Dao<User> {
 
-    @Override
-    void drop();
-
-    @Override
-    void create();
-
-    @Override
-    void init();
-
-    @Override
-    List<User> selectAll();
-
-    @Override
-    void insert(User data);
-
     @Deprecated
     void update(User data);
 

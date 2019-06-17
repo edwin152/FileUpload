@@ -232,4 +232,54 @@
             and building.zone_id = #{zone_id}
         </if>
     </select>
+
+    <select id="selectWhereHot" resultType="cn.ddzu.shop.entity.Office" parameterType="java.lang.Integer">
+        select
+            id,
+            name,
+            building_id,
+            address,
+            type_id,
+            area,
+            area_range_id,
+            price,
+            price_range_id,
+            decoration_id,
+            utilization_rate,
+            can_register,
+            rent_free_period,
+            notes,
+            img_list,
+            edit_time,
+            hot
+        from office
+        where valid = true and hot = true
+        order by edit_time desc
+        limit #{limit}
+    </select>
+
+    <select id="selectWhereNew" resultType="cn.ddzu.shop.entity.Office" parameterType="java.lang.Integer">
+        select
+            id,
+            name,
+            building_id,
+            address,
+            type_id,
+            area,
+            area_range_id,
+            price,
+            price_range_id,
+            decoration_id,
+            utilization_rate,
+            can_register,
+            rent_free_period,
+            notes,
+            img_list,
+            edit_time,
+            hot
+        from office
+        where valid = true
+        order by edit_time desc
+        limit #{limit}
+    </select>
 </mapper>

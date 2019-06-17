@@ -254,5 +254,41 @@
         group by building.id
         ) as a group by count;
     </select>
+
+    <select id="selectWhereHot" resultType="cn.ddzu.shop.entity.Building" parameterType="java.lang.Integer">
+        select
+            id,
+            name,
+            zone_id,
+            address,
+            metro_name_list,
+            introduce,
+            notes,
+            img_list,
+            edit_time,
+            hot
+        from building
+        where valid = true and hot = true
+        order by edit_time desc
+        limit #{limit}
+    </select>
+
+    <select id="selectWhereNew" resultType="cn.ddzu.shop.entity.Building" parameterType="java.lang.Integer">
+        select
+            id,
+            name,
+            zone_id,
+            address,
+            metro_name_list,
+            introduce,
+            notes,
+            img_list,
+            edit_time,
+            hot
+        from building
+        where valid = true
+        order by edit_time desc
+        limit #{limit}
+    </select>
 </mapper>
 

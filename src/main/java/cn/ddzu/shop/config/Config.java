@@ -2,7 +2,7 @@ package cn.ddzu.shop.config;
 
 public class Config {
 
-    public static final String HOST = "http://47.96.165.78";
+    public static final String HOST = "http://www.orangeban.com";
 
     public static final String IMAGE_PATH = "/images";
 

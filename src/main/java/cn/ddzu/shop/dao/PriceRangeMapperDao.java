@@ -9,21 +9,6 @@ import java.util.List;
 @Repository
 public interface PriceRangeMapperDao extends Dao<PriceRange> {
 
-    @Override
-    void drop();
-
-    @Override
-    void create();
-
-    @Override
-    void init();
-
-    @Override
-    List<PriceRange> selectAll();
-
-    @Override
-    void insert(PriceRange data);
-
     @Deprecated
     void update(PriceRange data);
 

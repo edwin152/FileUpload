@@ -180,7 +180,7 @@
 }
 
 .address_clickable:hover {
-    color: rgba(255, 255, 255, .6);
+    color: #e99640;
     text-decoration: underline;
 }
 

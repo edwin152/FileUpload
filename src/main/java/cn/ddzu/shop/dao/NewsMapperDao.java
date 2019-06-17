@@ -9,23 +9,8 @@ import java.util.List;
 @Repository
 public interface NewsMapperDao extends Dao<News> {
 
-    @Override
-    void drop();
-
-    @Override
-    void create();
-
     @Deprecated
     void init();
-
-    @Override
-    List<News> selectAll();
-
-    @Override
-    void insert(News data);
-
-    @Override
-    void update(News data);
 
     /**
      * 删除咨询
