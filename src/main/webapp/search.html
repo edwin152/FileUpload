@@ -1,7 +1,9 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8"/>
-    <title>橙办</title>
+    <meta name="keywords" content="{city}写字楼出租,{city}写字楼租赁,写字楼出租网,写字楼租赁平台,办公室出租,办公楼出租,{city}办公室出租,{city}办公室租赁,{city}办公楼出租,{city}办公楼租赁,橙办网"/>
+    <meta name="description" content="橙办网专业写字楼出租网站，提供真实写字楼出租、租赁信息！{city}写字楼出租,{city}创意园出租,{city}联合办公,{city}办公楼出租,{city}商务中心出租,{city}共享办公出租,写字楼出租网,{city}联合办公出租。">
+    <title>{city}写字楼出租|{city}办公室|办公楼出租/租赁平台-{city}橙办网</title>
     <link rel="stylesheet" type="text/css" href="layUI/css/layui.css"/>
     <link rel="stylesheet" type="text/css" href="css/all.css"/>
     <link rel="stylesheet" type="text/css" href="css/search.css"/>
@@ -52,7 +54,6 @@
         filter.checkedDecorationId = http.getParameter(request, "decoration_id");
         getFilterList();
         getHotList();
-
         setFixed();
     };
 
@@ -74,7 +75,7 @@
         let toBottomHeight = 90;
         if (window.scrollY <= (fixedTop - 100)) {
             fixedView.setAttribute("class", "content_right bg_white");
-        } else if (bottomBox.getBoundingClientRect().top <= 100 + toBottomHeight + fixedView.getBoundingClientRect().height) {
+        } else if (bottomBox.getBoundingClientRect().top < 100 + toBottomHeight + fixedView.getBoundingClientRect().height) {
             fixedView.setAttribute("class", "content_right bg_white position_fixed_bottom");
             fixedView.style.bottom = (window.innerHeight - bottomBox.getBoundingClientRect().top + toBottomHeight) + "px";
         } else {
@@ -94,7 +95,8 @@
                 price_range_id: filter.checkedPriceRangeId,
                 decoration_id: filter.checkedDecorationId,
             },
-            success: function (data) {
+            success: function (data, city) {
+                setTag(city, "", "");
                 filter = data;
                 getBuildingList();
             }
@@ -429,6 +431,41 @@
 <div class="title_box">
     <div class="win flex_row position_relative">
         <div class="top_logo"></div>
+
+        <div class="city-pull-down fl city-pull-down-border">
+            <span class="city-pull-down-bg inline-block">
+                <i class="txt">上海</i>
+                <div class="city-toggle-icon"></div>
+            </span>
+            <div class="city-select">
+                <div class="header-current-city">
+                    上海
+                    <div class="city-toggle-icon"></div>
+                </div>
+                <div class="clearfix header-city-box">
+                    <div class="header-tips">城市</div>
+                    <div class="header-city-list clearfix">
+                        <a href="http://www.orangeban.com/bj" class="fl header-city-item ">北京</a>
+                        <a href="http://www.orangeban.com/sh"
+                           class="fl header-city-item header-city-item-selected">上海</a>
+                        <a href="http://www.orangeban.com/hz" class="fl header-city-item ">杭州</a>
+                        <a href="http://www.orangeban.com/nb" class="fl header-city-item ">宁波</a>
+                        <a href="http://www.orangeban.com/nj" class="fl header-city-item ">南京</a>
+                        <a href="http://www.orangeban.com/sz" class="fl header-city-item ">苏州</a>
+                        <a href="http://www.orangeban.com/hf" class="fl header-city-item ">合肥</a>
+                    </div>
+                    <div class="header-city-box-footer"></div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(".city-pull-down").click(function () {
+                $('.city-pull-down .arrow-icon').toggle();
+                $(".city-pull-down .city-select").stop(true).slideToggle();
+            });
+        </script>
+
         <div class="position_right">
             <div class="title_text_right">
                 <a href="index.html" class="clickable">首页</a>

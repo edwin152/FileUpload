@@ -1,7 +1,9 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>橙办</title>
+    <meta name="keywords" content="{building},{building}写字楼,{building}租金,{building}图片,{building}停车费,{building}物业费,{building}电话,{building}地址,{building}办公室出租信息,橙办网"/>
+    <meta name="description" content="{building}写字楼楼盘介绍，租金价格，{building}写字楼图片，交通路线，地理位置，租赁详情，停车费，物业费，{building}写字楼出租，{city}橙办网专业写字楼租赁，办公选址专家">
+    <title>{building}{area}平写字楼，{building}租赁信息-{city}橙办网</title>
     <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/all.css"/>
     <link rel="stylesheet" type="text/css" href="css/officeDetail.css"/>
@@ -46,10 +48,12 @@
             params: {
                 id: office_id,
             },
-            success: function (data) {
+            success: function (data, city) {
+                setTag(city, data.building.name, data.office.area);
+
                 setOffice(data);
             }
-        })
+        });
     }
 
     function setOffice(data) {
@@ -130,43 +134,130 @@
         document.getElementById("bus_intro").innerHTML
             = buildingNotes.bus_intro;
 
-        utils.setImage(document.getElementById("building_img"), building.img_list);
+        // utils.setImage(document.getElementById("building_img"), building.img_list);
 
-        document.getElementById("bottom_building_name").innerHTML
+        document.getElementById("building_info").innerHTML
             = building.name;
 
-        document.getElementById("building_introduce").innerHTML
+        document.getElementById("building_detail_info").innerHTML
             = building.introduce;
 
         let imageListBox = document.getElementById("top_image_list");
         let img_list = utils.getImg_list(office);
+
+        img_list.push(img_list[0]);
+
+
         for (let img of img_list) {
             let itemBox = document.createElement("div");
             itemBox.setAttribute("class", "swiper-slide");
-            imageListBox.appendChild(itemBox);
             let itemImg = document.createElement("img");
             itemImg.setAttribute("class", "top_info_image");
             itemImg.setAttribute("src", img);
             itemBox.appendChild(itemImg);
+            imageListBox.appendChild(itemBox);
+        }
+        if (img_list.length > 1) {
+            let indicator = document.getElementById("top_info_page");
+            for (let img of img_list) {
+                let itemBox = document.createElement("div");
+                itemBox.setAttribute("class", "swiper-slide");
+                let itemImg = document.createElement("img");
+                itemImg.setAttribute("class", "top_info_image_indicator");
+                itemImg.setAttribute("src", img);
+                itemBox.appendChild(itemImg);
+                let itemBoxClone = itemBox.cloneNode(true);
+                indicator.appendChild(itemBoxClone);
+            }
         }
         startSwiper();
     }
 
+
+    let swiperTopInfo;
+    let indicator;
+
     function startSwiper() {
-        new Swiper('#swiper_top_info', {
-            loop: true,
+        swiperTopInfo = new Swiper('#swiper_top_info', {
             autoplay: 2000,
             pagination: '.swiper_position',
+            direction: "horizontal",
             paginationClickable: true,
             autoplayDisableOnInteraction: false,
+            grabCursor: true,
+            onSlideChangeStart: function () {
+                updateNavPosition();
+            }
         });
+        indicator = new Swiper('#swiper_top_info_page', {
+            watchSlidesProgress: true,
+            watchSlidesVisibility: true,
+            slidesPerView: 4,
+            onTap: function () {
+                swiperTopInfo.slideTo(indicator.clickedIndex);
+            }
+        });
+    }
+
+    function updateNavPosition() {
+        $('#swiper_top_info_page .active-nav').removeClass('active-nav')
+        let activeNav = $('#swiper_top_info_page .swiper-slide').eq(swiperTopInfo.activeIndex).addClass('active-nav');
+
+
+        if (!activeNav.hasClass('swiper-slide-visible')) {
+            console.log(1);
+            if (activeNav.index() > swiperTopInfo.activeIndex) {
+                console.log(2);
+                let thumbsPerNav = Math.floor(indicator.width / activeNav.width()) - 1;
+                indicator.slideTo(activeNav.index() - thumbsPerNav)
+            }
+            else {
+                console.log(3);
+                indicator.slideTo(activeNav.index())
+            }
+        }
     }
 </script>
 
-<body class="bg_gray">
+<body>
 <div class="title_box">
     <div class="win flex_row position_relative">
         <div class="top_logo"></div>
+
+        <div class="city-pull-down fl city-pull-down-border">
+            <span class="city-pull-down-bg inline-block">
+                <i class="txt">上海</i>
+                <div class="city-toggle-icon"></div>
+            </span>
+            <div class="city-select">
+                <div class="header-current-city">
+                    上海
+                    <div class="city-toggle-icon"></div>
+                </div>
+                <div class="clearfix header-city-box">
+                    <div class="header-tips">城市</div>
+                    <div class="header-city-list clearfix">
+                        <a href="http://www.orangeban.com/bj" class="fl header-city-item ">北京</a>
+                        <a href="http://www.orangeban.com/sh"
+                           class="fl header-city-item header-city-item-selected">上海</a>
+                        <a href="http://www.orangeban.com/hz" class="fl header-city-item ">杭州</a>
+                        <a href="http://www.orangeban.com/nb" class="fl header-city-item ">宁波</a>
+                        <a href="http://www.orangeban.com/nj" class="fl header-city-item ">南京</a>
+                        <a href="http://www.orangeban.com/sz" class="fl header-city-item ">苏州</a>
+                        <a href="http://www.orangeban.com/hf" class="fl header-city-item ">合肥</a>
+                    </div>
+                    <div class="header-city-box-footer"></div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(".city-pull-down").click(function () {
+                $('.city-pull-down .arrow-icon').toggle();
+                $(".city-pull-down .city-select").stop(true).slideToggle();
+            });
+        </script>
+
         <div class="position_right">
             <div class="title_text_right">
                 <a href="index.html" class="clickable">首页</a>
@@ -202,10 +293,17 @@
     <div class="detail_info_name" id="detail_info_name">
     </div>
     <div class="top_info flex_row">
-        <div class="swiper-container swiper_top_info" id="swiper_top_info">
-            <div class="swiper-wrapper" id="top_image_list">
+        <div>
+            <div class="swiper-container swiper_top_info" id="swiper_top_info">
+                <div class="swiper-wrapper" id="top_image_list">
+                </div>
+                <div class="swiper_position swiper_top"></div>
             </div>
-            <div class="swiper_position swiper_top"></div>
+            <div class="swiper-container" id="swiper_top_info_page">
+                <div class="swiper-wrapper top_image_list_indicator" id="top_info_page">
+
+                </div>
+            </div>
         </div>
         <div class="detail_info_box flex_column">
             <div class="detail_info_price_box">
@@ -236,27 +334,46 @@
             <div class="page_info_more mini_line_height flex_row">
                 地铁：<span id="metro_name_list"></span>
             </div>
-            <div class="page_info_service flex_row">
-                <div class="page_info_service_right flex_column">
-                    <div class="page_info_service_name">
-                        <span>同普大厦写字楼出租</span> 专属顾问
+            <div class="page_info_service flex_column_left">
+                <div class="orange_color">楼盘介绍——<span id="building_info"></span></div>
+                <div class="building_detail_info" id="building_detail_info"></div>
+                <!--<div class="page_info_service_right flex_column">-->
+                <!--<div class="page_info_service_name">-->
+                <!--<span>同普大厦写字楼出租</span> 专属顾问-->
+                <!--</div>-->
+                <!--<div class="page_info_service_btn_box flex_row">-->
+                <!--<div class="page_info_service_btn">-->
+                <!--咨询热线-->
+                <!--</div>-->
+                <!--<div class="page_info_service_phone">-->
+                <!--021 - 5090 6123-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+            </div>
+
+            <form class="phone_box">
+                <div class="flex_row_left">
+                    <div>
+                        <div class="phone_title">联系方式</div>
+                        <input type="text" class="phone_input"/>
                     </div>
-                    <div class="page_info_service_btn_box flex_row">
-                        <div class="page_info_service_btn">
-                            咨询热线
-                        </div>
-                        <div class="page_info_service_phone">
-                            021 - 5090 6123
-                        </div>
+                    <div>
+                        <div class="phone_title">称呼</div>
+                        <input type="text" class="phone_input"/>
+                    </div>
+                    <div>
+                        <div class="phone_title"></div>
+                        <input type="button" class="phone_btn" value="确定"/>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
 
 <div class="content_box matop win flex_row">
-    <div class="content_left">
+    <div class="content_left win">
         <div class="bg_white left_item matop">
             <h3 class="sec_title">概况</h3>
             <div class="data_list">
@@ -362,42 +479,42 @@
                 </div>
             </div>
         </div>
-        <div class="introduction_estate_box bg_white left_item matop">
-            <h3 class="sec_title">楼盘介绍</h3>
-            <div class="flex_row matop">
-                <img src="" class="introduction_estate_img" id="building_img" alt=""/>
-                <div class="flex_column introduction_estate_info_box">
-                    <div class="introduction_estate_name clickable" id="bottom_building_name">
-                    </div>
-                    <div class="introduction_estate_info" id="building_introduce">
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!--<div class="introduction_estate_box bg_white left_item matop">-->
+        <!--<h3 class="sec_title">楼盘介绍</h3>-->
+        <!--<div class="flex_row matop">-->
+        <!--<img src="" class="introduction_estate_img" id="building_img" alt=""/>-->
+        <!--<div class="flex_column introduction_estate_info_box">-->
+        <!--<div class="introduction_estate_name clickable" id="bottom_building_name">-->
+        <!--</div>-->
+        <!--<div class="introduction_estate_info" id="building_introduce">-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
     </div>
 
-    <div class="content_right bg_white">
-        <div class="contact_way">
-            <div class="service_phone flex_row">
-                <div class="icon_phone"></div>
-                <div class="service_phone_text">
-                    021 - 5090 6123
-                </div>
-            </div>
-            <div class="ready_see">
-                预约看房
-            </div>
-            <input class="ready_phone" type="text" name="ready_phone" id="ready_phone" value="" placeholder="请输入手机号"/>
-            <div class="contact_info">
-                <div class="ready_see btn">
-                    预约看房
-                </div>
-            </div>
-            <div class="content_right_title">
-                <img src="" class="content_right_title_img" alt=""/>热门楼盘
-            </div>
-        </div>
-    </div>
+    <!--<div class="content_right bg_white">-->
+    <!--<div class="contact_way">-->
+    <!--<div class="service_phone flex_row">-->
+    <!--<div class="icon_phone"></div>-->
+    <!--<div class="service_phone_text">-->
+    <!--021 - 5090 6123-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="ready_see">-->
+    <!--预约看房-->
+    <!--</div>-->
+    <!--<input class="ready_phone" type="text" name="ready_phone" id="ready_phone" value="" placeholder="请输入手机号"/>-->
+    <!--<div class="contact_info">-->
+    <!--<div class="ready_see btn">-->
+    <!--预约看房-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="content_right_title">-->
+    <!--<img src="" class="content_right_title_img" alt=""/>热门楼盘-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
 </div>
 
 <div class="bottom_box flex_column_left">

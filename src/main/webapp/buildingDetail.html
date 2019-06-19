@@ -1,7 +1,9 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>橙办</title>
+    <meta name="keywords" content="{building},{building}写字楼,{building}租金,{building}图片,{building}停车费,{building}物业费,{building}电话,{building}地址,{building}办公室出租信息,橙办网"/>
+    <meta name="description" content="{building}写字楼楼盘介绍，租金价格，{building}写字楼图片，交通路线，地理位置，租赁详情，停车费，物业费，{building}写字楼出租，{city}橙办网专业写字楼租赁，办公选址专家">
+    <title>{building}写字楼出租 | {building}租赁信息-{city}橙办网</title>
     <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
     <link rel="stylesheet" type="text/css" href="layUI/css/layui.css">
     <link rel="stylesheet" type="text/css" href="css/all.css"/>
@@ -42,20 +44,6 @@
     let pageIndex = 0;
     let pageNum = 0;
 
-    function openFixed() {
-        let subscribeTop = $("#subscribe_box").offset().top;
-        // 滚动监听
-        $(window).scroll(function () {
-            let scroll = getScrollOffset().y;
-            let subscribe = $("#subscribe_box");
-            if (subscribeTop - scroll < 80) {
-                subscribe.addClass('subscribePosition');
-            } else {
-                subscribe.removeClass('subscribePosition');
-            }
-        });
-    }
-
     window.onload = function () {
         let request = window.location.search;
         building_id = http.getParameter(request, "building_id");
@@ -65,11 +53,38 @@
         filter.checkedDecorationId = http.getParameter(request, "decoration_id");
         getFilterList();
         getBuilding();
+        getHotList();
 
         initMap();
 
-        openFixed();
+        setFixed();
     };
+    function setFixed() {
+        let fixedView = document.getElementById("position_fixed");
+        let fixedTop = window.scrollY + fixedView.getBoundingClientRect().y;
+        let fixedLeft = fixedView.getBoundingClientRect().x;
+        fixedView.setAttribute("style", "left: " + fixedLeft + "px;");
+        let bottomBox = document.getElementsByClassName("bottom_box")[0];
+
+        // 解决在页面中部时刷新页面浮动问题
+        setFixedPosition(bottomBox, fixedView, fixedTop);
+        window.onscroll = function () {
+            setFixedPosition(bottomBox, fixedView, fixedTop);
+        }
+    }
+
+    function setFixedPosition(bottomBox, fixedView, fixedTop) {
+        let toBottomHeight = 5;
+        if (window.scrollY <= (fixedTop - 100)) {
+            fixedView.setAttribute("class", "content_right bg_white");
+        } else if (bottomBox.getBoundingClientRect().top < 100 + toBottomHeight + fixedView.getBoundingClientRect().height) {
+            fixedView.setAttribute("class", "content_right bg_white position_fixed_bottom");
+            fixedView.style.bottom = (window.innerHeight - bottomBox.getBoundingClientRect().top + toBottomHeight) + "px";
+        } else {
+            fixedView.setAttribute("class", "content_right bg_white position_fixed");
+        }
+    }
+
 
     function getFilterList() {
         http.post({
@@ -94,7 +109,9 @@
             params: {
                 id: building_id,
             },
-            success: function (data) {
+            success: function (data, city) {
+                setTag(city, data.name, "");
+
                 setTopInfo(data);
                 setBottomInfo(data);
                 let notes = JSON.parse(data.notes);
@@ -125,6 +142,7 @@
                 pageIndex = data.pageIndex;
                 pageNum = data.pageNum;
                 setOfficeList(data.officeList);
+                loadPageUtil(pageNum * 10);
             }
         });
     }
@@ -201,7 +219,7 @@
         // 价格范围
         document.getElementById("detail_info_price").innerHTML = building.price_range;
         // 联系客服顶部价格
-        document.getElementById("service_info_price").innerHTML = building.price_range;
+        // document.getElementById("service_info_price").innerHTML = building.price_range;
         // 地址
         let district_name = document.getElementById("district_name");
         district_name.innerHTML = building.district_name;
@@ -255,13 +273,13 @@
             tdImage.appendChild(imageView);
 
             // 房源信息
-            let sourceInfo = document.createElement("td");
-            sourceInfo.setAttribute("class", "source_info_td");
-            sourceInfo.innerHTML = "<div class='clickable'>" + office.source_info + "</div>";
-            sourceInfo.onclick = function () {
-                openRoomDetail(office.id);
-            };
-            trView.appendChild(sourceInfo);
+            // let sourceInfo = document.createElement("td");
+            // sourceInfo.setAttribute("class", "source_info_td");
+            // sourceInfo.innerHTML = "<div class='clickable'>" + office.source_info + "</div>";
+            // sourceInfo.onclick = function () {
+            //     openRoomDetail(office.id);
+            // };
+            // trView.appendChild(sourceInfo);
 
             // 面积
             let area = document.createElement("td");
@@ -349,12 +367,132 @@
         });
     }
 
+    function getHotList() {
+        http.post({
+            url: "news/hot",
+            success: function (data) {
+                setHeatNews(data);
+            }
+        })
+    }
+
+    /**
+     * 设置资讯
+     * @param heatNewsList
+     */
+    function setHeatNews(heatNewsList) {
+        if (heatNewsList == null) return;
+        let ListBox = document.getElementById("right_heat_news");
+        for (let i = 0, len = heatNewsList.length; i < len; i++) {
+            let itemBox = document.createElement("div");
+            itemBox.className = "right_heat_news_item";
+
+            let imgListStr = heatNewsList[i].img_list;
+            let imgList = JSON.parse(imgListStr);
+            let itemImg = document.createElement("img");
+            itemImg.className = "right_heat_news_img";
+            if (imgList && imgList.length > 0) {
+                utils.setImageSrc(itemImg, imgList[0]);
+            } else {
+                utils.setImageSrc(itemImg, null);
+            }
+            itemBox.appendChild(itemImg);
+
+            let itemInfo = document.createElement("div");
+            itemInfo.className = "right_heat_news flex_column_left";
+
+            let itemTitle = document.createElement("div");
+            itemTitle.className = "right_heat_news_title";
+            itemTitle.innerHTML = heatNewsList[i].title;
+            itemTitle.onclick = function () {
+                window.open("newsDetail.html?news_id=" + heatNewsList[i].id);
+            };
+            itemInfo.appendChild(itemTitle);
+
+            let itemTime = document.createElement("div");
+            itemTime.className = "right_heat_news_time";
+            itemTime.innerHTML = heatNewsList[i].last_edit_time;
+            itemInfo.appendChild(itemTime);
+
+            if (i === len - 1) {
+                itemBox.setAttribute("style", "border: none;");
+            }
+
+            itemBox.appendChild(itemInfo);
+            ListBox.appendChild(itemBox);
+        }
+    }
+
+
+    /**
+     * 加载分页工具
+     * @param dataSize 数据总数
+     */
+    function loadPageUtil(dataSize) {
+        layui.use('laypage', function () {
+            var laypage = layui.laypage;
+            //执行一个laypage实例
+            laypage.render({
+                //注意，这里的 test1 是 ID，不用加 # 号
+                elem: 'page_box',
+                //数据总数，从服务端得到
+                count: dataSize,
+                limit: 10,
+                jump: function (obj, first) {
+                    //obj包含了当前分页的所有参数，比如：
+                    // console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                    // console.log(obj.limit); //得到每页显示的条数
+
+                    //首次不执行
+                    if (!first) {
+                        getOfficeList(obj.curr - 1);
+                    }
+                }
+            });
+        });
+    }
+
 </script>
 
-<body class="bg_gray">
+<body>
 <div class="title_box">
     <div class="win flex_row position_relative">
         <div class="top_logo"></div>
+
+        <div class="city-pull-down fl city-pull-down-border">
+            <span class="city-pull-down-bg inline-block">
+                <i class="txt">上海</i>
+                <div class="city-toggle-icon"></div>
+            </span>
+            <div class="city-select">
+                <div class="header-current-city">
+                    上海
+                    <div class="city-toggle-icon"></div>
+                </div>
+                <div class="clearfix header-city-box">
+                    <div class="header-tips">城市</div>
+                    <div class="header-city-list clearfix">
+                        <a href="http://www.orangeban.com/bj" class="fl header-city-item ">北京</a>
+                        <a href="http://www.orangeban.com/sh"
+                           class="fl header-city-item header-city-item-selected">上海</a>
+                        <a href="http://www.orangeban.com/hz" class="fl header-city-item ">杭州</a>
+                        <a href="http://www.orangeban.com/nb" class="fl header-city-item ">宁波</a>
+                        <a href="http://www.orangeban.com/nj" class="fl header-city-item ">南京</a>
+                        <a href="http://www.orangeban.com/sz" class="fl header-city-item ">苏州</a>
+                        <a href="http://www.orangeban.com/hf" class="fl header-city-item ">合肥</a>
+                    </div>
+                    <div class="header-city-box-footer"></div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(".city-pull-down").click(function () {
+                $('.city-pull-down .arrow-icon').toggle();
+                $(".city-pull-down .city-select").stop(true).slideToggle();
+            });
+        </script>
+
         <div class="position_right">
             <div class="title_text_right">
                 <a href="index.html" class="clickable">首页</a>
@@ -393,14 +531,36 @@
                 <span id="zone_name" class="clickable address_clickable"></span>
             </div>
         </div>
-        <div class="img_map_box">
-            <div class="swiper-container swiper_top_info" id="swiper_top_info">
-                <div class="swiper-wrapper" id="top_image_list">
-                </div>
-                <div class="swiper_position swiper_top"></div>
+    </div>
+
+    <div class="swiper-container swiper_top_info" id="swiper_top_info">
+        <div class="swiper-wrapper" id="top_image_list">
+        </div>
+        <div class="swiper_position swiper_top"></div>
+
+        <!-- 信息 -->
+        <div class="office_info_number_box">
+            <div class="office_info_in_top">
+                <span id="office_number" class="detail_info_price price_color">35</span>套在租房源
             </div>
-            <div class="map_box">
-                <div style="width:100%;height:100%;margin: 0 auto;font-size:12px" id="map"></div>
+            <div class="office_info_in_top">
+                可租面积：<span id="office_size" class="detail_info_price price_color">35</span>m²
+            </div>
+        </div>
+
+        <!-- 咨询预约 -->
+        <div class="ready_box_in_top flex_row">
+            <div class="flex_row">
+                <div>
+                    免费咨询：
+                </div><span class="price_color">400-8700-758</span>
+            </div>
+            <div class="flex_row">
+                <div>
+                    立即预约
+                </div>
+                <input class="layui-input ready_input" placeholder="请输入手机号" />
+                <div class="ready_submit">→</div>
             </div>
         </div>
     </div>
@@ -411,35 +571,35 @@
         <div class="bg_white left_item">
             <h3 class="sec_title">出租房源</h3>
 
-            <div class="condition_line flex_row" id="type">
+            <div class="condition_line flex_row" id="type" style="display: none;">
                 <div class="condition_title">
                     类型：
                 </div>
-                <div class="option_box flex_row" id="typeList">
+                <div class="option_box flex_row" id="typeList" style="display: none;">
                 </div>
             </div>
 
-            <div class="condition_line flex_row" id="areaRange">
+            <div class="condition_line flex_row" id="areaRange" style="display: none;">
                 <div class="condition_title">
                     面积：
                 </div>
-                <div class="option_box flex_row" id="areaRangeList">
+                <div class="option_box flex_row" id="areaRangeList" style="display: none;">
                 </div>
             </div>
 
-            <div class="condition_line flex_row" id="priceRange">
+            <div class="condition_line flex_row" id="priceRange" style="display: none;">
                 <div class="condition_title">
                     价格：
                 </div>
-                <div class="option_box flex_row" id="priceRangeList">
+                <div class="option_box flex_row" id="priceRangeList" style="display: none;">
                 </div>
             </div>
 
-            <div class="condition_line flex_row" id="decoration">
+            <div class="condition_line flex_row" id="decoration" style="display: none;">
                 <div class="condition_title">
                     装修：
                 </div>
-                <div class="option_box flex_row" id="decorationList">
+                <div class="option_box flex_row" id="decorationList" style="display: none;">
                 </div>
             </div>
 
@@ -450,58 +610,59 @@
 
             <table class="table_box" id="data_item_box">
                 <tr class="table_title">
-                    <td>全部</td>
-                    <td>房源信息</td>
+                    <td>照片</td>
+                    <!--<td>房源信息</td>-->
                     <td>面积</td>
                     <td>单价</td>
                     <td>总价</td>
                 </tr>
             </table>
 
-            <div class="paging" id="next_page">
-                <span class="paging_item" onclick="nextPage()">
-                    下一页
-                </span>
+            <div class="flex_row">
+
+                <div class="paging" id="next_page">
+                </div>
             </div>
         </div>
 
         <div class="bg_white left_item matop">
-            <h3 class="sec_title">写字楼信息</h3>
+            <h3 class="sec_title">楼盘信息</h3>
             <div class="data_list">
                 <div class="data_item_box flex_row">
                     <div class="bottom_info_box flex_row" id="bottom_info">
                     </div>
                 </div>
             </div>
+            <h3 class="sec_title matop">楼盘简介</h3>
             <div class="introduce_info" id="introduce_info">
 
             </div>
         </div>
+
+        <div class="img_map_box left_item ">
+            <div class="map_box">
+                <div style="width:100%;height:100%;margin: 0 auto;font-size:12px" id="map"></div>
+            </div>
+        </div>
     </div>
 
-    <div class="content_right">
-        <div class="contact_way bg_white" id="subscribe_box">
-            <div class="service_info_price_box">
-                <span class="service_info_price price_color" id="service_info_price"></span>元/m²/天
+    <div class="content_right bg_white" id="position_fixed">
+        <form action="search.html">
+            <div class="right_search_box">
+                <input type="text" id="keyword_input" class="right_search" name="keyword" placeholder="在这里输入您想了解的写字楼"/>
+                <input class="right_search_btn" type="submit" value=" "/>
             </div>
-            <div class="service_phone flex_row">
-                <div class="icon_phone"></div>
-                &nbsp;
-                <div class="service_phone_text">
-                    021 - 5090 6123
-                </div>
-            </div>
-            <div class="ready_see">
-                预约看房
-            </div>
-            <input class="ready_phone" type="text" name="ready_phone" id="ready_phone" value="" placeholder="请输入手机号"/>
-            <div class="contact_info">
-                <div class="ready_see btn">
-                    预约看房
-                </div>
-            </div>
-            <div class="content_right_title" style="display: none;">
-                <img src="" class="content_right_title_img" alt=""/>热门楼盘
+        </form>
+
+        <!--        <div class="right_item_box">-->
+        <!--            <div class="right_item_title_red">热门写字楼</div>-->
+        <!--            <div class="flex_column_left" id="right_heat_building">-->
+        <!--            </div>-->
+        <!--        </div>-->
+
+        <div class="right_item_box">
+            <div class="right_item_title_orange">近期资讯</div>
+            <div class="flex_column_left" id="right_heat_news">
             </div>
         </div>
     </div>

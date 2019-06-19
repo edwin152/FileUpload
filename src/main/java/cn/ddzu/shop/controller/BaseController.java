@@ -24,6 +24,7 @@ class BaseController {
         JsonObject json = new JsonObject();
         json.addProperty("code", resultCode.getCode());
         json.addProperty("msg", resultCode.getMsg());
+        json.addProperty("city", "上海");
         if (data != null) {
             json.add("data", data);
         }

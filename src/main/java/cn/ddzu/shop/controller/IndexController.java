@@ -89,6 +89,7 @@ public class IndexController extends BaseController {
             buildingObject.addProperty("area_range", areaRange.toString());
             buildingObject.add("area_list", new Gson().toJsonTree(areaList));
             buildingArray.add(buildingObject);
+            if (buildingArray.size() == 9) break;
         }
         json.add("fineList", buildingArray);
 

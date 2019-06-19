@@ -9,14 +9,16 @@
 .top_info {
 	margin: 0 auto;
 	color: #333333;
+	align-items: flex-start;
 }
 
 .swiper_top_info {
-	width: 660px;
-	height: 440px;
+	width: 550px;
+	height: 450px;
 	overflow: hidden;
 	position: relative;
 	margin: 0;
+	flex-shrink: 0;
 }
 
 .swiper_position {
@@ -29,30 +31,44 @@
 }
 
 .top_info_image {
-	width: 660px;
-	height: 440px;
+	width: 100%;
+	height: 100%;
+}
+
+.top_info_image_indicator{
+	width: 90%;
+}
+
+.top_image_list_indicator{
+	margin-top: 30px;
+}
+
+.top_image_list_indicator .swiper-slide{
+	text-align: center;
+}
+
+.top_image_list_indicator .active-nav img{
+	box-shadow: 0 0 2px 2px rgba(200, 200, 200, .7);
 }
 
 .detail_info_name {
-	font-size: 18px;
+	font-size: 24px;
 	line-height: 36px;
-	font-weight: normal;
 	padding-bottom: 20px;
+    font-weight: bold;
 }
 
 .detail_info_box {
-	height: 440px;
 	margin-left: 55px;
 	justify-content: flex-start;
 	align-items: flex-start;
-	flex-grow: 1;
+	flex-grow: 0;
 }
 
 .detail_info_price_box {
 	padding: 5px 0 20px;
 	font-size: 16px;
 	width: 100%;
-	border-bottom: 1px rgba(0, 0, 0, .1) solid;
 }
 
 .detail_info_price {
@@ -100,10 +116,11 @@
 }
 
 .page_info_service {
-	border-top: 1px rgba(0, 0, 0, .1) solid;
+	border-top: 1px solid #F8F8F8;
 	padding: 20px 0;
 	width: 100%;
 	margin-top: 10px;
+	font-size: 12px;
 }
 
 .page_info_service_imgage {
@@ -149,8 +166,53 @@
 	margin-left: 15px;
 }
 
-.content_box {
+/* 联系方式 */
+.phone_box{
+	width: 100%;
+}
+
+.phone_title{
+	height: 40px;
+	font-size: 14px;
+	line-height: 40px;
+	color: #2B2B2B;
+	font-weight: bold;
+}
+.phone_input{
+	height: 40px;
+	font-size: 14px;
+	line-height: 40px;
+	background: none;
+	border: 1px solid #E3E3E3;
+	margin: 0 30px 0 0;
+	padding: 0 10px;
+}
+
+.phone_btn{
+	width: 70px;
+	height: 30px;
+	font-size: 14px;
+	line-height: 30px;
+	background: none;
+	margin: 5px 0;
+	border: 1px solid #E3E3E3;
+}
+
+
+.building_detail_info{
+	font-size: 12px;
+	margin-top: 15px;
+}
+
+.office_info_box {
 	align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    margin: 50px auto 50px auto;
+}
+
+.office_info{
+    padding: 0 20px;
 }
 
 .content_left {
@@ -163,7 +225,6 @@
 
 .left_item {
 	flex-grow: 1;
-	width: 840px;
 	padding: 0 20px;
 }
 
@@ -176,9 +237,11 @@
 }
 
 .sec_title {
-	line-height: 34px;
-	font-size: 16px;
-	border-bottom: 4px #f5f8ff solid;
+	border-top: 1px solid #F8F8F8;
+	border-bottom: 0;
+	line-height: 50px;
+	font-size: 28px;
+	color: #e99640;
 	font-weight: normal;
 }
 
@@ -266,19 +329,20 @@
 }
 
 .bottom_info_item {
-	min-width: 400px;
+	min-width: 300px;
+	flex-grow: 1;
 	line-height: 32px;
 	overflow: hidden;
-	color: #666;
 	font-size: 12px;
+	font-weight: bold;
 	flex-direction: row;
 	align-items: start;
+	color: #2B2B2B;
 }
 
 .bottom_info_title {
 	float: left;
 	min-width: 60px;
-	color: #999;
 	font-size: 12px;
 	padding-right: 10px;
 	flex-shrink: 0;
@@ -287,7 +351,6 @@
 .bottom_info_text {
 	line-height: 32px;
 	overflow: hidden;
-	color: #666;
 	font-size: 12px;
 	flex-shrink: 1;
 }
@@ -301,7 +364,6 @@
 /* 楼盘介绍 */
 
 .introduction_estate_box{
-	padding: 0 20px 20px 20px;
 }
 
 .introduction_estate_img {
@@ -333,4 +395,8 @@
 	color: #666;
 	margin: 15px 0;
 
+}
+
+.orange_color{
+	color: #e99640;
 }

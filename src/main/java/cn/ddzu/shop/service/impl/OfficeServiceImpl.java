@@ -158,7 +158,7 @@ public class OfficeServiceImpl implements OfficeService {
 
     @Override
     public List<Building> getIndexBuilding() {
-        return buildingMapperDao.selectWhereNew(12);
+        return buildingMapperDao.selectWhereNew(Integer.MAX_VALUE);
     }
 
     @Override

@@ -1,9 +1,11 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta name="keywords" content="租房 上海房屋 出租 整租 办公室出租 出租"/>
-    <meta name="description" content="橙办租房网提供海量办公室出租房源，实时更新，租房信息真实有效。">
-    <title>橙办</title>
+    <meta name="keywords"
+          content="{city}写字楼出租,{city}写字楼租赁,写字楼出租网,写字楼租赁平台,办公室出租,办公楼出租,{city}办公室出租,{city}办公室租赁,{city}办公楼出租,{city}办公楼租赁,橙办网"/>
+    <meta name="description"
+          content="橙办网专业写字楼出租网站，提供真实写字楼出租、租赁信息！{city}写字楼出租,{city}创意园出租,{city}联合办公,{city}办公楼出租,{city}商务中心出租,{city}共享办公出租,写字楼出租网,{city}联合办公出租。">
+    <title>{city}写字楼出租|{city}办公室|办公楼出租/租赁平台-{city}橙办网</title>
     <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
     <link rel="stylesheet" href="layUI/css/layui.css">
     <link rel="stylesheet" type="text/css" href="css/all.css"/>
@@ -42,7 +44,9 @@
     function getAll() {
         http.post({
             url: "index/all",
-            success: function (data) {
+            success: function (data, city) {
+                setTag(city, "", "");
+
                 setTopBackground(data.bannerList);
                 setConditionScreen(data.districtList);
                 setTypeScreen(data.typeList);
@@ -51,7 +55,6 @@
                 setCoreBuilding(data.coreList);
                 setFineBuildingList(data.fineList);
                 setNewsList(data.newsList);
-                // setTrust(data.today_intro);
                 setTodaySupport(data.todaySupport);
                 openSwiper(data.bannerList.length !== 1);
             }
@@ -306,17 +309,6 @@
         }
     }
 
-    /**
-     * 设置委托房源
-     */
-    function setTrust(trust) {
-        utils.setImageSrc(document.getElementById("entrust_img"), trust.img_intro_1);
-        utils.setImageSrc(document.getElementById("trust_img"), trust.img_intro_2);
-        document.getElementById("entrust_title").innerHTML = trust.title;
-        document.getElementById("entrust_subtitle").innerHTML = trust.sub_title;
-        document.getElementById("entrust_content").innerHTML = trust.content;
-    }
-
     function setTodaySupport(todaySupport) {
         if (todaySupport) {
             let building = todaySupport.building;
@@ -358,6 +350,41 @@
 <div class="title_box">
     <div class="win flex_row position_relative">
         <div class="top_logo"></div>
+
+        <div class="city-pull-down fl city-pull-down-border">
+            <span class="city-pull-down-bg inline-block">
+                <i class="txt">上海</i>
+                <div class="city-toggle-icon"></div>
+            </span>
+            <div class="city-select">
+                <div class="header-current-city">
+                    上海
+                    <div class="city-toggle-icon"></div>
+                </div>
+                <div class="clearfix header-city-box">
+                    <div class="header-tips">城市</div>
+                    <div class="header-city-list clearfix">
+                        <a href="http://www.orangeban.com/bj" class="fl header-city-item ">北京</a>
+                        <a href="http://www.orangeban.com/sh"
+                           class="fl header-city-item header-city-item-selected">上海</a>
+                        <a href="http://www.orangeban.com/hz" class="fl header-city-item ">杭州</a>
+                        <a href="http://www.orangeban.com/nb" class="fl header-city-item ">宁波</a>
+                        <a href="http://www.orangeban.com/nj" class="fl header-city-item ">南京</a>
+                        <a href="http://www.orangeban.com/sz" class="fl header-city-item ">苏州</a>
+                        <a href="http://www.orangeban.com/hf" class="fl header-city-item ">合肥</a>
+                    </div>
+                    <div class="header-city-box-footer"></div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(".city-pull-down").click(function () {
+                $('.city-pull-down .arrow-icon').toggle();
+                $(".city-pull-down .city-select").stop(true).slideToggle();
+            });
+        </script>
+
         <div class="position_right">
             <div class="title_text_right">
                 <a href="index.html" class="clickable">首页</a>
