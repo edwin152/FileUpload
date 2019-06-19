@@ -29,12 +29,12 @@ let http = {
 
                 if (data.code === 0) {
                     if (!obj.success) return;
-                    obj.success(data.data);
+                    obj.success(data.data, data.city);
                 } else {
                     alert(data.code + ":" + data.msg);
 
                     if (!obj.onError) return;
-                    obj.onError(code, msg);
+                    obj.onError(code, msg, data.city);
                 }
             },
             error: function () {
@@ -129,17 +129,26 @@ let utils = {
     },
 };
 
+function setTag(city, building, area) {
+    let keywords = document.getElementsByName("keywords")[0];
+    let description = document.getElementsByName("description")[0];
+    let title = document.getElementsByTagName("title")[0];
 
-function getScrollOffset() {
-    if (window.pageXOffset !== undefined) {
-        return {
-            x: window.pageXOffset,
-            y: window.pageYOffset
-        }
-    } else {
-        return {
-            x: document.body.scrollLeft + document.documentElement.srollLeft,
-            y: document.body.scrollTop + document.documentElement.srollTop
-        }
-    }
+    let keywordsContent = keywords.getAttribute("content")
+        .replace(/{city}/g, city)
+        .replace(/{building}/g, building)
+        .replace(/{area}/g, area);
+    keywords.setAttribute("content", keywordsContent);
+
+    let descriptionContent = description.getAttribute("content")
+        .replace(/{city}/g, city)
+        .replace(/{building}/g, building)
+        .replace(/{area}/g, area);
+    description.setAttribute("content", descriptionContent);
+
+    title.innerHTML = title.innerHTML
+        .replace(/{city}/g, city)
+        .replace(/{building}/g, building)
+        .replace(/{area}/g, area);
+
 }

@@ -699,12 +699,12 @@ img {
     background-color: #e99640;
 }
 
-.position_fixed{
+.position_fixed {
     position: fixed;
     top: 100px;
 }
 
-.position_fixed_bottom{
+.position_fixed_bottom {
     position: fixed;
 }
 
@@ -770,7 +770,7 @@ img {
 }
 
 .city-pull-down .city-select .header-city-box .header-city-item-selected {
-    color: #0bbbe0
+    color: #e99640
 }
 
 .city-pull-down .city-select .header-tips {
@@ -812,7 +812,7 @@ img {
 }
 
 .city-pull-down ul li:hover {
-    color: #0bbbe0
+    color: #e99640
 }
 
 .city-pull-down ul li a {
@@ -824,7 +824,7 @@ img {
 }
 
 .city-pull-down ul li a:hover {
-    color: #17a1e6
+    color: #e99640
 }
 
 .city-pull-down:hover .arrow-icon {
@@ -870,4 +870,12 @@ img {
 
 .city-pull-down-hover-bg {
     background-color: #f2f2f2
+}
+
+.city-toggle-icon {
+    display: inline-block;
+    height: 10px;
+    width: 10px;
+    background-image: url(../img/city_toggle.png);
+    background-size: cover;
 }

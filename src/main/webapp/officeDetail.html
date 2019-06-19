@@ -1,7 +1,9 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>橙办</title>
+    <meta name="keywords" content="{building},{building}写字楼,{building}租金,{building}图片,{building}停车费,{building}物业费,{building}电话,{building}地址,{building}办公室出租信息,橙办网"/>
+    <meta name="description" content="{building}写字楼楼盘介绍，租金价格，{building}写字楼图片，交通路线，地理位置，租赁详情，停车费，物业费，{building}写字楼出租，{city}橙办网专业写字楼租赁，办公选址专家">
+    <title>{building}{area}平写字楼，{building}租赁信息-{city}橙办网</title>
     <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/all.css"/>
     <link rel="stylesheet" type="text/css" href="css/officeDetail.css"/>
@@ -46,10 +48,12 @@
             params: {
                 id: office_id,
             },
-            success: function (data) {
+            success: function (data, city) {
+                setTag(city, data.building.name, data.office.area);
+
                 setOffice(data);
             }
-        })
+        });
     }
 
     function setOffice(data) {
@@ -219,6 +223,41 @@
 <div class="title_box">
     <div class="win flex_row position_relative">
         <div class="top_logo"></div>
+
+        <div class="city-pull-down fl city-pull-down-border">
+            <span class="city-pull-down-bg inline-block">
+                <i class="txt">上海</i>
+                <div class="city-toggle-icon"></div>
+            </span>
+            <div class="city-select">
+                <div class="header-current-city">
+                    上海
+                    <div class="city-toggle-icon"></div>
+                </div>
+                <div class="clearfix header-city-box">
+                    <div class="header-tips">城市</div>
+                    <div class="header-city-list clearfix">
+                        <a href="http://www.orangeban.com/bj" class="fl header-city-item ">北京</a>
+                        <a href="http://www.orangeban.com/sh"
+                           class="fl header-city-item header-city-item-selected">上海</a>
+                        <a href="http://www.orangeban.com/hz" class="fl header-city-item ">杭州</a>
+                        <a href="http://www.orangeban.com/nb" class="fl header-city-item ">宁波</a>
+                        <a href="http://www.orangeban.com/nj" class="fl header-city-item ">南京</a>
+                        <a href="http://www.orangeban.com/sz" class="fl header-city-item ">苏州</a>
+                        <a href="http://www.orangeban.com/hf" class="fl header-city-item ">合肥</a>
+                    </div>
+                    <div class="header-city-box-footer"></div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(".city-pull-down").click(function () {
+                $('.city-pull-down .arrow-icon').toggle();
+                $(".city-pull-down .city-select").stop(true).slideToggle();
+            });
+        </script>
+
         <div class="position_right">
             <div class="title_text_right">
                 <a href="index.html" class="clickable">首页</a>
