@@ -27,6 +27,8 @@
     overflow: hidden;
     position: relative;
     margin: 0;
+    width: 100%;
+    height: 41.7vw;
 }
 
 .swiper_position {
@@ -39,8 +41,8 @@
 }
 
 .top_info_image {
-    width: 790px;
-    height: 440px;
+    width: 100%;
+    height: 100%;
 }
 
 .deteil_info_name {
@@ -79,7 +81,6 @@
     font-size: 28px;
     line-height: 40px;
     color: #e99640;
-    font-weight: bold;
     padding-right: 3px;
 }
 
@@ -90,8 +91,8 @@
 }
 
 .map_box{
-    width: 360px;
-    height: 440px;
+    width: 100%;
+    height: 400px;
     background: #FFFFFF;
 }
 
@@ -200,7 +201,6 @@
 .left_item {
     flex-grow: 1;
     width: 840px;
-    padding: 0 20px;
 }
 
 .error_not_text {
@@ -213,7 +213,7 @@
 
 .sec_title {
     line-height: 34px;
-    font-size: 16px;
+    font-size: 18px;
     border-bottom: 4px #f5f8ff solid;
     font-weight: normal;
 }
@@ -289,19 +289,22 @@
     color: #666;
     font: 12px Microsoft YaHei, SimHei, SimSun;
     line-height: 16px;
+    text-align: center;
 }
 
 .table_box td {
     line-height: 32px;
     font: 12px Microsoft YaHei, SimHei, SimSun;
-    padding-right: 30px;
+    padding: 0 15px;
     height: 146px;
 }
 
 .table_box .table_title td {
     color: #333;
-    text-align: left;
+    text-align: center;
     height: 33px;
+    font: 18px Microsoft YaHei, SimHei, SimSun;
+    font-weight: bold;
 }
 
 .table_box tr td .big_text {
@@ -318,7 +321,8 @@
 
 .bottom_info_item {
     min-width: 400px;
-    line-height: 32px;
+    line-height: 30px;
+    margin-top: 30px;
     overflow: hidden;
     color: #666;
     font-size: 12px;
@@ -350,4 +354,56 @@
 
 .source_info_td div:hover {
     color: #e99640;
+}
+
+.office_info_number_box{
+    position: absolute;
+    top: 75px;
+    right: 0;
+    background: rgba(255, 255, 255, .8);
+    z-index: 20;
+    font-size: 18px;
+    color: #000000;
+    min-width: 350px;
+    padding: 20px;
+    line-height: 30px;
+}
+
+.ready_box_in_top{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 20;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 22px;
+    padding: 10px 20px;
+    background: -webkit-linear-gradient(bottom, rgba(255, 255, 255, .5), rgba(255, 255, 255, .0)); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(top, rgba(255, 255, 255, .5), rgba(255, 255, 255, .0)); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(top, rgba(255, 255, 255, .5), rgba(255, 255, 255, .0)); /* Firefox 3.6 - 15 */
+    background: linear-gradient(to top, rgba(255, 255, 255, .5) , rgba(255, 255, 255, .0)); /* 标准的语法 */
+}
+
+.ready_box_in_top .flex_row{
+    margin: 0 20px;
+}
+
+.ready_input{
+    width: 220px;
+    height: 40px;
+    font-size: 14px;
+    border: 0;
+    margin-left: 10px;
+}
+
+.ready_submit{
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 20px;
+    background: #000000;
+    color: #FFFFFF;
+    margin-left: -20px;
 }

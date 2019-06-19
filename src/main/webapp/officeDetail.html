@@ -130,40 +130,92 @@
         document.getElementById("bus_intro").innerHTML
             = buildingNotes.bus_intro;
 
-        utils.setImage(document.getElementById("building_img"), building.img_list);
+        // utils.setImage(document.getElementById("building_img"), building.img_list);
 
-        document.getElementById("bottom_building_name").innerHTML
+        document.getElementById("building_info").innerHTML
             = building.name;
 
-        document.getElementById("building_introduce").innerHTML
+        document.getElementById("building_detail_info").innerHTML
             = building.introduce;
 
         let imageListBox = document.getElementById("top_image_list");
         let img_list = utils.getImg_list(office);
+
+        img_list.push(img_list[0]);
+
+
         for (let img of img_list) {
             let itemBox = document.createElement("div");
             itemBox.setAttribute("class", "swiper-slide");
-            imageListBox.appendChild(itemBox);
             let itemImg = document.createElement("img");
             itemImg.setAttribute("class", "top_info_image");
             itemImg.setAttribute("src", img);
             itemBox.appendChild(itemImg);
+            imageListBox.appendChild(itemBox);
+        }
+        if (img_list.length > 1) {
+            let indicator = document.getElementById("top_info_page");
+            for (let img of img_list) {
+                let itemBox = document.createElement("div");
+                itemBox.setAttribute("class", "swiper-slide");
+                let itemImg = document.createElement("img");
+                itemImg.setAttribute("class", "top_info_image_indicator");
+                itemImg.setAttribute("src", img);
+                itemBox.appendChild(itemImg);
+                let itemBoxClone = itemBox.cloneNode(true);
+                indicator.appendChild(itemBoxClone);
+            }
         }
         startSwiper();
     }
 
+
+    let swiperTopInfo;
+    let indicator;
+
     function startSwiper() {
-        new Swiper('#swiper_top_info', {
-            loop: true,
+        swiperTopInfo = new Swiper('#swiper_top_info', {
             autoplay: 2000,
             pagination: '.swiper_position',
+            direction: "horizontal",
             paginationClickable: true,
             autoplayDisableOnInteraction: false,
+            grabCursor: true,
+            onSlideChangeStart: function () {
+                updateNavPosition();
+            }
         });
+        indicator = new Swiper('#swiper_top_info_page', {
+            watchSlidesProgress: true,
+            watchSlidesVisibility: true,
+            slidesPerView: 4,
+            onTap: function () {
+                swiperTopInfo.slideTo(indicator.clickedIndex);
+            }
+        });
+    }
+
+    function updateNavPosition() {
+        $('#swiper_top_info_page .active-nav').removeClass('active-nav')
+        let activeNav = $('#swiper_top_info_page .swiper-slide').eq(swiperTopInfo.activeIndex).addClass('active-nav');
+
+
+        if (!activeNav.hasClass('swiper-slide-visible')) {
+            console.log(1);
+            if (activeNav.index() > swiperTopInfo.activeIndex) {
+                console.log(2);
+                let thumbsPerNav = Math.floor(indicator.width / activeNav.width()) - 1;
+                indicator.slideTo(activeNav.index() - thumbsPerNav)
+            }
+            else {
+                console.log(3);
+                indicator.slideTo(activeNav.index())
+            }
+        }
     }
 </script>
 
-<body class="bg_gray">
+<body>
 <div class="title_box">
     <div class="win flex_row position_relative">
         <div class="top_logo"></div>
@@ -202,10 +254,17 @@
     <div class="detail_info_name" id="detail_info_name">
     </div>
     <div class="top_info flex_row">
-        <div class="swiper-container swiper_top_info" id="swiper_top_info">
-            <div class="swiper-wrapper" id="top_image_list">
+        <div>
+            <div class="swiper-container swiper_top_info" id="swiper_top_info">
+                <div class="swiper-wrapper" id="top_image_list">
+                </div>
+                <div class="swiper_position swiper_top"></div>
             </div>
-            <div class="swiper_position swiper_top"></div>
+            <div class="swiper-container" id="swiper_top_info_page">
+                <div class="swiper-wrapper top_image_list_indicator" id="top_info_page">
+
+                </div>
+            </div>
         </div>
         <div class="detail_info_box flex_column">
             <div class="detail_info_price_box">
@@ -236,27 +295,46 @@
             <div class="page_info_more mini_line_height flex_row">
                 地铁：<span id="metro_name_list"></span>
             </div>
-            <div class="page_info_service flex_row">
-                <div class="page_info_service_right flex_column">
-                    <div class="page_info_service_name">
-                        <span>同普大厦写字楼出租</span> 专属顾问
+            <div class="page_info_service flex_column_left">
+                <div class="orange_color">楼盘介绍——<span id="building_info"></span></div>
+                <div class="building_detail_info" id="building_detail_info"></div>
+                <!--<div class="page_info_service_right flex_column">-->
+                <!--<div class="page_info_service_name">-->
+                <!--<span>同普大厦写字楼出租</span> 专属顾问-->
+                <!--</div>-->
+                <!--<div class="page_info_service_btn_box flex_row">-->
+                <!--<div class="page_info_service_btn">-->
+                <!--咨询热线-->
+                <!--</div>-->
+                <!--<div class="page_info_service_phone">-->
+                <!--021 - 5090 6123-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+            </div>
+
+            <form class="phone_box">
+                <div class="flex_row_left">
+                    <div>
+                        <div class="phone_title">联系方式</div>
+                        <input type="text" class="phone_input"/>
                     </div>
-                    <div class="page_info_service_btn_box flex_row">
-                        <div class="page_info_service_btn">
-                            咨询热线
-                        </div>
-                        <div class="page_info_service_phone">
-                            021 - 5090 6123
-                        </div>
+                    <div>
+                        <div class="phone_title">称呼</div>
+                        <input type="text" class="phone_input"/>
+                    </div>
+                    <div>
+                        <div class="phone_title"></div>
+                        <input type="button" class="phone_btn" value="确定"/>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
 
 <div class="content_box matop win flex_row">
-    <div class="content_left">
+    <div class="content_left win">
         <div class="bg_white left_item matop">
             <h3 class="sec_title">概况</h3>
             <div class="data_list">
@@ -362,42 +440,42 @@
                 </div>
             </div>
         </div>
-        <div class="introduction_estate_box bg_white left_item matop">
-            <h3 class="sec_title">楼盘介绍</h3>
-            <div class="flex_row matop">
-                <img src="" class="introduction_estate_img" id="building_img" alt=""/>
-                <div class="flex_column introduction_estate_info_box">
-                    <div class="introduction_estate_name clickable" id="bottom_building_name">
-                    </div>
-                    <div class="introduction_estate_info" id="building_introduce">
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!--<div class="introduction_estate_box bg_white left_item matop">-->
+        <!--<h3 class="sec_title">楼盘介绍</h3>-->
+        <!--<div class="flex_row matop">-->
+        <!--<img src="" class="introduction_estate_img" id="building_img" alt=""/>-->
+        <!--<div class="flex_column introduction_estate_info_box">-->
+        <!--<div class="introduction_estate_name clickable" id="bottom_building_name">-->
+        <!--</div>-->
+        <!--<div class="introduction_estate_info" id="building_introduce">-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
     </div>
 
-    <div class="content_right bg_white">
-        <div class="contact_way">
-            <div class="service_phone flex_row">
-                <div class="icon_phone"></div>
-                <div class="service_phone_text">
-                    021 - 5090 6123
-                </div>
-            </div>
-            <div class="ready_see">
-                预约看房
-            </div>
-            <input class="ready_phone" type="text" name="ready_phone" id="ready_phone" value="" placeholder="请输入手机号"/>
-            <div class="contact_info">
-                <div class="ready_see btn">
-                    预约看房
-                </div>
-            </div>
-            <div class="content_right_title">
-                <img src="" class="content_right_title_img" alt=""/>热门楼盘
-            </div>
-        </div>
-    </div>
+    <!--<div class="content_right bg_white">-->
+    <!--<div class="contact_way">-->
+    <!--<div class="service_phone flex_row">-->
+    <!--<div class="icon_phone"></div>-->
+    <!--<div class="service_phone_text">-->
+    <!--021 - 5090 6123-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="ready_see">-->
+    <!--预约看房-->
+    <!--</div>-->
+    <!--<input class="ready_phone" type="text" name="ready_phone" id="ready_phone" value="" placeholder="请输入手机号"/>-->
+    <!--<div class="contact_info">-->
+    <!--<div class="ready_see btn">-->
+    <!--预约看房-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="content_right_title">-->
+    <!--<img src="" class="content_right_title_img" alt=""/>热门楼盘-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
 </div>
 
 <div class="bottom_box flex_column_left">

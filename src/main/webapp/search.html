@@ -74,7 +74,7 @@
         let toBottomHeight = 90;
         if (window.scrollY <= (fixedTop - 100)) {
             fixedView.setAttribute("class", "content_right bg_white");
-        } else if (bottomBox.getBoundingClientRect().top <= 100 + toBottomHeight + fixedView.getBoundingClientRect().height) {
+        } else if (bottomBox.getBoundingClientRect().top < 100 + toBottomHeight + fixedView.getBoundingClientRect().height) {
             fixedView.setAttribute("class", "content_right bg_white position_fixed_bottom");
             fixedView.style.bottom = (window.innerHeight - bottomBox.getBoundingClientRect().top + toBottomHeight) + "px";
         } else {

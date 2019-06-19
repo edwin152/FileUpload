@@ -358,6 +358,56 @@
 <div class="title_box">
     <div class="win flex_row position_relative">
         <div class="top_logo"></div>
+
+        <div class="city-pull-down fl city-pull-down-border">
+            <span class="city-pull-down-bg inline-block">
+                <i class="txt">上海</i>
+                <i class="iconfont city-toggle-icon">&#xe625;</i>
+            </span>
+            <div class="city-select">
+                <div class="header-current-city">
+                    上海 <i class="iconfont city-toggle-icon">&#xe625;</i>
+                </div>
+                <div class="clearfix header-city-box">
+                    <div class="header-tips">热门城市</div>
+                    <div class="header-city-list clearfix">
+                        <a href="//sh.diandianzu.com/" class="fl header-city-item header-city-item-selected">上海</a>
+                        <a href="//gz.diandianzu.com/" class="fl header-city-item ">广州</a>
+                        <a href="//sz.diandianzu.com/" class="fl header-city-item ">深圳</a>
+                        <a href="//hz.diandianzu.com/" class="fl header-city-item ">杭州</a>
+                        <a href="//xa.diandianzu.com/" class="fl header-city-item ">西安</a>
+                    </div>
+                    <div class="header-split-line"></div>
+                    <div class="header-tips">其它城市</div>
+                    <div class="header-city-list clearfix">
+                        <a href="//bj.diandianzu.com/" class="fl header-city-item  ">北京</a>
+                        <a href="//su.diandianzu.com/" class="fl header-city-item  ">苏州</a>
+                        <a href="//nj.diandianzu.com/" class="fl header-city-item  ">南京</a>
+                        <a href="//nb.diandianzu.com/" class="fl header-city-item  ">宁波</a>
+                        <a href="//hf.diandianzu.com/" class="fl header-city-item  header-margin-auto">合肥</a>
+                        <a href="//cd.diandianzu.com/" class="fl header-city-item  ">成都</a>
+                        <a href="//london.diandianzu.com/" class="fl header-city-item  ">伦敦</a>
+                    </div>
+                    <div class="header-city-box-footer"></div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(".city-pull-down").click(function (event) {
+                $('.city-pull-down .arrow-icon').toggle();
+                $(".city-pull-down .city-select").stop(true).slideToggle();
+            });
+            // 鼠标移出隐藏 TODO
+            // $(".city-pull-down .city-select").hover(null, function(){
+            //     setTimeout(function(){
+            //         if ($(".city-pull-down .city-select").is(":visible")){
+            //             $(".city-pull-down .city-select").stop(true).slideToggle();
+            //         }
+            //     }, 300);
+            // })
+        </script>
+
         <div class="position_right">
             <div class="title_text_right">
                 <a href="index.html" class="clickable">首页</a>
