@@ -8,164 +8,9 @@
     <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
-<!-- 美洽客服 -->
-<script title="text/javascript">
-    'use strict';
-
-    (function (m, ei, q, i, a, j, s) {
-        m[i] = m[i] || function () {
-            (m[i].a = m[i].a || []).push(arguments)
-        };
-        j = ei.createElement(q);
-        s = ei.getElementsByTagName(q)[0];
-        j.async = true;
-        j.charset = 'UTF-8';
-        j.src = 'https://static.meiqia.com/dist/meiqia.js?=_t';
-        s.parentNode.insertBefore(j, s);
-    })(window, document, 'script', '_MEIQIA');
-    _MEIQIA('entId', 51778);
-</script>
-
 <script type="text/javascript">
     'use strict';
-
-    let filter = {};
-    window.onload = function () {
-
-        getFilterList();
-        getHotList();
-        let request = window.location.search;
-        let newsId = http.getParameter(request, "news_id");
-        getNewsDetail(newsId);
-    };
-
-    function getFilterList() {
-        http.post({
-            url: "filter/newsTag",
-            params: {
-                news_tag_id: filter.checkedNewsTagId
-            },
-            success: function (data) {
-                filter = data;
-                setNewsType(data.newsTagList);
-            }
-        })
-    }
-
-    function getNewsDetail(id) {
-
-        http.post({
-            url: "news/news",
-            params: {
-                id: id,
-            },
-            success: function (data) {
-                setNewsContent(data);
-            }
-        });
-    }
-
-    /**
-     * 设置类型
-     * @param typeList
-     */
-    function setNewsType(typeList) {
-        if (typeList == null) return;
-        let newTypeBox = document.getElementById("news_type");
-        for (let i = 0, len = typeList.length; i < len; i++) {
-            let typeItem = document.createElement("div");
-            typeItem.setAttribute("class", "link");
-            typeItem.onclick = function () {
-                window.location.href = "news.html?news_tag_id=" + typeList[i].id;
-            };
-            typeItem.innerHTML = typeList[i].name;
-            newTypeBox.appendChild(typeItem);
-        }
-    }
-
-    function setNewsContent(newsBean) {
-        let newsTitle = document.getElementById("news_detail_title");
-        newsTitle.innerHTML = newsBean.title;
-        let newsTime = document.getElementById("news_time");
-        newsTime.innerHTML = newsBean.last_edit_time;
-        let newsContent = document.getElementById("news_content");
-        newsContent.innerHTML = newsBean.content;
-
-        let notesStr = newsBean.notes;
-        if (notesStr) {
-            let notes = JSON.parse(notesStr);
-            let keywordListStr = notes.keyword_list;
-            if (keywordListStr) {
-                let keywordList = JSON.parse(keywordListStr);
-                if (keywordList) {
-                    let newsKeyword = document.getElementById("news_keyword");
-                    for (let i = 0, len = keywordList.length; i < len; i++) {
-                        let newKey = document.createElement("span");
-                        newKey.className = "keyword_item";
-                        newKey.innerHTML = keywordList[i];
-                        newsKeyword.appendChild(newKey);
-                    }
-                }
-            }
-        }
-    }
-
-    function getHotList() {
-        http.post({
-            url: "news/hot",
-            success: function (data) {
-                setHeatNews(data);
-            }
-        })
-    }
-
-    /**
-     * 设置资讯
-     * @param heatNewsList
-     */
-    function setHeatNews(heatNewsList) {
-        if (heatNewsList == null) return;
-        let ListBox = document.getElementById("right_heat_news");
-        for (let i = 0, len = heatNewsList.length; i < len; i++) {
-            let itemBox = document.createElement("div");
-            itemBox.className = "right_heat_news_item";
-
-            let imgListStr = heatNewsList[i].img_list;
-            let imgList = JSON.parse(imgListStr);
-            let itemImg = document.createElement("img");
-            itemImg.className = "right_heat_news_img";
-            if (imgList && imgList.length > 0) {
-                utils.setImageSrc(itemImg, imgList[0]);
-            } else {
-                utils.setImageSrc(itemImg, null);
-            }
-            itemBox.appendChild(itemImg);
-
-            let itemInfo = document.createElement("div");
-            itemInfo.className = "right_heat_news flex_column_left";
-
-            let itemTitle = document.createElement("div");
-            itemTitle.className = "right_heat_news_title";
-            itemTitle.innerHTML = heatNewsList[i].title;
-            itemTitle.onclick = function () {
-                window.open("newsDetail.html?news_id=" + heatNewsList[i].id);
-            };
-            itemInfo.appendChild(itemTitle);
-
-            let itemTime = document.createElement("div");
-            itemTime.className = "right_heat_news_time";
-            itemTime.innerHTML = heatNewsList[i].last_edit_time;
-            itemInfo.appendChild(itemTime);
-
-            if (i === len - 1) {
-                itemBox.setAttribute("style", "border: none;");
-            }
-
-            itemBox.appendChild(itemInfo);
-            ListBox.appendChild(itemBox);
-        }
-    }
-
+    setCity();
 </script>
 
 <body>
@@ -305,4 +150,163 @@
     </div>
 </div>
 </body>
+
+<!-- 美洽客服 -->
+<script title="text/javascript">
+    'use strict';
+
+    (function (m, ei, q, i, a, j, s) {
+        m[i] = m[i] || function () {
+            (m[i].a = m[i].a || []).push(arguments)
+        };
+        j = ei.createElement(q);
+        s = ei.getElementsByTagName(q)[0];
+        j.async = true;
+        j.charset = 'UTF-8';
+        j.src = 'https://static.meiqia.com/dist/meiqia.js?=_t';
+        s.parentNode.insertBefore(j, s);
+    })(window, document, 'script', '_MEIQIA');
+    _MEIQIA('entId', 51778);
+</script>
+
+<script type="text/javascript">
+    'use strict';
+
+    let filter = {};
+    window.onload = function () {
+        getFilterList();
+        getHotList();
+        let request = window.location.search;
+        let newsId = http.getParameter(request, "news_id");
+        getNewsDetail(newsId);
+    };
+
+    function getFilterList() {
+        http.post({
+            url: "filter/newsTag",
+            params: {
+                news_tag_id: filter.checkedNewsTagId
+            },
+            success: function (data) {
+                filter = data;
+                setNewsType(data.newsTagList);
+            }
+        })
+    }
+
+    function getNewsDetail(id) {
+
+        http.post({
+            url: "news/news",
+            params: {
+                id: id,
+            },
+            success: function (data) {
+                setNewsContent(data);
+            }
+        });
+    }
+
+    /**
+     * 设置类型
+     * @param typeList
+     */
+    function setNewsType(typeList) {
+        if (typeList == null) return;
+        let newTypeBox = document.getElementById("news_type");
+        for (let i = 0, len = typeList.length; i < len; i++) {
+            let typeItem = document.createElement("div");
+            typeItem.setAttribute("class", "link");
+            typeItem.onclick = function () {
+                window.location.href = "news.html?news_tag_id=" + typeList[i].id;
+            };
+            typeItem.innerHTML = typeList[i].name;
+            newTypeBox.appendChild(typeItem);
+        }
+    }
+
+    function setNewsContent(newsBean) {
+        let newsTitle = document.getElementById("news_detail_title");
+        newsTitle.innerHTML = newsBean.title;
+        let newsTime = document.getElementById("news_time");
+        newsTime.innerHTML = newsBean.last_edit_time;
+        let newsContent = document.getElementById("news_content");
+        newsContent.innerHTML = newsBean.content;
+
+        let notesStr = newsBean.notes;
+        if (notesStr) {
+            let notes = JSON.parse(notesStr);
+            let keywordListStr = notes.keyword_list;
+            if (keywordListStr) {
+                let keywordList = JSON.parse(keywordListStr);
+                if (keywordList) {
+                    let newsKeyword = document.getElementById("news_keyword");
+                    for (let i = 0, len = keywordList.length; i < len; i++) {
+                        let newKey = document.createElement("span");
+                        newKey.className = "keyword_item";
+                        newKey.innerHTML = keywordList[i];
+                        newsKeyword.appendChild(newKey);
+                    }
+                }
+            }
+        }
+    }
+
+    function getHotList() {
+        http.post({
+            url: "news/hot",
+            success: function (data) {
+                setHeatNews(data);
+            }
+        })
+    }
+
+    /**
+     * 设置资讯
+     * @param heatNewsList
+     */
+    function setHeatNews(heatNewsList) {
+        if (heatNewsList == null) return;
+        let ListBox = document.getElementById("right_heat_news");
+        for (let i = 0, len = heatNewsList.length; i < len; i++) {
+            let itemBox = document.createElement("div");
+            itemBox.className = "right_heat_news_item";
+
+            let imgListStr = heatNewsList[i].img_list;
+            let imgList = JSON.parse(imgListStr);
+            let itemImg = document.createElement("img");
+            itemImg.className = "right_heat_news_img";
+            if (imgList && imgList.length > 0) {
+                utils.setImageSrc(itemImg, imgList[0]);
+            } else {
+                utils.setImageSrc(itemImg, null);
+            }
+            itemBox.appendChild(itemImg);
+
+            let itemInfo = document.createElement("div");
+            itemInfo.className = "right_heat_news flex_column_left";
+
+            let itemTitle = document.createElement("div");
+            itemTitle.className = "right_heat_news_title";
+            itemTitle.innerHTML = heatNewsList[i].title;
+            itemTitle.onclick = function () {
+                window.open("newsDetail.html?news_id=" + heatNewsList[i].id);
+            };
+            itemInfo.appendChild(itemTitle);
+
+            let itemTime = document.createElement("div");
+            itemTime.className = "right_heat_news_time";
+            itemTime.innerHTML = heatNewsList[i].last_edit_time;
+            itemInfo.appendChild(itemTime);
+
+            if (i === len - 1) {
+                itemBox.setAttribute("style", "border: none;");
+            }
+
+            itemBox.appendChild(itemInfo);
+            ListBox.appendChild(itemBox);
+        }
+    }
+
+</script>
 </html>

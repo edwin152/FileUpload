@@ -92,6 +92,22 @@ public class Building {
         this.img_list = img_list;
     }
 
+    public Date getEdit_time() {
+        return edit_time;
+    }
+
+    public void setEdit_time(Date edit_time) {
+        this.edit_time = edit_time;
+    }
+
+    public Boolean getHot() {
+        return hot;
+    }
+
+    public void setHot(Boolean hot) {
+        this.hot = hot;
+    }
+
     public Boolean isValid() {
         return valid;
     }

@@ -12,211 +12,9 @@
     <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
-<!-- 美洽客服 -->
-<script title="text/javascript">
-    'use strict';
-
-    (function (m, ei, q, i, a, j, s) {
-        m[i] = m[i] || function () {
-            (m[i].a = m[i].a || []).push(arguments)
-        };
-        j = ei.createElement(q);
-        s = ei.getElementsByTagName(q)[0];
-        j.async = true;
-        j.charset = 'UTF-8';
-        j.src = 'https://static.meiqia.com/dist/meiqia.js?=_t';
-        s.parentNode.insertBefore(j, s);
-    })(window, document, 'script', '_MEIQIA');
-    _MEIQIA('entId', 51778);
-</script>
-
 <script type="text/javascript">
     'use strict';
-
-    let office_id;
-
-    window.onload = function () {
-        let request = window.location.search;
-        office_id = http.getParameter(request, "office_id");
-        office_id = parseInt(office_id);
-        getOffice();
-    };
-
-    function getOffice() {
-        http.post({
-            url: "search/office",
-            params: {
-                id: office_id,
-            },
-            success: function (data, city) {
-                setTag(city, data.building.name, data.office.area);
-
-                setOffice(data);
-            }
-        });
-    }
-
-    function setOffice(data) {
-        let office = data.office;
-        let building = data.building;
-        let officeNotes = JSON.parse(office.notes);
-        let buildingNotes = JSON.parse(building.notes);
-
-        document.getElementById("detail_info_name").innerHTML
-            = office.source_info;
-
-        document.getElementById("total_price").innerHTML
-            = office.total_price;
-
-        document.getElementById("price").innerHTML
-            = office.price;
-
-        document.getElementById("area").innerHTML
-            = office.area + "m²";
-
-        document.getElementById("workplace_accommodation").innerHTML
-            = office.workplace_accommodation + "个";
-
-        document.getElementById("decoration").innerHTML
-            = office.decoration_name;
-
-        document.getElementById("utilization_rate").innerHTML
-            = office.utilization_rate * 100 + "%";
-
-        document.getElementById("free_rent_period").innerHTML
-            = office.rent_free_period;
-
-        document.getElementById("can_register").innerHTML
-            = office.can_register ? "是" : "否";
-
-        document.getElementById("building_name").innerHTML
-            = building.name;
-
-        document.getElementById("metro_name_list").innerHTML
-            = building.metro_name_list;
-
-        document.getElementById("bottom_area").innerHTML
-            = "面积" + office.area + "m²";
-
-        document.getElementById("bottom_utilization_rate").innerHTML
-            = office.utilization_rate * 100
-            + "%，可容纳工位" + office.workplace_accommodation + "个";
-
-        document.getElementById("bottom_can_register").innerHTML
-            = office.can_register ? "是" : "否";
-
-        document.getElementById("price_advantage").innerHTML
-            = office.price + "元/m²/天" +
-            "，约" + office.total_price + "元/月" +
-            "，" + officeNotes.rent_payment;
-
-        document.getElementById("bottom_decoration").innerHTML
-            = office.decoration_name;
-
-        document.getElementById("bottom_free_rent_period").innerHTML
-            = office.rent_free_period;
-
-        document.getElementById("visit_time").innerHTML
-            = officeNotes.visit_time;
-
-        document.getElementById("earliest_rent").innerHTML
-            = officeNotes.earliest_rent;
-
-        document.getElementById("shortest_period").innerHTML
-            = officeNotes.shortest_period;
-
-        document.getElementById("floor_info").innerHTML
-            = officeNotes.floor_info;
-
-        document.getElementById("metro_intro").innerHTML
-            = buildingNotes.metro_intro;
-
-        document.getElementById("bus_intro").innerHTML
-            = buildingNotes.bus_intro;
-
-        // utils.setImage(document.getElementById("building_img"), building.img_list);
-
-        document.getElementById("building_info").innerHTML
-            = building.name;
-
-        document.getElementById("building_detail_info").innerHTML
-            = building.introduce;
-
-        let imageListBox = document.getElementById("top_image_list");
-        let img_list = utils.getImg_list(office);
-
-        img_list.push(img_list[0]);
-
-
-        for (let img of img_list) {
-            let itemBox = document.createElement("div");
-            itemBox.setAttribute("class", "swiper-slide");
-            let itemImg = document.createElement("img");
-            itemImg.setAttribute("class", "top_info_image");
-            itemImg.setAttribute("src", img);
-            itemBox.appendChild(itemImg);
-            imageListBox.appendChild(itemBox);
-        }
-        if (img_list.length > 1) {
-            let indicator = document.getElementById("top_info_page");
-            for (let img of img_list) {
-                let itemBox = document.createElement("div");
-                itemBox.setAttribute("class", "swiper-slide");
-                let itemImg = document.createElement("img");
-                itemImg.setAttribute("class", "top_info_image_indicator");
-                itemImg.setAttribute("src", img);
-                itemBox.appendChild(itemImg);
-                let itemBoxClone = itemBox.cloneNode(true);
-                indicator.appendChild(itemBoxClone);
-            }
-        }
-        startSwiper();
-    }
-
-
-    let swiperTopInfo;
-    let indicator;
-
-    function startSwiper() {
-        swiperTopInfo = new Swiper('#swiper_top_info', {
-            autoplay: 2000,
-            pagination: '.swiper_position',
-            direction: "horizontal",
-            paginationClickable: true,
-            autoplayDisableOnInteraction: false,
-            grabCursor: true,
-            onSlideChangeStart: function () {
-                updateNavPosition();
-            }
-        });
-        indicator = new Swiper('#swiper_top_info_page', {
-            watchSlidesProgress: true,
-            watchSlidesVisibility: true,
-            slidesPerView: 4,
-            onTap: function () {
-                swiperTopInfo.slideTo(indicator.clickedIndex);
-            }
-        });
-    }
-
-    function updateNavPosition() {
-        $('#swiper_top_info_page .active-nav').removeClass('active-nav')
-        let activeNav = $('#swiper_top_info_page .swiper-slide').eq(swiperTopInfo.activeIndex).addClass('active-nav');
-
-
-        if (!activeNav.hasClass('swiper-slide-visible')) {
-            console.log(1);
-            if (activeNav.index() > swiperTopInfo.activeIndex) {
-                console.log(2);
-                let thumbsPerNav = Math.floor(indicator.width / activeNav.width()) - 1;
-                indicator.slideTo(activeNav.index() - thumbsPerNav)
-            }
-            else {
-                console.log(3);
-                indicator.slideTo(activeNav.index())
-            }
-        }
-    }
+    setCity();
 </script>
 
 <body>
@@ -538,4 +336,211 @@
     </div>
 </div>
 </body>
+
+<!-- 美洽客服 -->
+<script title="text/javascript">
+    'use strict';
+
+    (function (m, ei, q, i, a, j, s) {
+        m[i] = m[i] || function () {
+            (m[i].a = m[i].a || []).push(arguments)
+        };
+        j = ei.createElement(q);
+        s = ei.getElementsByTagName(q)[0];
+        j.async = true;
+        j.charset = 'UTF-8';
+        j.src = 'https://static.meiqia.com/dist/meiqia.js?=_t';
+        s.parentNode.insertBefore(j, s);
+    })(window, document, 'script', '_MEIQIA');
+    _MEIQIA('entId', 51778);
+</script>
+
+<script type="text/javascript">
+    'use strict';
+
+    let office_id;
+    let swiperTopInfo;
+    let indicator;
+
+    window.onload = function () {
+        let request = window.location.search;
+        office_id = http.getParameter(request, "office_id");
+        office_id = parseInt(office_id);
+        getOffice();
+    };
+
+    function getOffice() {
+        http.post({
+            url: "search/office",
+            params: {
+                id: office_id,
+            },
+            success: function (data) {
+                setBuilding(data.building.name);
+                setArea(data.office.area);
+
+                setOffice(data);
+            }
+        });
+    }
+
+    function setOffice(data) {
+        let office = data.office;
+        let building = data.building;
+        let officeNotes = JSON.parse(office.notes);
+        let buildingNotes = JSON.parse(building.notes);
+
+        document.getElementById("detail_info_name").innerHTML
+            = office.source_info;
+
+        document.getElementById("total_price").innerHTML
+            = office.total_price;
+
+        document.getElementById("price").innerHTML
+            = office.price;
+
+        document.getElementById("area").innerHTML
+            = office.area + "m²";
+
+        document.getElementById("workplace_accommodation").innerHTML
+            = office.workplace_accommodation + "个";
+
+        document.getElementById("decoration").innerHTML
+            = office.decoration_name;
+
+        document.getElementById("utilization_rate").innerHTML
+            = office.utilization_rate * 100 + "%";
+
+        document.getElementById("free_rent_period").innerHTML
+            = office.rent_free_period;
+
+        document.getElementById("can_register").innerHTML
+            = office.can_register ? "是" : "否";
+
+        document.getElementById("building_name").innerHTML
+            = building.name;
+
+        document.getElementById("metro_name_list").innerHTML
+            = building.metro_name_list;
+
+        document.getElementById("bottom_area").innerHTML
+            = "面积" + office.area + "m²";
+
+        document.getElementById("bottom_utilization_rate").innerHTML
+            = office.utilization_rate * 100
+            + "%，可容纳工位" + office.workplace_accommodation + "个";
+
+        document.getElementById("bottom_can_register").innerHTML
+            = office.can_register ? "是" : "否";
+
+        document.getElementById("price_advantage").innerHTML
+            = office.price + "元/m²/天" +
+            "，约" + office.total_price + "元/月" +
+            "，" + officeNotes.rent_payment;
+
+        document.getElementById("bottom_decoration").innerHTML
+            = office.decoration_name;
+
+        document.getElementById("bottom_free_rent_period").innerHTML
+            = office.rent_free_period;
+
+        document.getElementById("visit_time").innerHTML
+            = officeNotes.visit_time;
+
+        document.getElementById("earliest_rent").innerHTML
+            = officeNotes.earliest_rent;
+
+        document.getElementById("shortest_period").innerHTML
+            = officeNotes.shortest_period;
+
+        document.getElementById("floor_info").innerHTML
+            = officeNotes.floor_info;
+
+        document.getElementById("metro_intro").innerHTML
+            = buildingNotes.metro_intro;
+
+        document.getElementById("bus_intro").innerHTML
+            = buildingNotes.bus_intro;
+
+        // utils.setImage(document.getElementById("building_img"), building.img_list, building.name);
+
+        document.getElementById("building_info").innerHTML
+            = building.name;
+
+        document.getElementById("building_detail_info").innerHTML
+            = building.introduce;
+
+        let imageListBox = document.getElementById("top_image_list");
+        let img_list = utils.getImg_list(office);
+
+        img_list.push(img_list[0]);
+
+
+        for (let img of img_list) {
+            let itemBox = document.createElement("div");
+            itemBox.setAttribute("class", "swiper-slide");
+            let itemImg = document.createElement("img");
+            itemImg.setAttribute("class", "top_info_image");
+            itemImg.setAttribute("src", img);
+            itemBox.appendChild(itemImg);
+            imageListBox.appendChild(itemBox);
+        }
+        if (img_list.length > 1) {
+            let indicator = document.getElementById("top_info_page");
+            for (let img of img_list) {
+                let itemBox = document.createElement("div");
+                itemBox.setAttribute("class", "swiper-slide");
+                let itemImg = document.createElement("img");
+                itemImg.setAttribute("class", "top_info_image_indicator");
+                itemImg.setAttribute("src", img);
+                itemImg.setAttribute("alt", building.name);
+                itemBox.appendChild(itemImg);
+                let itemBoxClone = itemBox.cloneNode(true);
+                indicator.appendChild(itemBoxClone);
+            }
+        }
+        startSwiper();
+    }
+
+    function startSwiper() {
+        swiperTopInfo = new Swiper('#swiper_top_info', {
+            autoplay: 2000,
+            pagination: '.swiper_position',
+            direction: "horizontal",
+            paginationClickable: true,
+            autoplayDisableOnInteraction: false,
+            grabCursor: true,
+            onSlideChangeStart: function () {
+                updateNavPosition();
+            }
+        });
+        indicator = new Swiper('#swiper_top_info_page', {
+            watchSlidesProgress: true,
+            watchSlidesVisibility: true,
+            slidesPerView: 4,
+            onTap: function () {
+                swiperTopInfo.slideTo(indicator.clickedIndex);
+            }
+        });
+    }
+
+    function updateNavPosition() {
+        $('#swiper_top_info_page .active-nav').removeClass('active-nav')
+        let activeNav = $('#swiper_top_info_page .swiper-slide').eq(swiperTopInfo.activeIndex).addClass('active-nav');
+
+
+        if (!activeNav.hasClass('swiper-slide-visible')) {
+            console.log(1);
+            if (activeNav.index() > swiperTopInfo.activeIndex) {
+                console.log(2);
+                let thumbsPerNav = Math.floor(indicator.width / activeNav.width()) - 1;
+                indicator.slideTo(activeNav.index() - thumbsPerNav)
+            }
+            else {
+                console.log(3);
+                indicator.slideTo(activeNav.index())
+            }
+        }
+    }
+</script>
 </html>

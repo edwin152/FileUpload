@@ -12,6 +12,197 @@
     <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
+<script type="text/javascript">
+    'use strict';
+    setCity();
+</script>
+
+<body>
+<div class="title_box">
+    <div class="win flex_row position_relative">
+        <div class="top_logo"></div>
+
+        <div class="city-pull-down fl city-pull-down-border">
+            <span class="city-pull-down-bg inline-block">
+                <i class="txt">上海</i>
+                <div class="city-toggle-icon"></div>
+            </span>
+            <div class="city-select">
+                <div class="header-current-city">
+                    上海
+                    <div class="city-toggle-icon"></div>
+                </div>
+                <div class="clearfix header-city-box">
+                    <div class="header-tips">城市</div>
+                    <div class="header-city-list clearfix">
+                        <a href="http://www.orangeban.com/bj" class="fl header-city-item ">北京</a>
+                        <a href="http://www.orangeban.com/sh"
+                           class="fl header-city-item header-city-item-selected">上海</a>
+                        <a href="http://www.orangeban.com/hz" class="fl header-city-item ">杭州</a>
+                        <a href="http://www.orangeban.com/nb" class="fl header-city-item ">宁波</a>
+                        <a href="http://www.orangeban.com/nj" class="fl header-city-item ">南京</a>
+                        <a href="http://www.orangeban.com/sz" class="fl header-city-item ">苏州</a>
+                        <a href="http://www.orangeban.com/hf" class="fl header-city-item ">合肥</a>
+                    </div>
+                    <div class="header-city-box-footer"></div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(".city-pull-down").click(function () {
+                $('.city-pull-down .arrow-icon').toggle();
+                $(".city-pull-down .city-select").stop(true).slideToggle();
+            });
+        </script>
+
+        <div class="position_right">
+            <div class="title_text_right">
+                <a href="index.html" class="clickable">首页</a>
+            </div>
+            <div class="title_text_right title_obvious">
+                <a href="search.html" class="clickable">写字楼出租</a>
+            </div>
+            <div class="title_text_right">
+                <a href="search.html?type_id=3" class="clickable">共享办公</a>
+            </div>
+            <div class="title_text_right">
+                <a href="news.html" class="clickable">资讯中心</a>
+            </div>
+            <div class="icon_phone"></div>
+            <div class="title_text_right">
+                <span class="tel_num">4008-700-758</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="matop bg_white">
+    <div class="condition_box flex_column" id="condition_box">
+        <div class="win condition_line gradient_line_50">
+            <div class="win flex_row_left">
+                <div class="condition_title" id="district">
+                    区：
+                </div>
+                <div class="option_box flex_row" id="districtList">
+                </div>
+            </div>
+        </div>
+        <div class="win condition_line gradient_line_55" id="zone" style="display: none;">
+            <div class="win flex_row_left">
+                <div class="condition_title">
+                    区域：
+                </div>
+                <div class="option_box flex_row" id="zoneList">
+                </div>
+            </div>
+        </div>
+        <div class="win condition_line gradient_line_60" id="metro">
+            <div class="win flex_row_left">
+                <div class="condition_title">
+                    地铁：
+                </div>
+                <div class="option_box flex_row" id="metroList">
+                </div>
+            </div>
+        </div>
+        <div class="win condition_line gradient_line_65" id="type">
+            <div class="win flex_row_left">
+                <div class="condition_title">
+                    类型：
+                </div>
+                <div class="option_box flex_row" id="typeList">
+                </div>
+            </div>
+        </div>
+        <div class="win condition_line gradient_line_70" id="areaRange">
+            <div class="win flex_row_left">
+                <div class="condition_title">
+                    面积：
+                </div>
+                <div class="option_box flex_row" id="areaRangeList">
+                </div>
+            </div>
+        </div>
+        <div class="win condition_line gradient_line_75" id="priceRange">
+            <div class="win flex_row_left">
+                <div class="condition_title">
+                    价格：
+                </div>
+                <div class="option_box flex_row" id="priceRangeList">
+                </div>
+            </div>
+        </div>
+        <div class="win condition_line gradient_line_80" id="decoration">
+            <div class="win flex_row_left">
+                <div class="condition_title">
+                    装修：
+                </div>
+                <div class="option_box flex_row" id="decorationList">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content_box matop win flex_row">
+    <div class="content_left bg_white">
+        <div class="error_not_text" id="error_not_text">
+            抱歉，暂无数据！
+        </div>
+
+        <div class="data_list flex_column_left" id="data_list_box">
+            <div class="data_item_box flex_row" id="dataList">
+            </div>
+        </div>
+
+        <div class="page_box" id="page_box">
+        </div>
+    </div>
+    <div class="content_right bg_white" id="position_fixed">
+        <form action="search.html">
+            <div class="right_search_box">
+                <input type="text" id="keyword_input" class="right_search" name="keyword" placeholder="在这里输入您想了解的写字楼"/>
+                <input class="right_search_btn" type="submit" value=" "/>
+            </div>
+        </form>
+
+        <!--        <div class="right_item_box">-->
+        <!--            <div class="right_item_title_red">热门写字楼</div>-->
+        <!--            <div class="flex_column_left" id="right_heat_building">-->
+        <!--            </div>-->
+        <!--        </div>-->
+
+        <div class="right_item_box">
+            <div class="right_item_title_orange">近期资讯</div>
+            <div class="flex_column_left" id="right_heat_news">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bottom_box flex_column_left">
+    <div class="win flex_column_left">
+        <span class="friendly_href_sign">&nbsp;|&nbsp;&nbsp;&nbsp;友情链接</span>
+
+        <div class="friendly_href">
+            <a href="https://sh.diandianzu.com/" target="_blank">上海办公室出租</a>
+            <a href="https://sh.diandianzu.com/" target="_blank">上海办公室出租</a>
+            <a href="https://sh.diandianzu.com/" target="_blank">上海办公室出租</a>
+        </div>
+
+        <div class="foot_logo flex_row">
+            <div class="bottom_logo"></div>
+            <span>&nbsp;&nbsp;&nbsp;办公选址 心想事成！</span>
+        </div>
+
+        <div class="foot_contact_info flex_column_left">
+            <span>24h 400电话：400-8700-758</span>
+        </div>
+    </div>
+</div>
+</body>
+
 <!-- 美洽客服 -->
 <script title="text/javascript">
     'use strict';
@@ -95,8 +286,7 @@
                 price_range_id: filter.checkedPriceRangeId,
                 decoration_id: filter.checkedDecorationId,
             },
-            success: function (data, city) {
-                setTag(city, "", "");
+            success: function (data) {
                 filter = data;
                 getBuildingList();
             }
@@ -221,7 +411,7 @@
 
             let imgLeft = document.createElement("img");
             imgLeft.className = 'item_image clickable';
-            utils.setImage(imgLeft, building.img_list);
+            utils.setImage(imgLeft, building.img_list, building.name);
             imgLeft.onclick = function () {
                 openDetail(building.id);
             };
@@ -426,190 +616,4 @@
         });
     }
 </script>
-
-<body>
-<div class="title_box">
-    <div class="win flex_row position_relative">
-        <div class="top_logo"></div>
-
-        <div class="city-pull-down fl city-pull-down-border">
-            <span class="city-pull-down-bg inline-block">
-                <i class="txt">上海</i>
-                <div class="city-toggle-icon"></div>
-            </span>
-            <div class="city-select">
-                <div class="header-current-city">
-                    上海
-                    <div class="city-toggle-icon"></div>
-                </div>
-                <div class="clearfix header-city-box">
-                    <div class="header-tips">城市</div>
-                    <div class="header-city-list clearfix">
-                        <a href="http://www.orangeban.com/bj" class="fl header-city-item ">北京</a>
-                        <a href="http://www.orangeban.com/sh"
-                           class="fl header-city-item header-city-item-selected">上海</a>
-                        <a href="http://www.orangeban.com/hz" class="fl header-city-item ">杭州</a>
-                        <a href="http://www.orangeban.com/nb" class="fl header-city-item ">宁波</a>
-                        <a href="http://www.orangeban.com/nj" class="fl header-city-item ">南京</a>
-                        <a href="http://www.orangeban.com/sz" class="fl header-city-item ">苏州</a>
-                        <a href="http://www.orangeban.com/hf" class="fl header-city-item ">合肥</a>
-                    </div>
-                    <div class="header-city-box-footer"></div>
-                </div>
-            </div>
-        </div>
-
-        <script>
-            $(".city-pull-down").click(function () {
-                $('.city-pull-down .arrow-icon').toggle();
-                $(".city-pull-down .city-select").stop(true).slideToggle();
-            });
-        </script>
-
-        <div class="position_right">
-            <div class="title_text_right">
-                <a href="index.html" class="clickable">首页</a>
-            </div>
-            <div class="title_text_right title_obvious">
-                <a href="search.html" class="clickable">写字楼出租</a>
-            </div>
-            <div class="title_text_right">
-                <a href="search.html?type_id=3" class="clickable">共享办公</a>
-            </div>
-            <div class="title_text_right">
-                <a href="news.html" class="clickable">资讯中心</a>
-            </div>
-            <div class="icon_phone"></div>
-            <div class="title_text_right">
-                <span class="tel_num">4008-700-758</span>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="matop bg_white">
-    <div class="condition_box flex_column" id="condition_box">
-        <div class="win condition_line gradient_line_50">
-            <div class="win flex_row_left">
-                <div class="condition_title" id="district">
-                    区：
-                </div>
-                <div class="option_box flex_row" id="districtList">
-                </div>
-            </div>
-        </div>
-        <div class="win condition_line gradient_line_55" id="zone" style="display: none;">
-            <div class="win flex_row_left">
-                <div class="condition_title">
-                    区域：
-                </div>
-                <div class="option_box flex_row" id="zoneList">
-                </div>
-            </div>
-        </div>
-        <div class="win condition_line gradient_line_60" id="metro">
-            <div class="win flex_row_left">
-                <div class="condition_title">
-                    地铁：
-                </div>
-                <div class="option_box flex_row" id="metroList">
-                </div>
-            </div>
-        </div>
-        <div class="win condition_line gradient_line_65" id="type">
-            <div class="win flex_row_left">
-                <div class="condition_title">
-                    类型：
-                </div>
-                <div class="option_box flex_row" id="typeList">
-                </div>
-            </div>
-        </div>
-        <div class="win condition_line gradient_line_70" id="areaRange">
-            <div class="win flex_row_left">
-                <div class="condition_title">
-                    面积：
-                </div>
-                <div class="option_box flex_row" id="areaRangeList">
-                </div>
-            </div>
-        </div>
-        <div class="win condition_line gradient_line_75" id="priceRange">
-            <div class="win flex_row_left">
-                <div class="condition_title">
-                    价格：
-                </div>
-                <div class="option_box flex_row" id="priceRangeList">
-                </div>
-            </div>
-        </div>
-        <div class="win condition_line gradient_line_80" id="decoration">
-            <div class="win flex_row_left">
-                <div class="condition_title">
-                    装修：
-                </div>
-                <div class="option_box flex_row" id="decorationList">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="content_box matop win flex_row">
-    <div class="content_left bg_white">
-        <div class="error_not_text" id="error_not_text">
-            抱歉，暂无数据！
-        </div>
-
-        <div class="data_list flex_column_left" id="data_list_box">
-            <div class="data_item_box flex_row" id="dataList">
-            </div>
-        </div>
-
-        <div class="page_box" id="page_box">
-        </div>
-    </div>
-    <div class="content_right bg_white" id="position_fixed">
-        <form action="search.html">
-            <div class="right_search_box">
-                <input type="text" id="keyword_input" class="right_search" name="keyword" placeholder="在这里输入您想了解的写字楼"/>
-                <input class="right_search_btn" type="submit" value=" "/>
-            </div>
-        </form>
-
-        <!--        <div class="right_item_box">-->
-        <!--            <div class="right_item_title_red">热门写字楼</div>-->
-        <!--            <div class="flex_column_left" id="right_heat_building">-->
-        <!--            </div>-->
-        <!--        </div>-->
-
-        <div class="right_item_box">
-            <div class="right_item_title_orange">近期资讯</div>
-            <div class="flex_column_left" id="right_heat_news">
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="bottom_box flex_column_left">
-    <div class="win flex_column_left">
-        <span class="friendly_href_sign">&nbsp;|&nbsp;&nbsp;&nbsp;友情链接</span>
-
-        <div class="friendly_href">
-            <a href="https://sh.diandianzu.com/" target="_blank">上海办公室出租</a>
-            <a href="https://sh.diandianzu.com/" target="_blank">上海办公室出租</a>
-            <a href="https://sh.diandianzu.com/" target="_blank">上海办公室出租</a>
-        </div>
-
-        <div class="foot_logo flex_row">
-            <div class="bottom_logo"></div>
-            <span>&nbsp;&nbsp;&nbsp;办公选址 心想事成！</span>
-        </div>
-
-        <div class="foot_contact_info flex_column_left">
-            <span>24h 400电话：400-8700-758</span>
-        </div>
-    </div>
-</div>
-</body>
 </html>
