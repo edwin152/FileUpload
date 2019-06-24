@@ -18,440 +18,9 @@
     <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
-<!-- 美洽客服 -->
-<script title="text/javascript">
-    'use strict';
-
-    (function (m, ei, q, i, a, j, s) {
-        m[i] = m[i] || function () {
-            (m[i].a = m[i].a || []).push(arguments)
-        };
-        j = ei.createElement(q);
-        s = ei.getElementsByTagName(q)[0];
-        j.async = true;
-        j.charset = 'UTF-8';
-        j.src = 'https://static.meiqia.com/dist/meiqia.js?=_t';
-        s.parentNode.insertBefore(j, s);
-    })(window, document, 'script', '_MEIQIA');
-    _MEIQIA('entId', 51778);
-</script>
-
 <script type="text/javascript">
     'use strict';
-
-    let building_id;
-    let filter = {};
-    let pageIndex = 0;
-    let pageNum = 0;
-
-    window.onload = function () {
-        let request = window.location.search;
-        building_id = http.getParameter(request, "building_id");
-        filter.checkedTypeId = http.getParameter(request, "type_id");
-        filter.checkedAreaRangeId = http.getParameter(request, "area_range_id");
-        filter.checkedPriceRangeId = http.getParameter(request, "price_range_id");
-        filter.checkedDecorationId = http.getParameter(request, "decoration_id");
-        getFilterList();
-        getBuilding();
-        getHotList();
-
-        initMap();
-
-        setFixed();
-    };
-    function setFixed() {
-        let fixedView = document.getElementById("position_fixed");
-        let fixedTop = window.scrollY + fixedView.getBoundingClientRect().y;
-        let fixedLeft = fixedView.getBoundingClientRect().x;
-        fixedView.setAttribute("style", "left: " + fixedLeft + "px;");
-        let bottomBox = document.getElementsByClassName("bottom_box")[0];
-
-        // 解决在页面中部时刷新页面浮动问题
-        setFixedPosition(bottomBox, fixedView, fixedTop);
-        window.onscroll = function () {
-            setFixedPosition(bottomBox, fixedView, fixedTop);
-        }
-    }
-
-    function setFixedPosition(bottomBox, fixedView, fixedTop) {
-        let toBottomHeight = 5;
-        if (window.scrollY <= (fixedTop - 100)) {
-            fixedView.setAttribute("class", "content_right bg_white");
-        } else if (bottomBox.getBoundingClientRect().top < 100 + toBottomHeight + fixedView.getBoundingClientRect().height) {
-            fixedView.setAttribute("class", "content_right bg_white position_fixed_bottom");
-            fixedView.style.bottom = (window.innerHeight - bottomBox.getBoundingClientRect().top + toBottomHeight) + "px";
-        } else {
-            fixedView.setAttribute("class", "content_right bg_white position_fixed");
-        }
-    }
-
-
-    function getFilterList() {
-        http.post({
-            url: "filter/office",
-            params: {
-                building_id: building_id,
-                type_id: filter.checkedTypeId,
-                area_range_id: filter.checkedAreaRangeId,
-                price_range_id: filter.checkedPriceRangeId,
-                decoration_id: filter.checkedDecorationId,
-            },
-            success: function (data) {
-                filter = data;
-                getOfficeList();
-            }
-        });
-    }
-
-    function getBuilding() {
-        http.post({
-            url: "search/building",
-            params: {
-                id: building_id,
-            },
-            success: function (data, city) {
-                setTag(city, data.name, "");
-
-                setTopInfo(data);
-                setBottomInfo(data);
-                let notes = JSON.parse(data.notes);
-                if (notes && notes.map) {
-                    setMarkers(notes.map);
-                }
-            }
-        });
-    }
-
-    function getOfficeList(page) {
-        http.post({
-            url: "search/offices",
-            params: {
-                building_id: building_id,
-                type_id: filter.checkedTypeId,
-                area_range_id: filter.checkedAreaRangeId,
-                price_range_id: filter.checkedPriceRangeId,
-                decoration_id: filter.checkedDecorationId,
-                page: page,
-            },
-            success: function (data) {
-                filter.checkedTypeId = data.checkedTypeId;
-                filter.checkedAreaRangeId = data.checkedAreaRangeId;
-                filter.checkedPriceRangeId = data.checkedPriceRangeId;
-                filter.checkedDecorationId = data.checkedDecorationId;
-                setFilterList();
-                pageIndex = data.pageIndex;
-                pageNum = data.pageNum;
-                setOfficeList(data.officeList);
-                loadPageUtil(pageNum * 10);
-            }
-        });
-    }
-
-    function setFilterList() {
-        if (!filter) {
-            return;
-        }
-        setFilterListByName(filter.typeList, 'typeList', filter.checkedTypeId);
-        setFilterListByName(filter.areaRangeList, 'areaRangeList', filter.checkedAreaRangeId);
-        setFilterListByName(filter.priceRangeList, 'priceRangeList', filter.checkedPriceRangeId);
-        setFilterListByName(filter.decorationList, 'decorationList', filter.checkedDecorationId);
-    }
-
-    function setFilterListByName(list, name, checkedId) {
-        if (!list || list.length <= 2) {
-            $("#" + name.substr(0, name.length - 4)).hide();
-        } else {
-            $("#" + name.substr(0, name.length - 4)).show();
-        }
-        let conditionBox = document.getElementById(name);
-        conditionBox.innerHTML = "";
-        for (let i = 0; list && i < list.length; i++) {
-            let optionItem = document.createElement("span");
-            if (list[i].id === checkedId) {
-                optionItem.className = 'condition_option_select';
-            } else {
-                optionItem.className = 'condition_option';
-            }
-            optionItem.innerHTML = list[i].name;
-            optionItem.onclick = function () {
-                switch (name) {
-                    case "typeList":
-                        filter.checkedTypeId = list[i].id;
-                        break;
-                    case "areaRangeList":
-                        filter.checkedAreaRangeId = list[i].id;
-                        break;
-                    case "priceRangeList":
-                        filter.checkedPriceRangeId = list[i].id;
-                        break;
-                    case "decorationList":
-                        filter.checkedDecorationId = list[i].id;
-                        break;
-                }
-                getOfficeList();
-            };
-            conditionBox.appendChild(optionItem);
-        }
-    }
-
-    /**
-     * 设置顶部数据
-     * @param building 数据
-     */
-    function setTopInfo(building) {
-        // 名字
-        document.getElementById("building_name").innerHTML = building.name;
-        // 图片
-        let imgBox = document.getElementById("top_image_list");
-        let img_list = utils.getImg_list(building);
-        for (let img of img_list) {
-            let itemBox = document.createElement("div");
-            itemBox.setAttribute("class", "swiper-slide");
-            imgBox.appendChild(itemBox);
-            let itemImg = document.createElement("img");
-            itemImg.setAttribute("class", "top_info_image");
-            itemImg.setAttribute("src", img);
-            itemBox.appendChild(itemImg);
-        }
-        if (img_list && img_list.length > 1) {
-            openSwiper();
-        }
-        // 价格范围
-        document.getElementById("detail_info_price").innerHTML = building.price_range;
-        // 联系客服顶部价格
-        // document.getElementById("service_info_price").innerHTML = building.price_range;
-        // 地址
-        let district_name = document.getElementById("district_name");
-        district_name.innerHTML = building.district_name;
-        district_name.onclick = function () {
-            window.open("search.html?district_id=" + building.district_id, "_blank");
-        };
-        let zone_name = document.getElementById("zone_name");
-        zone_name.innerHTML = building.zone_name;
-        zone_name.onclick = function () {
-            window.open("search.html?district_id=" + building.district_id
-                + "&zone_id=" + building.zone_id, "_blank");
-        };
-    }
-
-    /**
-     * 设置办公室列表数据
-     */
-    function setOfficeList(officeList) {
-        let contentBox = document.getElementById("data_item_box");
-        if (pageIndex === 0) {
-            // 清除子view
-            let childList = contentBox.childNodes;
-            while (childList.length > 2) {
-                contentBox.removeChild(childList[2]);
-            }
-        }
-        if (pageNum > pageIndex + 1) {
-            $("#next_page").show();
-        } else {
-            $("#next_page").hide();
-        }
-        // if (pageIndex === 0 && buildingList.length === 0) {
-        //     $("#error_not_text").show();
-        // } else {
-        //     $("#error_not_text").hide();
-        // }
-
-        for (let office of officeList) {
-            let trView = document.createElement("tr");
-            contentBox.appendChild(trView);
-            let tdImage = document.createElement("td");
-            trView.appendChild(tdImage);
-
-            // 图片
-            let imageView = document.createElement("img");
-            imageView.className = "table_item_image clickable";
-            utils.setImage(imageView, office.img_list);
-            tdImage.onclick = function () {
-                openRoomDetail(office.id);
-            };
-            tdImage.appendChild(imageView);
-
-            // 房源信息
-            // let sourceInfo = document.createElement("td");
-            // sourceInfo.setAttribute("class", "source_info_td");
-            // sourceInfo.innerHTML = "<div class='clickable'>" + office.source_info + "</div>";
-            // sourceInfo.onclick = function () {
-            //     openRoomDetail(office.id);
-            // };
-            // trView.appendChild(sourceInfo);
-
-            // 面积
-            let area = document.createElement("td");
-            let areaName = document.createElement("span");
-            areaName.innerHTML = office.area;
-            areaName.setAttribute("class", "big_text");
-            let areaEnd = document.createElement("span");
-            areaEnd.innerHTML = "m²";
-            area.appendChild(areaName);
-            area.appendChild(areaEnd);
-            trView.appendChild(area);
-
-            // 单价
-            let price = document.createElement("td");
-            let priceName = document.createElement("span");
-            priceName.innerHTML = office.price;
-            priceName.setAttribute("class", "big_text price_color");
-            let priceEnd = document.createElement("span");
-            priceEnd.innerHTML = "元/m²/天";
-            price.appendChild(priceName);
-            price.appendChild(priceEnd);
-            trView.appendChild(price);
-
-            // 总价
-            let totalPrice = document.createElement("td");
-            let totalPriceName = document.createElement("span");
-            totalPriceName.innerHTML = office.total_price;
-            totalPriceName.setAttribute("class", "big_text  price_color");
-            let totalPriceEnd = document.createElement("span");
-            totalPriceEnd.innerHTML = "元/月";
-            totalPrice.appendChild(totalPriceName);
-            totalPrice.appendChild(totalPriceEnd);
-            trView.appendChild(totalPrice);
-        }
-    }
-
-    /**
-     * 设置底部写字楼信息
-     */
-    function setBottomInfo(building) {
-        let notes = JSON.parse(building.notes);
-        let detail_info = notes.detail_info;
-        let bottom_info = document.getElementById("bottom_info");
-        bottom_info.innerHTML = "";
-        if (!detail_info || detail_info.length === 0) {
-            $("#bottom_info").hide();
-        } else {
-            $("#bottom_info").show();
-        }
-        for (let info of detail_info) {
-            let box = document.createElement("div");
-            box.className = "bottom_info_item flex_row";
-
-            let key = document.createElement("div");
-            key.className = "bottom_info_title";
-            key.innerHTML = info.key + ":";
-
-            let value = document.createElement("div");
-            value.className = "bottom_info_text";
-            value.innerHTML = info.value;
-
-            box.appendChild(key);
-            box.appendChild(value);
-            bottom_info.appendChild(box);
-        }
-
-        document.getElementById("introduce_info").innerHTML = building.introduce;
-    }
-
-    function nextPage() {
-        getOfficeList(pageIndex + 1);
-    }
-
-    function openRoomDetail(office_id) {
-        window.open("officeDetail.html?office_id=" + office_id, "_blank");
-    }
-
-    function openSwiper() {
-        new Swiper('#swiper_top_info', {
-            loop: true,
-            autoplay: 2000,
-            pagination: '.swiper_position',
-            paginationClickable: true,
-            autoplayDisableOnInteraction: false,
-        });
-    }
-
-    function getHotList() {
-        http.post({
-            url: "news/hot",
-            success: function (data) {
-                setHeatNews(data);
-            }
-        })
-    }
-
-    /**
-     * 设置资讯
-     * @param heatNewsList
-     */
-    function setHeatNews(heatNewsList) {
-        if (heatNewsList == null) return;
-        let ListBox = document.getElementById("right_heat_news");
-        for (let i = 0, len = heatNewsList.length; i < len; i++) {
-            let itemBox = document.createElement("div");
-            itemBox.className = "right_heat_news_item";
-
-            let imgListStr = heatNewsList[i].img_list;
-            let imgList = JSON.parse(imgListStr);
-            let itemImg = document.createElement("img");
-            itemImg.className = "right_heat_news_img";
-            if (imgList && imgList.length > 0) {
-                utils.setImageSrc(itemImg, imgList[0]);
-            } else {
-                utils.setImageSrc(itemImg, null);
-            }
-            itemBox.appendChild(itemImg);
-
-            let itemInfo = document.createElement("div");
-            itemInfo.className = "right_heat_news flex_column_left";
-
-            let itemTitle = document.createElement("div");
-            itemTitle.className = "right_heat_news_title";
-            itemTitle.innerHTML = heatNewsList[i].title;
-            itemTitle.onclick = function () {
-                window.open("newsDetail.html?news_id=" + heatNewsList[i].id);
-            };
-            itemInfo.appendChild(itemTitle);
-
-            let itemTime = document.createElement("div");
-            itemTime.className = "right_heat_news_time";
-            itemTime.innerHTML = heatNewsList[i].last_edit_time;
-            itemInfo.appendChild(itemTime);
-
-            if (i === len - 1) {
-                itemBox.setAttribute("style", "border: none;");
-            }
-
-            itemBox.appendChild(itemInfo);
-            ListBox.appendChild(itemBox);
-        }
-    }
-
-
-    /**
-     * 加载分页工具
-     * @param dataSize 数据总数
-     */
-    function loadPageUtil(dataSize) {
-        layui.use('laypage', function () {
-            var laypage = layui.laypage;
-            //执行一个laypage实例
-            laypage.render({
-                //注意，这里的 test1 是 ID，不用加 # 号
-                elem: 'page_box',
-                //数据总数，从服务端得到
-                count: dataSize,
-                limit: 10,
-                jump: function (obj, first) {
-                    //obj包含了当前分页的所有参数，比如：
-                    // console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-                    // console.log(obj.limit); //得到每页显示的条数
-
-                    //首次不执行
-                    if (!first) {
-                        getOfficeList(obj.curr - 1);
-                    }
-                }
-            });
-        });
-    }
-
+    setCity();
 </script>
 
 <body>
@@ -689,4 +258,444 @@
     </div>
 </div>
 </body>
+
+<!-- 美洽客服 -->
+<script title="text/javascript">
+    'use strict';
+
+    (function (m, ei, q, i, a, j, s) {
+        m[i] = m[i] || function () {
+            (m[i].a = m[i].a || []).push(arguments)
+        };
+        j = ei.createElement(q);
+        s = ei.getElementsByTagName(q)[0];
+        j.async = true;
+        j.charset = 'UTF-8';
+        j.src = 'https://static.meiqia.com/dist/meiqia.js?=_t';
+        s.parentNode.insertBefore(j, s);
+    })(window, document, 'script', '_MEIQIA');
+    _MEIQIA('entId', 51778);
+</script>
+
+<script type="text/javascript">
+    'use strict';
+
+    let building_id;
+    let building;
+    let filter = {};
+    let pageIndex = 0;
+    let pageNum = 0;
+
+    window.onload = function () {
+        let request = window.location.search;
+        building_id = http.getParameter(request, "building_id");
+        filter.checkedTypeId = http.getParameter(request, "type_id");
+        filter.checkedAreaRangeId = http.getParameter(request, "area_range_id");
+        filter.checkedPriceRangeId = http.getParameter(request, "price_range_id");
+        filter.checkedDecorationId = http.getParameter(request, "decoration_id");
+        getFilterList();
+        getBuilding();
+        getHotList();
+
+        initMap();
+
+        setFixed();
+    };
+
+    function setFixed() {
+        let fixedView = document.getElementById("position_fixed");
+        let fixedTop = window.scrollY + fixedView.getBoundingClientRect().y;
+        let fixedLeft = fixedView.getBoundingClientRect().x;
+        fixedView.setAttribute("style", "left: " + fixedLeft + "px;");
+        let bottomBox = document.getElementsByClassName("bottom_box")[0];
+
+        // 解决在页面中部时刷新页面浮动问题
+        setFixedPosition(bottomBox, fixedView, fixedTop);
+        window.onscroll = function () {
+            setFixedPosition(bottomBox, fixedView, fixedTop);
+        }
+    }
+
+    function setFixedPosition(bottomBox, fixedView, fixedTop) {
+        let toBottomHeight = 5;
+        if (window.scrollY <= (fixedTop - 100)) {
+            fixedView.setAttribute("class", "content_right bg_white");
+        } else if (bottomBox.getBoundingClientRect().top < 100 + toBottomHeight + fixedView.getBoundingClientRect().height) {
+            fixedView.setAttribute("class", "content_right bg_white position_fixed_bottom");
+            fixedView.style.bottom = (window.innerHeight - bottomBox.getBoundingClientRect().top + toBottomHeight) + "px";
+        } else {
+            fixedView.setAttribute("class", "content_right bg_white position_fixed");
+        }
+    }
+
+
+    function getFilterList() {
+        http.post({
+            url: "filter/office",
+            params: {
+                building_id: building_id,
+                type_id: filter.checkedTypeId,
+                area_range_id: filter.checkedAreaRangeId,
+                price_range_id: filter.checkedPriceRangeId,
+                decoration_id: filter.checkedDecorationId,
+            },
+            success: function (data) {
+                filter = data;
+                getOfficeList();
+            }
+        });
+    }
+
+    function getBuilding() {
+        http.post({
+            url: "search/building",
+            params: {
+                id: building_id,
+            },
+            success: function (data) {
+                building = data;
+
+                setBuilding(building.name);
+                setTopInfo(building);
+                setBottomInfo(building);
+                let notes = JSON.parse(building.notes);
+                if (notes && notes.map) {
+                    setMarkers(notes.map);
+                }
+            }
+        });
+    }
+
+    function getOfficeList(page) {
+        http.post({
+            url: "search/offices",
+            params: {
+                building_id: building_id,
+                type_id: filter.checkedTypeId,
+                area_range_id: filter.checkedAreaRangeId,
+                price_range_id: filter.checkedPriceRangeId,
+                decoration_id: filter.checkedDecorationId,
+                page: page,
+            },
+            success: function (data) {
+                filter.checkedTypeId = data.checkedTypeId;
+                filter.checkedAreaRangeId = data.checkedAreaRangeId;
+                filter.checkedPriceRangeId = data.checkedPriceRangeId;
+                filter.checkedDecorationId = data.checkedDecorationId;
+                setFilterList();
+                pageIndex = data.pageIndex;
+                pageNum = data.pageNum;
+                setOfficeList(data.officeList);
+                loadPageUtil(pageNum * 10);
+            }
+        });
+    }
+
+    function setFilterList() {
+        if (!filter) {
+            return;
+        }
+        setFilterListByName(filter.typeList, 'typeList', filter.checkedTypeId);
+        setFilterListByName(filter.areaRangeList, 'areaRangeList', filter.checkedAreaRangeId);
+        setFilterListByName(filter.priceRangeList, 'priceRangeList', filter.checkedPriceRangeId);
+        setFilterListByName(filter.decorationList, 'decorationList', filter.checkedDecorationId);
+    }
+
+    function setFilterListByName(list, name, checkedId) {
+        if (!list || list.length <= 2) {
+            $("#" + name.substr(0, name.length - 4)).hide();
+        } else {
+            $("#" + name.substr(0, name.length - 4)).show();
+        }
+        let conditionBox = document.getElementById(name);
+        conditionBox.innerHTML = "";
+        for (let i = 0; list && i < list.length; i++) {
+            let optionItem = document.createElement("span");
+            if (list[i].id === checkedId) {
+                optionItem.className = 'condition_option_select';
+            } else {
+                optionItem.className = 'condition_option';
+            }
+            optionItem.innerHTML = list[i].name;
+            optionItem.onclick = function () {
+                switch (name) {
+                    case "typeList":
+                        filter.checkedTypeId = list[i].id;
+                        break;
+                    case "areaRangeList":
+                        filter.checkedAreaRangeId = list[i].id;
+                        break;
+                    case "priceRangeList":
+                        filter.checkedPriceRangeId = list[i].id;
+                        break;
+                    case "decorationList":
+                        filter.checkedDecorationId = list[i].id;
+                        break;
+                }
+                getOfficeList();
+            };
+            conditionBox.appendChild(optionItem);
+        }
+    }
+
+    /**
+     * 设置顶部数据
+     * @param building 数据
+     */
+    function setTopInfo(building) {
+        // 名字
+        document.getElementById("building_name").innerHTML = building.name;
+        // 图片
+        let imgBox = document.getElementById("top_image_list");
+        let img_list = utils.getImg_list(building);
+        for (let img of img_list) {
+            let itemBox = document.createElement("div");
+            itemBox.setAttribute("class", "swiper-slide");
+            imgBox.appendChild(itemBox);
+            let itemImg = document.createElement("img");
+            itemImg.setAttribute("class", "top_info_image");
+            itemImg.setAttribute("src", img);
+            itemImg.setAttribute("alt", building.name);
+            itemBox.appendChild(itemImg);
+        }
+        if (img_list && img_list.length > 1) {
+            openSwiper();
+        }
+        // 价格范围
+        document.getElementById("detail_info_price").innerHTML = building.price_range;
+        // 联系客服顶部价格
+        // document.getElementById("service_info_price").innerHTML = building.price_range;
+        // 地址
+        let district_name = document.getElementById("district_name");
+        district_name.innerHTML = building.district_name;
+        district_name.onclick = function () {
+            window.open("search.html?district_id=" + building.district_id, "_blank");
+        };
+        let zone_name = document.getElementById("zone_name");
+        zone_name.innerHTML = building.zone_name;
+        zone_name.onclick = function () {
+            window.open("search.html?district_id=" + building.district_id
+                + "&zone_id=" + building.zone_id, "_blank");
+        };
+    }
+
+    /**
+     * 设置办公室列表数据
+     */
+    function setOfficeList(officeList) {
+        let contentBox = document.getElementById("data_item_box");
+        if (pageIndex === 0) {
+            // 清除子view
+            let childList = contentBox.childNodes;
+            while (childList.length > 2) {
+                contentBox.removeChild(childList[2]);
+            }
+        }
+        if (pageNum > pageIndex + 1) {
+            $("#next_page").show();
+        } else {
+            $("#next_page").hide();
+        }
+        // if (pageIndex === 0 && buildingList.length === 0) {
+        //     $("#error_not_text").show();
+        // } else {
+        //     $("#error_not_text").hide();
+        // }
+
+        for (let office of officeList) {
+            let trView = document.createElement("tr");
+            contentBox.appendChild(trView);
+            let tdImage = document.createElement("td");
+            trView.appendChild(tdImage);
+
+            // 图片
+            let imageView = document.createElement("img");
+            imageView.className = "table_item_image clickable";
+            utils.setImage(imageView, office.img_list, building.name);
+            tdImage.onclick = function () {
+                openRoomDetail(office.id);
+            };
+            tdImage.appendChild(imageView);
+
+            // 房源信息
+            // let sourceInfo = document.createElement("td");
+            // sourceInfo.setAttribute("class", "source_info_td");
+            // sourceInfo.innerHTML = "<div class='clickable'>" + office.source_info + "</div>";
+            // sourceInfo.onclick = function () {
+            //     openRoomDetail(office.id);
+            // };
+            // trView.appendChild(sourceInfo);
+
+            // 面积
+            let area = document.createElement("td");
+            let areaName = document.createElement("span");
+            areaName.innerHTML = office.area;
+            areaName.setAttribute("class", "big_text");
+            let areaEnd = document.createElement("span");
+            areaEnd.innerHTML = "m²";
+            area.appendChild(areaName);
+            area.appendChild(areaEnd);
+            trView.appendChild(area);
+
+            // 单价
+            let price = document.createElement("td");
+            let priceName = document.createElement("span");
+            priceName.innerHTML = office.price;
+            priceName.setAttribute("class", "big_text price_color");
+            let priceEnd = document.createElement("span");
+            priceEnd.innerHTML = "元/m²/天";
+            price.appendChild(priceName);
+            price.appendChild(priceEnd);
+            trView.appendChild(price);
+
+            // 总价
+            let totalPrice = document.createElement("td");
+            let totalPriceName = document.createElement("span");
+            totalPriceName.innerHTML = office.total_price;
+            totalPriceName.setAttribute("class", "big_text  price_color");
+            let totalPriceEnd = document.createElement("span");
+            totalPriceEnd.innerHTML = "元/月";
+            totalPrice.appendChild(totalPriceName);
+            totalPrice.appendChild(totalPriceEnd);
+            trView.appendChild(totalPrice);
+        }
+    }
+
+    /**
+     * 设置底部写字楼信息
+     */
+    function setBottomInfo(building) {
+        let notes = JSON.parse(building.notes);
+        let detail_info = notes.detail_info;
+        let bottom_info = document.getElementById("bottom_info");
+        bottom_info.innerHTML = "";
+        if (!detail_info || detail_info.length === 0) {
+            $("#bottom_info").hide();
+        } else {
+            $("#bottom_info").show();
+        }
+        for (let info of detail_info) {
+            let box = document.createElement("div");
+            box.className = "bottom_info_item flex_row";
+
+            let key = document.createElement("div");
+            key.className = "bottom_info_title";
+            key.innerHTML = info.key + ":";
+
+            let value = document.createElement("div");
+            value.className = "bottom_info_text";
+            value.innerHTML = info.value;
+
+            box.appendChild(key);
+            box.appendChild(value);
+            bottom_info.appendChild(box);
+        }
+
+        document.getElementById("introduce_info").innerHTML = building.introduce;
+    }
+
+    function nextPage() {
+        getOfficeList(pageIndex + 1);
+    }
+
+    function openRoomDetail(office_id) {
+        window.open("officeDetail.html?office_id=" + office_id, "_blank");
+    }
+
+    function openSwiper() {
+        new Swiper('#swiper_top_info', {
+            loop: true,
+            autoplay: 2000,
+            pagination: '.swiper_position',
+            paginationClickable: true,
+            autoplayDisableOnInteraction: false,
+        });
+    }
+
+    function getHotList() {
+        http.post({
+            url: "news/hot",
+            success: function (data) {
+                setHeatNews(data);
+            }
+        })
+    }
+
+    /**
+     * 设置资讯
+     * @param heatNewsList
+     */
+    function setHeatNews(heatNewsList) {
+        if (heatNewsList == null) return;
+        let ListBox = document.getElementById("right_heat_news");
+        for (let i = 0, len = heatNewsList.length; i < len; i++) {
+            let itemBox = document.createElement("div");
+            itemBox.className = "right_heat_news_item";
+
+            let imgListStr = heatNewsList[i].img_list;
+            let imgList = JSON.parse(imgListStr);
+            let itemImg = document.createElement("img");
+            itemImg.className = "right_heat_news_img";
+            if (imgList && imgList.length > 0) {
+                utils.setImageSrc(itemImg, imgList[0]);
+            } else {
+                utils.setImageSrc(itemImg, null);
+            }
+            itemBox.appendChild(itemImg);
+
+            let itemInfo = document.createElement("div");
+            itemInfo.className = "right_heat_news flex_column_left";
+
+            let itemTitle = document.createElement("div");
+            itemTitle.className = "right_heat_news_title";
+            itemTitle.innerHTML = heatNewsList[i].title;
+            itemTitle.onclick = function () {
+                window.open("newsDetail.html?news_id=" + heatNewsList[i].id);
+            };
+            itemInfo.appendChild(itemTitle);
+
+            let itemTime = document.createElement("div");
+            itemTime.className = "right_heat_news_time";
+            itemTime.innerHTML = heatNewsList[i].last_edit_time;
+            itemInfo.appendChild(itemTime);
+
+            if (i === len - 1) {
+                itemBox.setAttribute("style", "border: none;");
+            }
+
+            itemBox.appendChild(itemInfo);
+            ListBox.appendChild(itemBox);
+        }
+    }
+
+
+    /**
+     * 加载分页工具
+     * @param dataSize 数据总数
+     */
+    function loadPageUtil(dataSize) {
+        layui.use('laypage', function () {
+            var laypage = layui.laypage;
+            //执行一个laypage实例
+            laypage.render({
+                //注意，这里的 test1 是 ID，不用加 # 号
+                elem: 'page_box',
+                //数据总数，从服务端得到
+                count: dataSize,
+                limit: 10,
+                jump: function (obj, first) {
+                    //obj包含了当前分页的所有参数，比如：
+                    // console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                    // console.log(obj.limit); //得到每页显示的条数
+
+                    //首次不执行
+                    if (!first) {
+                        getOfficeList(obj.curr - 1);
+                    }
+                }
+            });
+        });
+    }
+
+</script>
 </html>

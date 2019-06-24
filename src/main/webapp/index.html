@@ -16,334 +16,9 @@
     <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
-<!-- 美洽客服 -->
-<script title="text/javascript">
-    'use strict';
-
-    (function (m, ei, q, i, a, j, s) {
-        m[i] = m[i] || function () {
-            (m[i].a = m[i].a || []).push(arguments)
-        };
-        j = ei.createElement(q);
-        s = ei.getElementsByTagName(q)[0];
-        j.async = true;
-        j.charset = 'UTF-8';
-        j.src = 'https://static.meiqia.com/dist/meiqia.js?=_t';
-        s.parentNode.insertBefore(j, s);
-    })(window, document, 'script', '_MEIQIA');
-    _MEIQIA('entId', 51778);
-</script>
-
 <script type="text/javascript">
     'use strict';
-
-    window.onload = function () {
-        getAll();
-    };
-
-    function getAll() {
-        http.post({
-            url: "index/all",
-            success: function (data, city) {
-                setTag(city, "", "");
-
-                setTopBackground(data.bannerList);
-                setConditionScreen(data.districtList);
-                setTypeScreen(data.typeList);
-                setAreaRangeScreen(data.areaRangeList);
-                setPriceRangeScreen(data.priceRangeList);
-                setCoreBuilding(data.coreList);
-                setFineBuildingList(data.fineList);
-                setNewsList(data.newsList);
-                setTodaySupport(data.todaySupport);
-                openSwiper(data.bannerList.length !== 1);
-            }
-        });
-    }
-
-    /**
-     * 设置头部背景图
-     */
-    function setTopBackground(imageUrl) {
-        let topBgBox = document.getElementById("top_bg_item_box");
-        for (let i = 0, len = imageUrl.length; i < len; i++) {
-            let itemBox = document.createElement("div");
-            itemBox.setAttribute("class", "swiper-slide");
-            topBgBox.appendChild(itemBox);
-            let imgView = document.createElement("img");
-            imgView.setAttribute("src", imageUrl[i]);
-            itemBox.appendChild(imgView);
-        }
-    }
-
-    /**
-     * 区域
-     * @param conditionList
-     */
-    function setConditionScreen(conditionList) {
-        let conditionBox = document.getElementById("screen_condition_box");
-        if (!conditionBox) {
-            return;
-        }
-        for (let i = 0, len = conditionList.length; i < len && i < 10; i++) {
-            if (conditionList[i].id === 1) {
-                continue;
-            }
-            let conditionItem = document.createElement("div");
-            conditionBox.appendChild(conditionItem);
-            let conditionText = document.createElement("a");
-            conditionText.setAttribute("href", "search.html?district_id=" + conditionList[i].id);
-            conditionText.innerHTML = conditionList[i].name;
-            conditionItem.appendChild(conditionText);
-        }
-        let conditionItem = document.createElement("div");
-        conditionBox.appendChild(conditionItem);
-        let conditionText = document.createElement("a");
-        conditionText.setAttribute("href", "search.html");
-        conditionText.innerHTML = "更多>>";
-        conditionItem.appendChild(conditionText);
-    }
-
-    /**
-     * 类型
-     * @param typeList
-     */
-    function setTypeScreen(typeList) {
-        let typeBox = document.getElementById("screen_type_box");
-        if (!typeBox) {
-            return;
-        }
-        for (let i = 0, len = typeList.length; i < len; i++) {
-            if (typeList[i].id === 1) {
-                continue;
-            }
-            let typeItem = document.createElement("a");
-            typeItem.setAttribute("href", "search.html?type_id=" + typeList[i].id);
-            typeBox.appendChild(typeItem);
-            let typeImg = document.createElement("img");
-            typeImg.setAttribute("class", "screen_type_icon");
-            switch (typeList[i].id) {
-                case 2:
-                    typeImg.setAttribute("src", "img/icon_type_1.png");
-                    break;
-                case 3:
-                    typeImg.setAttribute("src", "img/icon_type_2.png");
-                    break;
-                case 4:
-                    typeImg.setAttribute("src", "img/icon_type_3.png");
-                    break;
-            }
-            typeItem.appendChild(typeImg);
-            let typeText = document.createElement("div");
-            typeText.setAttribute("class", "screen_type_text");
-            typeText.innerHTML = typeList[i].name;
-            typeItem.appendChild(typeText);
-        }
-    }
-
-    /**
-     * 面积
-     * @param areaRangeList
-     */
-    function setAreaRangeScreen(areaRangeList) {
-        let areaRangeBox = document.getElementById("screen_area_box");
-        if (!areaRangeBox) {
-            return;
-        }
-        for (let i = 0, len = areaRangeList.length; i < len && i < 10; i++) {
-            if (areaRangeList[i].id === 1) {
-                continue;
-            }
-            let areaRangeText = document.createElement("a");
-            areaRangeText.setAttribute("class", "screen_option");
-            areaRangeText.setAttribute("href", "search.html?area_range_id=" + areaRangeList[i].id);
-            areaRangeBox.appendChild(areaRangeText);
-        }
-    }
-
-    /**
-     * 价格
-     * @param priceRangeList
-     */
-    function setPriceRangeScreen(priceRangeList) {
-        let priceRangeBox = document.getElementById("screen_price_box");
-        if (!priceRangeBox) {
-            return;
-        }
-        for (let i = 0, len = priceRangeList.length; i < len && i < 10; i++) {
-            if (priceRangeList[i].id === 1) {
-                continue;
-            }
-            let priceRangeText = document.createElement("a");
-            priceRangeText.setAttribute("class", "screen_option");
-            priceRangeText.setAttribute("href", "search.html?price_range_id=" + priceRangeList[i].id);
-            priceRangeBox.appendChild(priceRangeText);
-        }
-    }
-
-    /**
-     * 设置核心圈
-     * @param coreList 长度不超过4个
-     */
-    function setCoreBuilding(coreList) {
-        if (coreList && coreList.length > 0) {
-            document.getElementById("core_building").setAttribute("style", "display: flex;")
-        } else {
-            return;
-        }
-
-        for (let i = 0, len = coreList.length; i < len && i < 5; i++) {
-            let coreItemImg = document.getElementById("core_item_img_" + i);
-            utils.setImage(coreItemImg, coreList[i].img_list);
-            coreItemImg.onclick = function () {
-                window.open("search.html?district_id=" + coreList[i].district_id
-                    + "&zone_id=" + coreList[i].id, "_blank");
-            };
-
-            let coreItemText = document.getElementById("core_item_text_" + i);
-            coreItemText.innerHTML = coreList[i].name;
-        }
-    }
-
-    /**
-     * 设置精选写字楼
-     * @param buildingList 长度为4的倍数
-     */
-    function setFineBuildingList(buildingList) {
-        if (!buildingList) {
-            return;
-        }
-        let fineBuildingListBox = document.getElementById("fine_building");
-        for (let i = 0, len = buildingList.length; i < len; i++) {
-            let buildingItemBox = document.createElement("div");
-            buildingItemBox.setAttribute("class", "fine_building_item_box image_big flex_column clickable");
-            if ((i + 1) % 3 === 2) {
-                buildingItemBox.setAttribute("style", "margin-right: 90px; margin-left: 90px;");
-            }
-            buildingItemBox.onclick = function () {
-                window.open("buildingDetail.html?building_id=" + buildingList[i].id, "_blank");
-            };
-            fineBuildingListBox.appendChild(buildingItemBox);
-
-            let buildingImageBox = document.createElement("div");
-            buildingImageBox.setAttribute("class", "fine_building_image_box");
-            buildingItemBox.appendChild(buildingImageBox);
-            let buildingImage = document.createElement("img");
-            utils.setImage(buildingImage, buildingList[i].img_list);
-            buildingImageBox.appendChild(buildingImage);
-
-            let buildingTitle = document.createElement("a");
-            buildingTitle.setAttribute("class", "fine_building_title");
-            buildingTitle.innerHTML = buildingList[i].name;
-            buildingItemBox.appendChild(buildingTitle);
-
-            let buildingInfoBox = document.createElement("div");
-            buildingInfoBox.setAttribute("class", "fine_building_info");
-            buildingItemBox.appendChild(buildingInfoBox);
-
-            let buildingAddressBox = document.createElement("div");
-            buildingAddressBox.setAttribute("class", "flex_row");
-            // buildingInfoBox.appendChild(buildingAddressBox);
-            let buildingAddressIcon = document.createElement("div");
-            buildingAddressIcon.setAttribute("class", "icon_address");
-            buildingAddressBox.appendChild(buildingAddressIcon);
-            let buildingAddressText = document.createElement("span");
-            buildingAddressText.setAttribute("class", "address_text");
-            buildingAddressText.innerHTML = buildingList[i].district_name + "-" + buildingList[i].zone_name;
-            buildingAddressBox.appendChild(buildingAddressText);
-
-            let buildingPriceBox = document.createElement("div");
-            buildingPriceBox.setAttribute("class", "fine_building_price");
-            // buildingInfoBox.appendChild(buildingPriceBox);
-            let buildingPriceText = document.createElement("span");
-            buildingPriceText.setAttribute("class", "price_number");
-            buildingPriceText.innerHTML = buildingList[i].price_average;
-            buildingPriceBox.appendChild(buildingPriceText);
-            // let buildingPriceUnit = document.createElement("span");
-            // buildingPriceUnit.innerHTML = "元/m²/天";
-            // buildingPriceBox.appendChild(buildingPriceUnit);
-            $(buildingPriceBox).append("元/m²/天");
-        }
-    }
-
-    /**
-     * 设置新闻列表
-     */
-    function setNewsList(newsList) {
-        if (!newsList) {
-            return;
-        }
-
-        let news_list = document.getElementById("news_list");
-        for (let i = 0, len = newsList.length; i < len || i < 3; i++) {
-            let news;
-            if (newsList.hasOwnProperty(i)) {
-                news = newsList[i];
-            }
-            let news_item = document.createElement("div");
-            news_item.className = "news_item";
-            news_list.appendChild(news_item);
-            if (i % 3 !== 2) {
-                let news_item_line = document.createElement("div");
-                news_item_line.className = "news_item_line";
-                news_list.appendChild(news_item_line);
-            }
-
-            if (news) {
-                let news_title = document.createElement("span");
-                news_title.className = "news_title";
-                news_title.onclick = function () {
-                    window.open("newsDetail.html?news_id=" + news.id);
-                };
-                news_title.innerHTML = news.title;
-                news_item.appendChild(news_title);
-                let news_date = document.createElement("span");
-                news_date.className = "news_date";
-                news_date.innerHTML = news.last_edit_time;
-                news_item.appendChild(news_date);
-                let news_content = document.createElement("span");
-                news_content.className = "news_content";
-                news_content.innerHTML = news.content;
-                news_item.appendChild(news_content);
-            }
-        }
-    }
-
-    function setTodaySupport(todaySupport) {
-        if (todaySupport) {
-            let building = todaySupport.building;
-            let office = todaySupport.office;
-            utils.setImage(document.getElementById("entrust_img"), building.img_list);
-            utils.setImage(document.getElementById("trust_img"), office.img_list);
-            document.getElementById("entrust_title").innerHTML = building.name;
-            document.getElementById("entrust_content").innerHTML = building.introduce;
-            entrust_btn.onclick = function () {
-                window.open("buildingDetail.html?building_id=" + building.id);
-            }
-        } else {
-            utils.setImageSrc(document.getElementById("entrust_img"), "http://www.orangeban.com/images/intro_1.jpg");
-            utils.setImageSrc(document.getElementById("trust_img"), "http://www.orangeban.com/images/intro_2.jpg");
-            document.getElementById("entrust_title").innerHTML = "今日房源推荐";
-            document.getElementById("entrust_content").innerHTML = "用心打造完美个性家居环境";
-            entrust_btn.onclick = function () {
-                window.open("search.html?");
-            }
-        }
-    }
-
-    /**
-     * 开启轮播图
-     */
-    function openSwiper(loop) {
-        // 启动轮播图
-        new Swiper('#top_bg', {
-            loop: loop,
-            autoplay: 2000,
-            pagination: '#top_bg_position',
-            paginationClickable: true,
-            autoplayDisableOnInteraction: false,
-        });
-    }
+    setCity();
 </script>
 
 <body>
@@ -575,4 +250,332 @@
     </div>
 </div>
 </body>
+
+<!-- 美洽客服 -->
+<script title="text/javascript">
+    'use strict';
+
+    (function (m, ei, q, i, a, j, s) {
+        m[i] = m[i] || function () {
+            (m[i].a = m[i].a || []).push(arguments)
+        };
+        j = ei.createElement(q);
+        s = ei.getElementsByTagName(q)[0];
+        j.async = true;
+        j.charset = 'UTF-8';
+        j.src = 'https://static.meiqia.com/dist/meiqia.js?=_t';
+        s.parentNode.insertBefore(j, s);
+    })(window, document, 'script', '_MEIQIA');
+    _MEIQIA('entId', 51778);
+</script>
+
+<script type="text/javascript">
+    'use strict';
+
+    window.onload = function () {
+        getAll();
+    };
+
+    function getAll() {
+        http.post({
+            url: "index/all",
+            success: function (data) {
+                setTopBackground(data.bannerList);
+                setConditionScreen(data.districtList);
+                setTypeScreen(data.typeList);
+                setAreaRangeScreen(data.areaRangeList);
+                setPriceRangeScreen(data.priceRangeList);
+                setCoreBuilding(data.coreList);
+                setFineBuildingList(data.fineList);
+                setNewsList(data.newsList);
+                setTodaySupport(data.todaySupport);
+                openSwiper(data.bannerList.length !== 1);
+            }
+        });
+    }
+
+    /**
+     * 设置头部背景图
+     */
+    function setTopBackground(imageUrl) {
+        let topBgBox = document.getElementById("top_bg_item_box");
+        for (let i = 0, len = imageUrl.length; i < len; i++) {
+            let itemBox = document.createElement("div");
+            itemBox.setAttribute("class", "swiper-slide");
+            topBgBox.appendChild(itemBox);
+            let imgView = document.createElement("img");
+            imgView.setAttribute("src", imageUrl[i]);
+            itemBox.appendChild(imgView);
+        }
+    }
+
+    /**
+     * 区域
+     * @param conditionList
+     */
+    function setConditionScreen(conditionList) {
+        let conditionBox = document.getElementById("screen_condition_box");
+        if (!conditionBox) {
+            return;
+        }
+        for (let i = 0, len = conditionList.length; i < len && i < 10; i++) {
+            if (conditionList[i].id === 1) {
+                continue;
+            }
+            let conditionItem = document.createElement("div");
+            conditionBox.appendChild(conditionItem);
+            let conditionText = document.createElement("a");
+            conditionText.setAttribute("href", "search.html?district_id=" + conditionList[i].id);
+            conditionText.innerHTML = conditionList[i].name;
+            conditionItem.appendChild(conditionText);
+        }
+        let conditionItem = document.createElement("div");
+        conditionBox.appendChild(conditionItem);
+        let conditionText = document.createElement("a");
+        conditionText.setAttribute("href", "search.html");
+        conditionText.innerHTML = "更多>>";
+        conditionItem.appendChild(conditionText);
+    }
+
+    /**
+     * 类型
+     * @param typeList
+     */
+    function setTypeScreen(typeList) {
+        let typeBox = document.getElementById("screen_type_box");
+        if (!typeBox) {
+            return;
+        }
+        for (let i = 0, len = typeList.length; i < len; i++) {
+            if (typeList[i].id === 1) {
+                continue;
+            }
+            let typeItem = document.createElement("a");
+            typeItem.setAttribute("href", "search.html?type_id=" + typeList[i].id);
+            typeBox.appendChild(typeItem);
+            let typeImg = document.createElement("img");
+            typeImg.setAttribute("class", "screen_type_icon");
+            switch (typeList[i].id) {
+                case 2:
+                    typeImg.setAttribute("src", "img/icon_type_1.png");
+                    break;
+                case 3:
+                    typeImg.setAttribute("src", "img/icon_type_2.png");
+                    break;
+                case 4:
+                    typeImg.setAttribute("src", "img/icon_type_3.png");
+                    break;
+            }
+            typeItem.appendChild(typeImg);
+            let typeText = document.createElement("div");
+            typeText.setAttribute("class", "screen_type_text");
+            typeText.innerHTML = typeList[i].name;
+            typeItem.appendChild(typeText);
+        }
+    }
+
+    /**
+     * 面积
+     * @param areaRangeList
+     */
+    function setAreaRangeScreen(areaRangeList) {
+        let areaRangeBox = document.getElementById("screen_area_box");
+        if (!areaRangeBox) {
+            return;
+        }
+        for (let i = 0, len = areaRangeList.length; i < len && i < 10; i++) {
+            if (areaRangeList[i].id === 1) {
+                continue;
+            }
+            let areaRangeText = document.createElement("a");
+            areaRangeText.setAttribute("class", "screen_option");
+            areaRangeText.setAttribute("href", "search.html?area_range_id=" + areaRangeList[i].id);
+            areaRangeBox.appendChild(areaRangeText);
+        }
+    }
+
+    /**
+     * 价格
+     * @param priceRangeList
+     */
+    function setPriceRangeScreen(priceRangeList) {
+        let priceRangeBox = document.getElementById("screen_price_box");
+        if (!priceRangeBox) {
+            return;
+        }
+        for (let i = 0, len = priceRangeList.length; i < len && i < 10; i++) {
+            if (priceRangeList[i].id === 1) {
+                continue;
+            }
+            let priceRangeText = document.createElement("a");
+            priceRangeText.setAttribute("class", "screen_option");
+            priceRangeText.setAttribute("href", "search.html?price_range_id=" + priceRangeList[i].id);
+            priceRangeBox.appendChild(priceRangeText);
+        }
+    }
+
+    /**
+     * 设置核心圈
+     * @param coreList 长度不超过4个
+     */
+    function setCoreBuilding(coreList) {
+        if (coreList && coreList.length > 0) {
+            document.getElementById("core_building").setAttribute("style", "display: flex;")
+        } else {
+            return;
+        }
+
+        for (let i = 0, len = coreList.length; i < len && i < 5; i++) {
+            let coreItemImg = document.getElementById("core_item_img_" + i);
+            utils.setImage(coreItemImg, coreList[i].img_list, coreList[i].name);
+            coreItemImg.onclick = function () {
+                window.open("search.html?district_id=" + coreList[i].district_id
+                    + "&zone_id=" + coreList[i].id, "_blank");
+            };
+
+            let coreItemText = document.getElementById("core_item_text_" + i);
+            coreItemText.innerHTML = coreList[i].name;
+        }
+    }
+
+    /**
+     * 设置精选写字楼
+     * @param buildingList 长度为4的倍数
+     */
+    function setFineBuildingList(buildingList) {
+        if (!buildingList) {
+            return;
+        }
+        let fineBuildingListBox = document.getElementById("fine_building");
+        for (let i = 0, len = buildingList.length; i < len; i++) {
+            let buildingItemBox = document.createElement("div");
+            buildingItemBox.setAttribute("class", "fine_building_item_box image_big flex_column clickable");
+            if ((i + 1) % 3 === 2) {
+                buildingItemBox.setAttribute("style", "margin-right: 90px; margin-left: 90px;");
+            }
+            buildingItemBox.onclick = function () {
+                window.open("buildingDetail.html?building_id=" + buildingList[i].id, "_blank");
+            };
+            fineBuildingListBox.appendChild(buildingItemBox);
+
+            let buildingImageBox = document.createElement("div");
+            buildingImageBox.setAttribute("class", "fine_building_image_box");
+            buildingItemBox.appendChild(buildingImageBox);
+            let buildingImage = document.createElement("img");
+            utils.setImage(buildingImage, buildingList[i].img_list, buildingList[i].name);
+            buildingImageBox.appendChild(buildingImage);
+
+            let buildingTitle = document.createElement("a");
+            buildingTitle.setAttribute("class", "fine_building_title");
+            buildingTitle.innerHTML = buildingList[i].name;
+            buildingItemBox.appendChild(buildingTitle);
+
+            let buildingInfoBox = document.createElement("div");
+            buildingInfoBox.setAttribute("class", "fine_building_info");
+            buildingItemBox.appendChild(buildingInfoBox);
+
+            let buildingAddressBox = document.createElement("div");
+            buildingAddressBox.setAttribute("class", "flex_row");
+            // buildingInfoBox.appendChild(buildingAddressBox);
+            let buildingAddressIcon = document.createElement("div");
+            buildingAddressIcon.setAttribute("class", "icon_address");
+            buildingAddressBox.appendChild(buildingAddressIcon);
+            let buildingAddressText = document.createElement("span");
+            buildingAddressText.setAttribute("class", "address_text");
+            buildingAddressText.innerHTML = buildingList[i].district_name + "-" + buildingList[i].zone_name;
+            buildingAddressBox.appendChild(buildingAddressText);
+
+            let buildingPriceBox = document.createElement("div");
+            buildingPriceBox.setAttribute("class", "fine_building_price");
+            // buildingInfoBox.appendChild(buildingPriceBox);
+            let buildingPriceText = document.createElement("span");
+            buildingPriceText.setAttribute("class", "price_number");
+            buildingPriceText.innerHTML = buildingList[i].price_average;
+            buildingPriceBox.appendChild(buildingPriceText);
+            // let buildingPriceUnit = document.createElement("span");
+            // buildingPriceUnit.innerHTML = "元/m²/天";
+            // buildingPriceBox.appendChild(buildingPriceUnit);
+            $(buildingPriceBox).append("元/m²/天");
+        }
+    }
+
+    /**
+     * 设置新闻列表
+     */
+    function setNewsList(newsList) {
+        if (!newsList) {
+            return;
+        }
+
+        let news_list = document.getElementById("news_list");
+        for (let i = 0, len = newsList.length; i < len || i < 3; i++) {
+            let news;
+            if (newsList.hasOwnProperty(i)) {
+                news = newsList[i];
+            }
+            let news_item = document.createElement("div");
+            news_item.className = "news_item";
+            news_list.appendChild(news_item);
+            if (i % 3 !== 2) {
+                let news_item_line = document.createElement("div");
+                news_item_line.className = "news_item_line";
+                news_list.appendChild(news_item_line);
+            }
+
+            if (news) {
+                let news_title = document.createElement("span");
+                news_title.className = "news_title";
+                news_title.onclick = function () {
+                    window.open("newsDetail.html?news_id=" + news.id);
+                };
+                news_title.innerHTML = news.title;
+                news_item.appendChild(news_title);
+                let news_date = document.createElement("span");
+                news_date.className = "news_date";
+                news_date.innerHTML = news.last_edit_time;
+                news_item.appendChild(news_date);
+                let news_content = document.createElement("span");
+                news_content.className = "news_content";
+                news_content.innerHTML = news.content;
+                news_item.appendChild(news_content);
+            }
+        }
+    }
+
+    function setTodaySupport(todaySupport) {
+        if (todaySupport) {
+            let building = todaySupport.building;
+            let office = todaySupport.office;
+            utils.setImage(document.getElementById("entrust_img"), building.img_list, building.name);
+            utils.setImage(document.getElementById("trust_img"), office.img_list, building.name);
+            document.getElementById("entrust_title").innerHTML = building.name;
+            document.getElementById("entrust_content").innerHTML = building.introduce;
+            entrust_btn.onclick = function () {
+                window.open("buildingDetail.html?building_id=" + building.id);
+            }
+        } else {
+            utils.setImageSrc(document.getElementById("entrust_img"), "http://www.orangeban.com/images/intro_1.jpg");
+            utils.setImageSrc(document.getElementById("trust_img"), "http://www.orangeban.com/images/intro_2.jpg");
+            document.getElementById("entrust_title").innerHTML = "今日房源推荐";
+            document.getElementById("entrust_content").innerHTML = "用心打造完美个性家居环境";
+            entrust_btn.onclick = function () {
+                window.open("search.html?");
+            }
+        }
+    }
+
+    /**
+     * 开启轮播图
+     */
+    function openSwiper(loop) {
+        // 启动轮播图
+        new Swiper('#top_bg', {
+            loop: loop,
+            autoplay: 2000,
+            pagination: '#top_bg_position',
+            paginationClickable: true,
+            autoplayDisableOnInteraction: false,
+        });
+    }
+</script>
 </html>

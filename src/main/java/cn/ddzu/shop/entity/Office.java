@@ -1,5 +1,7 @@
 package cn.ddzu.shop.entity;
 
+import java.sql.Date;
+
 public class Office {
 
     private long id;
@@ -17,6 +19,8 @@ public class Office {
     private String rent_free_period;
     private String notes;
     private String img_list;
+    private Date edit_time;
+    private Boolean hot;
     private Boolean valid;
 
     private String building_name;
@@ -163,6 +167,22 @@ public class Office {
 
     public void setImg_list(String img_list) {
         this.img_list = img_list;
+    }
+
+    public Date getEdit_time() {
+        return edit_time;
+    }
+
+    public void setEdit_time(Date edit_time) {
+        this.edit_time = edit_time;
+    }
+
+    public Boolean getHot() {
+        return hot;
+    }
+
+    public void setHot(Boolean hot) {
+        this.hot = hot;
     }
 
     public Boolean isValid() {

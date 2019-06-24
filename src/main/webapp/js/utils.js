@@ -109,46 +109,75 @@ let utils = {
             : [this.default_img];
     },
 
-    setImage: function (img, img_list) {
+    setImage: function (img, img_list, alt) {
         let obj = {
             img_list: img_list,
         };
         let imgList = this.getImg_list(obj);
         img.setAttribute("src", imgList[0]);
+        img.setAttribute("alt", alt ? alt : "橙办网");
         let id = img.id;
         $("#" + id).show();
     },
 
-    setImageSrc: function (img, src) {
+    setImageSrc: function (img, src, alt) {
         if (!src) {
             let img_list = this.getImg_list();
             src = img_list[0];
         }
         img.setAttribute("src", src);
-        img.setAttribute("alt", "橙办");
+        img.setAttribute("alt", alt ? alt : "橙办网");
     },
 };
 
-function setTag(city, building, area) {
+function setCity() {
+    let city = "上海";
     let keywords = document.getElementsByName("keywords")[0];
     let description = document.getElementsByName("description")[0];
     let title = document.getElementsByTagName("title")[0];
 
     let keywordsContent = keywords.getAttribute("content")
-        .replace(/{city}/g, city)
-        .replace(/{building}/g, building)
+        .replace(/{city}/g, city);
+    keywords.setAttribute("content", keywordsContent);
+
+    let descriptionContent = description.getAttribute("content")
+        .replace(/{city}/g, city);
+    description.setAttribute("content", descriptionContent);
+
+    title.innerHTML = title.innerHTML
+        .replace(/{city}/g, city);
+}
+
+function setBuilding(building) {
+    let keywords = document.getElementsByName("keywords")[0];
+    let description = document.getElementsByName("description")[0];
+    let title = document.getElementsByTagName("title")[0];
+
+    let keywordsContent = keywords.getAttribute("content")
+        .replace(/{building}/g, building);
+    keywords.setAttribute("content", keywordsContent);
+
+    let descriptionContent = description.getAttribute("content")
+        .replace(/{building}/g, building);
+    description.setAttribute("content", descriptionContent);
+
+    title.innerHTML = title.innerHTML
+        .replace(/{building}/g, building);
+}
+
+function setArea(area) {
+    let keywords = document.getElementsByName("keywords")[0];
+    let description = document.getElementsByName("description")[0];
+    let title = document.getElementsByTagName("title")[0];
+
+    let keywordsContent = keywords.getAttribute("content")
         .replace(/{area}/g, area);
     keywords.setAttribute("content", keywordsContent);
 
     let descriptionContent = description.getAttribute("content")
-        .replace(/{city}/g, city)
-        .replace(/{building}/g, building)
         .replace(/{area}/g, area);
     description.setAttribute("content", descriptionContent);
 
     title.innerHTML = title.innerHTML
-        .replace(/{city}/g, city)
-        .replace(/{building}/g, building)
         .replace(/{area}/g, area);
-
 }

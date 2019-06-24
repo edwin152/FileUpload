@@ -10,6 +10,7 @@ import cn.ddzu.shop.util.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class OfficeServiceImpl implements OfficeService {
     public void addOffice(Office office) {
         Log.d("start insert office");
         office.setId(DataUtils.generateId());
+        office.setEdit_time(new Date(System.currentTimeMillis()));
         officeMapperDao.insert(office);
     }
 
@@ -41,6 +43,7 @@ public class OfficeServiceImpl implements OfficeService {
             return;
         }
         Log.d("start update office");
+        office.setEdit_time(new Date(System.currentTimeMillis()));
         officeMapperDao.update(office);
     }
 
@@ -100,6 +103,7 @@ public class OfficeServiceImpl implements OfficeService {
     public void addBuilding(Building building) {
         Log.d("start insert building");
         building.setId(DataUtils.generateId());
+        building.setEdit_time(new Date(System.currentTimeMillis()));
         buildingMapperDao.insert(building);
     }
 
@@ -117,6 +121,7 @@ public class OfficeServiceImpl implements OfficeService {
             return;
         }
         Log.d("start update building");
+        building.setEdit_time(new Date(System.currentTimeMillis()));
         buildingMapperDao.update(building);
     }
 
