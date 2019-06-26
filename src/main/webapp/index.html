@@ -305,7 +305,7 @@
             itemBox.setAttribute("class", "swiper-slide");
             topBgBox.appendChild(itemBox);
             let imgView = document.createElement("img");
-            imgView.setAttribute("src", imageUrl[i]);
+            utils.setImage(imgView, imageUrl);
             itemBox.appendChild(imgView);
         }
     }
@@ -358,13 +358,13 @@
             typeImg.setAttribute("class", "screen_type_icon");
             switch (typeList[i].id) {
                 case 2:
-                    typeImg.setAttribute("src", "img/icon_type_1.png");
+                    utils.setImage(typeImg, ["img/icon_type_1.png"]);
                     break;
                 case 3:
-                    typeImg.setAttribute("src", "img/icon_type_2.png");
+                    utils.setImage(typeImg, ["img/icon_type_2.png"]);
                     break;
                 case 4:
-                    typeImg.setAttribute("src", "img/icon_type_3.png");
+                    utils.setImage(typeImg, ["img/icon_type_3.png"]);
                     break;
             }
             typeItem.appendChild(typeImg);

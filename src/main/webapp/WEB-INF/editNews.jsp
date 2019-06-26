@@ -12,6 +12,7 @@
         'use strict';
 
         let newsId;
+        let filter;
 
         window.onload = function () {
             let request = window.location.search;
@@ -33,7 +34,7 @@
                     if (data.title) {
                         document.getElementById("title").setAttribute("value", data.title);
                     }
-                    if (data.img_list) {
+                    if (data.img_list && data.img_list.length !== 0) {
                         utils.setImage(document.getElementById("cover_img"), data.img_list);
                     }
                     if (data.sub_title) {
@@ -110,7 +111,7 @@
                         //上传完毕回调
                         console.log(res);
                         let coverImg = document.getElementById("cover_img");
-                        coverImg.setAttribute("src", res.data.src);
+                        utils.setImage(coverImg, [res.data.src]);
                         imageUrl = res.data.src;
                         coverImg.setAttribute("style", "");
                     }

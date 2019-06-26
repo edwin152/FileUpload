@@ -114,7 +114,11 @@ let utils = {
             img_list: img_list,
         };
         let imgList = this.getImg_list(obj);
-        img.setAttribute("src", imgList[0]);
+        let src = imgList[0];
+        if (!src) {
+            src = this.default_img;
+        }
+        img.setAttribute("src", src);
         img.setAttribute("alt", alt ? alt : "橙办网");
         let id = img.id;
         $("#" + id).show();

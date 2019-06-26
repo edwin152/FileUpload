@@ -101,7 +101,7 @@
 
             let image = imgList[index];
             let img = document.createElement("img");
-            img.setAttribute("src", image);
+            utils.setImage(img, [image]);
             img.onclick = function () {
                 imgList.splice(parseInt(index), 1);
                 freshImgList();

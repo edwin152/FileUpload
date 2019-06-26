@@ -458,7 +458,7 @@
             imgBox.appendChild(itemBox);
             let itemImg = document.createElement("img");
             itemImg.setAttribute("class", "top_info_image");
-            itemImg.setAttribute("src", img);
+            utils.setImage(itemImg, [img], building.name);
             itemBox.appendChild(itemImg);
         }
         if (img_list && img_list.length > 1) {

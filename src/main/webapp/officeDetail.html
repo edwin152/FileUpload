@@ -480,7 +480,7 @@
             itemBox.setAttribute("class", "swiper-slide");
             let itemImg = document.createElement("img");
             itemImg.setAttribute("class", "top_info_image");
-            itemImg.setAttribute("src", img);
+            utils.setImage(itemImg, [img], building.name);
             itemBox.appendChild(itemImg);
             imageListBox.appendChild(itemBox);
         }
@@ -491,7 +491,7 @@
                 itemBox.setAttribute("class", "swiper-slide");
                 let itemImg = document.createElement("img");
                 itemImg.setAttribute("class", "top_info_image_indicator");
-                itemImg.setAttribute("src", img);
+                utils.setImage(itemImg, [img], building.name);
                 itemBox.appendChild(itemImg);
                 let itemBoxClone = itemBox.cloneNode(true);
                 indicator.appendChild(itemBoxClone);
