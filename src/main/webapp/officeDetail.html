@@ -12,9 +12,10 @@
     <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
-<script type="text/javascript">
+<script title="text/javascript">
     'use strict';
     setCity();
+
 </script>
 
 <body>
@@ -359,8 +360,6 @@
     'use strict';
 
     let office_id;
-    let swiperTopInfo;
-    let indicator;
 
     window.onload = function () {
         let request = window.location.search;
@@ -462,7 +461,7 @@
         document.getElementById("bus_intro").innerHTML
             = buildingNotes.bus_intro;
 
-        // utils.setImage(document.getElementById("building_img"), building.img_list, building.name);
+        // utils.setImage(document.getElementById("building_img"), building.img_list);
 
         document.getElementById("building_info").innerHTML
             = building.name;
@@ -493,7 +492,6 @@
                 let itemImg = document.createElement("img");
                 itemImg.setAttribute("class", "top_info_image_indicator");
                 itemImg.setAttribute("src", img);
-                itemImg.setAttribute("alt", building.name);
                 itemBox.appendChild(itemImg);
                 let itemBoxClone = itemBox.cloneNode(true);
                 indicator.appendChild(itemBoxClone);
@@ -501,6 +499,10 @@
         }
         startSwiper();
     }
+
+
+    let swiperTopInfo;
+    let indicator;
 
     function startSwiper() {
         swiperTopInfo = new Swiper('#swiper_top_info', {

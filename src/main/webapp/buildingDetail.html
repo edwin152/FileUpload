@@ -18,9 +18,10 @@
     <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
-<script type="text/javascript">
+<script title="text/javascript">
     'use strict';
     setCity();
+
 </script>
 
 <body>
@@ -281,7 +282,6 @@
     'use strict';
 
     let building_id;
-    let building;
     let filter = {};
     let pageIndex = 0;
     let pageNum = 0;
@@ -301,7 +301,6 @@
 
         setFixed();
     };
-
     function setFixed() {
         let fixedView = document.getElementById("position_fixed");
         let fixedTop = window.scrollY + fixedView.getBoundingClientRect().y;
@@ -353,12 +352,11 @@
                 id: building_id,
             },
             success: function (data) {
-                building = data;
+                setBuilding(data.name);
 
-                setBuilding(building.name);
-                setTopInfo(building);
-                setBottomInfo(building);
-                let notes = JSON.parse(building.notes);
+                setTopInfo(data);
+                setBottomInfo(data);
+                let notes = JSON.parse(data.notes);
                 if (notes && notes.map) {
                     setMarkers(notes.map);
                 }
@@ -455,7 +453,6 @@
             let itemImg = document.createElement("img");
             itemImg.setAttribute("class", "top_info_image");
             itemImg.setAttribute("src", img);
-            itemImg.setAttribute("alt", building.name);
             itemBox.appendChild(itemImg);
         }
         if (img_list && img_list.length > 1) {
@@ -511,7 +508,7 @@
             // 图片
             let imageView = document.createElement("img");
             imageView.className = "table_item_image clickable";
-            utils.setImage(imageView, office.img_list, building.name);
+            utils.setImage(imageView, office.img_list);
             tdImage.onclick = function () {
                 openRoomDetail(office.id);
             };

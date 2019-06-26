@@ -12,9 +12,10 @@
     <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
-<script type="text/javascript">
+<script title="text/javascript">
     'use strict';
     setCity();
+
 </script>
 
 <body>
@@ -411,7 +412,7 @@
 
             let imgLeft = document.createElement("img");
             imgLeft.className = 'item_image clickable';
-            utils.setImage(imgLeft, building.img_list, building.name);
+            utils.setImage(imgLeft, building.img_list);
             imgLeft.onclick = function () {
                 openDetail(building.id);
             };

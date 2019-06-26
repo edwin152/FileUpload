@@ -16,9 +16,10 @@
     <script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
-<script type="text/javascript">
+<script title="text/javascript">
     'use strict';
     setCity();
+
 </script>
 
 <body>
@@ -427,7 +428,7 @@
 
         for (let i = 0, len = coreList.length; i < len && i < 5; i++) {
             let coreItemImg = document.getElementById("core_item_img_" + i);
-            utils.setImage(coreItemImg, coreList[i].img_list, coreList[i].name);
+            utils.setImage(coreItemImg, coreList[i].img_list);
             coreItemImg.onclick = function () {
                 window.open("search.html?district_id=" + coreList[i].district_id
                     + "&zone_id=" + coreList[i].id, "_blank");
@@ -462,7 +463,7 @@
             buildingImageBox.setAttribute("class", "fine_building_image_box");
             buildingItemBox.appendChild(buildingImageBox);
             let buildingImage = document.createElement("img");
-            utils.setImage(buildingImage, buildingList[i].img_list, buildingList[i].name);
+            utils.setImage(buildingImage, buildingList[i].img_list);
             buildingImageBox.appendChild(buildingImage);
 
             let buildingTitle = document.createElement("a");
@@ -546,8 +547,8 @@
         if (todaySupport) {
             let building = todaySupport.building;
             let office = todaySupport.office;
-            utils.setImage(document.getElementById("entrust_img"), building.img_list, building.name);
-            utils.setImage(document.getElementById("trust_img"), office.img_list, building.name);
+            utils.setImage(document.getElementById("entrust_img"), building.img_list);
+            utils.setImage(document.getElementById("trust_img"), office.img_list);
             document.getElementById("entrust_title").innerHTML = building.name;
             document.getElementById("entrust_content").innerHTML = building.introduce;
             entrust_btn.onclick = function () {
