@@ -34,6 +34,9 @@ body {
     display: inline-block;
     word-break: break-all;
 }
+.news_content img {
+    width: 100%;
+}
 
 .news_content ul li {
     list-style: none;
