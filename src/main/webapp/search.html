@@ -1,8 +1,10 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8"/>
-    <meta name="keywords" content="{city}写字楼出租,{city}写字楼租赁,写字楼出租网,写字楼租赁平台,办公室出租,办公楼出租,{city}办公室出租,{city}办公室租赁,{city}办公楼出租,{city}办公楼租赁,橙办网"/>
-    <meta name="description" content="橙办网专业写字楼出租网站，提供真实写字楼出租、租赁信息！{city}写字楼出租,{city}创意园出租,{city}联合办公,{city}办公楼出租,{city}商务中心出租,{city}共享办公出租,写字楼出租网,{city}联合办公出租。">
+    <meta name="keywords"
+          content="{city}写字楼出租,{city}写字楼租赁,写字楼出租网,写字楼租赁平台,办公室出租,办公楼出租,{city}办公室出租,{city}办公室租赁,{city}办公楼出租,{city}办公楼租赁,橙办网"/>
+    <meta name="description"
+          content="橙办网专业写字楼出租网站，提供真实写字楼出租、租赁信息！{city}写字楼出租,{city}创意园出租,{city}联合办公,{city}办公楼出租,{city}商务中心出租,{city}共享办公出租,写字楼出租网,{city}联合办公出租。">
     <title>{city}写字楼出租|{city}办公室|办公楼出租/租赁平台-{city}橙办网</title>
     <link rel="stylesheet" type="text/css" href="layUI/css/layui.css"/>
     <link rel="stylesheet" type="text/css" href="css/all.css"/>
@@ -157,8 +159,7 @@
             </div>
         </div>
 
-        <div class="page_box" id="page_box">
-        </div>
+        <div class="page_box" id="page_box"></div>
     </div>
     <div class="content_right bg_white" id="position_fixed">
         <form action="search.html">
@@ -229,6 +230,7 @@
     let filter = {};
     let pageIndex = 0;
     let pageNum = 0;
+    let isFirst = true;
 
     window.onload = function () {
         let request = window.location.search;
@@ -392,6 +394,11 @@
         if (pageIndex === 0) {
             dataListBox.innerHTML = "";
         }
+        // TODO 数据总数
+        if (isFirst && pageNum > 0) {
+            loadPageUtil(pageNum * 10);
+            isFirst = false;
+        }
         if (pageNum > pageIndex + 1) {
             $("#next_page").show();
         } else {
@@ -412,7 +419,7 @@
 
             let imgLeft = document.createElement("img");
             imgLeft.className = 'item_image clickable';
-            utils.setImage(imgLeft, building.img_list);
+            utils.setImage(imgLeft, building.img_list, building.name);
             imgLeft.onclick = function () {
                 openDetail(building.id);
             };
@@ -541,11 +548,7 @@
             let imgList = JSON.parse(imgListStr);
             let itemImg = document.createElement("img");
             itemImg.className = "right_heat_news_img";
-            if (imgList && imgList.length > 0) {
-                utils.setImageSrc(itemImg, imgList[0]);
-            } else {
-                utils.setImageSrc(itemImg, null);
-            }
+            utils.setImage(itemImg, imgList);
             itemBox.appendChild(itemImg);
 
             let itemInfo = document.createElement("div");

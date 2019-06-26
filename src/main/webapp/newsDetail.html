@@ -278,11 +278,7 @@
             let imgList = JSON.parse(imgListStr);
             let itemImg = document.createElement("img");
             itemImg.className = "right_heat_news_img";
-            if (imgList && imgList.length > 0) {
-                utils.setImageSrc(itemImg, imgList[0]);
-            } else {
-                utils.setImageSrc(itemImg, null);
-            }
+            utils.setImage(itemImg, imgList);
             itemBox.appendChild(itemImg);
 
             let itemInfo = document.createElement("div");

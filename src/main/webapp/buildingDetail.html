@@ -1,8 +1,10 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta name="keywords" content="{building},{building}写字楼,{building}租金,{building}图片,{building}停车费,{building}物业费,{building}电话,{building}地址,{building}办公室出租信息,橙办网"/>
-    <meta name="description" content="{building}写字楼楼盘介绍，租金价格，{building}写字楼图片，交通路线，地理位置，租赁详情，停车费，物业费，{building}写字楼出租，{city}橙办网专业写字楼租赁，办公选址专家">
+    <meta name="keywords"
+          content="{building},{building}写字楼,{building}租金,{building}图片,{building}停车费,{building}物业费,{building}电话,{building}地址,{building}办公室出租信息,橙办网"/>
+    <meta name="description"
+          content="{building}写字楼楼盘介绍，租金价格，{building}写字楼图片，交通路线，地理位置，租赁详情，停车费，物业费，{building}写字楼出租，{city}橙办网专业写字楼租赁，办公选址专家">
     <title>{building}写字楼出租 | {building}租赁信息-{city}橙办网</title>
     <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
     <link rel="stylesheet" type="text/css" href="layUI/css/layui.css">
@@ -123,13 +125,14 @@
             <div class="flex_row">
                 <div>
                     免费咨询：
-                </div><span class="price_color">400-8700-758</span>
+                </div>
+                <span class="price_color">400-8700-758</span>
             </div>
             <div class="flex_row">
                 <div>
                     立即预约
                 </div>
-                <input class="layui-input ready_input" placeholder="请输入手机号" />
+                <input class="layui-input ready_input" placeholder="请输入手机号"/>
                 <div class="ready_submit">→</div>
             </div>
         </div>
@@ -281,6 +284,7 @@
 <script type="text/javascript">
     'use strict';
 
+    let building;
     let building_id;
     let filter = {};
     let pageIndex = 0;
@@ -301,6 +305,7 @@
 
         setFixed();
     };
+
     function setFixed() {
         let fixedView = document.getElementById("position_fixed");
         let fixedTop = window.scrollY + fixedView.getBoundingClientRect().y;
@@ -352,11 +357,12 @@
                 id: building_id,
             },
             success: function (data) {
-                setBuilding(data.name);
+                building = data;
 
-                setTopInfo(data);
-                setBottomInfo(data);
-                let notes = JSON.parse(data.notes);
+                setBuilding(building.name);
+                setTopInfo(building);
+                setBottomInfo(building);
+                let notes = JSON.parse(building.notes);
                 if (notes && notes.map) {
                     setMarkers(notes.map);
                 }
@@ -508,7 +514,7 @@
             // 图片
             let imageView = document.createElement("img");
             imageView.className = "table_item_image clickable";
-            utils.setImage(imageView, office.img_list);
+            utils.setImage(imageView, office.img_list, building.name);
             tdImage.onclick = function () {
                 openRoomDetail(office.id);
             };
@@ -633,11 +639,7 @@
             let imgList = JSON.parse(imgListStr);
             let itemImg = document.createElement("img");
             itemImg.className = "right_heat_news_img";
-            if (imgList && imgList.length > 0) {
-                utils.setImageSrc(itemImg, imgList[0]);
-            } else {
-                utils.setImageSrc(itemImg, null);
-            }
+            utils.setImage(itemImg, imgList);
             itemBox.appendChild(itemImg);
 
             let itemInfo = document.createElement("div");
@@ -664,7 +666,6 @@
             ListBox.appendChild(itemBox);
         }
     }
-
 
     /**
      * 加载分页工具

@@ -119,15 +119,6 @@ let utils = {
         let id = img.id;
         $("#" + id).show();
     },
-
-    setImageSrc: function (img, src, alt) {
-        if (!src) {
-            let img_list = this.getImg_list();
-            src = img_list[0];
-        }
-        img.setAttribute("src", src);
-        img.setAttribute("alt", alt ? alt : "橙办网");
-    },
 };
 
 function setCity() {
